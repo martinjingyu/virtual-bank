@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import GUI.templete_1;
+import GUI.shop_page.shop_parent;
 import GUI.templete_2;
 
 
@@ -17,7 +17,7 @@ public class Main extends JFrame {
     private JPanel current_panel;
     private JPanel pg1, pg2;
 
-    public Main(templete_1 pg1,templete_2 pg2) {
+    public Main(templete_1 pg1,shop_parent pg2) {
         super("demo");
         current_panel = pg1;
         this.pg1 = pg1;
@@ -30,7 +30,8 @@ public class Main extends JFrame {
     public void Jframe_Jpanel(){
         // 设置主窗口的标题
 
-        this.setSize(1920,1080);
+//        this.setSize(1920,1080);
+        this.setSize(860,540);
         menu = new JPanel();
         main_page = new JPanel();
         main_page.setLayout(new BorderLayout());
@@ -42,7 +43,7 @@ public class Main extends JFrame {
 
 
         menu.setBackground(Color.pink);
-        main_page.setBackground(Color.blue);
+//        main_page.setBackground(Color.blue);
 
 
         gridBagConstraints.gridx = 0;
@@ -56,6 +57,9 @@ public class Main extends JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.weightx = 0.95;
         gridBagConstraints.gridheight =GridBagConstraints.REMAINDER;
+//        gridBagConstraints.weightx = 1; // 确保在水平方向上这个组件可以扩展
+//        gridBagConstraints.weighty = 1; // 确保在垂直方向上这个组件可以扩展
+//        gridBagConstraints.fill = GridBagConstraints.BOTH; // 指示组件需要在水平和垂直方向上扩展
         gridBagLayout.setConstraints(main_page, gridBagConstraints);
 
         this.add(main_page);
@@ -77,7 +81,7 @@ public class Main extends JFrame {
                 repaint();
             }
         });
-        button2 = new JButton("button2");
+        button2 = new JButton("Shop");
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,8 +90,10 @@ public class Main extends JFrame {
                 current_panel = pg2;
                 revalidate();
                 repaint();
+
             }
         });
+
 
         menu.add(button1);
         menu.add(button2);
@@ -98,7 +104,7 @@ public class Main extends JFrame {
     }
     public static void main(String[] args) {
         templete_1 page1 = new templete_1();
-        templete_2 page2 = new templete_2();
+        shop_parent page2 = new shop_parent();
         new Main(page1,page2);
     }
 }
