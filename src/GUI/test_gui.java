@@ -29,7 +29,7 @@ public class test_gui extends JFrame {
     public void Jframe_Jpanel(){
         // 设置主窗口的标题
 
-        this.setSize(1920,1080);
+        this.setSize(960,540);
         menu = new JPanel();
         main_page = new JPanel();
         main_page.setLayout(new BorderLayout());
