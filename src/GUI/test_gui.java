@@ -1,16 +1,15 @@
 package GUI;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import GUI.home_page.homepage_tem;
 
 public class test_gui extends JFrame {
-    private GridBagLayout gridBagLayout;
-    private GridBagConstraints gridBagConstraints;
+    private BorderLayout borderLayout;
     private JPanel main_page;
     private JPanel menu;
-    private JButton button1, button2;
+    private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
 
     public static void main(String[] args) {
@@ -30,63 +29,96 @@ public class test_gui extends JFrame {
         // 设置主窗口的标题
 
         this.setSize(960,540);
+        borderLayout = new BorderLayout();
         menu = new JPanel();
         main_page = new JPanel();
-        main_page.setLayout(new BorderLayout());
-
-        gridBagLayout = new GridBagLayout();
-        this.setLayout(gridBagLayout);
-        gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.fill=GridBagConstraints.BOTH;
-
 
         menu.setBackground(Color.pink);
         main_page.setBackground(Color.blue);
 
+        menu.setPreferredSize(new Dimension(51, 540));
 
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight =GridBagConstraints.REMAINDER;
-        gridBagConstraints.weightx = 0.05;
-        gridBagConstraints.weighty = 1;
-        gridBagLayout.setConstraints(menu, gridBagConstraints);
 
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.weightx = 0.95;
-        gridBagConstraints.gridheight =GridBagConstraints.REMAINDER;
-        gridBagLayout.setConstraints(main_page, gridBagConstraints);
 
-        this.add(main_page);
-        this.add(menu);
+        this.add(main_page,BorderLayout.CENTER);
+        this.add(menu, BorderLayout.WEST);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
     public void navi_button(){
 
-        button1 = new JButton("button1");
-        button1.addActionListener(new ActionListener() {
+        button1 = new JLabel();
+        ImageIcon icon = new ImageIcon("bank.png");
+        Image img = icon.getImage();
+        Image scaledImg = img.getScaledInstance(25, 25, Image.SCALE_SMOOTH); // 自动调整宽度，高度等比例缩放
+        button1.setIcon(new ImageIcon(scaledImg)); // 替换为您的图片路径
+        button1.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseClicked(MouseEvent e) {
+                // 添加按钮点击事件的处理代码
+                main_page.remove(current_panel);
+                main_page.add(current_panel, BorderLayout.CENTER);
+                revalidate();
+                repaint();
+            }
+        });
+        button1.setHorizontalAlignment(SwingConstants.CENTER); // 设置水平居中对齐
 
-                main_page.remove(current_panel);
-                main_page.add(current_panel,BorderLayout.CENTER);
-                revalidate();
-                repaint();
-            }
-        });
-        button2 = new JButton("button2");
-        button2.addActionListener(new ActionListener() {
+        button2 = new JLabel();
+        button2.setIcon(new ImageIcon(scaledImg)); // 替换为您的图片路径
+        button2.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseClicked(MouseEvent e) {
+                // 添加按钮点击事件的处理代码
                 main_page.remove(current_panel);
                 revalidate();
                 repaint();
             }
         });
+        button2.setHorizontalAlignment(SwingConstants.CENTER); // 设置水平居中对齐
+
+        button3 = new JLabel();
+        button3.setIcon(new ImageIcon(scaledImg)); // 替换为您的图片路径
+        button3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // 添加按钮点击事件的处理代码
+                main_page.remove(current_panel);
+                revalidate();
+                repaint();
+            }
+        });
+        button3.setHorizontalAlignment(SwingConstants.CENTER); // 设置水平居中对齐
+
+        button4 = new JLabel();
+        button4.setIcon(new ImageIcon(scaledImg)); // 替换为您的图片路径
+        button4.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // 添加按钮点击事件的处理代码
+                main_page.remove(current_panel);
+                revalidate();
+                repaint();
+            }
+        });
+        button4.setHorizontalAlignment(SwingConstants.CENTER); // 设置水平居中对齐
+
+        menu.setLayout(new GridLayout(15, 1)); // 竖直排列按钮
+        menu.add(new JLabel());
+        menu.add(new JLabel());
 
         menu.add(button1);
+        menu.add(new JLabel());
+
         menu.add(button2);
+        menu.add(new JLabel());
+
+        menu.add(button3);
+        menu.add(new JLabel());
+
+        menu.add(button4);
+        menu.add(new JLabel());
+
 
     }
     public void sub_page(templete_1 pg1){
