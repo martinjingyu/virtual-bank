@@ -153,7 +153,5 @@ public class shop_kid extends JPanel {
         return shop_kid;
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
 }
+
