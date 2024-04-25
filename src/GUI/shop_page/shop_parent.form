@@ -2,7 +2,7 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.shop_page.shop_parent">
   <grid id="27dc6" binding="shop" layout-manager="GridBagLayout">
     <constraints>
-      <xy x="20" y="20" width="500" height="400"/>
+      <xy x="20" y="20" width="590" height="436"/>
     </constraints>
     <properties>
       <background color="-14196325"/>
@@ -104,7 +104,7 @@
                 <children>
                   <component id="2baa2" class="javax.swing.JFormattedTextField" binding="nameFormattedTextField" default-binding="true">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
                       </grid>
                       <gridbag weightx="1.0" weighty="1.0"/>
@@ -115,7 +115,7 @@
                   </component>
                   <component id="db557" class="javax.swing.JFormattedTextField" binding="prizeFormattedTextField" default-binding="true">
                     <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                      <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
                       </grid>
                       <gridbag weightx="1.0" weighty="1.0"/>
@@ -126,7 +126,7 @@
                   </component>
                   <component id="318f3" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
                     <constraints>
-                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                       <gridbag weightx="1.0" weighty="1.0"/>
                     </constraints>
                     <properties>
@@ -139,7 +139,7 @@
                   </component>
                   <component id="a7d3" class="javax.swing.JButton" binding="SUBMITButton" default-binding="true">
                     <constraints>
-                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                       <gridbag weightx="1.0" weighty="1.0"/>
                     </constraints>
                     <properties>
@@ -148,66 +148,21 @@
                   </component>
                 </children>
               </grid>
-            </children>
-          </grid>
-          <grid id="10052" layout-manager="GridBagLayout">
-            <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="1.0" weighty="1.0"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <grid id="3b6c6" layout-manager="GridBagLayout">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="1.0" weighty="1.0"/>
-                </constraints>
-                <properties>
-                  <background color="-14196325"/>
-                </properties>
-                <border type="none" title="History"/>
-                <children>
-                  <component id="9a769" class="javax.swing.JList" binding="list1" default-binding="true">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="50"/>
-                      </grid>
-                      <gridbag weightx="1.0" weighty="1.0"/>
-                    </constraints>
-                    <properties>
-                      <model>
-                        <item value="TIME       WHAT         COST"/>
-                        <item value=""/>
-                        <item value="2024/4/9     A CAR         $5"/>
-                        <item value="2024/4/2     A BOOK       $6"/>
-                      </model>
-                      <selectionBackground color="-7616293"/>
-                      <selectionForeground color="-7616293"/>
-                    </properties>
-                  </component>
-                </children>
-              </grid>
-              <grid id="6b39e" layout-manager="GridBagLayout">
+              <grid id="d173d" layout-manager="GridBagLayout">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="1.0" weighty="1.0"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
-                <properties>
-                  <background color="-14196325"/>
-                </properties>
-                <border type="none"/>
+                <properties/>
+                <border type="none" title="Current account"/>
                 <children>
-                  <component id="cf23a" class="javax.swing.JLabel" binding="balance">
+                  <component id="2a206" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                      <gridbag weightx="1.0" weighty="1.0"/>
+                      <gridbag weightx="0.0" weighty="0.0"/>
                     </constraints>
                     <properties>
-                      <horizontalAlignment value="0"/>
-                      <horizontalTextPosition value="0"/>
-                      <text value="Blanced:$30"/>
-                      <verticalAlignment value="0"/>
+                      <text value="Total:$60.00"/>
                     </properties>
                   </component>
                 </children>

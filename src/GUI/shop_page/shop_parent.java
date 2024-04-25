@@ -17,9 +17,7 @@ public class shop_parent extends JPanel {
     private JFormattedTextField prizeFormattedTextField;
     private JComboBox comboBox1;
     private JPanel TODOLIST;
-    private JLabel balance;
     private JButton SUBMITButton;
-    private JList list1;
 
 
     public shop_parent() {
