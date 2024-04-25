@@ -21,7 +21,7 @@ public class shop_parent extends JPanel {
 
 
     public shop_parent() {
-        Dimension preferredSize = new Dimension(650, 540);
+        Dimension preferredSize = new Dimension(900, 540);
         shop.setPreferredSize(preferredSize);
         add(shop);
         SUBMITButton.addMouseListener(new MouseAdapter() {
@@ -158,6 +158,7 @@ public class shop_parent extends JPanel {
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.gridwidth = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
@@ -168,6 +169,7 @@ public class shop_parent extends JPanel {
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
+        gbc.gridwidth = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
@@ -182,6 +184,7 @@ public class shop_parent extends JPanel {
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 2;
+        gbc.gridwidth = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
@@ -192,6 +195,7 @@ public class shop_parent extends JPanel {
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 3;
+        gbc.gridwidth = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -199,67 +203,24 @@ public class shop_parent extends JPanel {
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridBagLayout());
         gbc = new GridBagConstraints();
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        panel1.add(panel4, gbc);
-        final JPanel panel5 = new JPanel();
-        panel5.setLayout(new GridBagLayout());
-        panel5.setBackground(new Color(-14196325));
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        panel4.add(panel5, gbc);
-        panel5.setBorder(BorderFactory.createTitledBorder(null, "History", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
-        list1 = new JList();
-        final DefaultListModel defaultListModel1 = new DefaultListModel();
-        defaultListModel1.addElement("TIME       WHAT         COST");
-        defaultListModel1.addElement("");
-        defaultListModel1.addElement("2024/4/9     A CAR         $5");
-        defaultListModel1.addElement("2024/4/2     A BOOK       $6");
-        list1.setModel(defaultListModel1);
-        list1.setSelectionBackground(new Color(-7616293));
-        list1.setSelectionForeground(new Color(-7616293));
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        panel5.add(list1, gbc);
-        final JPanel panel6 = new JPanel();
-        panel6.setLayout(new GridBagLayout());
-        panel6.setBackground(new Color(-14196325));
-        gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
-        panel4.add(panel6, gbc);
-        balance = new JLabel();
-        balance.setHorizontalAlignment(0);
-        balance.setHorizontalTextPosition(0);
-        balance.setText("Blanced:$30");
-        balance.setVerticalAlignment(0);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        panel6.add(balance, gbc);
+        Upload.add(panel4, gbc);
+        panel4.setBorder(BorderFactory.createTitledBorder(null, "Current account", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         final JLabel label1 = new JLabel();
-        label1.setText("Family Mall");
+        label1.setText("Total:$60.00");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel4.add(label1, gbc);
+        final JLabel label2 = new JLabel();
+        label2.setText("Family Mall");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
-        shop.add(label1, gbc);
+        shop.add(label2, gbc);
     }
 
     /**

@@ -5,7 +5,9 @@
     <constraints>
       <xy x="20" y="20" width="476" height="400"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-4137489"/>
+    </properties>
     <border type="none"/>
     <children>
       <grid id="5ab2" binding="MALL" layout-manager="GridBagLayout">
@@ -30,12 +32,16 @@
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-4137489"/>
+        </properties>
         <border type="none"/>
         <children>
           <grid id="63be4" layout-manager="GridBagLayout">
             <constraints/>
-            <properties/>
+            <properties>
+              <background color="-4137489"/>
+            </properties>
             <border type="none"/>
             <children>
               <component id="81d82" class="javax.swing.JLabel">
@@ -112,6 +118,9 @@
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
+                  <background color="-4137489"/>
+                  <hideActionText value="false"/>
+                  <selected value="false"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -121,6 +130,7 @@
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
+                  <background color="-4137489"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -130,6 +140,7 @@
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
+                  <background color="-4137489"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -139,6 +150,7 @@
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
+                  <background color="-4137489"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -148,6 +160,7 @@
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
+                  <background color="-4137489"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -157,6 +170,7 @@
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
+                  <background color="-4137489"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -169,6 +183,9 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-9975466"/>
+          <foreground color="-1"/>
+          <hideActionText value="false"/>
           <text value="BUY!"/>
         </properties>
       </component>
