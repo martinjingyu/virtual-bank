@@ -3,32 +3,45 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import GUI.home_page.homepage_tem;
 
-public class Main extends JFrame {
+
+public class MainFrame extends JFrame {
     private BorderLayout borderLayout;
     private JPanel main_page;
     private JPanel menu;
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
+    private JPanel pg1, pg2;
 
-    public static void main(String[] args) {
-        homepage_tem page1 = new homepage_tem();
-        new test_gui(page1);
+
+    public MainFrame(templete_1 pg1, templete_2 pg2) {
+        super("demo");
+        current_panel = pg1;
+        this.pg1 = pg1;
+        this.pg2 = pg2;
+        Jframe_Jpanel();
+        navi_button();
+        setVisible(true);
     }
 
-    public Main(JPanel panel) {
+    public MainFrame(JPanel panel) {
         super("demo");
         current_panel = panel;
         Jframe_Jpanel();
         navi_button();
         setVisible(true);
     }
-    public Main() {
+
+    public MainFrame() {
         super("demo");
+        this.pg1 = new templete_1();
+        this.pg2 = new templete_2();
+        current_panel = pg1;
         Jframe_Jpanel();
         navi_button();
         setVisible(true);
+
+
     }
 
     public void Jframe_Jpanel(){
@@ -63,6 +76,7 @@ public class Main extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 // 添加按钮点击事件的处理代码
                 main_page.remove(current_panel);
+                current_panel = pg1;
                 main_page.add(current_panel, BorderLayout.CENTER);
                 revalidate();
                 repaint();
@@ -77,6 +91,8 @@ public class Main extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 // 添加按钮点击事件的处理代码
                 main_page.remove(current_panel);
+                current_panel = pg2;
+                main_page.add(current_panel, BorderLayout.CENTER);
                 revalidate();
                 repaint();
             }
@@ -90,6 +106,9 @@ public class Main extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 // 添加按钮点击事件的处理代码
                 main_page.remove(current_panel);
+                main_page.remove(current_panel);
+                current_panel = pg1;
+                main_page.add(current_panel, BorderLayout.CENTER);
                 revalidate();
                 repaint();
             }
@@ -103,6 +122,9 @@ public class Main extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 // 添加按钮点击事件的处理代码
                 main_page.remove(current_panel);
+                main_page.remove(current_panel);
+                current_panel = pg2;
+                main_page.add(current_panel, BorderLayout.CENTER);
                 revalidate();
                 repaint();
             }
@@ -127,8 +149,9 @@ public class Main extends JFrame {
 
 
     }
-    public void sub_page(templete_1 pg1){
 
+    public static void main(String[] args) {
+        MainFrame main = new MainFrame();
     }
 
 }
