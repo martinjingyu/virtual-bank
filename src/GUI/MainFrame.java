@@ -1,4 +1,9 @@
 package GUI;
+import GUI.bank_page.bank_kid;
+import GUI.message_page.templete_message;
+import GUI.shop_page.shop_kid;
+import GUI.task_page.Task_kid;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -11,36 +16,23 @@ public class MainFrame extends JFrame {
     private JPanel menu;
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
-    private JPanel pg1, pg2;
+    private JPanel pg1, pg2,pg3,pg4;
 
-
-    public MainFrame(templete_1 pg1, templete_2 pg2) {
-        super("demo");
-        current_panel = pg1;
-        this.pg1 = pg1;
-        this.pg2 = pg2;
-        Jframe_Jpanel();
-        navi_button();
-        setVisible(true);
-    }
-
-    public MainFrame(JPanel panel) {
-        super("demo");
-        current_panel = panel;
-        Jframe_Jpanel();
-        navi_button();
-        setVisible(true);
-    }
 
     public MainFrame() {
         super("demo");
-        this.pg1 = new templete_1();
-        this.pg2 = new templete_2();
+        this.pg1 = new bank_kid();
+        this.pg2 = new shop_kid();
+        this.pg3 = new Task_kid();
+        this.pg4 = new templete_message();
+
         current_panel = pg1;
         Jframe_Jpanel();
         navi_button();
         setVisible(true);
+    }
 
+    public MainFrame(String id){
 
     }
 
@@ -50,7 +42,7 @@ public class MainFrame extends JFrame {
         this.setSize(960,540);
         borderLayout = new BorderLayout();
         menu = new JPanel();
-        main_page = new JPanel();
+        main_page = new JPanel(new BorderLayout());
 
         menu.setBackground(Color.pink);
         main_page.setBackground(Color.blue);
@@ -60,7 +52,9 @@ public class MainFrame extends JFrame {
 
 
         this.add(main_page,BorderLayout.CENTER);
+
         this.add(menu, BorderLayout.WEST);
+        main_page.add(current_panel,BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
@@ -107,7 +101,7 @@ public class MainFrame extends JFrame {
                 // 添加按钮点击事件的处理代码
                 main_page.remove(current_panel);
                 main_page.remove(current_panel);
-                current_panel = pg1;
+                current_panel = pg3;
                 main_page.add(current_panel, BorderLayout.CENTER);
                 revalidate();
                 repaint();
@@ -123,7 +117,7 @@ public class MainFrame extends JFrame {
                 // 添加按钮点击事件的处理代码
                 main_page.remove(current_panel);
                 main_page.remove(current_panel);
-                current_panel = pg2;
+                current_panel = pg4;
                 main_page.add(current_panel, BorderLayout.CENTER);
                 revalidate();
                 repaint();

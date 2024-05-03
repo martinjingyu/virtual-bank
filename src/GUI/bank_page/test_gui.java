@@ -1,5 +1,5 @@
-package GUI;
-import GUI.bank_page.bank_kid;
+package GUI.bank_page;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,11 +28,12 @@ public class test_gui extends JFrame {
 
     public void Jframe_Jpanel(){
         // 设置主窗口的标题
-
         this.setSize(960,540);
+
         borderLayout = new BorderLayout();
         menu = new JPanel();
         main_page = new JPanel();
+        main_page.setLayout(new BorderLayout());
 
         menu.setBackground(Color.pink);
         main_page.setBackground(Color.blue);
@@ -40,8 +41,8 @@ public class test_gui extends JFrame {
         menu.setPreferredSize(new Dimension(51, 540));
 
 
-
         this.add(main_page,BorderLayout.CENTER);
+        main_page.add(current_panel,BorderLayout.CENTER);
         this.add(menu, BorderLayout.WEST);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -120,9 +121,6 @@ public class test_gui extends JFrame {
         menu.add(button4);
         menu.add(new JLabel());
 
-
-    }
-    public void sub_page(templete_1 pg1){
 
     }
 
