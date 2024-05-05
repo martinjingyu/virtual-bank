@@ -21,7 +21,7 @@ public class shop_parent extends JPanel {
 
 
     public shop_parent() {
-        Dimension preferredSize = new Dimension(900, 540);
+        Dimension preferredSize = new Dimension(900, 450);
         shop.setPreferredSize(preferredSize);
         add(shop);
         SUBMITButton.addMouseListener(new MouseAdapter() {

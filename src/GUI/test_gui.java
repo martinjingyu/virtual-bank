@@ -1,10 +1,9 @@
 package GUI;
-import GUI.bank_page.bank_kid;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import GUI.home_page.homepage_tem;
 
 public class test_gui extends JFrame {
     private BorderLayout borderLayout;
@@ -14,7 +13,7 @@ public class test_gui extends JFrame {
     private JPanel current_panel;
 
     public static void main(String[] args) {
-        bank_kid page1 = new bank_kid();
+        homepage_tem page1 = new homepage_tem();
         new test_gui(page1);
     }
 
