@@ -1,4 +1,5 @@
 package GUI;
+import Entity.Kids;
 import GUI.bank_page.bank_kid;
 import GUI.message_page.templete_message;
 import GUI.shop_page.shop_kid;
@@ -17,14 +18,16 @@ public class MainFrame extends JFrame {
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
     private JPanel pg1, pg2,pg3,pg4;
+    private Kids kid;
 
 
-    public MainFrame() {
+    public MainFrame(Kids kid) {
         super("demo");
-        this.pg1 = new bank_kid();
-        this.pg2 = new shop_kid();
-        this.pg3 = new Task_kid();
-        this.pg4 = new templete_message();
+        this.pg1 = new bank_kid(kid);
+        this.pg2 = new shop_kid(kid);
+        this.pg3 = new Task_kid(kid);
+        this.pg4 = new templete_message(kid);
+        this.kid = kid;
 
         current_panel = pg1;
         Jframe_Jpanel();
@@ -32,9 +35,6 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-    public MainFrame(String id){
-
-    }
 
     public void Jframe_Jpanel(){
         // 设置主窗口的标题
@@ -145,7 +145,7 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        MainFrame main = new MainFrame();
+        MainFrame main = new MainFrame(new Kids());
     }
 
 }
