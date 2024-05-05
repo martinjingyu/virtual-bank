@@ -1,8 +1,6 @@
 package utill.read;
 
 import Entity.Bank;
-import Entity.HistoryTransaction;
-import Entity.HistoryTransactionList;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,7 +13,7 @@ public class ReadBank {
             String line;
             if ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 7) {
+                if (parts.length == 6) {
                     String name = parts[0].trim();
                     double savingGoal = Double.parseDouble(parts[1].trim());
                     double currentInterestRate = Double.parseDouble(parts[2].trim());
@@ -37,7 +35,7 @@ public class ReadBank {
     }
 
     public static void main(String[] args) {
-        Bank bank = readBank("Bank.txt");
+        Bank bank = readBank("data/Kids/222/Bank.txt");
         if (bank != null) {
             System.out.println("Bank Information:");
             System.out.println("Name: " + bank.getName());
@@ -46,7 +44,6 @@ public class ReadBank {
             System.out.println("Saving Interest Rate: " + bank.getSavingInterestRate());
             System.out.println("Current Total: " + bank.getCurrentTotal());
             System.out.println("Saving Total: " + bank.getSavingTotal());
-            System.out.println("Transaction History:");
         }
     }
 }
