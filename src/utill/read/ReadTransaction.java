@@ -31,7 +31,7 @@ public class ReadTransaction {
     }
 
     public static void main(String[] args) {
-        HistoryTransactionList transactionList = readTransactions("Transaction.txt");
+        HistoryTransactionList transactionList = readTransactions("data/Kids/222/TransactionHistory.txt");
         if (transactionList != null) {
             System.out.println("Transaction History:");
             for (HistoryTransaction transaction : transactionList.getTransactions()) {
