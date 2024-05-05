@@ -1,5 +1,7 @@
 package GUI.task_page;
 
+import Entity.Kids;
+
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
@@ -14,9 +16,17 @@ public class Task_kid extends JPanel {
     private JLabel money;
     private JLabel progress;
     private JPanel Container;
-
+    private Kids kid;
 
     public Task_kid() {
+        $$$setupUI$$$(); // Ensures all GUI components are initialized first
+        Dimension preferredSize = new Dimension(900, 540);
+        Container.setPreferredSize(preferredSize);
+        add(Container);
+        // Debug to ensure components are initialized
+    }
+    public Task_kid(Kids kid) {
+        this.kid = kid;
         $$$setupUI$$$(); // Ensures all GUI components are initialized first
         Dimension preferredSize = new Dimension(900, 540);
         Container.setPreferredSize(preferredSize);

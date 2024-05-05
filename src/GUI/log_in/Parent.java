@@ -117,10 +117,11 @@ public class Parent {
                 }
                 if (text1.equals(contents)) {
                     System.out.println("text1");
+                    System.out.println("彭炜达 快跑！！！！别回头！！");
                     // 创建并显示第二个界面
-                    MainFrame secondUI = new MainFrame();
-                    secondUI.setVisible(true);
-                    frame.setVisible(false); // 关闭当前界面
+
+
+
 
                 } else {
                     System.out.println("error");

@@ -7,6 +7,10 @@ public class Kids {
     private HistoryTransactionList transactionList;
     private MessageList messagelist;
 
+    public Kids(){
+
+    }
+
     public Kids(Bank bank,HistoryTransactionList transactionList,
                 ProductList productList, TaskList taskList,MessageList messagelist){
         this.bank = bank;

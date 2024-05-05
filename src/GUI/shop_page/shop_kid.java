@@ -1,5 +1,7 @@
 package GUI.shop_page;
 
+import Entity.Kids;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -14,8 +16,16 @@ public class shop_kid extends JPanel {
     private JPanel shop_kid;
     private JPanel MALL;
     private JScrollPane Product;
+    private Kids kid;
 
     public shop_kid() {
+        Dimension preferredSize = new Dimension(900, 540);
+        shop_kid.setPreferredSize(preferredSize);
+        add(shop_kid);
+    }
+
+    public shop_kid(Kids kid) {
+        this.kid = kid;
         Dimension preferredSize = new Dimension(900, 540);
         shop_kid.setPreferredSize(preferredSize);
         add(shop_kid);
