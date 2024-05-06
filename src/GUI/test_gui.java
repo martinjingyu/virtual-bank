@@ -1,6 +1,9 @@
 package GUI;
 import GUI.bank_page.bank_kid;
 
+import GUI.task_page.Depository;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -14,8 +17,9 @@ public class test_gui extends JFrame {
     private JPanel current_panel;
 
     public static void main(String[] args) {
-        bank_kid page1 = new bank_kid();
-        new test_gui(page1);
+
+        Depository page1 = new Depository();
+
     }
 
     public test_gui(JPanel panel) {

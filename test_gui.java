@@ -1,11 +1,11 @@
-package GUI.task_page;
-
-import GUI.templete_1;
-
+package GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import GUI.task_page.Task_kid;
+import GUI.task_page.Task_parent;
 
 public class test_gui extends JFrame {
     private BorderLayout borderLayout;
@@ -14,12 +14,7 @@ public class test_gui extends JFrame {
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
 
-    public static void main(String[] args) {
 
-        Depository page1 = new Depository();
-        new GUI.test_gui(page1);
-
-    }
 
     public test_gui(JPanel panel) {
         super("demo");
@@ -35,16 +30,17 @@ public class test_gui extends JFrame {
         this.setSize(960,540);
         borderLayout = new BorderLayout();
         menu = new JPanel();
-        main_page = new JPanel(new BorderLayout());
+        main_page = new JPanel();
 
         menu.setBackground(Color.pink);
         main_page.setBackground(Color.blue);
 
         menu.setPreferredSize(new Dimension(51, 540));
 
+
+
         this.add(main_page,BorderLayout.CENTER);
         this.add(menu, BorderLayout.WEST);
-        main_page.add(current_panel,BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
@@ -127,5 +123,9 @@ public class test_gui extends JFrame {
     public void sub_page(templete_1 pg1){
 
     }
-
+    public static void main(String[] args) {
+        //Task_kid page1 = new Task_kid();
+        Task_parent page1 = new Task_parent();
+        new test_gui(page1);
+    }
 }

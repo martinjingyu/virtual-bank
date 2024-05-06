@@ -2,8 +2,9 @@ package Entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class TaskList {
+public class TaskList{
     private List<Task> taskList;
 
     public TaskList() {
@@ -17,9 +18,42 @@ public class TaskList {
     public void removeTask(Task task) {
         taskList.remove(task);
     }
+    public Task getTask(int index){
+        return taskList.get(index);
+    }
+
+    public List<Task> getNonConfirmedTask(){
+        List<Task> nonTask;
+        nonTask = new ArrayList<>();
+        for (Task task : taskList) {
+            if (!Objects.equals(task.getState(), "Confirmed")) {
+                nonTask.add(task);
+            }
+        }
+        return nonTask;
+    }
+    public int[] getNonConfirmedIndex(int size){
+        int index = 0;
+        int j=0;
+        int[] array= new int[size];
+        for (Task task : taskList) {
+            if (!Objects.equals(task.getState(), "Confirmed")) {
+                array[j]=index;
+                index++;
+            }
+            index++;
+        }
+        return array;
+    }
+
+
 
     public List<Task> getAllTasks() {
         return taskList;
+    }
+
+    public int getSize(){
+        return taskList.size();
     }
 
     public Task getTaskByName(String name) {
@@ -38,10 +72,10 @@ public class TaskList {
         TaskList taskList = new TaskList();
 
         // Add some tasks
-        taskList.addTask(new Task("Clean the room", 5.0,"checking"));
-        taskList.addTask(new Task("Do homework", 3.0,"done"));
-        taskList.addTask(new Task("Wash dishes", 2.0,"processing"));
-        taskList.addTask(new Task("Wash dishes", 2.0,"released"));
+        taskList.addTask(new Task("Clean the room", 5.0,"checking","111"));
+        taskList.addTask(new Task("Do homework", 3.0,"done","111"));
+        taskList.addTask(new Task("Wash dishes", 2.0,"processing","111"));
+        taskList.addTask(new Task("Wash dishes", 2.0,"released","111"));
 
         // Get all tasks
         List<Task> allTasks = taskList.getAllTasks();
