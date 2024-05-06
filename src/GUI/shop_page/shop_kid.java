@@ -1,5 +1,7 @@
 package GUI.shop_page;
 
+import Entity.Kids;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -14,8 +16,16 @@ public class shop_kid extends JPanel {
     private JPanel shop_kid;
     private JPanel MALL;
     private JScrollPane Product;
+    private Kids kid;
 
-    public shop_kid(JPanel shop_kid) {
+    public shop_kid() {
+        Dimension preferredSize = new Dimension(900, 540);
+        shop_kid.setPreferredSize(preferredSize);
+        add(shop_kid);
+    }
+
+    public shop_kid(Kids kid) {
+        this.kid = kid;
         Dimension preferredSize = new Dimension(900, 540);
         shop_kid.setPreferredSize(preferredSize);
         add(shop_kid);
@@ -37,22 +47,36 @@ public class shop_kid extends JPanel {
      */
     private void $$$setupUI$$$() {
         shop_kid = new JPanel();
-        shop_kid.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(4, 1, new Insets(0, 0, 0, 0), -1, -1));
+        shop_kid.setLayout(new GridBagLayout());
+        shop_kid.setBackground(new Color(-4137489));
         MALL = new JPanel();
         MALL.setLayout(new GridBagLayout());
-        shop_kid.add(MALL, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        GridBagConstraints gbc;
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        shop_kid.add(MALL, gbc);
         final JLabel label1 = new JLabel();
         label1.setText("FAMILY MALL");
-        GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
         MALL.add(label1, gbc);
         Product = new JScrollPane();
-        shop_kid.add(Product, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        Product.setBackground(new Color(-4137489));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        shop_kid.add(Product, gbc);
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridBagLayout());
+        panel1.setBackground(new Color(-4137489));
         Product.setViewportView(panel1);
         final JLabel label2 = new JLabel();
         label2.setText("LEGO sets");
@@ -103,47 +127,68 @@ public class shop_kid extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(toolBar$Separator2, gbc);
         radioButton1 = new JRadioButton();
+        radioButton1.setBackground(new Color(-4137489));
+        radioButton1.setHideActionText(false);
+        radioButton1.setSelected(false);
         radioButton1.setText("");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
         panel1.add(radioButton1, gbc);
         radioButton2 = new JRadioButton();
+        radioButton2.setBackground(new Color(-4137489));
         radioButton2.setText("");
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 1;
         panel1.add(radioButton2, gbc);
         radioButton3 = new JRadioButton();
+        radioButton3.setBackground(new Color(-4137489));
         radioButton3.setText("");
         gbc = new GridBagConstraints();
         gbc.gridx = 4;
         gbc.gridy = 1;
         panel1.add(radioButton3, gbc);
         radioButton4 = new JRadioButton();
+        radioButton4.setBackground(new Color(-4137489));
         radioButton4.setText("");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 3;
         panel1.add(radioButton4, gbc);
         radioButton5 = new JRadioButton();
+        radioButton5.setBackground(new Color(-4137489));
         radioButton5.setText("");
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 3;
         panel1.add(radioButton5, gbc);
         radioButton6 = new JRadioButton();
+        radioButton6.setBackground(new Color(-4137489));
         radioButton6.setText("");
         gbc = new GridBagConstraints();
         gbc.gridx = 4;
         gbc.gridy = 3;
         panel1.add(radioButton6, gbc);
         BUYButton = new JButton();
+        BUYButton.setBackground(new Color(-9975466));
+        BUYButton.setForeground(new Color(-1));
+        BUYButton.setHideActionText(false);
         BUYButton.setText("BUY!");
-        shop_kid.add(BUYButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        shop_kid.add(BUYButton, gbc);
         final JLabel label8 = new JLabel();
         label8.setText("Current Account ： $ 60.00");
-        shop_kid.add(label8, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_EAST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.weightx = 1.0;
+        gbc.anchor = GridBagConstraints.EAST;
+        shop_kid.add(label8, gbc);
     }
 
     /**

@@ -1,6 +1,6 @@
-package GUI;
-import GUI.bank_page.bank_kid;
-import GUI.task_page.Depository;
+package GUI.task_page;
+
+import GUI.templete_1;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +16,7 @@ public class test_gui extends JFrame {
 
     public static void main(String[] args) {
         Depository page1 = new Depository();
-        new test_gui(page1);
+        new GUI.test_gui(page1);
     }
 
     public test_gui(JPanel panel) {
@@ -33,17 +33,16 @@ public class test_gui extends JFrame {
         this.setSize(960,540);
         borderLayout = new BorderLayout();
         menu = new JPanel();
-        main_page = new JPanel();
+        main_page = new JPanel(new BorderLayout());
 
         menu.setBackground(Color.pink);
         main_page.setBackground(Color.blue);
 
         menu.setPreferredSize(new Dimension(51, 540));
 
-
-
         this.add(main_page,BorderLayout.CENTER);
         this.add(menu, BorderLayout.WEST);
+        main_page.add(current_panel,BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }

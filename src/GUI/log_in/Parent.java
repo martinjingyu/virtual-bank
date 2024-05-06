@@ -117,12 +117,11 @@ public class Parent {
                 }
                 if (text1.equals(contents)) {
                     System.out.println("text1");
+                    System.out.println("彭炜达 快跑！！！！别回头！！");
                     // 创建并显示第二个界面
-                    GUI.home_page.templete_1 page1 = new GUI.home_page.templete_1(); // 注意，在这个地方由于文件在不同的包中，需要在文件之前添加目录。
-                    GUI.home_page.templete_2 page2 = new GUI.home_page.templete_2();
-                    MainFrame secondUI = new MainFrame();
-                    secondUI.setVisible(true);
-                    frame.setVisible(false); // 关闭当前界面
+
+
+
 
                 } else {
                     System.out.println("error");

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.task_page.Depository">
+  <grid id="27dc6" binding="Container" layout-manager="GridBagLayout">
+    <constraints>
+      <xy x="20" y="20" width="899" height="400"/>
+    </constraints>
+    <properties>
+      <background color="-4137489"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="eb980" binding="textArea" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag top="30" left="10" bottom="30" right="10" weightx="1.0" weighty="0.4"/>
+        </constraints>
+        <properties>
+          <background color="-921103"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="3cbe3" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <font name="Arial Black" size="20"/>
+              <foreground color="-12763843"/>
+              <text value="When a parent pays you for an assignment,"/>
+            </properties>
+          </component>
+          <component id="15349" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <font name="Arial Black" size="20"/>
+              <foreground color="-12763843"/>
+              <text value="which account do you expect to be credited?"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="d8fc5" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag top="20" left="10" bottom="30" right="20" weightx="1.0" weighty="1.0"/>
+        </constraints>
+        <properties>
+          <background color="-921103"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="c5fd6" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <font name="Arial Black" size="20"/>
+              <foreground color="-1010247"/>
+              <text value="Saving"/>
+            </properties>
+          </component>
+          <component id="4bd23" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <font name="Arial Black" size="20"/>
+              <foreground color="-1010247"/>
+              <text value="Account"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="d7437" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag top="20" left="10" bottom="30" right="20" weightx="1.0" weighty="1.0"/>
+        </constraints>
+        <properties>
+          <background color="-921103"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="d32d3" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <font name="Arial Black" size="20"/>
+              <foreground color="-13534488"/>
+              <text value="Current"/>
+            </properties>
+          </component>
+          <component id="e63ae" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <font name="Arial Black" size="20"/>
+              <foreground color="-13534488"/>
+              <text value="Account"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

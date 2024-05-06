@@ -38,10 +38,10 @@ public class TaskList {
         TaskList taskList = new TaskList();
 
         // Add some tasks
-        taskList.addTask(new Task("Clean the room", 5.0,"checking"));
-        taskList.addTask(new Task("Do homework", 3.0,"done"));
-        taskList.addTask(new Task("Wash dishes", 2.0,"processing"));
-        taskList.addTask(new Task("Wash dishes", 2.0,"released"));
+        taskList.addTask(new Task("Clean the room", 5.0,"checking","111"));
+        taskList.addTask(new Task("Do homework", 3.0,"done","111"));
+        taskList.addTask(new Task("Wash dishes", 2.0,"processing","111"));
+        taskList.addTask(new Task("Wash dishes", 2.0,"released","111"));
 
         // Get all tasks
         List<Task> allTasks = taskList.getAllTasks();

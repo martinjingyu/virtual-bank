@@ -61,6 +61,7 @@ class TransparentPanel extends JPanel {
 }
 
 public class GUIMain {
+    public LoginListener loginListener;
 
     public JFrame frame;
     public JPanel cardPanel;
@@ -70,6 +71,14 @@ public class GUIMain {
     // GUIMain ui = new GUIMain();
     // ui.createAndShowGUI();
     // } [pwd]:4/25：将启动项外移
+
+    // 设置登录监听器
+    public void setLoginListener(LoginListener listener) {
+        this.loginListener = listener;
+    }
+
+
+
 
     public void createAndShowGUI() {
         frame = new JFrame("Bank");
@@ -153,3 +162,4 @@ public class GUIMain {
         cardLayout.show(cardPanel, cardName);
     }
 }
+

@@ -86,9 +86,13 @@ public class Children {
         childrenPanel.add(logButton);
 
         logButton.addActionListener(new ActionListener() {
+            // 在登录按钮的 ActionListener 中调用此方法
             public void actionPerformed(ActionEvent e) {
+
                 String text1 = textField_2.getText();
                 String text2 = textField_1.getText();
+                g.frame.dispose();
+                g.loginListener.onLogin("222");
                 System.out.println(text1);
                 String contents = "";
                 try {
@@ -133,6 +137,7 @@ public class Children {
 
         cardPanel.add(childrenPanel, "children");
     }
+
 
     public static void showCard(GUIMain g, String cardName) {
         g.showCard(cardName);
