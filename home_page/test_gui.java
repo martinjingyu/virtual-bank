@@ -1,4 +1,4 @@
-    package GUI.home_page;
+package GUI.bank_page;
 
 
 import javax.swing.*;

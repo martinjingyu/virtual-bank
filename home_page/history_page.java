@@ -1,15 +1,22 @@
-package GUI.home_page;
+package GUI.bank_page;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class history_page extends JPanel {
     public history_page(){
+
+        setLayout(null); // Set layout to null for manual component positioning
+
+        // Create and add components
+        JTextField jTextField1 = new JTextField(); // Using JTextField instead of JFormattedTextField
+        jTextField1.setBounds(300,60,60,40); // Set bounds for position and size
+        add(jTextField1); // Add the component to the panel
+
+        JTextField jTextField2 = new JTextField(); // Using JTextField instead of JFormattedTextField
+        jTextField2.setBounds(335,60,60,40); // Set bounds for position and size
+        add(jTextField2); // Add the component to the panel
+
     }
 
     protected void paintComponent(Graphics g) {
@@ -34,6 +41,8 @@ public class history_page extends JPanel {
 
         g.setColor(Color.black);
         g.drawString("Destination",690,40);
+
+        setVisible(true);
 
     }
 }

@@ -1,4 +1,4 @@
-package GUI.home_page;
+package GUI.bank_page;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +34,14 @@ public class bank_parents extends JPanel implements ActionListener{
         button_history.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //history_page();
+                history_page review = new history_page();
+                JFrame Review_win = new JFrame();
+                Review_win.setTitle("History");
+                Review_win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                Review_win.setLocationRelativeTo(null);
+                Review_win.add(review);
+                Review_win.setSize(800, 400);
+                Review_win.setVisible(true);
             }
         });
         add(button_history);
