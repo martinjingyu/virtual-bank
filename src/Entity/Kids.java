@@ -20,6 +20,7 @@ public class Kids {
         this.messagelist = messagelist;
     }
 
+
     public Bank getBank() {
         return bank;
     }
@@ -27,6 +28,5 @@ public class Kids {
     public TaskList getTaskList() {
         return taskList;
     }
-
 
 }

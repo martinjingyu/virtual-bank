@@ -1,6 +1,8 @@
 package GUI;
 import GUI.bank_page.bank_kid;
+
 import GUI.task_page.Depository;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,8 +17,9 @@ public class test_gui extends JFrame {
     private JPanel current_panel;
 
     public static void main(String[] args) {
+
         Depository page1 = new Depository();
-        new test_gui(page1);
+
     }
 
     public test_gui(JPanel panel) {

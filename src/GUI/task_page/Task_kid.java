@@ -1,12 +1,16 @@
 package GUI.task_page;
+
 import Entity.*;
 import utill.read.ReadBank;
+
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+
 import java.util.List;
+
 import java.util.Locale;
 
 public class Task_kid extends JPanel {
@@ -17,6 +21,7 @@ public class Task_kid extends JPanel {
     private JLabel money;
     private JLabel progress;
     private JPanel Container;
+
     private JPanel SavingBlock;
     private JPanel Goals;
     private JPanel Progress;
@@ -30,6 +35,7 @@ public class Task_kid extends JPanel {
     private JPanel Task2Info;
     private JPanel Task3Info;
     private JPanel Task4Info;
+
     private Kids kid;
 
     public Task_kid() {
@@ -51,9 +57,11 @@ public class Task_kid extends JPanel {
 
 
 
+
     private void $$$setupUI$$$() {
 
         System.out.println(this.kid.getBank().getSavingTotal());
+
 
 
 
@@ -64,9 +72,11 @@ public class Task_kid extends JPanel {
         Container.setEnabled(true);
 
 
+
         SavingBlock = new JPanel();
         SavingBlock.setLayout(new BorderLayout(0, 0));
         SavingBlock.setBackground(new Color(-1052689));
+
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -75,12 +85,14 @@ public class Task_kid extends JPanel {
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(20, 10, 10, 10);
+
         Container.add(SavingBlock, gbc);
         Goals = new JPanel();
         Goals.setLayout(new GridBagLayout());
         Goals.setBackground(new Color(-1052689));
         Goals.setPreferredSize(new Dimension(400, 70));
         SavingBlock.add(Goals, BorderLayout.NORTH);
+
         saving = new JLabel();
         Font savingFont = this.$$$getFont$$$("Arial Black", Font.BOLD, 36, saving.getFont());
         if (savingFont != null) saving.setFont(savingFont);
@@ -92,20 +104,25 @@ public class Task_kid extends JPanel {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
+
         Goals.add(saving, gbc);
 
         //read file for goal and progress
+
         money = new JLabel();
         Font moneyFont = this.$$$getFont$$$("Arial Black", Font.BOLD, 28, money.getFont());
         if (moneyFont != null) money.setFont(moneyFont);
         money.setForeground(new Color(-9975466));
+
         money.setText("$"+kid.getBank().getSavingTotal()+"/$"+kid.getBank().getSavingGoal());
+
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.EAST;
+
         Goals.add(money, gbc);
 
 
@@ -113,31 +130,38 @@ public class Task_kid extends JPanel {
         Progress.setLayout(new GridBagLayout());
         Progress.setBackground(new Color(-1052689));
         SavingBlock.add(Progress, BorderLayout.SOUTH);
+
         progressBar1 = new JProgressBar();
         progressBar1.setBackground(new Color(-2565928));
         progressBar1.setForeground(new Color(-1010247));
         progressBar1.setMinimum(0);
         progressBar1.setStringPainted(false);
+
         //System.out.println(bankKid.getSavingTotal()/bankKid.getSavingGoal());
         progressBar1.setValue((int)((kid.getBank().getSavingTotal()/kid.getBank().getSavingGoal())*100));
+
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+
         Progress.add(progressBar1, gbc);
 
         progress = new JLabel();
         Font progressFont = this.$$$getFont$$$("Arial Black", -1, 16, progress.getFont());
         if (progressFont != null) progress.setFont(progressFont);
         progress.setForeground(new Color(-12763843));
+
         progress.setText(String.valueOf(kid.getBank().getSavingTotal()/kid.getBank().getSavingGoal()*100)+"%");
+
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.EAST;
+
         Progress.add(progress, gbc);
 
 
@@ -150,6 +174,7 @@ public class Task_kid extends JPanel {
         TaskBlock.setLayout(new GridBagLayout());
         TaskBlock.setAlignmentY(0.5f);
         TaskBlock.setBackground(new Color(-4137489));
+
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -158,6 +183,7 @@ public class Task_kid extends JPanel {
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(0, 10, 0, 10);
+
         Container.add(TaskBlock, gbc);
 
         //Task 1
@@ -510,21 +536,26 @@ public class Task_kid extends JPanel {
         }
         Deposit = new JPanel();
         Deposit.setLayout(new GridBagLayout());
+
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(0, 0, 10, 0);
+
         TaskBlock.add(Deposit, gbc);
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new GridBagLayout());
         panel5.setBackground(new Color(-1052689));
+
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
+
         Deposit.add(panel5, gbc);
+
         final JLabel label17 = new JLabel();
         Font label17Font = this.$$$getFont$$$("Arial Black", -1, 20, label17.getFont());
         if (label17Font != null) label17.setFont(label17Font);
@@ -535,8 +566,10 @@ public class Task_kid extends JPanel {
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
+
         panel5.add(label17, gbc);
     }
+
 
 
     private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
@@ -557,6 +590,8 @@ public class Task_kid extends JPanel {
         Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
+
+
 
 
     public JComponent $$$getRootComponent$$$() {
