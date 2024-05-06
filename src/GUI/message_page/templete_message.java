@@ -1,10 +1,13 @@
 package GUI.message_page;
 
 import Entity.Kids;
+import Entity.Message;
 
 import javax.swing.*;
+import javax.swing.text.html.parser.Entity;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -17,72 +20,73 @@ public class templete_message extends JPanel {
     private Map<String, Message[]> messagesData;
     private Kids kid;
 
-    public templete_message() {
-        this.setLayout(new BorderLayout(10, 10));
-        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        // 初始化消息数据
-        initializeMessages();
-
-        // 创建联系人列表
-        String[] contacts = {"Parents", "System Alerts"};
-        contactsList = new JList<>(contacts);
-        JScrollPane contactsScrollPane = new JScrollPane(contactsList);
-        JPanel contactsPanel = createSectionPanel("Contacts", contactsScrollPane);
-        Color customColor1 = new Color(186, 223, 243);  // 自定义的 RGB 值
-        contactsList.setBackground(customColor1);
-        contactsPanel.setPreferredSize(new Dimension(350, 250));
-
-
-        // 创建消息列表
-        messageModel = new DefaultListModel<>();
-        messagesList = new JList<>(messageModel);
-        messagesList.setCellRenderer(new MessageCellRenderer());
-        JScrollPane messagesScrollPane = new JScrollPane(messagesList);
-        Color customColor2 = new Color(255, 225, 229);  // 自定义的 RGB 值
-        messagesList.setBackground(customColor2);
-        messagesScrollPane.setPreferredSize(new Dimension(400, 350));
-
-        // 创建信息输入框
-        messageInput = new JTextField();
-        messageInput.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (!messageInput.getText().isEmpty() && contactsList.getSelectedValue() != null) {
-                    String text = messageInput.getText();
-                    messageModel.addElement(new Message(text, true));
-                    messageInput.setText(""); // 清空输入框
-                }
-            }
-        });
-
-        contactNameLabel = new JLabel("Select a contact");
-        contactNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//        contactNameLabel.setFont(new Font("Arial", Font.PLAIN, 24));
-
-        // 消息面板设置
-        JPanel messagesPanel = new JPanel(new BorderLayout());
-        messagesPanel.add(contactNameLabel, BorderLayout.NORTH);
-        messagesPanel.add(messagesScrollPane, BorderLayout.CENTER);
-        messagesPanel.add(messageInput, BorderLayout.SOUTH);  // 添加输入框到面板底部
-        messagesPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-
-        // 添加到面板
-        this.add(messagesPanel, BorderLayout.CENTER);
-        this.add(contactsPanel, BorderLayout.EAST);
-
-        // 添加监听器到联系人列表
-        contactsList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 1) {
-                    String selectedContact = contactsList.getSelectedValue();
-                    updateMessages(selectedContact);
-                }
-            }
-        });
-    }
+//    public templete_message() {
+//        this.setLayout(new BorderLayout(10, 10));
+//        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+//
+//        // 初始化消息数据
+//        initializeMessages();
+//
+//        // 创建联系人列表
+//        String[] contacts = {"Parents", "System Alerts"};
+//        contactsList = new JList<>(contacts);
+//        JScrollPane contactsScrollPane = new JScrollPane(contactsList);
+//        JPanel contactsPanel = createSectionPanel("Contacts", contactsScrollPane);
+//        Color customColor1 = new Color(186, 223, 243);  // 自定义的 RGB 值
+//        contactsList.setBackground(customColor1);
+//        contactsPanel.setPreferredSize(new Dimension(350, 250));
+//
+//
+//        // 创建消息列表
+//        messageModel = new DefaultListModel<>();
+//        messagesList = new JList<>(messageModel);
+//        messagesList.setCellRenderer(new MessageCellRenderer());
+//        JScrollPane messagesScrollPane = new JScrollPane(messagesList);
+//        Color customColor2 = new Color(255, 225, 229);  // 自定义的 RGB 值
+//        messagesList.setBackground(customColor2);
+//        messagesScrollPane.setPreferredSize(new Dimension(400, 350));
+//
+//        // 创建信息输入框
+//        messageInput = new JTextField();
+//        messageInput.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                if (!messageInput.getText().isEmpty() && contactsList.getSelectedValue() != null) {
+//                    String text = messageInput.getText();
+//                    messageModel.addElement(new Message(text, true));
+//                    messageInput.setText(""); // 清空输入框
+//                }
+//            }
+//        });
+//
+//        contactNameLabel = new JLabel("Select a contact");
+//        contactNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+////        contactNameLabel.setFont(new Font("Arial", Font.PLAIN, 24));
+//
+//        // 消息面板设置
+//        JPanel messagesPanel = new JPanel(new BorderLayout());
+//        messagesPanel.add(contactNameLabel, BorderLayout.NORTH);
+//        messagesPanel.add(messagesScrollPane, BorderLayout.CENTER);
+//        messagesPanel.add(messageInput, BorderLayout.SOUTH);  // 添加输入框到面板底部
+//        messagesPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+//
+//        // 添加到面板
+//        this.add(messagesPanel, BorderLayout.CENTER);
+//        this.add(contactsPanel, BorderLayout.EAST);
+//
+//        // 添加监听器到联系人列表
+//        contactsList.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                if (e.getClickCount() == 1) {
+//                    String selectedContact = contactsList.getSelectedValue();
+//                    updateMessages(selectedContact);
+//                }
+//            }
+//        });
+//    }
 
     public templete_message(Kids kid) {
+        System.out.println(kid.getMessagelist());
         this.kid = kid;
         this.setLayout(new BorderLayout(10, 10));
         this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -115,7 +119,7 @@ public class templete_message extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (!messageInput.getText().isEmpty() && contactsList.getSelectedValue() != null) {
                     String text = messageInput.getText();
-                    messageModel.addElement(new Message(text, true));
+                    messageModel.addElement(new Message(text, "sssss","this is a try"));
                     messageInput.setText(""); // 清空输入框
                 }
             }
@@ -158,8 +162,20 @@ public class templete_message extends JPanel {
 
     private void initializeMessages() {
         messagesData = new HashMap<>();
-        messagesData.put("Parents", new Message[]{new Message("Hello mom and dad!", true), new Message("How's your day?", true), new Message("not so good", false)});
-        messagesData.put("System Alerts", new Message[]{new Message("[Alert] System maintenance tonight.", false), new Message("[Warning] Unusual login attempt.", false)});
+        System.out.println(kid.getMessagelist().getAllMessages());
+
+        List<Message> msgList = kid.getMessagelist().getAllMessages();
+        for(Message msg: msgList){
+            System.out.println(msg);
+            messagesData.put("Parents", new Message[]{new Message("kid", "sssss","this is a try"),new Message("parent", "sssss","this is a try")});
+            messagesData.put("System Alerts", new Message[]{new Message("[Alert] System maintenance tonight.", "false","this is a try")});
+        }
+
+
+
+
+//        messagesData.put("Parents", new Message[]{new Message("kid", "sssss","this is a try")});
+//        messagesData.put("System Alerts", new Message[]{new Message("[Alert] System maintenan,ce tonight.", "false","this is a try")});
     }
 
     private void updateMessages(String contact) {
@@ -207,22 +223,14 @@ public class templete_message extends JPanel {
     }
 
 
-    static class Message {
-        String text;
-        boolean isUser; // true if this message is from the user
 
-        public Message(String text, boolean isUser) {
-            this.text = text;
-            this.isUser = isUser;
-        }
-    }
 
     static class MessageCellRenderer extends JLabel implements ListCellRenderer<Message> {
         @Override
         public Component getListCellRendererComponent(JList<? extends Message> list, Message value, int index, boolean isSelected, boolean cellHasFocus) {
-            setText(value.text);
+            setText(value.getContent());
             setOpaque(true);
-            if (value.isUser) {
+            if (value.getSender().equals("kid")) {
                 setHorizontalAlignment(SwingConstants.RIGHT);
                 setBackground(Color.LIGHT_GRAY);
             } else {
