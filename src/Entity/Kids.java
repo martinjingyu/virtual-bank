@@ -19,4 +19,14 @@ public class Kids {
         this.taskList = taskList;
         this.messagelist = messagelist;
     }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public TaskList getTaskList() {
+        return taskList;
+    }
+
+
 }

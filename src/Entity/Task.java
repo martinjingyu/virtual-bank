@@ -46,6 +46,24 @@ public class Task {
     public void setDescription(){
         this.description = description;
     }
+    public String getCondition(String state){
+        return switch (state) {
+            case "ToBeConfirmed" -> "Submitted";
+            case "ToBeTaken" -> "Pick it";
+            case "Taken" -> "Submit";
+            default -> null;
+        };
+    }
+
+    public String getText(String state){
+        return switch (state) {
+            case "ToBeConfirmed" -> "Please wait for parent's confirmation";
+            case "ToBeTaken" -> "You can take this task";
+            case "Taken" -> "You have taken this task.";
+            default -> null;
+        };
+    }
+
 
     @Override
     public String toString() {
