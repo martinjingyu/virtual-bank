@@ -1,4 +1,6 @@
 package GUI.message_page;
+import Entity.Kids;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -12,7 +14,7 @@ public class test_gui extends JFrame {
     private JPanel current_panel;
 
     public static void main(String[] args) {
-        templete_message page4 = new templete_message();
+        message_kid page4 = new message_kid(new Kids());
         new test_gui(page4);
     }
 
@@ -121,7 +123,7 @@ public class test_gui extends JFrame {
 
 
     }
-    public void sub_page(templete_message pg4){
+    public void sub_page(message_kid pg4){
 
     }
 
