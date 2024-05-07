@@ -4,11 +4,13 @@ public class Task {
     private String name;
     private double reward;
     private String state;
+    private String description;
 
-    public Task(String name, double reward, String state) {
+    public Task(String name, double reward, String state, String description) {
         this.name = name;
         this.reward = reward;
         this.state = state;
+        this.description = description;
     }
 
     // Getter and setter methods for name
@@ -29,12 +31,47 @@ public class Task {
         this.reward = reward;
     }
 
+    public String getState(){
+        return state;
+    }
+
+    public void setState(){
+        this.state = state;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+
+    public void setDescription(){
+        this.description = description;
+    }
+    public String getCondition(String state){
+        return switch (state) {
+            case "ToBeConfirmed" -> "Submitted";
+            case "ToBeTaken" -> "Pick it";
+            case "Taken" -> "Submit";
+            default -> null;
+        };
+    }
+
+    public String getText(String state){
+        return switch (state) {
+            case "ToBeConfirmed" -> "Please wait for parent's confirmation";
+            case "ToBeTaken" -> "You can take this task";
+            case "Taken" -> "You have taken this task.";
+            default -> null;
+        };
+    }
+
+
     @Override
     public String toString() {
         return "Task{" +
                 "name='" + name + '\'' +
                 ", reward=" + reward +
                 ", state=" + state +
+                ", description=" + description +
                 '}';
     }
 }

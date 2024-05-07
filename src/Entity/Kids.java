@@ -27,6 +27,14 @@ public class Kids {
     }
 
     public Bank getBank() {
-        return this.bank;
+        return bank;
+    }
+
+    public TaskList getTaskList() {
+        return taskList;
+    }
+
+    public MessageList getMessagelist() {
+        return messagelist;
     }
 }

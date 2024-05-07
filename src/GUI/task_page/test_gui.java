@@ -15,8 +15,10 @@ public class test_gui extends JFrame {
     private JPanel current_panel;
 
     public static void main(String[] args) {
-        Task_kid page1 = new Task_kid();
-        new test_gui(page1);
+
+        Depository page1 = new Depository();
+        new GUI.test_gui(page1);
+
     }
 
     public test_gui(JPanel panel) {

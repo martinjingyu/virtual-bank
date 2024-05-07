@@ -1,1 +1,7 @@
-sweep the floor, 30, done
+Sweep the floor,20,Confirmed,description1
+Independent study1,14,ToBeConfirmed,description2
+Independent study2,19,Confirmed,description2
+Independent study3,13,ToBeTaken,description2
+Independent study2,19,TobeTaken,description2
+
+
