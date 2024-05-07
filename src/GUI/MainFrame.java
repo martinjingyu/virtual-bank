@@ -1,46 +1,86 @@
 package GUI;
+import Entity.Kids;
+import GUI.bank_page.bank_kid;
+import GUI.message_page.message_kid;
+import GUI.shop_page.shop_kid;
+import GUI.task_page.Task_kid;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements RefreshListener{
     private BorderLayout borderLayout;
     private JPanel main_page;
     private JPanel menu;
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
-    private JPanel pg1, pg2;
+    private JPanel pg1, pg2,pg3,pg4;
+    private Kids kid;
 
 
-    public MainFrame(templete_1 pg1, templete_2 pg2) {
+    public MainFrame(Kids kid) {
         super("demo");
+        this.pg1 = new bank_kid(kid);
+        this.pg2 = new shop_kid(kid);
+        this.pg3 = new Task_kid(kid, this);
+        this.pg4 = new message_kid(kid);
+        this.kid = kid;
+
         current_panel = pg1;
-        this.pg1 = pg1;
-        this.pg2 = pg2;
         Jframe_Jpanel();
         navi_button();
         setVisible(true);
     }
 
-    public MainFrame(JPanel panel) {
-        super("demo");
-        current_panel = panel;
-        Jframe_Jpanel();
-        navi_button();
-        setVisible(true);
-    }
+    @Override
+    public void refresh() {
+        int tempIndex = 0;
+        main_page.remove(current_panel);
+        if(current_panel == pg1){
+            tempIndex = 1;
+        }
+        else if (current_panel == pg2) {
+            tempIndex =2;
 
-    public MainFrame() {
-        super("demo");
-        this.pg1 = new templete_1();
-        this.pg2 = new templete_2();
-        current_panel = pg1;
-        Jframe_Jpanel();
-        navi_button();
-        setVisible(true);
+        }
+        else if(current_panel == pg3){
+            tempIndex = 3;
+        }
+        else if(current_panel == pg4){
+            tempIndex = 4;
+        }
+        else{
+            tempIndex = 1;
+        }
+        this.pg1 = new bank_kid(kid);
+        this.pg2 = new shop_kid(kid);
+        this.pg3 = new Task_kid(kid, this);
+        this.pg4 = new message_kid(kid);
+        switch (tempIndex) {
+            case 1:
+                current_panel = pg1;
+                break;
+            case 2:
+                current_panel = pg2;
+                break;
+            case 3:
+                current_panel = pg3;
+                break;
+            case 4:
+                current_panel = pg4;
+                break;
+            default:
+// 如果没有确定的索引，则默认显示 pg1
+                current_panel = pg1;
+                break;
+        }
 
+        main_page.add(current_panel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
 
     }
 
@@ -50,7 +90,7 @@ public class MainFrame extends JFrame {
         this.setSize(960,540);
         borderLayout = new BorderLayout();
         menu = new JPanel();
-        main_page = new JPanel();
+        main_page = new JPanel(new BorderLayout());
 
         menu.setBackground(Color.pink);
         main_page.setBackground(Color.blue);
@@ -60,7 +100,9 @@ public class MainFrame extends JFrame {
 
 
         this.add(main_page,BorderLayout.CENTER);
+
         this.add(menu, BorderLayout.WEST);
+        main_page.add(current_panel,BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
@@ -107,7 +149,7 @@ public class MainFrame extends JFrame {
                 // 添加按钮点击事件的处理代码
                 main_page.remove(current_panel);
                 main_page.remove(current_panel);
-                current_panel = pg1;
+                current_panel = pg3;
                 main_page.add(current_panel, BorderLayout.CENTER);
                 revalidate();
                 repaint();
@@ -123,7 +165,7 @@ public class MainFrame extends JFrame {
                 // 添加按钮点击事件的处理代码
                 main_page.remove(current_panel);
                 main_page.remove(current_panel);
-                current_panel = pg2;
+                current_panel = pg4;
                 main_page.add(current_panel, BorderLayout.CENTER);
                 revalidate();
                 repaint();
@@ -151,7 +193,7 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        MainFrame main = new MainFrame();
+        MainFrame main = new MainFrame(new Kids());
     }
 
 }

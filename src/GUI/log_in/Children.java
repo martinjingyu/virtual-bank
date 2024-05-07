@@ -16,13 +16,13 @@ public class Children {
         // 添加 childrenPanel 的组件和逻辑
 
         JLabel head_label_1 = new JLabel("WELCOME TO ONLINE BANK");
-        head_label_1.setBounds(200, 50, 1000, 50);
+        head_label_1.setBounds(250, 50, 1000, 50);
         // 创建 Font 对象，设置字体为宋体，大小为16
         head_label_1.setFont(new Font("Times New Roman", Font.BOLD, 40));
         childrenPanel.add(head_label_1);
 
         JLabel head_label = new JLabel("Please choose your identity");
-        head_label.setBounds(250, 100, 1000, 50);
+        head_label.setBounds(300, 100, 1000, 50);
         // 创建 Font 对象，设置字体为宋体，大小为16
         head_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
         childrenPanel.add(head_label);
@@ -86,44 +86,16 @@ public class Children {
         childrenPanel.add(logButton);
 
         logButton.addActionListener(new ActionListener() {
+            // 在登录按钮的 ActionListener 中调用此方法
             public void actionPerformed(ActionEvent e) {
-                String text1 = textField_2.getText();
-                String text2 = textField_1.getText();
-                System.out.println(text1);
-                String contents = "";
-                try {
-                    // 打开文件
-                    File file = new File("data/children_secret.txt"); // 替换为您的文件路径
 
-                    // 创建 Scanner 对象来读取文件内容
-                    Scanner scanner = new Scanner(file);
-
-                    // 读取直到第一个空格
-                    contents = scanner.next();
-
-                    // 打印结果
-                    System.out.println("Content until first space: " + contents);
-                    if (text1.equals(contents)) {
-                        System.out.println("text1_right");
-                        contents = scanner.next();
-                        if (text2.equals(contents)) {
-                            System.out.println("text2_right");
-                            showCard(g, "children_main");
-                        } else {
-                            System.out.println("error_secret");
-                            showCard(g, "error");
-                        }
-
-                    } else {
-                        System.out.println("error");
-                        showCard(g, "error");
-                    }
-
-                    // 关闭 Scanner
-                    scanner.close();
-                } catch (IOException error) {
-                    System.out.println("error_children");
-                    System.exit(1);
+                String text2 = textField_2.getText();
+                String text1 = textField_1.getText();
+                if (utill.read.CheckChildrenSecret.checkChildrenSecret(text1, text2, "data/secret.txt") == true) {
+                    g.frame.dispose();
+                    g.loginListener.onLogin(text1);
+                } else {
+                    showCard(g, "error");
                 }
 
             }

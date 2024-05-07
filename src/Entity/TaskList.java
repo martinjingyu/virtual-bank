@@ -2,8 +2,9 @@ package Entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class TaskList {
+public class TaskList{
     private List<Task> taskList;
 
     public TaskList() {
@@ -17,9 +18,48 @@ public class TaskList {
     public void removeTask(Task task) {
         taskList.remove(task);
     }
+    public Task getTask(int index){
+        return taskList.get(index);
+    }
+
+    public void updateTask(String taskName, Task newTaskData) {
+        for (Task task : taskList) {
+            if (task.getName().equals(taskName)) {
+                task.setName(newTaskData.getName());
+                task.setReward(newTaskData.getReward());
+                task.setState(newTaskData.getState());
+                task.setDescription(newTaskData.getDescription());
+                task.setDestination(newTaskData.getDestination());
+                break;
+            }
+        }
+    }
+
+    public TaskList getNonConfirmedTask(){
+        TaskList nonTask = new TaskList();
+        for (Task task : taskList) {
+            if (!Objects.equals(task.getState(), "Confirmed")) {
+                nonTask.addTask(task);
+            }
+        }
+        return nonTask;
+    }
+    public TaskList changeDepository(String destination){
+        TaskList tasks = new TaskList();
+        for (Task task : taskList) {
+            task.setDestination(destination);
+        }
+        return tasks;
+    }
+
+
 
     public List<Task> getAllTasks() {
         return taskList;
+    }
+
+    public int getSize(){
+        return taskList.size();
     }
 
     public Task getTaskByName(String name) {
@@ -38,10 +78,10 @@ public class TaskList {
         TaskList taskList = new TaskList();
 
         // Add some tasks
-        taskList.addTask(new Task("Clean the room", 5.0,"checking"));
-        taskList.addTask(new Task("Do homework", 3.0,"done"));
-        taskList.addTask(new Task("Wash dishes", 2.0,"processing"));
-        taskList.addTask(new Task("Wash dishes", 2.0,"released"));
+        taskList.addTask(new Task("Clean the room", 5.0,"checking","111","saving"));
+        taskList.addTask(new Task("Do homework", 3.0,"done","111","current"));
+        taskList.addTask(new Task("Wash dishes", 2.0,"processing","111","current"));
+        taskList.addTask(new Task("Wash dishes", 2.0,"released","111","current"));
 
         // Get all tasks
         List<Task> allTasks = taskList.getAllTasks();
@@ -49,6 +89,9 @@ public class TaskList {
         for (Task task : allTasks) {
             System.out.println(task);
         }
+
+
+
 
         // Get a task by name
         Task cleanRoomTask = taskList.getTaskByName("Clean the room");

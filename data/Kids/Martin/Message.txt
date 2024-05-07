@@ -1,2 +1,0 @@
-parent, 2024:1:10 12:12:11, "Hello, this is Henry."
-kid, 2024:1:10 12:12:40, "Hello, this is Martin."

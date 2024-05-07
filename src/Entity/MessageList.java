@@ -48,6 +48,7 @@ public class MessageList {
         return parentMessages;
     }
 
+
     // Adding new methods to handle different types of messages
     public void addTaskMessage(Task task, String description) {
         Message taskMessage = new Message("parent",description);
@@ -64,6 +65,7 @@ public class MessageList {
         String bigTransaction = String.format("Attention! You made a large expenditure, spending %d.", price);
         Message shopMessage = new Message("system",bigTransaction);
         messages.add(shopMessage);
+
     }
 
 

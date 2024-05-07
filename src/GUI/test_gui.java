@@ -1,9 +1,13 @@
 package GUI;
+import GUI.bank_page.bank_kid;
+
+import GUI.task_page.Depository;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import GUI.home_page.homepage_tem;
 
 public class test_gui extends JFrame {
     private BorderLayout borderLayout;
@@ -13,8 +17,9 @@ public class test_gui extends JFrame {
     private JPanel current_panel;
 
     public static void main(String[] args) {
-        homepage_tem page1 = new homepage_tem();
-        new test_gui(page1);
+
+        Depository page1 = new Depository();
+
     }
 
     public test_gui(JPanel panel) {
