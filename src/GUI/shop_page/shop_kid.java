@@ -1,9 +1,6 @@
 package GUI.shop_page;
 
-import Entity.Bank;
-import Entity.Kids;
-import Entity.Product;
-import Entity.ProductList;
+import Entity.*;
 import utill.read.ReadAll;
 
 import javax.swing.*;
@@ -25,6 +22,7 @@ public class shop_kid extends JPanel {
     private List<Product> selectedProductList;
     private Kids kid;
     private JLabel selectedTotalLabel; // 使其成为类的成员变量以便于访问和修改
+    private MessageList messagelist;
 
     public shop_kid(Kids kid) {
         this.kid = kid;
@@ -34,6 +32,7 @@ public class shop_kid extends JPanel {
         selectedProductList = new ArrayList<>();
         selectedTotalLabel = new JLabel("Selected Total: $0.00");
         selectedTotalLabel.setForeground(Color.BLACK);
+        this.messagelist = kid.getMessagelist();
 
         setLayout(new BorderLayout(10, 10));
         setBackground(new Color(173, 216, 230)); // 浅蓝色背景
@@ -201,6 +200,9 @@ public class shop_kid extends JPanel {
             try {
                 System.out.println(totalCost);
                 double newTotal = bank.changeCurrent(-totalCost);
+                if (totalCost > 0.8 * currentAccount) { // Check if totalCost exceeds 80% of currentAccount
+                    messagelist.addShopMessage(totalCost);
+                }
                 currentAccount = newTotal;
                 JOptionPane.showMessageDialog(this, "Purchase Successful!");
                 currentAccountLabel.setText(String.format("Current Account: $%.2f", currentAccount)); // Update the current account display

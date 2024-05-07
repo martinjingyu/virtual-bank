@@ -41,6 +41,13 @@ public class MessageList {
         return parentMessages;
     }
 
+//    这段代码用于hyz临时交互用，merge时候可直接删除
+    public void addShopMessage(double price) {
+        String bigTransaction = String.format("Attention! You made a large expenditure, spending %d.", price);
+//        Message shopMessage = new Message("system",bigTransaction);
+//        messages.add(shopMessage);
+    }
+
 
     @Override
     public String toString() {
