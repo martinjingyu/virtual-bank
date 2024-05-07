@@ -1,7 +1,7 @@
 package GUI;
 import Entity.Kids;
 import GUI.bank_page.bank_kid;
-import GUI.message_page.templete_message;
+import GUI.message_page.message_kid;
 import GUI.shop_page.shop_kid;
 import GUI.task_page.Task_kid;
 
@@ -26,7 +26,7 @@ public class MainFrame extends JFrame {
         this.pg1 = new bank_kid(kid);
         this.pg2 = new shop_kid(kid);
         this.pg3 = new Task_kid(kid);
-        this.pg4 = new templete_message(kid);
+        this.pg4 = new message_kid(kid);
         this.kid = kid;
 
         current_panel = pg1;

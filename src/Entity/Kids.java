@@ -29,4 +29,7 @@ public class Kids {
         return taskList;
     }
 
+    public MessageList getMessagelist() {
+        return messagelist;
+    }
 }
