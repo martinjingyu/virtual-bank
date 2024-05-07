@@ -20,7 +20,6 @@ public class Kids {
         this.productList = productList;
         this.taskList = taskList;
         this.messagelist = messagelist;
-
         this.getMessagelist().setKids(this);
     }
 
@@ -28,6 +27,7 @@ public class Kids {
         return this.productList;
     }
 
+    public HistoryTransactionList getTransactionList(){return this.transactionList;}
 
     public Bank getBank() {
         return bank;

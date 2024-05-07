@@ -81,27 +81,17 @@ public class Bank {
         this.savingTotal = savingTotal;
     }
 
-    public double changeCurrent(double number) throws InsufficientFundsException {
+    public void changeCurrent(double number) throws InsufficientFundsException {
         if (number < 0 && Math.abs(number) > currentTotal) {
 
             throw new InsufficientFundsException("Insufficient funds for the operation.");
         }
         this.currentTotal = currentTotal + number;
 //        System.out.println(this.currentTotal);
-        return currentTotal;
     }
 
 
-    public double savingCurrent(double number) throws InsufficientFundsException {
-        if (number < 0 && Math.abs(number) > currentTotal) {
-            throw new InsufficientFundsException("Insufficient funds for the operation.");
-        }
-        this.currentTotal = currentTotal + number;
-        System.out.println(this.currentTotal);
-        return currentTotal;
-    }
-
-    public double changeSaving(double number) throws InsufficientFundsException{
+    public void changeSaving(double number) throws InsufficientFundsException{
         // 如果 number 是负数，且加上 currentTotal 后结果小于 0，则直接返回 currentTotal
         if (number < 0 && Math.abs(number) > savingTotal) {
 
@@ -110,7 +100,6 @@ public class Bank {
         }
             // 否则，将 number 加到 currentTotal 上，并返回结果
         savingTotal += number; // 更新 savingTotal 的值
-        return savingTotal;
 
     }
 
@@ -211,9 +200,9 @@ public class Bank {
                         // 从文本框中获取用户输入并将其转换为 double 类型
                         double userInput = Double.parseDouble(textField.getText());
                         if(source.equals("saving")){
-                            savingTotal = saving_to_current(userInput);
+                            saving_to_current(userInput);
                         }else {
-                            currentTotal = current_to_saving(userInput);
+                            current_to_saving(userInput);
                         }
                     } catch (NumberFormatException exception) {
                         // 如果用户输入无效，可以在这里处理错误
@@ -241,29 +230,27 @@ public class Bank {
 
     }
 
-    public double current_to_saving(double amount){
+    public void current_to_saving(double amount){
         try {
-            currentTotal = changeCurrent(-amount);
-            savingTotal = changeSaving(amount);
+            changeCurrent(-amount);
+            changeSaving(amount);
 
         }
         catch(InsufficientFundsException e){
             JOptionPane.showMessageDialog(null, "Sorry, you can't do this operation.", "Operation Not Allowed", JOptionPane.WARNING_MESSAGE);
         }
-        return currentTotal;
     }
 
-    public double saving_to_current(double amount){
+    public void saving_to_current(double amount){
         try {
-            savingTotal = changeSaving(-amount);
-            currentTotal = changeCurrent(amount);
+            changeSaving(-amount);
+            changeCurrent(amount);
 
         }
         catch (InsufficientFundsException e){
             JOptionPane.showMessageDialog(null, "Sorry, you can't do this operation.", "Operation Not Allowed", JOptionPane.WARNING_MESSAGE);
 
         }
-        return savingTotal;
     }
     public double transfer_to_kid(JTextField transferAmountTextField){
         try {

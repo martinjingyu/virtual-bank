@@ -199,11 +199,10 @@ public class shop_kid extends JPanel {
         double totalCost = calculateSelectedTotal();
         try {
             System.out.println(totalCost);
-            double newTotal = bank.changeCurrent(-totalCost);
+            bank.changeCurrent(-totalCost);
             if (totalCost > 0.8 * currentAccount) { // Check if totalCost exceeds 80% of currentAccount
                 messagelist.addShopMessage(totalCost);
             }
-            currentAccount = newTotal;
             JOptionPane.showMessageDialog(this, "Purchase Successful!");
             currentAccountLabel.setText(String.format("Current Account: $%.2f", currentAccount)); // Update the current account display
             toggleButtons.forEach(button -> button.setSelected(false)); // Reset all toggle buttons
