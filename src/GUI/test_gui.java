@@ -18,7 +18,6 @@ public class test_gui extends JFrame {
 
     public static void main(String[] args) {
 
-        Depository page1 = new Depository();
 
     }
 

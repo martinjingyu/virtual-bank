@@ -118,7 +118,7 @@ public class message_kid extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (!messageInput.getText().isEmpty() && contactsList.getSelectedValue() != null) {
                     String text = messageInput.getText();
-                    messageModel.addElement(new Message(text, "sssss","this is a try"));
+                    messageModel.addElement(new Message("kid", text));
                     messageInput.setText(""); // 清空输入框
                 }
             }

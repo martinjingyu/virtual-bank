@@ -4,22 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import GUI.shop_page.shop_kid;
-import Entity.Kids;
-import Entity.Bank;
-import Entity.Kids;
-import Entity.Product;
-import Entity.ProductList;
-import utill.read.ReadAll;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import exceptions.InsufficientFundsException;
+import Entity.Kids;
+import utill.read.ReadAll;
 
 public class test_gui extends JFrame {
     private BorderLayout borderLayout;

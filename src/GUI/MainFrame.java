@@ -23,7 +23,7 @@ public class MainFrame extends JFrame implements RefreshListener{
 
     public MainFrame(Kids kid) {
         super("demo");
-        this.pg1 = new bank_kid(kid);
+        this.pg1 = new bank_kid(kid,this);
         this.pg2 = new shop_kid(kid);
         this.pg3 = new Task_kid(kid, this);
         this.pg4 = new message_kid(kid);
@@ -55,7 +55,7 @@ public class MainFrame extends JFrame implements RefreshListener{
         else{
             tempIndex = 1;
         }
-        this.pg1 = new bank_kid(kid);
+        this.pg1 = new bank_kid(kid,this);
         this.pg2 = new shop_kid(kid);
         this.pg3 = new Task_kid(kid, this);
         this.pg4 = new message_kid(kid);
