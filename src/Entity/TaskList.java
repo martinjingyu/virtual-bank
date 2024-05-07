@@ -22,28 +22,34 @@ public class TaskList{
         return taskList.get(index);
     }
 
-    public List<Task> getNonConfirmedTask(){
-        List<Task> nonTask;
-        nonTask = new ArrayList<>();
+    public void updateTask(String taskName, Task newTaskData) {
+        for (Task task : taskList) {
+            if (task.getName().equals(taskName)) {
+                task.setName(newTaskData.getName());
+                task.setReward(newTaskData.getReward());
+                task.setState(newTaskData.getState());
+                task.setDescription(newTaskData.getDescription());
+                task.setDestination(newTaskData.getDestination());
+                break;
+            }
+        }
+    }
+
+    public TaskList getNonConfirmedTask(){
+        TaskList nonTask = new TaskList();
         for (Task task : taskList) {
             if (!Objects.equals(task.getState(), "Confirmed")) {
-                nonTask.add(task);
+                nonTask.addTask(task);
             }
         }
         return nonTask;
     }
-    public int[] getNonConfirmedIndex(int size){
-        int index = 0;
-        int j=0;
-        int[] array= new int[size];
+    public TaskList changeDepository(String destination){
+        TaskList tasks = new TaskList();
         for (Task task : taskList) {
-            if (!Objects.equals(task.getState(), "Confirmed")) {
-                array[j]=index;
-                index++;
-            }
-            index++;
+            task.setDestination(destination);
         }
-        return array;
+        return tasks;
     }
 
 
@@ -72,10 +78,10 @@ public class TaskList{
         TaskList taskList = new TaskList();
 
         // Add some tasks
-        taskList.addTask(new Task("Clean the room", 5.0,"checking","111"));
-        taskList.addTask(new Task("Do homework", 3.0,"done","111"));
-        taskList.addTask(new Task("Wash dishes", 2.0,"processing","111"));
-        taskList.addTask(new Task("Wash dishes", 2.0,"released","111"));
+        taskList.addTask(new Task("Clean the room", 5.0,"checking","111","saving"));
+        taskList.addTask(new Task("Do homework", 3.0,"done","111","current"));
+        taskList.addTask(new Task("Wash dishes", 2.0,"processing","111","current"));
+        taskList.addTask(new Task("Wash dishes", 2.0,"released","111","current"));
 
         // Get all tasks
         List<Task> allTasks = taskList.getAllTasks();
@@ -83,6 +89,9 @@ public class TaskList{
         for (Task task : allTasks) {
             System.out.println(task);
         }
+
+
+
 
         // Get a task by name
         Task cleanRoomTask = taskList.getTaskByName("Clean the room");

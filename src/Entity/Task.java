@@ -5,12 +5,14 @@ public class Task {
     private double reward;
     private String state;
     private String description;
+    private String destination;
 
-    public Task(String name, double reward, String state, String description) {
+    public Task(String name, double reward, String state, String description, String destination) {
         this.name = name;
         this.reward = reward;
         this.state = state;
         this.description = description;
+        this.destination = destination;
     }
 
     // Getter and setter methods for name
@@ -35,7 +37,7 @@ public class Task {
         return state;
     }
 
-    public void setState(){
+    public void setState(String state){
         this.state = state;
     }
 
@@ -43,14 +45,41 @@ public class Task {
         return description;
     }
 
-    public void setDescription(){
-        this.description = description;
+    public void setDescription(String destination){
+        this.destination = destination;
     }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
     public String getCondition(String state){
         return switch (state) {
             case "ToBeConfirmed" -> "Submitted";
             case "ToBeTaken" -> "Pick it";
             case "Taken" -> "Submit";
+            default -> null;
+        };
+    }
+
+    public String getCon1(String state){
+        return switch (state) {
+            case "ToBeConfirmed" -> "Submitted";
+            case "ToBeTaken" -> "Do you want to pick this task?";
+            case "Taken" -> "Do you want to submit this task?";
+            default -> null;
+        };
+    }
+
+    public String getCon2(String state){
+        return switch (state) {
+            case "ToBeConfirmed" -> "Submitted";
+            case "ToBeTaken" -> "You have taken this task!";
+            case "Taken" -> "You have submitted this task!";
             default -> null;
         };
     }
@@ -64,6 +93,25 @@ public class Task {
         };
     }
 
+    public Task taskOperation(Task task){
+        switch (task.getState()) {
+            case "ToBeConfirmed":{
+                task.setState("Confirmed");
+                break;
+            }
+            case "ToBeTaken":{
+                task.setState("Taken");
+                break;
+            }
+            case "Taken":{
+                task.setState("ToBeConfirmed");
+                break;
+            }
+
+        }
+        return task;
+    }
+
 
     @Override
     public String toString() {
@@ -72,6 +120,7 @@ public class Task {
                 ", reward=" + reward +
                 ", state=" + state +
                 ", description=" + description +
+                ", destination=" + destination +
                 '}';
     }
 }
