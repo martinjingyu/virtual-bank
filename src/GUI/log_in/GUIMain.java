@@ -77,9 +77,6 @@ public class GUIMain {
         this.loginListener = listener;
     }
 
-
-
-
     public void createAndShowGUI() {
         frame = new JFrame("Bank");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -155,11 +152,10 @@ public class GUIMain {
         Error.addErrorPanel(cardPanel, cardLayout, this);
         Children_main.addChildren_mainPanel(cardPanel, cardLayout, this);
         Remain.addRemainPanel(cardPanel, cardLayout, this);
-
+        Sign.addSignPanel(cardPanel, cardLayout, this);
     }
 
     public void showCard(String cardName) {
         cardLayout.show(cardPanel, cardName);
     }
 }
-

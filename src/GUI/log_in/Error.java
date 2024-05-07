@@ -10,12 +10,12 @@ public class Error {
         JPanel joiningPanel = new JPanel();
         joiningPanel.setLayout(null);
         JLabel error = new JLabel("Error, please try again! ");
-        error.setBounds(200, 400, 1000, 50);
+        error.setBounds(250, 200, 1000, 50);
         // 创建 Font 对象，设置字体为宋体，大小为16
         error.setFont(new Font("Times New Roman", Font.BOLD, 60));
         joiningPanel.add(error);
         JButton button = new JButton("back");
-        button.setBounds(250, 600, 200, 50);
+        button.setBounds(450, 280, 200, 50);
         button.setFont(new Font("Times New Roman", Font.BOLD, 30));
 
         button.addActionListener(new ActionListener() {

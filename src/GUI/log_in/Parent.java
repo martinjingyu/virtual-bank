@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.Scanner;
 
 class BackPanel extends JPanel {
     private Image backImage;
@@ -42,13 +43,13 @@ public class Parent {
         // 添加 parentPanel 的组件和逻辑
 
         JLabel head_label_1 = new JLabel("WELCOME TO ONLINE BANK");
-        head_label_1.setBounds(200, 50, 1000, 50);
+        head_label_1.setBounds(250, 50, 1000, 50);
         // 创建 Font 对象，设置字体为宋体，大小为16
         head_label_1.setFont(new Font("Times New Roman", Font.BOLD, 40));
         parentPanel.add(head_label_1);
 
         JLabel head_label = new JLabel("Please choose your identity");
-        head_label.setBounds(250, 100, 1000, 50);
+        head_label.setBounds(300, 100, 1000, 50);
         // 创建 Font 对象，设置字体为宋体，大小为16
         head_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
         parentPanel.add(head_label);
@@ -86,47 +87,43 @@ public class Parent {
 
         parentPanel.add(parent_label);
         // parent_label.setText("New Text"); // 更改文本
+
+        JLabel id_label = new JLabel("ID : ");
+        id_label.setBounds(550, 320, 260, 50);
+        id_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
+        parentPanel.add(id_label);
+
+        JTextField textField_1 = new JTextField(4);
+        textField_1.setBounds(800, 320, 200, 50);
+        parentPanel.add(textField_1);
+
         JLabel secret_label = new JLabel("PASSWORD : ");
-        secret_label.setBounds(550, 340, 260, 50);
+        secret_label.setBounds(550, 380, 260, 50);
         secret_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
         parentPanel.add(secret_label);
 
-        JTextField textField = new JTextField(4);
-        textField.setBounds(800, 340, 200, 50);
-        parentPanel.add(textField);
+        JTextField textField_2 = new JTextField(4);
+        textField_2.setBounds(800, 380, 200, 50);
+        parentPanel.add(textField_2);
 
         JButton logButton = new JButton("log in");
         logButton.setBounds(700, 450, 110, 50);
         logButton.setFont(new Font("Times New Roman", Font.BOLD, 30));
-
         parentPanel.add(logButton);
 
         logButton.addActionListener(new ActionListener() {
+            // 在登录按钮的 ActionListener 中调用此方法
             public void actionPerformed(ActionEvent e) {
-                String text1 = textField.getText();
-                System.out.println(text1);
-                String contents = "";
-                try {
-                    FileReader fileReader = new FileReader(fileName);
-                    BufferedReader bufferedReader = new BufferedReader(fileReader);
-                    contents = bufferedReader.readLine();
-                    bufferedReader.close();
-                } catch (IOException error) {
-                    System.out.println("error_parent");
-                    System.exit(1);
-                }
-                if (text1.equals(contents)) {
-                    System.out.println("text1");
-                    System.out.println("彭炜达 快跑！！！！别回头！！");
-                    // 创建并显示第二个界面
 
-
-
-
+                String text2 = textField_2.getText();
+                String text1 = textField_1.getText();
+                if (utill.read.CheckParentSecret.checkParentSecret(text1, text2, "data/secret.txt") == true) {
+                    g.frame.dispose();
+                    g.loginListener.onLogin(text1);
                 } else {
-                    System.out.println("error");
                     showCard(g, "error");
                 }
+
             }
         });
 

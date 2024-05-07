@@ -37,13 +37,13 @@ public class Basic_login {
         // 添加 basicPanel 的组件和逻辑
 
         JLabel head_label_1 = new JLabel("WELCOME TO ONLINE BANK");
-        head_label_1.setBounds(200, 50, 1000, 50);
+        head_label_1.setBounds(250, 50, 1000, 50);
         // 创建 Font 对象，设置字体为宋体，大小为16
         head_label_1.setFont(new Font("Times New Roman", Font.BOLD, 40));
         basicPanel.add(head_label_1);
 
         JLabel head_label = new JLabel("Please choose your identity");
-        head_label.setBounds(250, 100, 1000, 50);
+        head_label.setBounds(300, 100, 1000, 50);
         // 创建 Font 对象，设置字体为宋体，大小为16
         head_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
         basicPanel.add(head_label);
@@ -78,6 +78,16 @@ public class Basic_login {
         JLabel basic_label = new JLabel("You identity is unknown");
         basic_label.setBounds(550, 250, 1000, 50);
         basic_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
+        JButton logButton = new JButton("sign up");
+        logButton.setBounds(650, 350, 200, 50);
+        logButton.setFont(new Font("Times New Roman", Font.BOLD, 30));
+        logButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showCard(g, "sign");
+
+            }
+        });
+        basicPanel.add(logButton);
 
         basicPanel.add(basic_label);
 
