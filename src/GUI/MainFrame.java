@@ -11,7 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
-public class MainFrame extends JFrame implements refreshListener{
+public class MainFrame extends JFrame implements RefreshListener{
     private BorderLayout borderLayout;
     private JPanel main_page;
     private JPanel menu;
@@ -73,7 +73,7 @@ public class MainFrame extends JFrame implements refreshListener{
                 current_panel = pg4;
                 break;
             default:
-                // 如果没有确定的索引，则默认显示 pg1
+// 如果没有确定的索引，则默认显示 pg1
                 current_panel = pg1;
                 break;
         }
@@ -147,6 +147,7 @@ public class MainFrame extends JFrame implements refreshListener{
             @Override
             public void mouseClicked(MouseEvent e) {
                 // 添加按钮点击事件的处理代码
+                main_page.remove(current_panel);
                 main_page.remove(current_panel);
                 current_panel = pg3;
                 main_page.add(current_panel, BorderLayout.CENTER);

@@ -5,12 +5,14 @@ public class Task {
     private double reward;
     private String state;
     private String description;
+    private String destination;
 
-    public Task(String name, double reward, String state, String description) {
+    public Task(String name, double reward, String state, String description, String destination) {
         this.name = name;
         this.reward = reward;
         this.state = state;
         this.description = description;
+        this.destination = destination;
     }
 
     // Getter and setter methods for name
@@ -43,9 +45,19 @@ public class Task {
         return description;
     }
 
-    public void setDescription(String description){
-        this.description = description;
+    public void setDescription(String destination){
+        this.destination = destination;
     }
+
+    public String getDestination() {
+        return destination;
+    }
+
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
     public String getCondition(String state){
         return switch (state) {
             case "ToBeConfirmed" -> "Submitted";
@@ -102,6 +114,7 @@ public class Task {
     }
 
 
+
     @Override
     public String toString() {
         return "Task{" +
@@ -109,6 +122,7 @@ public class Task {
                 ", reward=" + reward +
                 ", state=" + state +
                 ", description=" + description +
+                ", destination=" + destination +
                 '}';
     }
 }

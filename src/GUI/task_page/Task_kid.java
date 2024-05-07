@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class Task_kid extends JPanel {
 
@@ -69,26 +70,17 @@ public class Task_kid extends JPanel {
             // 使用 JOptionPane 来显示消息
             int response = JOptionPane.showConfirmDialog(this, kid.getTaskList().getNonConfirmedTask().getTask(index).getCon1(kid.getTaskList().getNonConfirmedTask().getTask(index).getState()), "Confirmation", JOptionPane.YES_NO_OPTION);
 
-
-            List<Task> allTasks = kid.getTaskList().getNonConfirmedTask().getAllTasks();
-            System.out.println("All tasks before:");
-            for (Task task : allTasks) {
-                System.out.println(task);
-            }
             if (response == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(this, kid.getTaskList().getNonConfirmedTask().getTask(index).getCon2(kid.getTaskList().getNonConfirmedTask().getTask(index).getState()), "Message", JOptionPane.INFORMATION_MESSAGE);
                 kid.getTaskList().updateTask(kid.getTaskList().getNonConfirmedTask().getTask(index).getName(),kid.getTaskList().getNonConfirmedTask().getTask(index).taskOperation(kid.getTaskList().getNonConfirmedTask().getTask(index)));
                 mainFrame.refresh();
 
-                List<Task> allTasks1 = kid.getTaskList().getNonConfirmedTask().getAllTasks();
-                System.out.println("All tasks after:");
-                for (Task task : allTasks1) {
-                    System.out.println(task);
-                }
-
             }
         }
 
+    }
+    private void showWarning(){
+        JOptionPane.showMessageDialog(this, "Please select your account first.", "Message", JOptionPane.WARNING_MESSAGE);
     }
 
 
@@ -96,7 +88,6 @@ public class Task_kid extends JPanel {
 
     private void $$$setupUI$$$() {
 
-        System.out.println(this.kid.getBank().getSavingTotal());
 
 
 
@@ -269,7 +260,11 @@ public class Task_kid extends JPanel {
             label1.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    showDialog(index);
+                    if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
+                        showWarning();
+                    }else {
+                        showDialog(index);
+                    }
                 }
 
             });
@@ -363,6 +358,17 @@ public class Task_kid extends JPanel {
             if (label5Font != null) label5.setFont(label5Font);
             label5.setForeground(new Color(-12763843));
             label5.setText(kid.getTaskList().getNonConfirmedTask().getTask(1).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(1).getState()));
+            label5.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
+                        showWarning();
+                    }else {
+                        showDialog(index);
+                    }
+                }
+
+            });
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -385,7 +391,7 @@ public class Task_kid extends JPanel {
             Font label7Font = this.$$$getFont$$$("Arial", Font.ITALIC, 24, label7.getFont());
             if (label7Font != null) label7.setFont(label7Font);
             label7.setForeground(new Color(-12763843));
-            label7.setText(kid.getTaskList().getNonConfirmedTask().getNonConfirmedTask().getTask(1).getText(kid.getTaskList().getNonConfirmedTask().getTask(1).getState()));
+            label7.setText(kid.getTaskList().getNonConfirmedTask().getTask(1).getText(kid.getTaskList().getNonConfirmedTask().getTask(1).getState()));
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 1;
@@ -452,6 +458,17 @@ public class Task_kid extends JPanel {
             if (label9Font != null) label9.setFont(label9Font);
             label9.setForeground(new Color(-12763843));
             label9.setText(kid.getTaskList().getNonConfirmedTask().getTask(2).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(2).getState()));
+            label9.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
+                        showWarning();
+                    }else {
+                        showDialog(index);
+                    }
+                }
+
+            });
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -537,6 +554,17 @@ public class Task_kid extends JPanel {
             if (label13Font != null) label13.setFont(label13Font);
             label13.setForeground(new Color(-12763843));
             label13.setText(kid.getTaskList().getNonConfirmedTask().getTask(3).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(3).getState()));
+            label13.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
+                        showWarning();
+                    }else {
+                        showDialog(index);
+                    }
+                }
+
+            });
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -581,7 +609,13 @@ public class Task_kid extends JPanel {
         }
         Deposit = new JPanel();
         Deposit.setLayout(new GridBagLayout());
+        Deposit.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new Depository(kid);
+            }
 
+        });
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 4;

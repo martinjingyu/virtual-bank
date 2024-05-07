@@ -13,12 +13,13 @@ public class ReadTask {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
 //                System.out.println(parts.length);
-                if (parts.length == 4) {
+                if (parts.length == 5) {
                     String name = parts[0].trim();
                     double price = Double.parseDouble(parts[1].trim());
                     String state = parts[2].trim();
                     String description = parts[3].trim();
-                    Task task = new Task(name, price,state,description);
+                    String destination = parts[4].trim();
+                    Task task = new Task(name, price,state,description,destination);
                     taskList.addTask(task);
                 } else {
                     System.out.println("Invalid product data: " + line);
