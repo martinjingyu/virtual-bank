@@ -83,6 +83,15 @@ public class Task_kid extends JPanel {
         JOptionPane.showMessageDialog(this, "Please select your account first.", "Message", JOptionPane.WARNING_MESSAGE);
     }
 
+    public String taskInfo(int index){
+        if(Objects.equals(kid.getTaskList().getNonConfirmedTask().getTask(index).getState(), "Confirmed")){
+            return kid.getTaskList().getNonConfirmedTask().getTask(index).getM("Confirmed") +" " + kid.getTaskList().getNonConfirmedTask().getTask(index).getReward();
+
+        }else {
+            return kid.getTaskList().getNonConfirmedTask().getTask(index).getM(kid.getTaskList().getNonConfirmedTask().getTask(index).getState())
+                    + kid.getTaskList().getNonConfirmedTask().getTask(index).getName();
+        }
+    }
 
 
 
@@ -263,7 +272,9 @@ public class Task_kid extends JPanel {
                     if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
                         showWarning();
                     }else {
+                        taskInfo(index);
                         showDialog(index);
+                        kid.getMessagelist().addTaskMessage(kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
                     }
                 }
 
@@ -364,7 +375,9 @@ public class Task_kid extends JPanel {
                     if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
                         showWarning();
                     }else {
+                        taskInfo(index);
                         showDialog(index);
+                        kid.getMessagelist().addTaskMessage(kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
                     }
                 }
 
@@ -464,8 +477,11 @@ public class Task_kid extends JPanel {
                     if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
                         showWarning();
                     }else {
+                        taskInfo(index);
                         showDialog(index);
+                        kid.getMessagelist().addTaskMessage(kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
                     }
+
                 }
 
             });
@@ -560,7 +576,9 @@ public class Task_kid extends JPanel {
                     if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
                         showWarning();
                     }else {
+                        taskInfo(index);
                         showDialog(index);
+                        kid.getMessagelist().addTaskMessage(kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
                     }
                 }
 
