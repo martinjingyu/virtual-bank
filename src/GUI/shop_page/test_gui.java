@@ -13,7 +13,7 @@ public class test_gui extends JFrame {
     private JPanel current_panel;
 
     public static void main(String[] args) {
-        shop_kid page1 = new shop_kid();
+        shop_kid_2 page1 = new shop_kid_2();
         shop_parent page2 = new shop_parent();
         new test_gui(page1);
     }
