@@ -1,5 +1,7 @@
 package Entity;
 
+import java.util.List;
+
 public class Kids {
     private Bank bank;
     private ProductList productList;
@@ -20,6 +22,9 @@ public class Kids {
         this.messagelist = messagelist;
     }
 
+    public ProductList getProductList() {
+        return this.productList;
+    }
 
     public Bank getBank() {
         return bank;
