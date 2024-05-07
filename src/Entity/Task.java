@@ -53,7 +53,6 @@ public class Task {
         return destination;
     }
 
-
     public void setDestination(String destination) {
         this.destination = destination;
     }
@@ -64,6 +63,16 @@ public class Task {
             case "ToBeTaken" -> "Pick it";
             case "Taken" -> "Submit";
             default -> null;
+        };
+    }
+
+    public String getM(String state){
+        return switch (state) {
+            case "ToBeConfirmed" -> "Please wait patiently for parent's confirmation, you have submitted the task";
+            case "ToBeTaken" -> "You have picked the task";
+            case "Taken" -> "You have submitted the task";
+            case "Confirmed" -> "Parents have confirmed your task, you have received reward $";
+            default -> throw new IllegalStateException("Unexpected value: " + state);
         };
     }
 
@@ -112,7 +121,6 @@ public class Task {
         }
         return task;
     }
-
 
 
     @Override
