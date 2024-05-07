@@ -1,6 +1,7 @@
 package GUI.task_page;
 
 import Entity.*;
+import GUI.MainFrame;
 import utill.read.ReadBank;
 
 
@@ -9,6 +10,8 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import java.util.Locale;
@@ -36,6 +39,8 @@ public class Task_kid extends JPanel {
     private JPanel Task3Info;
     private JPanel Task4Info;
 
+    private MainFrame mainFrame;
+
     private Kids kid;
 
     public Task_kid() {
@@ -46,7 +51,8 @@ public class Task_kid extends JPanel {
         // Debug to ensure components are initialized
     }
 
-    public Task_kid(Kids kid) {
+    public Task_kid(Kids kid, MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
         this.kid = kid;
         $$$setupUI$$$(); // Ensures all GUI components are initialized first
         Dimension preferredSize = new Dimension(900, 540);
@@ -55,14 +61,42 @@ public class Task_kid extends JPanel {
         // Debug to ensure components are initialized
     }
 
+    // 弹出对话框方法
+    private void showDialog(int index) {
+        if(kid.getTaskList().getNonConfirmedTask().getTask(index).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(index).getState())=="Submitted"){
+            JOptionPane.showMessageDialog(this, "You have submitted this task, please wait for parent's confirmation", "Message", JOptionPane.WARNING_MESSAGE);
+        }else {
+            // 使用 JOptionPane 来显示消息
+            int response = JOptionPane.showConfirmDialog(this, kid.getTaskList().getNonConfirmedTask().getTask(index).getCon1(kid.getTaskList().getNonConfirmedTask().getTask(index).getState()), "Confirmation", JOptionPane.YES_NO_OPTION);
+
+
+            List<Task> allTasks = kid.getTaskList().getNonConfirmedTask().getAllTasks();
+            System.out.println("All tasks before:");
+            for (Task task : allTasks) {
+                System.out.println(task);
+            }
+            if (response == JOptionPane.YES_OPTION) {
+                JOptionPane.showMessageDialog(this, kid.getTaskList().getNonConfirmedTask().getTask(index).getCon2(kid.getTaskList().getNonConfirmedTask().getTask(index).getState()), "Message", JOptionPane.INFORMATION_MESSAGE);
+                kid.getTaskList().updateTask(kid.getTaskList().getNonConfirmedTask().getTask(index).getName(),kid.getTaskList().getNonConfirmedTask().getTask(index).taskOperation(kid.getTaskList().getNonConfirmedTask().getTask(index)));
+                mainFrame.refresh();
+
+                List<Task> allTasks1 = kid.getTaskList().getNonConfirmedTask().getAllTasks();
+                System.out.println("All tasks after:");
+                for (Task task : allTasks1) {
+                    System.out.println(task);
+                }
+
+            }
+        }
+
+    }
+
 
 
 
     private void $$$setupUI$$$() {
 
         System.out.println(this.kid.getBank().getSavingTotal());
-
-
 
 
 
@@ -154,7 +188,7 @@ public class Task_kid extends JPanel {
         if (progressFont != null) progress.setFont(progressFont);
         progress.setForeground(new Color(-12763843));
 
-        progress.setText(String.valueOf(kid.getBank().getSavingTotal()/kid.getBank().getSavingGoal()*100)+"%");
+        progress.setText(kid.getBank().getSavingTotal()/kid.getBank().getSavingGoal()*100+"%");
 
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
@@ -168,7 +202,8 @@ public class Task_kid extends JPanel {
 
 
         //Tasks set up
-        int size = kid.getTaskList().getSize();
+        int size = kid.getTaskList().getNonConfirmedTask().getSize();
+
         //int[] index=kid.getTaskList().getNonConfirmedIndex(size);
         TaskBlock = new JPanel();
         TaskBlock.setLayout(new GridBagLayout());
@@ -188,6 +223,7 @@ public class Task_kid extends JPanel {
 
         //Task 1
         if(size>=1) {
+            int index=0;
             Task1Con = new JPanel();
             Task1Con.setLayout(new GridBagLayout());
             gbc = new GridBagConstraints();
@@ -228,7 +264,17 @@ public class Task_kid extends JPanel {
             Font label1Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 22, label1.getFont());
             if (label1Font != null) label1.setFont(label1Font);
             label1.setForeground(new Color(-12763843));
-            label1.setText(kid.getTaskList().getTask(0).getCondition(kid.getTaskList().getTask(0).getState()));
+            //button1
+            label1.setText(kid.getTaskList().getNonConfirmedTask().getTask(0).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(0).getState()));
+            label1.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    showDialog(index);
+                }
+
+            });
+            System.out.println("after");
+            System.out.println(kid.getTaskList().getNonConfirmedTask().getTask(0).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(0).getState()));
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -240,7 +286,7 @@ public class Task_kid extends JPanel {
             Font label2Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 20, label2.getFont());
             if (label2Font != null) label2.setFont(label2Font);
             label2.setForeground(new Color(-9975466));
-            label2.setText("$"+kid.getTaskList().getTask(0).getReward());
+            label2.setText("$"+kid.getTaskList().getNonConfirmedTask().getTask(0).getReward());
             gbc = new GridBagConstraints();
             gbc.gridx = 1;
             gbc.gridy = 0;
@@ -251,7 +297,7 @@ public class Task_kid extends JPanel {
             Font label3Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 24, label3.getFont());
             if (label3Font != null) label3.setFont(label3Font);
             label3.setForeground(new Color(-13534488));
-            label3.setText(kid.getTaskList().getTask(0).getName());
+            label3.setText(kid.getTaskList().getNonConfirmedTask().getTask(0).getName());
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -263,7 +309,7 @@ public class Task_kid extends JPanel {
             Font label4Font = this.$$$getFont$$$("Arial", Font.ITALIC, 24, label4.getFont());
             if (label4Font != null) label4.setFont(label4Font);
             label4.setForeground(new Color(-12763843));
-            label4.setText(kid.getTaskList().getTask(0).getText(kid.getTaskList().getTask(0).getState()));
+            label4.setText(kid.getTaskList().getTask(0).getText(kid.getTaskList().getNonConfirmedTask().getTask(0).getState()));
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 1;
@@ -271,12 +317,11 @@ public class Task_kid extends JPanel {
             gbc.anchor = GridBagConstraints.NORTHWEST;
             Task1Info.add(label4, gbc);
 
-        }else {
-            size--;
         }
 
         //Task 2
-        if((size>=2) && (kid.getTaskList().getTask(0).getCondition(kid.getTaskList().getTask(0).getState())!=null)) {
+        if(size>=2) {
+            int index=1;
             Task2Con = new JPanel();
             Task2Con.setLayout(new GridBagLayout());
             gbc = new GridBagConstraints();
@@ -317,7 +362,7 @@ public class Task_kid extends JPanel {
             Font label5Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 22, label5.getFont());
             if (label5Font != null) label5.setFont(label5Font);
             label5.setForeground(new Color(-12763843));
-            label5.setText("Pick it ");
+            label5.setText(kid.getTaskList().getNonConfirmedTask().getTask(1).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(1).getState()));
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -328,7 +373,7 @@ public class Task_kid extends JPanel {
             Font label6Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 24, label6.getFont());
             if (label6Font != null) label6.setFont(label6Font);
             label6.setForeground(new Color(-13534488));
-            label6.setText("Wash dishes            ");
+            label6.setText(kid.getTaskList().getNonConfirmedTask().getTask(1).getName());
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -340,7 +385,7 @@ public class Task_kid extends JPanel {
             Font label7Font = this.$$$getFont$$$("Arial", Font.ITALIC, 24, label7.getFont());
             if (label7Font != null) label7.setFont(label7Font);
             label7.setForeground(new Color(-12763843));
-            label7.setText("You can take this task.");
+            label7.setText(kid.getTaskList().getNonConfirmedTask().getNonConfirmedTask().getTask(1).getText(kid.getTaskList().getNonConfirmedTask().getTask(1).getState()));
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 1;
@@ -352,19 +397,20 @@ public class Task_kid extends JPanel {
             Font label8Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 20, label8.getFont());
             if (label8Font != null) label8.setFont(label8Font);
             label8.setForeground(new Color(-9975466));
-            label8.setText("$12");
+            label8.setText("$"+kid.getTaskList().getNonConfirmedTask().getTask(1).getReward());
             gbc = new GridBagConstraints();
             gbc.gridx = 1;
             gbc.gridy = 0;
             gbc.weighty = 1.0;
             gbc.anchor = GridBagConstraints.NORTHEAST;
             Task2Info.add(label8, gbc);
-        }else {
-            size--;
+
+
         }
 
         //Task 3
-        if((size>=3 && (kid.getTaskList().getTask(0).getCondition(kid.getTaskList().getTask(0).getState())!=null))) {
+        if(size>=3) {
+            int index=2;
             Task3Con = new JPanel();
             Task3Con.setLayout(new GridBagLayout());
             gbc = new GridBagConstraints();
@@ -405,7 +451,7 @@ public class Task_kid extends JPanel {
             Font label9Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 22, label9.getFont());
             if (label9Font != null) label9.setFont(label9Font);
             label9.setForeground(new Color(-12763843));
-            label9.setText("Pick it ");
+            label9.setText(kid.getTaskList().getNonConfirmedTask().getTask(2).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(2).getState()));
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -416,7 +462,7 @@ public class Task_kid extends JPanel {
             Font label10Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 24, label10.getFont());
             if (label10Font != null) label10.setFont(label10Font);
             label10.setForeground(new Color(-13534488));
-            label10.setText("Wash clothes          ");
+            label10.setText(kid.getTaskList().getNonConfirmedTask().getNonConfirmedTask().getTask(2).getName());
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -428,7 +474,7 @@ public class Task_kid extends JPanel {
             Font label11Font = this.$$$getFont$$$("Arial", Font.ITALIC, 24, label11.getFont());
             if (label11Font != null) label11.setFont(label11Font);
             label11.setForeground(new Color(-12763843));
-            label11.setText("You can take this task.");
+            label11.setText(kid.getTaskList().getNonConfirmedTask().getTask(2).getText(kid.getTaskList().getNonConfirmedTask().getTask(2).getState()));
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 1;
@@ -440,19 +486,18 @@ public class Task_kid extends JPanel {
             Font label12Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 20, label12.getFont());
             if (label12Font != null) label12.setFont(label12Font);
             label12.setForeground(new Color(-9975466));
-            label12.setText("$12");
+            label12.setText("$"+kid.getTaskList().getNonConfirmedTask().getTask(2).getReward());
             gbc = new GridBagConstraints();
             gbc.gridx = 1;
             gbc.gridy = 0;
             gbc.weighty = 1.0;
             gbc.anchor = GridBagConstraints.NORTHEAST;
             Task3Info.add(label12, gbc);
-        }else {
-            size--;
         }
 
         //Task 4
-        if((size==4) && (kid.getTaskList().getTask(0).getCondition(kid.getTaskList().getTask(0).getState())!=null)) {
+        if(size==4) {
+            int index=3;
             Task4Con = new JPanel();
             Task4Con.setLayout(new GridBagLayout());
             gbc = new GridBagConstraints();
@@ -491,7 +536,7 @@ public class Task_kid extends JPanel {
             Font label13Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 22, label13.getFont());
             if (label13Font != null) label13.setFont(label13Font);
             label13.setForeground(new Color(-12763843));
-            label13.setText("Pick it ");
+            label13.setText(kid.getTaskList().getNonConfirmedTask().getTask(3).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(3).getState()));
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -503,7 +548,7 @@ public class Task_kid extends JPanel {
             Font label14Font = this.$$$getFont$$$("Arial", Font.ITALIC, 24, label14.getFont());
             if (label14Font != null) label14.setFont(label14Font);
             label14.setForeground(new Color(-12763843));
-            label14.setText("You can take this task.");
+            label14.setText(kid.getTaskList().getNonConfirmedTask().getTask(3).getText(kid.getTaskList().getNonConfirmedTask().getTask(3).getState()));
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 1;
@@ -515,7 +560,7 @@ public class Task_kid extends JPanel {
             Font label15Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 20, label15.getFont());
             if (label15Font != null) label15.setFont(label15Font);
             label15.setForeground(new Color(-9975466));
-            label15.setText("$12");
+            label15.setText("$"+kid.getTaskList().getNonConfirmedTask().getTask(3).getReward());
             gbc = new GridBagConstraints();
             gbc.gridx = 1;
             gbc.gridy = 0;
@@ -526,7 +571,7 @@ public class Task_kid extends JPanel {
             Font label16Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 24, label16.getFont());
             if (label16Font != null) label16.setFont(label16Font);
             label16.setForeground(new Color(-13534488));
-            label16.setText("Independent study  ");
+            label16.setText(kid.getTaskList().getNonConfirmedTask().getTask(3).getName());
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;

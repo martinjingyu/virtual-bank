@@ -11,7 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements refreshListener{
     private BorderLayout borderLayout;
     private JPanel main_page;
     private JPanel menu;
@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
         super("demo");
         this.pg1 = new bank_kid(kid);
         this.pg2 = new shop_kid(kid);
-        this.pg3 = new Task_kid(kid);
+        this.pg3 = new Task_kid(kid, this);
         this.pg4 = new message_kid(kid);
         this.kid = kid;
 
@@ -35,6 +35,54 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
+    @Override
+    public void refresh() {
+        int tempIndex = 0;
+        main_page.remove(current_panel);
+        if(current_panel == pg1){
+            tempIndex = 1;
+        }
+        else if (current_panel == pg2) {
+            tempIndex =2;
+
+        }
+        else if(current_panel == pg3){
+            tempIndex = 3;
+        }
+        else if(current_panel == pg4){
+            tempIndex = 4;
+        }
+        else{
+            tempIndex = 1;
+        }
+        this.pg1 = new bank_kid(kid);
+        this.pg2 = new shop_kid(kid);
+        this.pg3 = new Task_kid(kid, this);
+        this.pg4 = new message_kid(kid);
+        switch (tempIndex) {
+            case 1:
+                current_panel = pg1;
+                break;
+            case 2:
+                current_panel = pg2;
+                break;
+            case 3:
+                current_panel = pg3;
+                break;
+            case 4:
+                current_panel = pg4;
+                break;
+            default:
+                // 如果没有确定的索引，则默认显示 pg1
+                current_panel = pg1;
+                break;
+        }
+
+        main_page.add(current_panel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+
+    }
 
     public void Jframe_Jpanel(){
         // 设置主窗口的标题
@@ -99,7 +147,6 @@ public class MainFrame extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // 添加按钮点击事件的处理代码
-                main_page.remove(current_panel);
                 main_page.remove(current_panel);
                 current_panel = pg3;
                 main_page.add(current_panel, BorderLayout.CENTER);

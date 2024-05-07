@@ -1,8 +1,10 @@
-
 Sweep the floor,20,Confirmed,description1
-Independent study1,14,ToBeConfirmed,description2
-Independent study2,19,Confirmed,description2
-Independent study3,13,ToBeTaken,description2
-Independent study2,19,TobeTaken,description2
+Independent study1,14,ToBeTaken,description2
+Independent study2,19,Taken,description2
+Independent study3,13,ToBeTaken,description3
+Independent study4,19,ToBeTaken,description4
+
+
+
 
 

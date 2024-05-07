@@ -35,7 +35,7 @@ public class Task {
         return state;
     }
 
-    public void setState(){
+    public void setState(String state){
         this.state = state;
     }
 
@@ -43,7 +43,7 @@ public class Task {
         return description;
     }
 
-    public void setDescription(){
+    public void setDescription(String description){
         this.description = description;
     }
     public String getCondition(String state){
@@ -55,6 +55,24 @@ public class Task {
         };
     }
 
+    public String getCon1(String state){
+        return switch (state) {
+            case "ToBeConfirmed" -> "Submitted";
+            case "ToBeTaken" -> "Do you want to pick this task?";
+            case "Taken" -> "Do you want to submit this task?";
+            default -> null;
+        };
+    }
+
+    public String getCon2(String state){
+        return switch (state) {
+            case "ToBeConfirmed" -> "Submitted";
+            case "ToBeTaken" -> "You have taken this task!";
+            case "Taken" -> "You have submitted this task!";
+            default -> null;
+        };
+    }
+
     public String getText(String state){
         return switch (state) {
             case "ToBeConfirmed" -> "Please wait for parent's confirmation";
@@ -62,6 +80,25 @@ public class Task {
             case "Taken" -> "You have taken this task.";
             default -> null;
         };
+    }
+
+    public Task taskOperation(Task task){
+        switch (task.getState()) {
+            case "ToBeConfirmed":{
+                task.setState("Confirmed");
+                break;
+            }
+            case "ToBeTaken":{
+                task.setState("Taken");
+                break;
+            }
+            case "Taken":{
+                task.setState("ToBeConfirmed");
+                break;
+            }
+
+        }
+        return task;
     }
 
 

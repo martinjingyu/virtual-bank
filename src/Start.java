@@ -18,6 +18,5 @@ public class Start implements LoginListener {
         // 创建并显示新的窗口
         Kids kid = ReadAll.readall(id);
         MainFrame mainFrame = new MainFrame(kid);
-
     }
 }

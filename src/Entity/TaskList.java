@@ -22,12 +22,24 @@ public class TaskList{
         return taskList.get(index);
     }
 
-    public List<Task> getNonConfirmedTask(){
-        List<Task> nonTask;
-        nonTask = new ArrayList<>();
+    public void updateTask(String taskName, Task newTaskData) {
+        for (Task task : taskList) {
+            if (task.getName().equals(taskName)) {
+                task.setName(newTaskData.getName());
+                task.setReward(newTaskData.getReward());
+                task.setState(newTaskData.getState());
+                task.setDescription(newTaskData.getDescription());
+                break;
+            }
+        }
+    }
+
+    public TaskList getNonConfirmedTask(){
+        TaskList nonTask;
+        nonTask = new TaskList();
         for (Task task : taskList) {
             if (!Objects.equals(task.getState(), "Confirmed")) {
-                nonTask.add(task);
+                nonTask.addTask(task);
             }
         }
         return nonTask;
