@@ -22,6 +22,25 @@ public class MessageList {
         this.messages = messages;
     }
 
+    public List<Message> getParentKidMessages() {
+        List<Message> parentMessages = new ArrayList<>();
+        for (Message message : messages) {
+            if (message.getSender().equals("parent")||message.getSender().equals("kid")) {
+                parentMessages.add(message);
+            }
+        }
+        return parentMessages;
+    }
+    public List<Message> getSystemMessages() {
+        List<Message> parentMessages = new ArrayList<>();
+        for (Message message : messages) {
+            if (message.getSender().equals("system")) {
+                parentMessages.add(message);
+            }
+        }
+        return parentMessages;
+    }
+
 
     @Override
     public String toString() {

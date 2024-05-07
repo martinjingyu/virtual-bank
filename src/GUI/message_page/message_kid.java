@@ -163,14 +163,10 @@ public class message_kid extends JPanel {
         messagesData = new HashMap<>();
         System.out.println(kid.getMessagelist().getAllMessages());
 
-        List<Message> msgList = kid.getMessagelist().getAllMessages();
-        for(Message msg: msgList){
-            System.out.println(msg);
-            Message[] messages = msgList.toArray(new Message[0]);
-            messagesData.put("Parents", messages);
-           // messagesData.put("Parents", new Message[]{new Message("kid", "timestamp","this is a try"),new Message("parent", "sssss","this is a try")});
-            messagesData.put("System Alerts", new Message[]{new Message("[Alert] System maintenance tonight.", "timestamp2","this is a try")});
-        }
+        Message[] parentMessages = kid.getMessagelist().getParentKidMessages().toArray(new Message[0]);
+        Message[] systemMessages = kid.getMessagelist().getSystemMessages().toArray(new Message[0]);
+        messagesData.put("Parents", parentMessages);
+        messagesData.put("System Alerts", systemMessages);
 
 
 
