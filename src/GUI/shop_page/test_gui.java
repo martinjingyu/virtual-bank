@@ -4,6 +4,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import GUI.shop_page.shop_kid;
+import Entity.Kids;
+import Entity.Bank;
+import Entity.Kids;
+import Entity.Product;
+import Entity.ProductList;
+import utill.read.ReadAll;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import exceptions.InsufficientFundsException;
 
 public class test_gui extends JFrame {
     private BorderLayout borderLayout;
@@ -13,7 +29,8 @@ public class test_gui extends JFrame {
     private JPanel current_panel;
 
     public static void main(String[] args) {
-        shop_kid_2 page1 = new shop_kid_2();
+        Kids kid = ReadAll.readall(String.valueOf(222));
+        shop_kid page1 = new shop_kid(kid);
         shop_parent page2 = new shop_parent();
         new test_gui(page1);
     }
@@ -29,7 +46,7 @@ public class test_gui extends JFrame {
     public void Jframe_Jpanel(){
         // 设置主窗口的标题
 
-        this.setSize(960,540);
+        this.setSize(900,540);
         borderLayout = new BorderLayout();
         menu = new JPanel();
         main_page = new JPanel(new BorderLayout());
@@ -37,7 +54,7 @@ public class test_gui extends JFrame {
         menu.setBackground(Color.pink);
         main_page.setBackground(Color.blue);
 
-        menu.setPreferredSize(new Dimension(51, 540));
+//        menu.setPreferredSize(new Dimension(51, 540));
 
         this.add(main_page,BorderLayout.CENTER);
         this.add(menu, BorderLayout.WEST);

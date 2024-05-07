@@ -2,6 +2,8 @@ package Entity;
 
 import java.awt.*;
 import javax.swing.JOptionPane;
+import exceptions.InsufficientFundsException;
+
 
 public class Bank {
     private String name;
@@ -75,15 +77,11 @@ public class Bank {
         this.savingTotal = savingTotal;
     }
 
-    public double changeCurrent(double number, double currentTotal) {
-        // 如果 number 是负数，且加上 currentTotal 后结果小于 0，则直接返回 currentTotal
+    public double changeCurrent(double number) throws InsufficientFundsException {
         if (number < 0 && Math.abs(number) > currentTotal) {
-            JOptionPane.showMessageDialog(null, "Sorry, you can't do this operation.", "Operation Not Allowed", JOptionPane.WARNING_MESSAGE);
-            return currentTotal;
-        } else {
-            // 否则，将 number 加到 currentTotal 上，并返回结果
-            return currentTotal + number;
+            throw new InsufficientFundsException("Insufficient funds for the operation.");
         }
+        return currentTotal + number;
     }
 
     public double changeSaving(double number, double savingTotal) {
