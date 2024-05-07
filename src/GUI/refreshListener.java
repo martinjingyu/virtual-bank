@@ -1,5 +1,5 @@
 package GUI;
 
-public interface refreshListener {
+public interface RefreshListener {
     void refresh();
 }
