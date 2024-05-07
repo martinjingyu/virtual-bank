@@ -220,10 +220,46 @@ public class message_kid extends JPanel {
 
 
 
+//    static class MessageCellRenderer extends JLabel implements ListCellRenderer<Message> {
+//        @Override
+//        public Component getListCellRendererComponent(JList<? extends Message> list, Message value, int index, boolean isSelected, boolean cellHasFocus) {
+//            setText(value.getContent());
+//            setOpaque(true);
+//            if (value.getSender().equals("kid")) {
+//                setHorizontalAlignment(SwingConstants.RIGHT);
+//                setBackground(Color.LIGHT_GRAY);
+//            } else {
+//                setHorizontalAlignment(SwingConstants.LEFT);
+//                setBackground(Color.WHITE);
+//            }
+//            return this;
+//        }
+//    }
+
+//    static class MessageCellRenderer extends JLabel implements ListCellRenderer<Message> {
+//        @Override
+//        public Component getListCellRendererComponent(JList<? extends Message> list, Message value, int index, boolean isSelected, boolean cellHasFocus) {
+//            setText(value.toString()); // This will now include both the timestamp and the content.
+//            setOpaque(true);
+//            if (value.getSender().equals("kid")) {
+//                setHorizontalAlignment(SwingConstants.RIGHT);
+//                setBackground(Color.LIGHT_GRAY);
+//            } else {
+//                setHorizontalAlignment(SwingConstants.LEFT);
+//                setBackground(Color.WHITE);
+//            }
+//            return this;
+//        }
+//    }
+
     static class MessageCellRenderer extends JLabel implements ListCellRenderer<Message> {
         @Override
         public Component getListCellRendererComponent(JList<? extends Message> list, Message value, int index, boolean isSelected, boolean cellHasFocus) {
-            setText(value.getContent());
+            // Using HTML to format the text into two lines and align it
+            String formattedText = "<html><div style='text-align: " + (value.getSender().equals("kid") ? "right" : "left") + ";'>" +
+                    value.getTimestamp() + "<br/>" +
+                    value.getContent() + "</div></html>";
+            setText(formattedText);
             setOpaque(true);
             if (value.getSender().equals("kid")) {
                 setHorizontalAlignment(SwingConstants.RIGHT);
@@ -235,4 +271,5 @@ public class message_kid extends JPanel {
             return this;
         }
     }
+
 }
