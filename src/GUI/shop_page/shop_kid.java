@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import exceptions.InsufficientFundsException;
+import Exceptions.InsufficientFundsException;
 
 public class shop_kid extends JPanel {
     private JButton buyButton;
@@ -189,38 +189,38 @@ public class shop_kid extends JPanel {
         }
     }
 
-        private void buyProducts() {
+    private void buyProducts() {
 
-            if (selectedProductList.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "You haven't selected any products.", "No Products Selected!", JOptionPane.WARNING_MESSAGE);
-                return; // Exit the method
-            }
-
-            double totalCost = calculateSelectedTotal();
-            try {
-                System.out.println(totalCost);
-                double newTotal = bank.changeCurrent(-totalCost);
-                if (totalCost > 0.8 * currentAccount) { // Check if totalCost exceeds 80% of currentAccount
-                    messagelist.addShopMessage(totalCost);
-                }
-                currentAccount = newTotal;
-                JOptionPane.showMessageDialog(this, "Purchase Successful!");
-                currentAccountLabel.setText(String.format("Current Account: $%.2f", currentAccount)); // Update the current account display
-                toggleButtons.forEach(button -> button.setSelected(false)); // Reset all toggle buttons
-                selectedProductList.clear(); // Clear the list of selected products
-                updateSelectedTotalDisplay(); // Update the display of the selected total price
-                updateCurrentAccountDisplay();
-            } catch (InsufficientFundsException e) {
-                JOptionPane.showMessageDialog(this, e.getMessage(), "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
-            }
+        if (selectedProductList.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "You haven't selected any products.", "No Products Selected!", JOptionPane.WARNING_MESSAGE);
+            return; // Exit the method
         }
 
-        public static void main(String[] args) {
-            Kids kid = ReadAll.readall(String.valueOf(222));
-            shop_kid page1 = new shop_kid(kid);
-            shop_parent page2 = new shop_parent();
-            new test_gui(page1);
+        double totalCost = calculateSelectedTotal();
+        try {
+            System.out.println(totalCost);
+            double newTotal = bank.changeCurrent(-totalCost);
+            if (totalCost > 0.8 * currentAccount) { // Check if totalCost exceeds 80% of currentAccount
+                messagelist.addShopMessage(totalCost);
+            }
+            currentAccount = newTotal;
+            JOptionPane.showMessageDialog(this, "Purchase Successful!");
+            currentAccountLabel.setText(String.format("Current Account: $%.2f", currentAccount)); // Update the current account display
+            toggleButtons.forEach(button -> button.setSelected(false)); // Reset all toggle buttons
+            selectedProductList.clear(); // Clear the list of selected products
+            updateSelectedTotalDisplay(); // Update the display of the selected total price
+            updateCurrentAccountDisplay();
+        } catch (InsufficientFundsException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public static void main(String[] args) {
+        Kids kid = ReadAll.readall(String.valueOf(222));
+        shop_kid page1 = new shop_kid(kid);
+        shop_parent page2 = new shop_parent();
+        new test_gui(page1);
+    }
 
 
 }

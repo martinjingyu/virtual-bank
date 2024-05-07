@@ -24,8 +24,6 @@ public class Kids {
         this.getMessagelist().setKids(this);
     }
 
-    }
-
     public ProductList getProductList() {
         return this.productList;
     }
