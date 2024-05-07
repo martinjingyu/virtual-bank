@@ -20,11 +20,16 @@ public class Kids {
         this.productList = productList;
         this.taskList = taskList;
         this.messagelist = messagelist;
+
+        this.getMessagelist().setKids(this);
+    }
+
     }
 
     public ProductList getProductList() {
         return this.productList;
     }
+
 
     public Bank getBank() {
         return bank;
