@@ -46,7 +46,7 @@ public class Task {
     public void setDescription(){
         this.description = description;
     }
-    public String getCondition(String state){
+   public String getCondition(String state){
         return switch (state) {
             case "ToBeConfirmed" -> "Submitted";
             case "ToBeTaken" -> "Pick it";
@@ -63,7 +63,6 @@ public class Task {
             default -> null;
         };
     }
-
 
     @Override
     public String toString() {
