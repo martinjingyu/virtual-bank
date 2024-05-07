@@ -81,7 +81,9 @@ public class Bank {
         if (number < 0 && Math.abs(number) > currentTotal) {
             throw new InsufficientFundsException("Insufficient funds for the operation.");
         }
-        return currentTotal + number;
+        this.currentTotal = currentTotal + number;
+        System.out.println(this.currentTotal);
+        return currentTotal;
     }
 
     public double changeSaving(double number, double savingTotal) {

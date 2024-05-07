@@ -191,8 +191,15 @@ public class shop_kid extends JPanel {
     }
 
         private void buyProducts() {
+
+            if (selectedProductList.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "You haven't selected any products.", "No Products Selected!", JOptionPane.WARNING_MESSAGE);
+                return; // Exit the method
+            }
+
             double totalCost = calculateSelectedTotal();
             try {
+                System.out.println(totalCost);
                 double newTotal = bank.changeCurrent(-totalCost);
                 currentAccount = newTotal;
                 JOptionPane.showMessageDialog(this, "Purchase Successful!");
