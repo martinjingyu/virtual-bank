@@ -89,7 +89,7 @@ public class Task_kid extends JPanel {
 
         }else {
             return kid.getTaskList().getNonConfirmedTask().getTask(index).getM(kid.getTaskList().getNonConfirmedTask().getTask(index).getState())
-                    + kid.getTaskList().getNonConfirmedTask().getTask(index).getName();
+                    +" "+ kid.getTaskList().getNonConfirmedTask().getTask(index).getName();
         }
     }
 
@@ -274,7 +274,7 @@ public class Task_kid extends JPanel {
                     }else {
                         taskInfo(index);
                         showDialog(index);
-                        kid.getMessagelist().addTaskMessage(kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
+                        kid.getMessagelist().addTaskMessage("Child_Opt",kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
                     }
                 }
 
@@ -377,7 +377,7 @@ public class Task_kid extends JPanel {
                     }else {
                         taskInfo(index);
                         showDialog(index);
-                        kid.getMessagelist().addTaskMessage(kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
+                        kid.getMessagelist().addTaskMessage("Child_Opt",kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
                     }
                 }
 
@@ -479,7 +479,7 @@ public class Task_kid extends JPanel {
                     }else {
                         taskInfo(index);
                         showDialog(index);
-                        kid.getMessagelist().addTaskMessage(kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
+                        kid.getMessagelist().addTaskMessage("Child_Opt",kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
                     }
 
                 }
@@ -578,7 +578,7 @@ public class Task_kid extends JPanel {
                     }else {
                         taskInfo(index);
                         showDialog(index);
-                        kid.getMessagelist().addTaskMessage(kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
+                        kid.getMessagelist().addTaskMessage("Child_Opt",kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
                     }
                 }
 

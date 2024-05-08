@@ -50,9 +50,16 @@ public class MessageList {
 
 
     // Adding new methods to handle different types of messages
-    public void addTaskMessage(Task task, String description) {
-        Message taskMessage = new Message("parent",description);
-        messages.add(taskMessage);
+    public void addTaskMessage(String type, Task task, String description) {
+        if(type.equals("Child_Opt")){
+            Message taskMessage = new Message("system",description);
+            messages.add(taskMessage);
+        }
+        if(type.equals("Parent_add")){
+            Message taskMessage = new Message("parent",description);
+            messages.add(taskMessage);
+        }
+
     }
 
     public void addBankMessage(Bank bank, double currentInterestRate,double savingInterestRate) {
