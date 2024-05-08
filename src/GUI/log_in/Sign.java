@@ -1,6 +1,8 @@
 package GUI.log_in;
 
 import javax.swing.*;
+import Controller.login.ButtonControl;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -54,48 +56,54 @@ public class Sign {
         JButton button_1 = new JButton("sign");
         button_1.setBounds(250, 500, 200, 50);
         button_1.setFont(new Font("Times New Roman", Font.BOLD, 40));
-        button_1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (textField_1.getText().isEmpty() || textField_2.getText().isEmpty()
-                        || textField_4.getText().isEmpty()) {
-                    secret_label_3.setText("Your id or passwords is empty!");
-                    secret_label_3.setBounds(350, 100, 1000, 50);
-                } else {
-                    String text_1 = textField_1.getText();
-                    text_1 += ' ';
-                    text_1 += textField_2.getText();
-                    text_1 += ' ';
-                    text_1 += textField_4.getText();
-                    // 查找第一个空格的位置
-                    int indexOfSpace = text_1.indexOf(" ");
+        ButtonControl.addButtonListener4(button_1, g, textField_1, textField_2, textField_4, secret_label_3);
 
-                    // 提取第一个空格之前的内容
-                    String contentBeforeSpace = text_1.substring(0, indexOfSpace);
-                    if (utill.read.CheckID.checkID(contentBeforeSpace, "data/secret.txt") == false) {
-                        secret_label_3.setText("Account is already signed.");
-                        secret_label_3.setBounds(400, 100, 1000, 50);
-                    } else {
-                        utill.write.WriteToFile.writeTextToFile(text_1, "data/secret.txt");
-                        secret_label_3.setText("Your account is ready.");
-                        secret_label_3.setBounds(400, 100, 1000, 50);
-                    }
-                    textField_1.setText(null);
-                    textField_2.setText(null);
-                    textField_4.setText(null);
-                    // showCard(g, "basic");
-                }
-            }
-        });
+        // button_1.addActionListener(new ActionListener() {
+        // public void actionPerformed(ActionEvent e) {
+        // if (textField_1.getText().isEmpty() || textField_2.getText().isEmpty()
+        // || textField_4.getText().isEmpty()) {
+        // secret_label_3.setText("Your id or passwords is empty!");
+        // secret_label_3.setBounds(350, 100, 1000, 50);
+        // } else {
+        // String text_1 = textField_1.getText();
+        // String text_2 = text_1;
+        // text_1 += ' ';
+        // text_1 += textField_2.getText();
+        // text_1 += ' ';
+        // text_1 += textField_4.getText();
+        // // 查找第一个空格的位置
+        // int indexOfSpace = text_1.indexOf(" ");
+
+        // // 提取第一个空格之前的内容
+        // String contentBeforeSpace = text_1.substring(0, indexOfSpace);
+        // if (utill.read.CheckID.checkID(contentBeforeSpace, "data/secret.txt") ==
+        // false) {
+        // secret_label_3.setText("Account is already signed.");
+        // secret_label_3.setBounds(400, 100, 1000, 50);
+        // } else {
+        // utill.write.WriteToFile.writeTextToFile(text_1, "data/secret.txt");
+        // utill.write.WriteToFile.createFolderAndFiles(text_2);
+        // secret_label_3.setText("Your account is ready.");
+        // secret_label_3.setBounds(400, 100, 1000, 50);
+        // }
+        // textField_1.setText(null);
+        // textField_2.setText(null);
+        // textField_4.setText(null);
+        // // showCard(g, "basic");
+        // }
+        // }
+        // });
         JButton button_2 = new JButton("back");
         button_2.setBounds(650, 500, 200, 50);
         button_2.setFont(new Font("Times New Roman", Font.BOLD, 40));
+        ButtonControl.addButtonListener(button_2, g);
 
-        button_2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                showCard(g, "basic");
+        // button_2.addActionListener(new ActionListener() {
+        // public void actionPerformed(ActionEvent e) {
+        // showCard(g, "basic");
 
-            }
-        });
+        // }
+        // });
 
         signPanel.add(button_1);
         signPanel.add(button_2);

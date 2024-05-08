@@ -4,6 +4,7 @@ import Entity.Kids;
 import Entity.Bank;
 import GUI.MainFrame;
 import com.sun.tools.javac.Main;
+import Controller.bank.bank_kid_control;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +24,7 @@ public class bank_kid extends JPanel implements ActionListener {
     private JButton button_yes;
     private JButton button_no;
     private Kids kid;
-    private JTextField savingGoalTextField;
+    public JTextField savingGoalTextField;
     private MainFrame mainFrame;
     private int clickCount;
     private String saving;
@@ -37,71 +38,42 @@ public class bank_kid extends JPanel implements ActionListener {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                setLayout(null);
-                JDialog dialog = new JDialog();//构造一个新的JFrame，作为新窗口。
-                dialog.setBounds(// 让新窗口与SwingTest窗口示例错开50像素。
-                        new Rectangle(
-                                100,
-                                100,
-                                400, 400
-                        )
-                );
-
-                JPanel whitePanel1 = new JPanel();
-                whitePanel1.setBackground(Color.WHITE);
-                whitePanel1.setBounds(50, 50, 100, 50);
-                dialog.getContentPane().add(whitePanel1);
-
-                JLabel jl1 = new JLabel();
-                jl1.setBounds(160, 50, 20, 50);
-                dialog.getContentPane().add(jl1);
-                jl1.setText("to");
-
-                // 创建白色框2
-                JPanel whitePanel2 = new JPanel();
-                whitePanel2.setBackground(Color.WHITE);
-                whitePanel2.setBounds(190, 50, 100, 50);
-                dialog.getContentPane().add(whitePanel2);
-
-                JLabel jl2 = new JLabel();
-                jl2.setBounds(50, 120, 200, 50);
-                dialog.getContentPane().add(jl2);
-                jl2.setText("How much?");
-
-                JTextField textField = new JTextField();
-                textField.setBounds(190, 120, 100, 50);
-                dialog.getContentPane().add(textField);
-
-                JLabel jl3 = new JLabel();
-                dialog.getContentPane().add(jl3);
-                jl3.setText("Are you sure to operate?");
-                jl3.setBounds(50, 220, 300, 20);
-
-                button_yes = new JButton("YES");
-                button_yes.setBounds(100, 270, 80, 40);
-                button_no = new JButton("NO");
-                button_no.setBounds(200, 270, 80, 40);
-
-                jl3.setVerticalAlignment(JLabel.CENTER);
-                jl3.setHorizontalAlignment(JLabel.CENTER);// 注意方法名别写错了。
-                dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);    // 设置模式类型。
-                dialog.setLayout(null); // 设置布局为null，使用绝对布局
-                dialog.add(button_yes);
-                dialog.add(button_no);
-                dialog.setVisible(true);
+                JDialog dialog = new JDialog();
+                kid.getBank().transaction(dialog,"saving","current");
+                dialog.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent e) {
+                        // 在对话框关闭时刷新页面
+                        mainFrame.refresh();
+                    }
+                });
             }
         });
         add(button1);
 
         button_goal = new JButton("Edit");
-        button_goal.setBounds(680,60,70,30);
-//        button_goal.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                kids_1.getBank().changeSavingGoal();
-//            }
-//        });
+        button_goal.setBounds(680,80,70,30);
+        savingGoalTextField = new JTextField();
+        savingGoalTextField.setBounds(580, 80, 75, 30);
+        savingGoalTextField.setVisible(false);
+        add(savingGoalTextField);
+        button_goal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clickCount++; // 每次点击增加点击次数
+                // 根据点击次数的奇偶性设置文本框的可见性
+                if (clickCount % 2 == 1) {
+                    savingGoalTextField.setVisible(true);
+                    revalidate();
+                    repaint();
+                } else {
+                    savingGoalTextField.setVisible(false);
+                    kid.getBank().changeSavingGoal(savingGoalTextField);
+                    mainFrame.refresh();
+                }
+
+            }
+        });
         add(button_goal);
 
 //        button2 = new JButton("OUTO");
@@ -249,23 +221,24 @@ public class bank_kid extends JPanel implements ActionListener {
         this.kid = kid;
 
         setLayout(null); // 使用绝对布局
-        button1 = new JButton("INTO");
-        button1.setBounds(590, 190, 140, 30);
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new JDialog();
-                kid.getBank().transaction(dialog,"saving","current");
-                dialog.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosed(WindowEvent e) {
-                        // 在对话框关闭时刷新页面
-                        mainFrame.refresh();
-                    }
-                });
-            }
-        });
-        add(button1);
+//        button1 = new JButton("INTO");
+//        button1.setBounds(590, 190, 140, 30);
+//        bank_kid_control.addButtonListener(mainFrame,button1);
+//        button1.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                JDialog dialog = new JDialog();
+//                kid.getBank().transaction(dialog,"saving","current");
+//                dialog.addWindowListener(new WindowAdapter() {
+//                    @Override
+//                    public void windowClosed(WindowEvent e) {
+//                        // 在对话框关闭时刷新页面
+//                        mainFrame.refresh();
+//                    }
+//                });
+//            }
+//        });
+//        add(button1);
 
         button_goal = new JButton("Edit");
         button_goal.setBounds(680,80,70,30);
@@ -273,61 +246,17 @@ public class bank_kid extends JPanel implements ActionListener {
         savingGoalTextField.setBounds(580, 80, 75, 30);
         savingGoalTextField.setVisible(false);
         add(savingGoalTextField);
-        button_goal.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clickCount++; // 每次点击增加点击次数
-                // 根据点击次数的奇偶性设置文本框的可见性
-                if (clickCount % 2 == 1) {
-                    savingGoalTextField.setVisible(true);
-                    revalidate();
-                    repaint();
-                } else {
-                    savingGoalTextField.setVisible(false);
-                    kid.getBank().changeSavingGoal(savingGoalTextField);
-                    mainFrame.refresh();
-                }
-
-            }
-        });
+        bank_kid_control.addButtonListener(mainFrame,button_goal,kid);
         add(button_goal);
 
         button3 = new JButton("INTO");
         button3.setBounds(590, 310, 140, 30);
-        button3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new JDialog();
-                kid.getBank().transaction(dialog, "current", "saving");
-                dialog.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosed(WindowEvent e) {
-                        // 在对话框关闭时刷新主页面
-//                        kid.getBank().getCurrentTotal();
-//                        kid.getBank().getSavingTotal();
-                        mainFrame.refresh();
-                    }
-                });
-            }
-        });
+        bank_kid_control.addButtonListener(mainFrame,button3,kid);
         add(button3);
 
         button_history = new JButton("Review");
         button_history.setBounds(590, 420, 140, 30);
-        button_history.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //this.dispose();
-                history_page review = new history_page();
-                JFrame Review_win = new JFrame();
-                Review_win.setTitle("History");
-                Review_win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                Review_win.setLocationRelativeTo(null);
-                Review_win.add(review);
-                Review_win.setSize(800, 400);
-                Review_win.setVisible(true);
-            }
-        });
+        bank_kid_control.addButtonListener(mainFrame,button_history,kid);
         add(button_history);
     }
 

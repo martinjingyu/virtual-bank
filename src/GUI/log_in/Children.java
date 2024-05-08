@@ -2,6 +2,8 @@ package GUI.log_in;
 
 import javax.swing.*;
 
+import Controller.login.ButtonControl;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -35,23 +37,25 @@ public class Children {
         JButton mainButton1 = new JButton("parent");
         mainButton1.setBounds(80, 500, 150, 50);
         mainButton1.setFont(new Font("Times New Roman", Font.BOLD, 30));
-        mainButton1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                showCard(g, "parent");
+        ButtonControl.addButtonListener(mainButton1, g);
+        // mainButton1.addActionListener(new ActionListener() {
+        // public void actionPerformed(ActionEvent e) {
+        // showCard(g, "parent");
 
-            }
-        });
+        // }
+        // });
         childrenPanel.add(mainButton1);
 
         JButton mainButton2 = new JButton("children");
         mainButton2.setBounds(260, 500, 150, 50);
         mainButton2.setFont(new Font("Times New Roman", Font.BOLD, 30));
-        mainButton2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                showCard(g, "children");
+        ButtonControl.addButtonListener(mainButton2, g);
+        // mainButton2.addActionListener(new ActionListener() {
+        // public void actionPerformed(ActionEvent e) {
+        // showCard(g, "children");
 
-            }
-        });
+        // }
+        // });
         childrenPanel.add(mainButton2);
 
         JLabel children_label = new JLabel("You are children");
@@ -84,22 +88,24 @@ public class Children {
         logButton.setFont(new Font("Times New Roman", Font.BOLD, 30));
 
         childrenPanel.add(logButton);
+        ButtonControl.addButtonListener2(logButton, g, textField_1, textField_2);
 
-        logButton.addActionListener(new ActionListener() {
-            // 在登录按钮的 ActionListener 中调用此方法
-            public void actionPerformed(ActionEvent e) {
+        // logButton.addActionListener(new ActionListener() {
+        // // 在登录按钮的 ActionListener 中调用此方法
+        // public void actionPerformed(ActionEvent e) {
 
-                String text2 = textField_2.getText();
-                String text1 = textField_1.getText();
-                if (utill.read.CheckChildrenSecret.checkChildrenSecret(text1, text2, "data/secret.txt") == true) {
-                    g.frame.dispose();
-                    g.loginListener.onLogin(text1);
-                } else {
-                    showCard(g, "error");
-                }
+        // String text2 = textField_2.getText();
+        // String text1 = textField_1.getText();
+        // if (utill.read.CheckChildrenSecret.checkChildrenSecret(text1, text2,
+        // "data/secret.txt") == true) {
+        // g.frame.dispose();
+        // g.loginListener.onLogin(text1);
+        // } else {
+        // showCard(g, "error");
+        // }
 
-            }
-        });
+        // }
+        // });
 
         childrenPanel.setLayout(null);
 

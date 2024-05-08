@@ -1,4 +1,5 @@
 package GUI;
+import Controller.MainFrameController;
 import Entity.Kids;
 import GUI.bank_page.bank_kid;
 import GUI.message_page.message_kid;
@@ -7,8 +8,6 @@ import GUI.task_page.Task_kid;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 
 public class MainFrame extends JFrame implements RefreshListener{
@@ -30,10 +29,37 @@ public class MainFrame extends JFrame implements RefreshListener{
         this.kid = kid;
 
         current_panel = pg1;
-        Jframe_Jpanel();
+        frame_panel();
         navi_button();
+        MainFrameController mainFrameController = new MainFrameController(this);
         setVisible(true);
     }
+
+    public void changePanel(int pgIndex){
+        main_page.remove(current_panel);
+        switch (pgIndex){
+            case 1:
+                current_panel = pg1;
+                break;
+            case 2:
+                current_panel = pg2;
+                break;
+            case 3:
+                current_panel = pg3;
+                break;
+            case 4:
+                current_panel = pg4;
+                break;
+            default:
+                current_panel = pg1;
+                break;
+        }
+        main_page.add(current_panel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+
 
     @Override
     public void refresh() {
@@ -83,8 +109,22 @@ public class MainFrame extends JFrame implements RefreshListener{
         repaint();
 
     }
+    public JLabel getButton(int index){
+        switch (index) {
+            case 1:
+                return button1;
+            case 2:
+                return button2;
+            case 3:
+                return button3;
+            case 4:
+                return button4;
+            default:
+                return button1;
+        }
+    }
 
-    public void Jframe_Jpanel(){
+    public void frame_panel(){
         // 设置主窗口的标题
 
         this.setSize(960,540);
@@ -108,69 +148,26 @@ public class MainFrame extends JFrame implements RefreshListener{
     }
     public void navi_button(){
 
+
         button1 = new JLabel();
         ImageIcon icon = new ImageIcon("bank.png");
         Image img = icon.getImage();
         Image scaledImg = img.getScaledInstance(25, 25, Image.SCALE_SMOOTH); // 自动调整宽度，高度等比例缩放
         button1.setIcon(new ImageIcon(scaledImg)); // 替换为您的图片路径
-        button1.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // 添加按钮点击事件的处理代码
-                main_page.remove(current_panel);
-                current_panel = pg1;
-                main_page.add(current_panel, BorderLayout.CENTER);
-                revalidate();
-                repaint();
-            }
-        });
         button1.setHorizontalAlignment(SwingConstants.CENTER); // 设置水平居中对齐
 
         button2 = new JLabel();
         button2.setIcon(new ImageIcon(scaledImg)); // 替换为您的图片路径
-        button2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // 添加按钮点击事件的处理代码
-                main_page.remove(current_panel);
-                current_panel = pg2;
-                main_page.add(current_panel, BorderLayout.CENTER);
-                revalidate();
-                repaint();
-            }
-        });
+
+
         button2.setHorizontalAlignment(SwingConstants.CENTER); // 设置水平居中对齐
 
         button3 = new JLabel();
         button3.setIcon(new ImageIcon(scaledImg)); // 替换为您的图片路径
-        button3.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // 添加按钮点击事件的处理代码
-                main_page.remove(current_panel);
-                main_page.remove(current_panel);
-                current_panel = pg3;
-                main_page.add(current_panel, BorderLayout.CENTER);
-                revalidate();
-                repaint();
-            }
-        });
         button3.setHorizontalAlignment(SwingConstants.CENTER); // 设置水平居中对齐
 
         button4 = new JLabel();
         button4.setIcon(new ImageIcon(scaledImg)); // 替换为您的图片路径
-        button4.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // 添加按钮点击事件的处理代码
-                main_page.remove(current_panel);
-                main_page.remove(current_panel);
-                current_panel = pg4;
-                main_page.add(current_panel, BorderLayout.CENTER);
-                revalidate();
-                repaint();
-            }
-        });
         button4.setHorizontalAlignment(SwingConstants.CENTER); // 设置水平居中对齐
 
         menu.setLayout(new GridLayout(15, 1)); // 竖直排列按钮
