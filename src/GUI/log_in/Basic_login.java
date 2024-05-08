@@ -1,6 +1,9 @@
 package GUI.log_in;
 
 import javax.swing.*;
+
+import Controller.login.ButtonControl;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -56,23 +59,25 @@ public class Basic_login {
         JButton mainButton1 = new JButton("parent");
         mainButton1.setBounds(80, 500, 150, 50);
         mainButton1.setFont(new Font("Times New Roman", Font.BOLD, 30));
-        mainButton1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                showCard(g, "parent");
+        ButtonControl.addButtonListener(mainButton1, g);
+        // mainButton1.addActionListener(new ActionListener() {
+        // public void actionPerformed(ActionEvent e) {
+        // showCard(g, "parent");
 
-            }
-        });
+        // }
+        // });
         basicPanel.add(mainButton1);
 
         JButton mainButton2 = new JButton("children");
         mainButton2.setBounds(260, 500, 150, 50);
         mainButton2.setFont(new Font("Times New Roman", Font.BOLD, 30));
-        mainButton2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                showCard(g, "children");
+        ButtonControl.addButtonListener(mainButton2, g);
+        // mainButton2.addActionListener(new ActionListener() {
+        // public void actionPerformed(ActionEvent e) {
+        // showCard(g, "children");
 
-            }
-        });
+        // }
+        // });
         basicPanel.add(mainButton2);
 
         JLabel basic_label = new JLabel("You identity is unknown");
@@ -81,12 +86,13 @@ public class Basic_login {
         JButton logButton = new JButton("sign up");
         logButton.setBounds(650, 350, 200, 50);
         logButton.setFont(new Font("Times New Roman", Font.BOLD, 30));
-        logButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                showCard(g, "sign");
+        ButtonControl.addButtonListener(logButton, g);
+        // logButton.addActionListener(new ActionListener() {
+        // public void actionPerformed(ActionEvent e) {
+        // showCard(g, "sign");
 
-            }
-        });
+        // }
+        // });
         basicPanel.add(logButton);
 
         basicPanel.add(basic_label);

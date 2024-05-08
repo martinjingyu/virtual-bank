@@ -26,5 +26,8 @@ public class WriteToFile {
             System.err.println("写入文件时出现错误：" + e.getMessage());
         }
     }
+    public static void createFolderAndFiles(String text){
+
+    }
 
 }
