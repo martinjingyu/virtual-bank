@@ -23,6 +23,7 @@ public class shop_kid extends JPanel {
     private Kids kid;
     private JLabel selectedTotalLabel; // 使其成为类的成员变量以便于访问和修改
     private MessageList messagelist;
+    private JLabel quantityLabel;
 
     public shop_kid(Kids kid) {
         this.kid = kid;
@@ -65,7 +66,7 @@ public class shop_kid extends JPanel {
             productPanel.setLayout(new BoxLayout(productPanel, BoxLayout.Y_AXIS));
             productPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
             productPanel.setBackground(Color.WHITE); // 设置白色背景
-            productPanel.setPreferredSize(new Dimension(200, 85)); // 每个面板固定大小
+            productPanel.setPreferredSize(new Dimension(200, 110)); // 每个面板固定大小
 
             JLabel nameLabel = new JLabel(product.getName(), SwingConstants.CENTER);
             nameLabel.setFont(new Font("Arial", Font.BOLD, 16)); // 商品名称字体更大
@@ -75,13 +76,64 @@ public class shop_kid extends JPanel {
             priceLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // 价格字体
             priceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+            JPanel quantityPanel = new JPanel(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            quantityPanel.setBackground(Color.WHITE); // 设置白色背景
+
+            JButton minusButton = new JButton("-");
+            minusButton.setFont(new Font("Arial", Font.PLAIN, 14)); // 设置按钮字体
+            minusButton.setBackground(Color.LIGHT_GRAY);
+            minusButton.setOpaque(true);
+            minusButton.setBorderPainted(false);
+            minusButton.setPreferredSize(new Dimension(40, 30)); // 设置按钮尺寸
+            minusButton.addActionListener(e -> {
+                int quantity = Integer.parseInt(quantityLabel.getText());
+                if (quantity > 0) {
+                    quantityLabel.setText(String.valueOf(quantity - 1));
+                }
+            });
+
+            quantityLabel = new JLabel("0");
+            quantityLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // 设置标签字体
+            quantityLabel.setHorizontalAlignment(SwingConstants.CENTER); // 居中显示
+            quantityLabel.setPreferredSize(new Dimension(45, 30)); // 设置标签尺寸
+
+            JButton plusButton = new JButton("+");
+            plusButton.setFont(new Font("Arial", Font.PLAIN, 14)); // 设置按钮字体
+            plusButton.setBackground(new Color(192, 192, 192));
+            plusButton.setOpaque(true);
+            plusButton.setBorderPainted(false);
+            plusButton.setPreferredSize(new Dimension(45, 30)); // 设置按钮尺寸
+            plusButton.addActionListener(e -> {
+                int quantity = Integer.parseInt(quantityLabel.getText());
+                quantityLabel.setText(String.valueOf(quantity + 1));
+            });
+
+
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.insets = new Insets(0, 0, 0, 8);  // 在组件右侧添加2像素的间隔
+            quantityPanel.add(minusButton, gbc);
+
+            gbc.gridx = 1;
+            gbc.insets = new Insets(0, 0, 0, 0);  // 不添加额外间隔
+            quantityPanel.add(quantityLabel, gbc);
+
+            gbc.gridx = 2;
+            gbc.insets = new Insets(0, 8, 0, 0);  // 在组件左侧添加2像素的间隔
+            quantityPanel.add(plusButton, gbc);
+
+
             JRadioButton radioButton = new JRadioButton();
             radioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            radioButton.setBackground(Color.WHITE); // 设置背景颜色为白色
 
             productPanel.add(nameLabel);
-            productPanel.add(Box.createVerticalStrut(10)); // 添加间隔
+            productPanel.add(Box.createVerticalStrut(5)); // 添加间隔
             productPanel.add(priceLabel);
-            productPanel.add(Box.createVerticalStrut(10)); // 添加间隔
+            productPanel.add(Box.createVerticalStrut(5)); // 添加间隔
+            productPanel.add(quantityPanel);
+            productPanel.add(Box.createVerticalStrut(5)); // 添加间隔
             productPanel.add(radioButton);
             productPanel.add(Box.createVerticalStrut(5)); // 与底部边界的间隔
 
@@ -106,6 +158,8 @@ public class shop_kid extends JPanel {
 
         return scrollPane;
     }
+
+
 
 
 
