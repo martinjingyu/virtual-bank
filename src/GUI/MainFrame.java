@@ -10,7 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class MainFrame extends JFrame implements RefreshListener{
+//public class MainFrame extends JFrame implements RefreshListener{
+public class MainFrame extends JFrame{
     private BorderLayout borderLayout;
     private JPanel main_page;
     private JPanel menu;
@@ -61,7 +62,7 @@ public class MainFrame extends JFrame implements RefreshListener{
 
 
 
-    @Override
+//    @Override
     public void refresh() {
         int tempIndex = 0;
         main_page.remove(current_panel);

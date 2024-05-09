@@ -68,9 +68,12 @@ public class MessageList {
         messages.add(bankMessage);
     }
 
+//    my宝宝，这块儿数据结构和我的不匹配，我给改了，保留我的就好
     public void addShopMessage(double price) {
-        String bigTransaction = String.format("Attention! You made a large expenditure, spending %d.", price);
-        Message shopMessage = new Message("system",bigTransaction);
+        String formattedString = String.format("Double value: %.2f", price);
+
+//     宝宝，这块儿参数是string要加双引号，你保留我的就会
+        Message shopMessage = new Message("system","bigTransaction");
         messages.add(shopMessage);
 
     }
