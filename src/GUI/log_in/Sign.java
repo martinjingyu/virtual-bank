@@ -1,20 +1,49 @@
+/**
+ * Title      : Sign.java
+ * Description: This class is a sign up window.
+ * Copyright  : Copyright (c) 2024/5/9
+ * @author      Weida Peng
+ * @version     1.0
+ */
 package GUI.log_in;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import Controller.login.ButtonControl;
-
 import java.awt.*;
-import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
+
+class ImagePanel extends JPanel {
+    private Image backgroundImage;
+
+    public ImagePanel(String imagePath) {
+        try {
+            backgroundImage = ImageIO.read(new File(imagePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
+}
 
 public class Sign {
+
     public static void addSignPanel(JPanel cardPanel, CardLayout cardLayout, GUIMain g) {
-        JPanel signPanel = new JPanel();
+        JPanel signPanel = new ImagePanel("image/background3.jpg");
         signPanel.setLayout(null);
         JLabel children = new JLabel("Sign for children ");
         children.setBounds(150, 200, 1000, 60);
-        // 创建 Font 对象，设置字体为宋体，大小为16
         children.setFont(new Font("Times New Roman", Font.BOLD, 40));
         signPanel.add(children);
+
         JLabel id_label_1 = new JLabel("ID : ");
         id_label_1.setBounds(100, 320, 260, 50);
         id_label_1.setFont(new Font("Times New Roman", Font.BOLD, 30));
@@ -35,7 +64,6 @@ public class Sign {
 
         JLabel parent = new JLabel("Sign for parent ");
         parent.setBounds(650, 200, 1000, 60);
-        // 创建 Font 对象，设置字体为宋体，大小为16
         parent.setFont(new Font("Times New Roman", Font.BOLD, 40));
         signPanel.add(parent);
 
@@ -71,10 +99,8 @@ public class Sign {
         // text_1 += textField_2.getText();
         // text_1 += ' ';
         // text_1 += textField_4.getText();
-        // // 查找第一个空格的位置
         // int indexOfSpace = text_1.indexOf(" ");
 
-        // // 提取第一个空格之前的内容
         // String contentBeforeSpace = text_1.substring(0, indexOfSpace);
         // if (utill.read.CheckID.checkID(contentBeforeSpace, "data/secret.txt") ==
         // false) {

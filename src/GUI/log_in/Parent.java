@@ -1,13 +1,15 @@
+/**
+ * Title      : Parent.java
+ * Description: This class is used to generate a page for parent to log in.
+ * Copyright  : Copyright (c) 2024/5/9
+ * @author      Weida Peng
+ * @version     1.0
+ */
 package GUI.log_in;
 
-import GUI.MainFrame;
 import Controller.login.ButtonControl;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.util.Scanner;
 
 class BackPanel extends JPanel {
     private Image backImage;
@@ -19,12 +21,10 @@ class BackPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // 绘制背景图片
         g.drawImage(backImage, 0, 0, getWidth(), getHeight(), this);
 
-        // 设置透明度
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setComposite(AlphaComposite.SrcOver.derive(0.35f)); // 设置透明度为35%
+        g2d.setComposite(AlphaComposite.SrcOver.derive(0.35f));
         g2d.setColor(getBackground());
         g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.dispose();
@@ -32,7 +32,7 @@ class BackPanel extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(800, 30); // 设置bank的大小为400x300像素
+        return new Dimension(800, 30);
     }
 }
 
@@ -41,21 +41,18 @@ public class Parent {
 
     public static void addParentPanel(JPanel cardPanel, CardLayout cardLayout, GUIMain g, JFrame frame) {
         BackPanel parentPanel = new BackPanel("image/background.jpg");
-        // 添加 parentPanel 的组件和逻辑
 
         JLabel head_label_1 = new JLabel("WELCOME TO ONLINE BANK");
         head_label_1.setBounds(250, 50, 1000, 50);
-        // 创建 Font 对象，设置字体为宋体，大小为16
         head_label_1.setFont(new Font("Times New Roman", Font.BOLD, 40));
         parentPanel.add(head_label_1);
 
         JLabel head_label = new JLabel("Please choose your identity");
         head_label.setBounds(300, 100, 1000, 50);
-        // 创建 Font 对象，设置字体为宋体，大小为16
         head_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
         parentPanel.add(head_label);
 
-        ImageIcon parent_img = new ImageIcon("image/parent.jpg"); // 图片路径
+        ImageIcon parent_img = new ImageIcon("image/parent.jpg");
         JLabel parent_img_label = new JLabel(parent_img);
         parent_img_label.setBounds(100, 150, 300, 300);
         parentPanel.add(parent_img_label);
@@ -89,7 +86,7 @@ public class Parent {
         parent_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
 
         parentPanel.add(parent_label);
-        // parent_label.setText("New Text"); // 更改文本
+        // parent_label.setText("New Text");
 
         JLabel id_label = new JLabel("ID : ");
         id_label.setBounds(550, 320, 260, 50);

@@ -1,3 +1,11 @@
+/**
+ * Title      : Parent_main.java
+ * Description: This class is used to generate the login page for you to choose identity and sign up a new account.
+ * Copyright  : Copyright (c) 2024/5/9
+ * @deprecated  addParent_mainPanel
+ * @author      Weida Peng
+ * @version     1.0
+ */
 package GUI.log_in;
 
 import javax.swing.*;
