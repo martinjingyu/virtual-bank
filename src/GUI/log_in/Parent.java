@@ -1,13 +1,9 @@
 package GUI.log_in;
 
-import GUI.MainFrame;
 import Controller.login.ButtonControl;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.util.Scanner;
 
 class BackPanel extends JPanel {
     private Image backImage;

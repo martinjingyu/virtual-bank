@@ -2,12 +2,9 @@
 // [pwd]:4/25：作为启动文件，用于启动整个项目
 
 import Controller.MainController;
-import Entity.Kids;
-import GUI.MainFrame;
+import GUI.MainFrame_kid;
+import GUI.MainFrame_parent;
 import GUI.log_in.LoginListener;
-import utill.read.ReadAll;
-
-import javax.swing.*;
 
 public class Start implements LoginListener {
     public static void main(String[] args) {
@@ -15,9 +12,15 @@ public class Start implements LoginListener {
         ui.createAndShowGUI();
         ui.setLoginListener(new Start());
     }
-    public void onLogin(String id) {
+    public void onLogin_kid(String id) {
         // 创建并显示新的窗口
         MainController mainController = new MainController(id);
-        MainFrame mainFrame = new MainFrame(mainController);
+
+        MainFrame_kid mainFrameKid = new MainFrame_kid(mainController);
+    }
+    public void onLogin_parent(String id){
+        MainController mainController = new MainController(id);
+
+        MainFrame_parent mainFrameParent = new MainFrame_parent(mainController);
     }
 }

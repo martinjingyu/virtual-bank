@@ -1,8 +1,7 @@
 package GUI.task_page;
 
 import Entity.*;
-import GUI.MainFrame;
-import utill.read.ReadBank;
+import GUI.MainFrame_kid;
 
 
 import javax.swing.*;
@@ -12,7 +11,6 @@ import java.awt.*;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -40,7 +38,7 @@ public class Task_kid extends JPanel {
     private JPanel Task3Info;
     private JPanel Task4Info;
 
-    private MainFrame mainFrame;
+    private MainFrame_kid mainFrameKid;
 
     private Kids kid;
 
@@ -52,8 +50,8 @@ public class Task_kid extends JPanel {
         // Debug to ensure components are initialized
     }
 
-    public Task_kid(Kids kid, MainFrame mainFrame) {
-        this.mainFrame = mainFrame;
+    public Task_kid(Kids kid, MainFrame_kid mainFrameKid) {
+        this.mainFrameKid = mainFrameKid;
         this.kid = kid;
         $$$setupUI$$$(); // Ensures all GUI components are initialized first
         Dimension preferredSize = new Dimension(900, 540);
@@ -73,7 +71,7 @@ public class Task_kid extends JPanel {
             if (response == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(this, kid.getTaskList().getNonConfirmedTask().getTask(index).getCon2(kid.getTaskList().getNonConfirmedTask().getTask(index).getState()), "Message", JOptionPane.INFORMATION_MESSAGE);
                 kid.getTaskList().updateTask(kid.getTaskList().getNonConfirmedTask().getTask(index).getName(),kid.getTaskList().getNonConfirmedTask().getTask(index).taskOperation(kid.getTaskList().getNonConfirmedTask().getTask(index)));
-                mainFrame.refresh();
+                mainFrameKid.refresh();
 
             }
         }

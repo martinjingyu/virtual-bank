@@ -1,18 +1,15 @@
 package GUI;
 import Controller.MainController;
-import Controller.shop.*;
-import Controller.MainFrameController;
 import GUI.bank_page.Bank_kid;
 import GUI.shop_page.Shop_kid;
 import GUI.task_page.Task_kid;
-import Entity.*;
 
 import javax.swing.*;
 import java.awt.*;
 
 
 //public class MainFrame extends JFrame implements RefreshListener{
-public class MainFrame extends JFrame {
+public class MainFrame_kid extends JFrame {
     private BorderLayout borderLayout;
     private JPanel main_page;
     private JPanel menu;
@@ -25,16 +22,12 @@ public class MainFrame extends JFrame {
     private Task_kid taskKid;
 //    private Message_kid messageKid;
 
-    public MainFrame(MainController mainController) {
+    public MainFrame_kid(MainController mainController) {
         super("demo");
         this.mainController = mainController;
+        InitiateAll();
 
-        ShopController shopController =mainController.getShopController();
-
-        this.pg2 = new Shop_kid(shopController);
-
-
-        current_panel = pg2;
+        current_panel = pg1;
         frame_panel();
         navi_button();
         setVisible(true);
@@ -67,6 +60,13 @@ public class MainFrame extends JFrame {
         repaint();
     }
 
+    private void InitiateAll(){
+        this.pg1 = new Bank_kid(mainController.bank_kid_control, this);
+        this.pg2 = new Shop_kid(mainController.ShopController);
+//        this.pg3 = new Task_kid(mainController.task_kid_control, this);
+//        this.pg4 = new Shop_kid(mainController.ShopController);
+    }
+
 
 
 //    @Override
@@ -89,7 +89,9 @@ public class MainFrame extends JFrame {
         else{
             tempIndex = 1;
         }
-        this.pg1 = new Bank_kid(mainController,this);
+        InitiateAll();
+
+
 
 //        this.pg3 = new Task_kid(this);
 
@@ -117,6 +119,8 @@ public class MainFrame extends JFrame {
         repaint();
 
     }
+
+
     public JLabel getButton(int index){
         switch (index) {
             case 1:
@@ -198,7 +202,7 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        MainFrame main = new MainFrame(new MainController("222"));
+        MainFrame_kid main = new MainFrame_kid(new MainController("222"));
     }
 
 }
