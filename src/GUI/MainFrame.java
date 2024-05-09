@@ -1,9 +1,7 @@
 package GUI;
+import Controller.MainController;
 import Controller.MainFrameController;
-import Entity.Kids;
-import GUI.bank_page.bank_kid;
-import GUI.message_page.message_kid;
-import GUI.shop_page.shop_kid;
+import GUI.bank_page.Bank_kid;
 import GUI.task_page.Task_kid;
 
 import javax.swing.*;
@@ -17,16 +15,22 @@ public class MainFrame extends JFrame implements RefreshListener{
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
     private JPanel pg1, pg2,pg3,pg4;
-    private Kids kid;
+    private MainFrameController mainFrameController;
+    private MainController mainController;
 
 
-    public MainFrame(Kids kid) {
+    public MainFrame(MainController mainController) {
+
+
         super("demo");
-        this.pg1 = new bank_kid(kid,this);
-        this.pg2 = new shop_kid(kid);
-        this.pg3 = new Task_kid(kid, this);
-        this.pg4 = new message_kid(kid);
-        this.kid = kid;
+        this.mainController = mainController;
+
+        this.pg1 = new Bank_kid(mainController,this);
+
+        this.pg3 = new Task_kid(mainController,this);
+
+//        this.pg3 = new Task_kid(this);
+
 
         current_panel = pg1;
         frame_panel();
@@ -34,6 +38,7 @@ public class MainFrame extends JFrame implements RefreshListener{
         MainFrameController mainFrameController = new MainFrameController(this);
         setVisible(true);
     }
+
 
     public void changePanel(int pgIndex){
         main_page.remove(current_panel);
@@ -81,10 +86,10 @@ public class MainFrame extends JFrame implements RefreshListener{
         else{
             tempIndex = 1;
         }
-        this.pg1 = new bank_kid(kid,this);
-        this.pg2 = new shop_kid(kid);
-        this.pg3 = new Task_kid(kid, this);
-        this.pg4 = new message_kid(kid);
+        this.pg1 = new Bank_kid(mainController,this);
+
+//        this.pg3 = new Task_kid(this);
+
         switch (tempIndex) {
             case 1:
                 current_panel = pg1;
@@ -190,7 +195,7 @@ public class MainFrame extends JFrame implements RefreshListener{
     }
 
     public static void main(String[] args) {
-        MainFrame main = new MainFrame(new Kids());
+        MainFrame main = new MainFrame(new MainController("222"));
     }
 
 }

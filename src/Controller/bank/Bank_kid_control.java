@@ -1,9 +1,9 @@
 package Controller.bank;
 
 import Entity.Kids;
-import GUI.MainFrame;
-import GUI.bank_page.bank_kid;
+
 import GUI.bank_page.history_page;
+import GUI.bank_page.Bank_kid;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -11,16 +11,28 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class bank_kid_control {
+public class Bank_kid_control {
     private static JTextField savingGoalTextField;
     private static int clickCount=0;
+    private Kids kid;
+    private Bank_kid GUI;
+    public Bank_kid_control(Kids kid){
+        this.kid = kid;
 
-    public static void addButtonListener(MainFrame mainFrame, JButton button, Kids kid){
+    }
+    public void setGUI(Bank_kid GUI){
+        this.GUI = GUI;
+    }
+    public Kids getKid(){
+        return kid;
+    }
+
+    public void addButtonListener(JButton button){
 
         savingGoalTextField = new JTextField();
         savingGoalTextField.setBounds(630, 80, 75, 30);
         savingGoalTextField.setVisible(false);
-        mainFrame.add(savingGoalTextField);
+        GUI.getMainFrame().add(savingGoalTextField);
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -31,12 +43,12 @@ public class bank_kid_control {
                     // 根据点击次数的奇偶性设置文本框的可见性
                     if (clickCount % 2 == 1) {
                         savingGoalTextField.setVisible(true);
-                        mainFrame.revalidate();
-                        mainFrame.repaint();
+                        GUI.getMainFrame().revalidate();
+                        GUI.getMainFrame().repaint();
                     } else {
                         savingGoalTextField.setVisible(false);
                         kid.getBank().changeSavingGoal(savingGoalTextField);
-                        mainFrame.refresh();
+                        GUI.getMainFrame().refresh();
                     }
                 }else if (buttonName.equals("INTO")){
                     JDialog dialog = new JDialog();
@@ -44,7 +56,7 @@ public class bank_kid_control {
                     dialog.addWindowListener(new WindowAdapter() {
                         @Override
                         public void windowClosed(WindowEvent e) {
-                            mainFrame.refresh();
+                            GUI.getMainFrame().refresh();
                         }
                     });
                 } else if (buttonName.equals("Review")) {
