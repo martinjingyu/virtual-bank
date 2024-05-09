@@ -7,18 +7,20 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class shopController {
+public class ShopController {
     private Kids kid;
     private Bank bank;
     private MessageList messageList;
     private List<Product> selectedProductList;
 
-    public shopController(Kids kid) {
+    public ShopController(Kids kid) {
         this.kid = kid;
         this.bank = kid.getBank();
         this.messageList = kid.getMessagelist();
         this.selectedProductList = new ArrayList<>();
     }
+
+    public Kids getKid(){return kid;}
 
     public double calculateSelectedTotal() {
         double total = 0;

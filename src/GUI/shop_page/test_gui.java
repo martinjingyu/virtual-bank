@@ -15,20 +15,20 @@ public class test_gui extends JFrame {
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
 
-    public static void main(String[] args) {
-        Kids kid = ReadAll.readall(String.valueOf(222));
-        shop_kid page1 = new shop_kid(kid);
-        shop_parent page2 = new shop_parent();
-        new test_gui(page1);
-    }
-
-    public test_gui(JPanel panel) {
-        super("demo");
-        current_panel = panel;
-        Jframe_Jpanel();
-        navi_button();
-        setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        Kids kid = ReadAll.readall(String.valueOf(222));
+//        Shop_kid page1 = new Shop_kid(kid);
+//        shop_parent page2 = new shop_parent();
+//        new test_gui(page1);
+//    }
+//
+//    public test_gui(JPanel panel) {
+//        super("demo");
+//        current_panel = panel;
+//        Jframe_Jpanel();
+//        navi_button();
+//        setVisible(true);
+//    }
 
     public void Jframe_Jpanel(){
         // 设置主窗口的标题

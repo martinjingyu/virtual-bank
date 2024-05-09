@@ -1,6 +1,6 @@
 package GUI.shop_page;
 
-import Controller.shop.shopController;
+import Controller.shop.ShopController;
 import Entity.Kids;
 import Entity.Product;
 import Entity.ProductList;
@@ -10,26 +10,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.awt.event.ItemEvent;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.*;
 import javax.swing.JRadioButton;
 import java.util.ArrayList;
 
-public class shop_kid extends JPanel {
+public class Shop_kid extends JPanel {
     private JButton buyButton;
     private List<JRadioButton> toggleButtons;
     private ProductList productList;
-    private shopController shopController;
+    private ShopController shopController;
     private JLabel selectedTotalLabel;
     private JLabel currentAccountLabel;
 
-    public shop_kid(Kids kid) {
-        this.productList = kid.getProductList();
-        this.shopController = new shopController(kid);
+    public Shop_kid(ShopController shopController) {
+        this.shopController = shopController;
+        this.productList = shopController.getKid().getProductList();
         this.selectedTotalLabel = new JLabel("Selected Total: $      0.00");
         this.selectedTotalLabel.setForeground(Color.BLACK);
-        this.currentAccountLabel = new JLabel(String.format("Current Account: $%9.2f", kid.getBank().getCurrentTotal()));
+        this.currentAccountLabel = new JLabel(String.format("Current Account: $%9.2f", shopController.getKid().getBank().getCurrentTotal()));
         this.toggleButtons = new ArrayList<>();
 
         setLayout(new BorderLayout(10, 10));
@@ -141,7 +138,8 @@ public class shop_kid extends JPanel {
 
     public static void main(String[] args) {
         Kids kid = ReadAll.readall(String.valueOf(222));
-        shop_kid shopKid = new shop_kid(kid);
+        ShopController ShopController = new ShopController(kid);
+        Shop_kid shopKid = new Shop_kid(ShopController);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(shopKid);

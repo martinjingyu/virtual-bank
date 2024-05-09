@@ -1,44 +1,46 @@
 package GUI;
 import Controller.MainController;
+import Controller.shop.*;
 import Controller.MainFrameController;
 import GUI.bank_page.Bank_kid;
+import GUI.shop_page.Shop_kid;
 import GUI.task_page.Task_kid;
+import Entity.*;
 
 import javax.swing.*;
 import java.awt.*;
 
 
 //public class MainFrame extends JFrame implements RefreshListener{
-public class MainFrame extends JFrame{
+public class MainFrame extends JFrame {
     private BorderLayout borderLayout;
     private JPanel main_page;
     private JPanel menu;
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
     private JPanel pg1, pg2,pg3,pg4;
-    private MainFrameController mainFrameController;
     private MainController mainController;
-
+    private Bank_kid bankKid;
+    private Shop_kid shopKid;
+    private Task_kid taskKid;
+//    private Message_kid messageKid;
 
     public MainFrame(MainController mainController) {
-
-
         super("demo");
         this.mainController = mainController;
 
-        this.pg1 = new Bank_kid(mainController,this);
+        ShopController shopController =mainController.getShopController();
 
-        this.pg3 = new Task_kid(mainController,this);
-
-//        this.pg3 = new Task_kid(this);
+        this.pg2 = new Shop_kid(shopController);
 
 
-        current_panel = pg1;
+        current_panel = pg2;
         frame_panel();
         navi_button();
-        MainFrameController mainFrameController = new MainFrameController(this);
         setVisible(true);
     }
+
+
 
 
     public void changePanel(int pgIndex){
