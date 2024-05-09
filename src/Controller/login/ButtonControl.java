@@ -49,7 +49,7 @@ public class ButtonControl {
                 String text1 = textField_1.getText();
                 if (utill.read.CheckChildrenSecret.checkChildrenSecret(text1, text2, "data/secret.txt") == true) {
                     g.frame.dispose();
-                    g.loginListener.onLogin(text1);
+                    g.loginListener.onLogin_kid(text1);
                 } else {
                     GUI.log_in.Basic_login.showCard(g, "error");
                 }
@@ -68,7 +68,7 @@ public class ButtonControl {
                 String text1 = textField_1.getText();
                 if (utill.read.CheckParentSecret.checkParentSecret(text1, text2, "data/secret.txt") == true) {
                     g.frame.dispose();
-                    g.loginListener.onLogin(text1);
+                    g.loginListener.onLogin_parent(text1);
                 } else {
                     GUI.log_in.Basic_login.showCard(g, "error");
                 }
