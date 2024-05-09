@@ -1,3 +1,10 @@
+/**
+ * Title      : CheckID.java
+ * Description: This class is used to check if the id is already exist.
+ * Copyright  : Copyright (c) 2024/5/9
+ * @author      Weida Peng
+ * @version     1.0
+ */
 package utill.read;
 
 import java.io.File;
@@ -9,10 +16,7 @@ public class CheckID {
     public static boolean checkID(String text1, String filePath) {
         try {
             String contents = "";
-            // 打开文件
-            File file = new File(filePath); // 替换为您的文件路径
-
-            // 创建 Scanner 对象来读取文件内容
+            File file = new File(filePath);
             Scanner scanner = new Scanner(file);
             contents = scanner.next();
             System.out.println("content:" + contents);
@@ -37,10 +41,10 @@ public class CheckID {
             System.out.println("ID_DONT_HAVE");
             scanner.close();
             return true;
-            // // 读取直到第一个空格
+            //
             // contents = scanner.next();
 
-            // // 打印结果
+            //
             // System.out.println("Content until first space: " + contents);
             // if (text1.equals(contents)) {
             // System.out.println("text1_right");
@@ -59,8 +63,6 @@ public class CheckID {
             // System.out.println("error");
             // showCard(g, "error");
             // }
-
-            // 关闭 Scanner
 
         } catch (IOException error) {
             System.out.println("error_id");
