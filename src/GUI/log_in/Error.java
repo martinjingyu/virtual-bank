@@ -1,16 +1,11 @@
-/**
- * Title      : Error.java
- * Description: This class is used to generate the error page to indicate that the input of user is error.
- * Copyright  : Copyright (c) 2024/5/9
- * @author      Weida Peng
- * @version     1.0
- */
-
 package GUI.log_in;
 
 import javax.swing.*;
+
 import Controller.login.ButtonControl;
+
 import java.awt.*;
+import java.awt.event.*;
 
 public class Error {
 

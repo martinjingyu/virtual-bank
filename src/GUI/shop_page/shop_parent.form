@@ -124,22 +124,9 @@
                       <text value="Prize     :"/>
                     </properties>
                   </component>
-                  <component id="318f3" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
-                    <constraints>
-                      <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                      <gridbag weightx="1.0" weighty="1.0"/>
-                    </constraints>
-                    <properties>
-                      <model>
-                        <item value="STUDY"/>
-                        <item value="ENTERTAINMENT"/>
-                        <item value="OUTFIT"/>
-                      </model>
-                    </properties>
-                  </component>
                   <component id="a7d3" class="javax.swing.JButton" binding="SUBMITButton" default-binding="true">
                     <constraints>
-                      <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                       <gridbag weightx="1.0" weighty="1.0"/>
                     </constraints>
                     <properties>

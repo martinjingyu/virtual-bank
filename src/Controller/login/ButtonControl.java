@@ -1,26 +1,19 @@
-/**
- * Title      : ButtonControl.java
- * Description: This class is used control the button action.
- * Copyright  : Copyright (c) 2024/5/9
- * @author      Weida Peng
- * @version     1.0
- */
 package Controller.login;
 
 import GUI.log_in.*;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ButtonControl {
-    public Icon icon;
 
     public static void addButtonListener(JButton button, GUIMain g) {
 
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                // 在这里编写按钮点击后的行为
                 String buttonName = e.getActionCommand();
                 System.out.println(buttonName);
                 if (buttonName == "parent") {
@@ -37,39 +30,26 @@ public class ButtonControl {
                     GUI.log_in.Basic_login.showCard(g, "basic");
                 }
 
+
             }
         });
     }
 
-    public static void addMouseListener(JButton button, int a) {
-        button.addActionListener(new ActionListener() {
-            @Override
-
-            public void actionPerformed(ActionEvent e) {
-                if (a == 1) {
-                    JOptionPane.showMessageDialog(null, "If you have any question, please phone me : #123456789",
-                            "HELP",
-                            JOptionPane.INFORMATION_MESSAGE);
-                } else if (a == 2) {
-                    System.exit(0);
-                }
-            }
-        });
-
+    public static void addButtonListener(JButton button) {
     }
 
     public static void addButtonListener2(JButton button, GUIMain g, JTextField textField_1, JTextField textField_2) {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                // 在这里编写按钮点击后的行为
                 String buttonName = e.getActionCommand();
                 System.out.println(buttonName);
                 String text2 = textField_2.getText();
                 String text1 = textField_1.getText();
                 if (utill.read.CheckChildrenSecret.checkChildrenSecret(text1, text2, "data/secret.txt") == true) {
                     g.frame.dispose();
-                    g.loginListener.onLogin_kid(text1);
+                    g.loginListener.onLogin(text1);
                 } else {
                     GUI.log_in.Basic_login.showCard(g, "error");
                 }
@@ -81,14 +61,14 @@ public class ButtonControl {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                // 在这里编写按钮点击后的行为
                 String buttonName = e.getActionCommand();
                 System.out.println(buttonName);
                 String text2 = textField_2.getText();
                 String text1 = textField_1.getText();
                 if (utill.read.CheckParentSecret.checkParentSecret(text1, text2, "data/secret.txt") == true) {
                     g.frame.dispose();
-                    g.loginListener.onLogin_parent(text1);
+                    g.loginListener.onLogin(text1);
                 } else {
                     GUI.log_in.Basic_login.showCard(g, "error");
                 }
@@ -101,7 +81,7 @@ public class ButtonControl {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                // 在这里编写按钮点击后的行为
                 String buttonName = e.getActionCommand();
                 System.out.println(buttonName);
                 if (textField_1.getText().isEmpty() || textField_2.getText().isEmpty()
@@ -115,9 +95,10 @@ public class ButtonControl {
                     text_1 += textField_2.getText();
                     text_1 += ' ';
                     text_1 += textField_4.getText();
-
+                    // 查找第一个空格的位置
                     int indexOfSpace = text_1.indexOf(" ");
 
+                    // 提取第一个空格之前的内容
                     String contentBeforeSpace = text_1.substring(0, indexOfSpace);
                     if (utill.read.CheckID.checkID(contentBeforeSpace, "data/secret.txt") == false) {
                         secret_label_3.setText("Account is already signed.");

@@ -1,43 +1,38 @@
-/**
- * Title      : Children_main.java
- * Description: This class is used to generate children home page, but is deprecated.
- * Copyright  : Copyright (c) 2024/5/9
- * @deprecated  CircularImageButton
- * @author      Weida Peng
- * @version     1.0
- */
 package GUI.log_in;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
+// 自定义圆形图像按钮类
 class CircularImageButton extends JButton {
         public CircularImageButton(ImageIcon icon) {
                 super(icon);
 
-                // Set the appearance of the button
-                setContentAreaFilled(false);
-                setFocusPainted(false);
+                // 设置按钮的外观
+                setContentAreaFilled(false); // 设置按钮透明
+                setFocusPainted(false); // 移除按钮焦点边框
         }
 
         @Override
         protected void paintComponent(Graphics g) {
                 if (getModel().isArmed()) {
-                        // Draw different effects when the button is pressed
+                        // 当按钮被按下时绘制不同的效果
                         g.setColor(Color.lightGray);
                 } else {
                         g.setColor(getBackground());
                 }
-                g.fillOval(0, 0, getSize().width - 1, getSize().height - 1); // Draw round button
+                g.fillOval(0, 0, getSize().width - 1, getSize().height - 1); // 绘制圆形按钮
                 super.paintComponent(g);
         }
 
         @Override
         protected void paintBorder(Graphics g) {
+                // 不绘制边框
         }
 
-        // Check whether the click is within the circle of the button
+        // 检测点击是否在按钮的圆形范围内
         @Override
         public boolean contains(int x, int y) {
                 int radius = Math.min(getWidth(), getHeight()) / 2;
@@ -77,11 +72,14 @@ public class Children_main {
                         }
                 });
                 children_mainPanel.add(back);
+                // 准备按钮图像
                 ImageIcon imageIcon1 = new ImageIcon("image/circle.jpg");
                 CircularImageButton circularButton = new CircularImageButton(imageIcon1);
                 circularButton.setPreferredSize(new Dimension(100, 100));
                 circularButton.setBounds(800, 340, 100, 100);
+                // 将按钮添加到 JFrame
                 children_mainPanel.add(circularButton);
+
                 cardPanel.add(children_mainPanel, "children_main");
 
         }

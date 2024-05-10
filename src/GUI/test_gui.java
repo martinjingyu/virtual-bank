@@ -1,4 +1,7 @@
 package GUI;
+import GUI.bank_page.bank_kid;
+
+import GUI.task_page.Depository;
 
 
 import javax.swing.*;

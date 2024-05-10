@@ -1,33 +1,35 @@
-/**
- * Title      : Children.java
- * Description: This class is used to generate the login page for children.
- * Copyright  : Copyright (c) 2024/5/9
- * @author      Weida Peng
- * @version     1.0
- */
 package GUI.log_in;
 
 import javax.swing.*;
+
 import Controller.login.ButtonControl;
+
 import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.Scanner;
 
 public class Children {
     public static String fileName = "data/children_secret.txt";
 
     public static void addChildrenPanel(JPanel cardPanel, CardLayout cardLayout, GUIMain g) {
         BackPanel childrenPanel = new BackPanel("image/background.jpg");
+        // 添加 childrenPanel 的组件和逻辑
+        // 添加 childrenPanel 的组件和逻辑
 
         JLabel head_label_1 = new JLabel("WELCOME TO ONLINE BANK");
         head_label_1.setBounds(250, 50, 1000, 50);
+        // 创建 Font 对象，设置字体为宋体，大小为16
         head_label_1.setFont(new Font("Times New Roman", Font.BOLD, 40));
         childrenPanel.add(head_label_1);
 
         JLabel head_label = new JLabel("Please choose your identity");
         head_label.setBounds(300, 100, 1000, 50);
+        // 创建 Font 对象，设置字体为宋体，大小为16
         head_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
         childrenPanel.add(head_label);
 
-        ImageIcon children_img = new ImageIcon("image/children.jpg");
+        ImageIcon children_img = new ImageIcon("image/children.jpg"); // 图片路径
         JLabel children_img_label = new JLabel(children_img);
         children_img_label.setBounds(100, 150, 300, 300);
         childrenPanel.add(children_img_label);
@@ -59,7 +61,9 @@ public class Children {
         JLabel children_label = new JLabel("You are children");
         children_label.setBounds(620, 250, 1000, 50);
         children_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
+
         childrenPanel.add(children_label);
+        // children_label.setText("New Text"); // 更改文本
 
         JLabel id_label = new JLabel("ID : ");
         id_label.setBounds(550, 320, 260, 50);
@@ -82,6 +86,7 @@ public class Children {
         JButton logButton = new JButton("log in");
         logButton.setBounds(700, 450, 110, 50);
         logButton.setFont(new Font("Times New Roman", Font.BOLD, 30));
+
         childrenPanel.add(logButton);
         ButtonControl.addButtonListener2(logButton, g, textField_1, textField_2);
 

@@ -1,10 +1,3 @@
-/**
- * Title      : Remain.java
- * Description: This class is used to get time from the computer.
- * Copyright  : Copyright (c) 2024/5/9
- * @author      Weida Peng
- * @version     1.0
- */
 package GUI.log_in;
 
 import javax.swing.*;

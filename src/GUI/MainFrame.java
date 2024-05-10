@@ -1,5 +1,6 @@
 package GUI;
 import Controller.MainController;
+import Controller.shop.*;
 import GUI.bank_page.Bank_kid;
 import GUI.shop_page.Shop_kid;
 import GUI.task_page.Task_kid;
@@ -8,8 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 
 
-//public class MainFrame extends JFrame implements RefreshListener{
-public class MainFrame_kid extends JFrame {
+public class MainFrame extends JFrame implements RefreshListener{
     private BorderLayout borderLayout;
     private JPanel main_page;
     private JPanel menu;
@@ -22,19 +22,19 @@ public class MainFrame_kid extends JFrame {
     private Task_kid taskKid;
 //    private Message_kid messageKid;
 
-    public MainFrame_kid(MainController mainController) {
+    public MainFrame(MainController mainController) {
         super("demo");
         this.mainController = mainController;
-        InitiateAll();
 
-        current_panel = pg1;
+        ShopController shopController =mainController.getShopController();
+
+        this.pg2 = new Shop_kid(shopController);
+
+        current_panel = pg2;
         frame_panel();
         navi_button();
         setVisible(true);
     }
-
-
-
 
     public void changePanel(int pgIndex){
         main_page.remove(current_panel);
@@ -60,16 +60,9 @@ public class MainFrame_kid extends JFrame {
         repaint();
     }
 
-    private void InitiateAll(){
-        this.pg1 = new Bank_kid(mainController.bank_kid_control, this);
-        this.pg2 = new Shop_kid(mainController.ShopController);
-//        this.pg3 = new Task_kid(mainController.task_kid_control, this);
-//        this.pg4 = new Shop_kid(mainController.ShopController);
-    }
 
 
-
-//    @Override
+    @Override
     public void refresh() {
         int tempIndex = 0;
         main_page.remove(current_panel);
@@ -109,7 +102,7 @@ public class MainFrame_kid extends JFrame {
                 current_panel = pg4;
                 break;
             default:
-// 如果没有确定的索引，则默认显示 pg1
+                // 如果没有确定的索引，则默认显示 pg1
                 current_panel = pg1;
                 break;
         }
@@ -119,8 +112,6 @@ public class MainFrame_kid extends JFrame {
         repaint();
 
     }
-
-
     public JLabel getButton(int index){
         switch (index) {
             case 1:

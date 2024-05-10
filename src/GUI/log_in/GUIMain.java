@@ -1,15 +1,10 @@
-/**
- * Title      : GUIMain.java
- * Description: This class is used to generate main frame of the login page.
- * Copyright  : Copyright (c) 2024/5/9
- * @author      Weida Peng
- * @version     1.0
- */
 package GUI.log_in;
 
 import javax.swing.*;
-import Controller.login.ButtonControl;
+
 import java.awt.*;
+
+import java.awt.event.*;
 
 class DownPanel extends JPanel {
     private Image downImage;
@@ -21,9 +16,12 @@ class DownPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        // 绘制背景图片
         g.drawImage(downImage, 0, 0, getWidth(), getHeight(), this);
+
+        // 设置透明度
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setComposite(AlphaComposite.SrcOver.derive(0.35f));
+        g2d.setComposite(AlphaComposite.SrcOver.derive(0.35f)); // 设置透明度为35%
         g2d.setColor(getBackground());
         g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.dispose();
@@ -31,7 +29,7 @@ class DownPanel extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(800, 30);
+        return new Dimension(800, 30); // 设置bank的大小为400x300像素
     }
 }
 
@@ -45,9 +43,12 @@ class TransparentPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        // 绘制背景图片
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+
+        // 设置透明度
         Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setComposite(AlphaComposite.SrcOver.derive(0.35f));
+        g2d.setComposite(AlphaComposite.SrcOver.derive(0.35f)); // 设置透明度为35%
         g2d.setColor(getBackground());
         g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.dispose();
@@ -55,7 +56,7 @@ class TransparentPanel extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(800, 200);
+        return new Dimension(800, 200); // 设置bank的大小为400x300像素
     }
 }
 
@@ -69,7 +70,9 @@ public class GUIMain {
     // public static void main(String[] args) {
     // GUIMain ui = new GUIMain();
     // ui.createAndShowGUI();
-    // }
+    // } [pwd]:4/25：将启动项外移
+
+    // 设置登录监听器
     public void setLoginListener(LoginListener listener) {
         this.loginListener = listener;
     }
@@ -79,55 +82,64 @@ public class GUIMain {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1100, 700);
 
-        TransparentPanel upPanel = new TransparentPanel("image/bank.jpg");
+        TransparentPanel upPanel = new TransparentPanel("image/bank.jpg");// 更换为你的背景图片路径
         upPanel.setLayout(null);
 
-        JButton help = new JButton(new ImageIcon("image/question_mark.jpg"));
-        help.setBounds(950, 0, 77, 35);
+        JButton help = new JButton(new ImageIcon("image/bank.jpg"));
+        help.setBounds(850, 20, 77, 35);
+        // 获取按钮的宽度和高度
         int width = help.getWidth();
         int height = help.getHeight();
+        // 加载图像
         ImageIcon icon = (ImageIcon) help.getIcon();
         Image img = icon.getImage();
+        // 缩放图像到按钮的大小
         Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        // 创建新的 ImageIcon 对象，使用缩放后的图像
         ImageIcon scaledIcon = new ImageIcon(scaledImg);
+        // 设置按钮的图标为缩放后的图像
         help.setIcon(scaledIcon);
-        ButtonControl.addMouseListener(help, 1);
-        // help.addMouseListener(new MouseAdapter() {
-        // @Override
-        // public void mouseClicked(MouseEvent e) {
-        // JOptionPane.showMessageDialog(null, "If you have any question, please phone
-        // me : #123456789", "HELP",
-        // JOptionPane.INFORMATION_MESSAGE);
-        // }
-        // });
+        help.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // 点击图片时弹出另一个窗口显示 "welcome" 文字
+                JOptionPane.showMessageDialog(null, "If you have any question, please phone me : #123456789", "HELP",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
 
-        JButton exit = new JButton(new ImageIcon("image/CLOSE.jpg"));
+        JButton exit = new JButton(new ImageIcon("image/bank.jpg"));
         exit.setFont(new Font("Times New Roman", Font.BOLD, 60));
-        exit.setBounds(1020, 0, 68, 40);
-
-        width = exit.getWidth();
-        height = exit.getHeight();
-        icon = (ImageIcon) exit.getIcon();
+        exit.setBounds(850, 80, 68, 40);
+        // 获取按钮的宽度和高度
+        width = help.getWidth();
+        height = help.getHeight();
+        // 加载图像
+        icon = (ImageIcon) help.getIcon();
         img = icon.getImage();
+        // 缩放图像到按钮的大小
         scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        // 创建新的 ImageIcon 对象，使用缩放后的图像
         scaledIcon = new ImageIcon(scaledImg);
+        // 设置按钮的图标为缩放后的图像
         exit.setIcon(scaledIcon);
-        ButtonControl.addMouseListener(exit, 2);
-        // exit.addMouseListener(new MouseAdapter() {
-        // @Override
-        // public void mouseClicked(MouseEvent e) {
-        // System.exit(0);
-        // }
-        // });
+        exit.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // 点击图片时退出程序
+                System.exit(0);
+            }
+        });
+        upPanel.add(help);
+        upPanel.add(exit);
 
         cardPanel = new JPanel();
         cardLayout = new CardLayout();
         cardPanel.setLayout(cardLayout);
 
-        DownPanel downPanel = new DownPanel("image/white.jpg");
+        DownPanel downPanel = new DownPanel("image/white.jpg");// 更换为你的背景图片路径
         downPanel.setLayout(null);
-        downPanel.add(help);
-        downPanel.add(exit);
+
         // frame.add(upPanel, BorderLayout.NORTH);
         frame.add(cardPanel, BorderLayout.CENTER);
         frame.add(downPanel, BorderLayout.SOUTH);

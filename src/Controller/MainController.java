@@ -21,5 +21,8 @@ public class MainController {
         return kid;
     }
 
+    public ShopController getShopController() {
+        return ShopController;
+    }
 
 }
