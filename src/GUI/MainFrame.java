@@ -9,8 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 
 
-//public class MainFrame extends JFrame implements RefreshListener{
-public class MainFrame extends JFrame {
+public class MainFrame extends JFrame implements RefreshListener{
     private BorderLayout borderLayout;
     private JPanel main_page;
     private JPanel menu;
@@ -31,15 +30,11 @@ public class MainFrame extends JFrame {
 
         this.pg2 = new Shop_kid(shopController);
 
-
         current_panel = pg2;
         frame_panel();
         navi_button();
         setVisible(true);
     }
-
-
-
 
     public void changePanel(int pgIndex){
         main_page.remove(current_panel);
@@ -67,7 +62,7 @@ public class MainFrame extends JFrame {
 
 
 
-//    @Override
+    @Override
     public void refresh() {
         int tempIndex = 0;
         main_page.remove(current_panel);
@@ -87,7 +82,9 @@ public class MainFrame extends JFrame {
         else{
             tempIndex = 1;
         }
-        this.pg1 = new Bank_kid(mainController,this);
+        InitiateAll();
+
+
 
 //        this.pg3 = new Task_kid(this);
 
@@ -105,7 +102,7 @@ public class MainFrame extends JFrame {
                 current_panel = pg4;
                 break;
             default:
-// 如果没有确定的索引，则默认显示 pg1
+                // 如果没有确定的索引，则默认显示 pg1
                 current_panel = pg1;
                 break;
         }
@@ -196,7 +193,7 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        MainFrame main = new MainFrame(new MainController("222"));
+        MainFrame_kid main = new MainFrame_kid(new MainController("222"));
     }
 
 }
