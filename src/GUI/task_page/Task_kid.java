@@ -1,7 +1,10 @@
 package GUI.task_page;
 
+import Controller.MainController;
+import Controller.task.Task_kid_control;
 import Entity.*;
 import GUI.MainFrame_kid;
+import utill.read.ReadBank;
 
 
 import javax.swing.*;
@@ -11,6 +14,7 @@ import java.awt.*;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -37,10 +41,10 @@ public class Task_kid extends JPanel {
     private JPanel Task2Info;
     private JPanel Task3Info;
     private JPanel Task4Info;
-
-    private MainFrame_kid mainFrameKid;
-
-    private Kids kid;
+    private MainFrame_kid mainFrame;
+    private JLabel button1,button2,button3,button4,button5;
+    private Task_kid_control task_kid_control;
+    private int index;
 
     public Task_kid() {
         $$$setupUI$$$(); // Ensures all GUI components are initialized first
@@ -50,46 +54,70 @@ public class Task_kid extends JPanel {
         // Debug to ensure components are initialized
     }
 
-    public Task_kid(Kids kid, MainFrame_kid mainFrameKid) {
-        this.mainFrameKid = mainFrameKid;
-        this.kid = kid;
+    public Task_kid(Task_kid_control controller, MainFrame_kid mainFrame) {
+        this.mainFrame = mainFrame;
+        this.task_kid_control = controller;
+
+
         $$$setupUI$$$(); // Ensures all GUI components are initialized first
         Dimension preferredSize = new Dimension(900, 540);
+        controller.setGUI(this);
+        controller.addButtonControl();
         Container.setPreferredSize(preferredSize);
         add(Container);
         // Debug to ensure components are initialized
     }
 
+    public JLabel getButton(int index){
+        switch (index) {
+            case 1:
+                return button1;
+            case 2:
+                return button2;
+            case 3:
+                return button3;
+            case 4:
+                return button4;
+            default:
+                return button5;
+        }
+    }
+
     // 弹出对话框方法
     private void showDialog(int index) {
-        if(kid.getTaskList().getNonConfirmedTask().getTask(index).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(index).getState())=="Submitted"){
+        if(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState())=="Submitted"){
             JOptionPane.showMessageDialog(this, "You have submitted this task, please wait for parent's confirmation", "Message", JOptionPane.WARNING_MESSAGE);
         }else {
             // 使用 JOptionPane 来显示消息
-            int response = JOptionPane.showConfirmDialog(this, kid.getTaskList().getNonConfirmedTask().getTask(index).getCon1(kid.getTaskList().getNonConfirmedTask().getTask(index).getState()), "Confirmation", JOptionPane.YES_NO_OPTION);
+            int response = JOptionPane.showConfirmDialog(this, task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCon1(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Confirmation", JOptionPane.YES_NO_OPTION);
 
             if (response == JOptionPane.YES_OPTION) {
-                JOptionPane.showMessageDialog(this, kid.getTaskList().getNonConfirmedTask().getTask(index).getCon2(kid.getTaskList().getNonConfirmedTask().getTask(index).getState()), "Message", JOptionPane.INFORMATION_MESSAGE);
-                kid.getTaskList().updateTask(kid.getTaskList().getNonConfirmedTask().getTask(index).getName(),kid.getTaskList().getNonConfirmedTask().getTask(index).taskOperation(kid.getTaskList().getNonConfirmedTask().getTask(index)));
-                mainFrameKid.refresh();
-
+                JOptionPane.showMessageDialog(this, task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCon2(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Message", JOptionPane.INFORMATION_MESSAGE);
+                task_kid_control.getKid().getTaskList().updateTask(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName(),task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).taskOperation(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index)));
+                mainFrame.refresh();
             }
         }
 
     }
-    private void showWarning(){
+    public void showWarning(){
         JOptionPane.showMessageDialog(this, "Please select your account first.", "Message", JOptionPane.WARNING_MESSAGE);
     }
 
-    public String taskInfo(int index){
-        if(Objects.equals(kid.getTaskList().getNonConfirmedTask().getTask(index).getState(), "Confirmed")){
-            return kid.getTaskList().getNonConfirmedTask().getTask(index).getM("Confirmed") +" " + kid.getTaskList().getNonConfirmedTask().getTask(index).getReward();
+//    public String taskInfo(int index){
+//        if(Objects.equals(mainController.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState(), "Confirmed")){
+//            return mainController.getKid().getTaskList().getNonConfirmedTask().getTask(index).getM("Confirmed") +" " + mainController.getKid().getTaskList().getNonConfirmedTask().getTask(index).getReward();
+//
+//        }else {
+//            return mainController.getKid().getTaskList().getNonConfirmedTask().getTask(index).getM(mainController.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState())
+//                    + mainController.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
+//        }
+//    }
 
-        }else {
-            return kid.getTaskList().getNonConfirmedTask().getTask(index).getM(kid.getTaskList().getNonConfirmedTask().getTask(index).getState())
-                    +" "+ kid.getTaskList().getNonConfirmedTask().getTask(index).getName();
-        }
+    public void Info_show(){
+        // this.taskInfo(index);
+        this.showDialog(index);
     }
+
 
 
 
@@ -146,7 +174,7 @@ public class Task_kid extends JPanel {
         if (moneyFont != null) money.setFont(moneyFont);
         money.setForeground(new Color(-9975466));
 
-        money.setText("$"+kid.getBank().getSavingTotal()+"/$"+kid.getBank().getSavingGoal());
+        money.setText("$"+task_kid_control.getKid().getBank().getSavingTotal()+"/$"+task_kid_control.getKid().getBank().getSavingGoal());
 
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
@@ -170,7 +198,7 @@ public class Task_kid extends JPanel {
         progressBar1.setStringPainted(false);
 
         //System.out.println(bankKid.getSavingTotal()/bankKid.getSavingGoal());
-        progressBar1.setValue((int)((kid.getBank().getSavingTotal()/kid.getBank().getSavingGoal())*100));
+        progressBar1.setValue((int)((task_kid_control.getKid().getBank().getSavingTotal()/task_kid_control.getKid().getBank().getSavingGoal())*100));
 
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -186,7 +214,7 @@ public class Task_kid extends JPanel {
         if (progressFont != null) progress.setFont(progressFont);
         progress.setForeground(new Color(-12763843));
 
-        progress.setText(kid.getBank().getSavingTotal()/kid.getBank().getSavingGoal()*100+"%");
+        progress.setText(task_kid_control.getKid().getBank().getSavingTotal()/task_kid_control.getKid().getBank().getSavingGoal()*100+"%");
 
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
@@ -200,7 +228,7 @@ public class Task_kid extends JPanel {
 
 
         //Tasks set up
-        int size = kid.getTaskList().getNonConfirmedTask().getSize();
+        int size = task_kid_control.getKid().getTaskList().getNonConfirmedTask().getSize();
 
         //int[] index=kid.getTaskList().getNonConfirmedIndex(size);
         TaskBlock = new JPanel();
@@ -221,7 +249,7 @@ public class Task_kid extends JPanel {
 
         //Task 1
         if(size>=1) {
-            int index=0;
+            index=0;
             Task1Con = new JPanel();
             Task1Con.setLayout(new GridBagLayout());
             gbc = new GridBagConstraints();
@@ -257,28 +285,18 @@ public class Task_kid extends JPanel {
             gbc.anchor = GridBagConstraints.EAST;
             Task1Info.add(panel1, gbc);
             final JLabel label1 = new JLabel();
+            this.button1 = label1;
             label1.setBackground(new Color(-1052689));
             label1.setEnabled(true);
             Font label1Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 22, label1.getFont());
             if (label1Font != null) label1.setFont(label1Font);
             label1.setForeground(new Color(-12763843));
             //button1
-            label1.setText(kid.getTaskList().getNonConfirmedTask().getTask(0).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(0).getState()));
-            label1.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
-                        showWarning();
-                    }else {
-                        taskInfo(index);
-                        showDialog(index);
-                        kid.getMessagelist().addTaskMessage("Child_Opt",kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
-                    }
-                }
+            label1.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getState()));
 
-            });
+
             System.out.println("after");
-            System.out.println(kid.getTaskList().getNonConfirmedTask().getTask(0).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(0).getState()));
+            System.out.println(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getState()));
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -290,7 +308,7 @@ public class Task_kid extends JPanel {
             Font label2Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 20, label2.getFont());
             if (label2Font != null) label2.setFont(label2Font);
             label2.setForeground(new Color(-9975466));
-            label2.setText("$"+kid.getTaskList().getNonConfirmedTask().getTask(0).getReward());
+            label2.setText("$"+task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getReward());
             gbc = new GridBagConstraints();
             gbc.gridx = 1;
             gbc.gridy = 0;
@@ -301,7 +319,7 @@ public class Task_kid extends JPanel {
             Font label3Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 24, label3.getFont());
             if (label3Font != null) label3.setFont(label3Font);
             label3.setForeground(new Color(-13534488));
-            label3.setText(kid.getTaskList().getNonConfirmedTask().getTask(0).getName());
+            label3.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getName());
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
@@ -313,7 +331,7 @@ public class Task_kid extends JPanel {
             Font label4Font = this.$$$getFont$$$("Arial", Font.ITALIC, 24, label4.getFont());
             if (label4Font != null) label4.setFont(label4Font);
             label4.setForeground(new Color(-12763843));
-            label4.setText(kid.getTaskList().getTask(0).getText(kid.getTaskList().getNonConfirmedTask().getTask(0).getState()));
+            label4.setText(task_kid_control.getKid().getTaskList().getTask(0).getText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getState()));
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 1;
@@ -324,7 +342,7 @@ public class Task_kid extends JPanel {
         }
 
         //Task 2
-        if(size>=2) {
+        /*if(size>=2) {
             int index=1;
             Task2Con = new JPanel();
             Task2Con.setLayout(new GridBagLayout());
@@ -361,6 +379,7 @@ public class Task_kid extends JPanel {
             gbc.anchor = GridBagConstraints.EAST;
             Task2Info.add(panel2, gbc);
             final JLabel label5 = new JLabel();
+            this.button2 = label5;
             label5.setBackground(new Color(-1052689));
             label5.setEnabled(true);
             Font label5Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 22, label5.getFont());
@@ -375,7 +394,7 @@ public class Task_kid extends JPanel {
                     }else {
                         taskInfo(index);
                         showDialog(index);
-                        kid.getMessagelist().addTaskMessage("Child_Opt",kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
+                        kid.getMessagelist().addTaskMessage(kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
                     }
                 }
 
@@ -463,6 +482,7 @@ public class Task_kid extends JPanel {
             gbc.anchor = GridBagConstraints.EAST;
             Task3Info.add(panel3, gbc);
             final JLabel label9 = new JLabel();
+            this.button3 = label9
             label9.setBackground(new Color(-1052689));
             label9.setEnabled(true);
             Font label9Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 22, label9.getFont());
@@ -477,7 +497,7 @@ public class Task_kid extends JPanel {
                     }else {
                         taskInfo(index);
                         showDialog(index);
-                        kid.getMessagelist().addTaskMessage("Child_Opt",kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
+                        kid.getMessagelist().addTaskMessage(kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
                     }
 
                 }
@@ -562,6 +582,7 @@ public class Task_kid extends JPanel {
             gbc.anchor = GridBagConstraints.EAST;
             Task4Info.add(panel4, gbc);
             final JLabel label13 = new JLabel();
+            this.button4 = label13;
             label13.setBackground(new Color(-1052689));
             label13.setEnabled(true);
             Font label13Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 22, label13.getFont());
@@ -576,7 +597,7 @@ public class Task_kid extends JPanel {
                     }else {
                         taskInfo(index);
                         showDialog(index);
-                        kid.getMessagelist().addTaskMessage("Child_Opt",kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
+                        kid.getMessagelist().addTaskMessage(kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
                     }
                 }
 
@@ -622,13 +643,14 @@ public class Task_kid extends JPanel {
             gbc.weighty = 1.0;
             gbc.anchor = GridBagConstraints.NORTHWEST;
             Task4Info.add(label16, gbc);
-        }
+        }*/
         Deposit = new JPanel();
+
         Deposit.setLayout(new GridBagLayout());
         Deposit.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new Depository(kid);
+                new Depository(task_kid_control.getKid());
             }
 
         });

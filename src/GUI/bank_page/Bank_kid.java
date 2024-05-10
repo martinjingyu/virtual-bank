@@ -33,20 +33,6 @@ public class Bank_kid extends JPanel {
         setLayout(null); // 使用绝对布局
         button1 = new JButton("INTO");
         button1.setBounds(590, 190, 140, 30);
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new JDialog();
-                bank_kid_control.getKid().getBank().transaction(dialog,"saving","current");
-                dialog.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosed(WindowEvent e) {
-                        // 在对话框关闭时刷新页面
-                        mainFrameKid.refresh();
-                    }
-                });
-            }
-        });
         add(button1);
 
         button_goal = new JButton("Edit");
@@ -55,23 +41,7 @@ public class Bank_kid extends JPanel {
         savingGoalTextField.setBounds(580, 80, 75, 30);
         savingGoalTextField.setVisible(false);
         add(savingGoalTextField);
-        button_goal.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clickCount++; // 每次点击增加点击次数
-                // 根据点击次数的奇偶性设置文本框的可见性
-                if (clickCount % 2 == 1) {
-                    savingGoalTextField.setVisible(true);
-                    revalidate();
-                    repaint();
-                } else {
-                    savingGoalTextField.setVisible(false);
-                    bank_kid_control.getKid().getBank().changeSavingGoal(savingGoalTextField);
-                    mainFrameKid.refresh();
-                }
 
-            }
-        });
         add(button_goal);
 
 //        button2 = new JButton("OUTO");

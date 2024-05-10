@@ -5,9 +5,21 @@ import java.awt.event.*;
 
 public class MainFrameController extends MouseAdapter {
     private MainFrame_kid mainFrameKid;
+    public MainFrameController() {
+
+    }
 
     public MainFrameController(MainFrame_kid mainFrameKid) {
         this.mainFrameKid = mainFrameKid;
+        mainFrameKid.getButton(1).addMouseListener(this);
+        mainFrameKid.getButton(2).addMouseListener(this);
+        mainFrameKid.getButton(3).addMouseListener(this);
+        mainFrameKid.getButton(4).addMouseListener(this);
+    }
+    public void setGUI(MainFrame_kid mainFrameKid){
+        this.mainFrameKid = mainFrameKid;
+    }
+    public void addButtonListener(){
         mainFrameKid.getButton(1).addMouseListener(this);
         mainFrameKid.getButton(2).addMouseListener(this);
         mainFrameKid.getButton(3).addMouseListener(this);
