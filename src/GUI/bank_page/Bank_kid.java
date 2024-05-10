@@ -1,6 +1,7 @@
 package GUI.bank_page;
 
-import GUI.MainFrame_kid;
+import Controller.MainController;
+import GUI.MainFrame;
 import Controller.bank.Bank_kid_control;
 
 import javax.swing.*;
@@ -21,11 +22,12 @@ public class Bank_kid extends JPanel {
     private JButton button_yes;
     private JButton button_no;
     public JTextField savingGoalTextField;
-    private MainFrame_kid mainFrameKid;
+    private MainFrame mainFrame;
     private int clickCount;
     private String saving;
     private String current;
     private Bank_kid_control bank_kid_control;
+    private MainController mainController;
 
 
 
@@ -42,7 +44,7 @@ public class Bank_kid extends JPanel {
                     @Override
                     public void windowClosed(WindowEvent e) {
                         // 在对话框关闭时刷新页面
-                        mainFrameKid.refresh();
+                        mainFrame.refresh();
                     }
                 });
             }
@@ -67,7 +69,7 @@ public class Bank_kid extends JPanel {
                 } else {
                     savingGoalTextField.setVisible(false);
                     bank_kid_control.getKid().getBank().changeSavingGoal(savingGoalTextField);
-                    mainFrameKid.refresh();
+                    mainFrame.refresh();
                 }
 
             }
@@ -108,9 +110,10 @@ public class Bank_kid extends JPanel {
         add(button_history);
     }
 
-    public Bank_kid(Bank_kid_control bank_kid_control, MainFrame_kid mainFrameKid) {
-        this.mainFrameKid = mainFrameKid;
-        this.bank_kid_control = bank_kid_control;
+    public Bank_kid(MainController mainController, MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
+        this.mainController = mainController;
+        this.bank_kid_control = mainController.bank_kid_control;
         bank_kid_control.setGUI(this);
         setLayout(null); // 使用绝对布局
 
@@ -136,7 +139,7 @@ public class Bank_kid extends JPanel {
     private void setController(Bank_kid_control bank_kid_control){
         this.bank_kid_control =bank_kid_control;
     }
-    public MainFrame_kid getMainFrame(){return this.mainFrameKid;}
+    public MainFrame getMainFrame(){return this.mainFrame;}
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

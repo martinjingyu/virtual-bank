@@ -15,7 +15,6 @@ public class shop_parent extends JPanel {
     private JFormattedTextField nameFormattedTextField;
     private JPanel Upload;
     private JFormattedTextField prizeFormattedTextField;
-    private JComboBox comboBox1;
     private JPanel TODOLIST;
     private JButton SUBMITButton;
 
