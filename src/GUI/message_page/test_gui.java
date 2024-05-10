@@ -14,7 +14,7 @@ public class test_gui extends JFrame {
     private JPanel current_panel;
 
     public static void main(String[] args) {
-        message_kid page4 = new message_kid(new Kids());
+        message_kid page4 = new message_kid();
         new test_gui(page4);
     }
 

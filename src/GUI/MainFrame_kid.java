@@ -1,6 +1,7 @@
 package GUI;
 import Controller.MainController;
 import GUI.bank_page.Bank_kid;
+import GUI.message_page.message_kid;
 import GUI.shop_page.Shop_kid;
 import GUI.task_page.Task_kid;
 
@@ -25,15 +26,22 @@ public class MainFrame_kid extends JFrame {
     public MainFrame_kid(MainController mainController) {
         super("demo");
         this.mainController = mainController;
+        mainController.mainFrameController.setGUI(this);
         InitiateAll();
-
         current_panel = pg1;
         frame_panel();
         navi_button();
+        mainController.mainFrameController.addButtonListener();
         setVisible(true);
     }
 
+    private void InitiateAll(){
+        this.pg1 = new Bank_kid(mainController.bank_kid_control, this);
+        this.pg2 = new Shop_kid(mainController.ShopController);
+        this.pg3 = new Task_kid(mainController.task_kid_control, this);
 
+        this.pg4 = new message_kid(mainController.message_kid_controller);
+    }
 
 
     public void changePanel(int pgIndex){
@@ -60,12 +68,7 @@ public class MainFrame_kid extends JFrame {
         repaint();
     }
 
-    private void InitiateAll(){
-        this.pg1 = new Bank_kid(mainController.bank_kid_control, this);
-        this.pg2 = new Shop_kid(mainController.ShopController);
-//        this.pg3 = new Task_kid(mainController.task_kid_control, this);
-//        this.pg4 = new Shop_kid(mainController.ShopController);
-    }
+
 
 
 
