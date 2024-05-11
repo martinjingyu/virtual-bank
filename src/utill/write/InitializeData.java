@@ -12,7 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
 
-public class WriteToFile {
+public class InitializeData {
 
     public static void writeTextToFile(String text, String filePath) {
 

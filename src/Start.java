@@ -5,9 +5,11 @@ import Controller.MainController;
 import GUI.MainFrame_kid;
 import GUI.MainFrame_parent;
 import GUI.log_in.LoginListener;
+import java.util.Locale;
 
 public class Start implements LoginListener {
     public static void main(String[] args) {
+        Locale.setDefault(Locale.ENGLISH);
         GUI.log_in.GUIMain ui = new GUI.log_in.GUIMain();
         ui.createAndShowGUI();
         ui.setLoginListener(new Start());

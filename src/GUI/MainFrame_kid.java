@@ -32,6 +32,8 @@ public class MainFrame_kid extends JFrame {
         frame_panel();
         navi_button();
         mainController.mainFrameController.addButtonListener();
+        mainController.mainFrameController.addFrameListener();
+
         setVisible(true);
     }
 
@@ -39,7 +41,6 @@ public class MainFrame_kid extends JFrame {
         this.pg1 = new Bank_kid(mainController.bank_kid_control, this);
         this.pg2 = new Shop_kid(mainController.ShopController);
         this.pg3 = new Task_kid(mainController.task_kid_control, this);
-
         this.pg4 = new message_kid(mainController.message_kid_controller);
     }
 
@@ -158,7 +159,7 @@ public class MainFrame_kid extends JFrame {
 
         this.add(menu, BorderLayout.WEST);
         main_page.add(current_panel,BorderLayout.CENTER);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
     }
     public void navi_button(){

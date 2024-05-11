@@ -8,6 +8,8 @@
 package Controller.login;
 
 import GUI.log_in.*;
+import utill.write.InitializeData;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -123,8 +125,8 @@ public class ButtonControl {
                         secret_label_3.setText("Account is already signed.");
                         secret_label_3.setBounds(400, 100, 1000, 50);
                     } else {
-                        utill.write.WriteToFile.writeTextToFile(text_1, "data/secret.txt");
-                        utill.write.WriteToFile.createFolderAndFiles(text_2);
+                        InitializeData.writeTextToFile(text_1, "data/secret.txt");
+                        InitializeData.createFolderAndFiles(text_2);
                         secret_label_3.setText("Your account is ready.");
                         secret_label_3.setBounds(400, 100, 1000, 50);
                     }

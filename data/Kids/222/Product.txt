@@ -13,5 +13,3 @@ bee, 5.00
 T-shirt,5.00
 Apple, 3.00
 bee, 5.00
-
-

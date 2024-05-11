@@ -11,6 +11,7 @@ import utill.read.ReadAll;
 
 public class MainController {
     private Kids kid;
+    private String ID;
     private RefreshListener listener;
     public Bank_kid_control bank_kid_control;
     public ShopController ShopController;
@@ -19,8 +20,9 @@ public class MainController {
 
     public Task_kid_control task_kid_control;
     public MainController(String id){
+        this.ID = id;
         Kids kid = ReadAll.readall(id);
-        mainFrameController = new MainFrameController();
+        mainFrameController = new MainFrameController(id,kid);
 
         bank_kid_control = new Bank_kid_control(kid);
         ShopController = new ShopController(kid);
@@ -28,6 +30,7 @@ public class MainController {
         message_kid_controller = new Message_kid_controller(kid);
 
     }
+
     public Kids getKid(){
         return kid;
     }
