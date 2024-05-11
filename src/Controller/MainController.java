@@ -4,10 +4,12 @@ import Controller.bank.Bank_kid_control;
 import Controller.shop.ShopController;
 //import Controller.task.Task_kid_control;
 import Entity.Kids;
+import GUI.RefreshListener;
 import utill.read.ReadAll;
 
 public class MainController {
     private Kids kid;
+    private RefreshListener listener;
     public Bank_kid_control bank_kid_control;
     public ShopController ShopController;
 

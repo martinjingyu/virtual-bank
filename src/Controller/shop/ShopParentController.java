@@ -3,6 +3,7 @@ package Controller.shop;
 import Entity.Kids;
 import Entity.Product;
 import Entity.ProductList;
+import GUI.RefreshListener;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -11,10 +12,15 @@ import java.util.List;
 public class ShopParentController {
     private Kids kid;
     private List<Product> boughtProduct;
+    private RefreshListener refreshListener;
 
     public ShopParentController(Kids kid) {
         this.kid = kid;
         this.boughtProduct = new ArrayList<>();
+    }
+
+    public void setRefreshListener(RefreshListener listener) {
+        this.refreshListener = listener;
     }
 
     public Kids getKid() {
@@ -35,9 +41,6 @@ public class ShopParentController {
         }
     }
 
-    public void removeSelectedProduct(Product product) {
-        kid.getSelectedList().removeProduct(product);
-    }
 
     public void updateProducts(String name, String price) {
         try {
@@ -63,6 +66,9 @@ public class ShopParentController {
         }
         for (JCheckBox checkBox : checkBoxes) {
             checkBox.setSelected(false);
+        }
+        if (refreshListener != null) {
+            refreshListener.refreshUI();
         }
 
     }
