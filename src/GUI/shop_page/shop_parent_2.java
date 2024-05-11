@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class shop_parent extends JPanel {
+public class shop_parent_2 extends JPanel {
     private JPanel shop;
     private JCheckBox bookCheckBox;
     private JCheckBox toyCheckBox;
@@ -20,7 +20,7 @@ public class shop_parent extends JPanel {
     private JButton SUBMITButton;
 
 
-    public shop_parent() {
+    public shop_parent_2() {
         Dimension preferredSize = new Dimension(900, 540);
         shop.setPreferredSize(preferredSize);
         add(shop);
@@ -228,6 +228,22 @@ public class shop_parent extends JPanel {
      */
     public JComponent $$$getRootComponent$$$() {
         return shop;
+    }
+
+    public class Main {
+        public static void main(String[] args) {
+            SwingUtilities.invokeLater(() -> {
+                JFrame frame = new JFrame("Shop Page");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                shop_parent_2 shopPanel = new shop_parent_2();
+                frame.getContentPane().add(shopPanel.getRootPanel());
+
+                frame.pack();
+                frame.setLocationRelativeTo(null); // 居中显示
+                frame.setVisible(true);
+            });
+        }
     }
 
 }
