@@ -3,6 +3,7 @@ package GUI.shop_page;
 import Controller.shop.ShopParentController;
 import Entity.Kids;
 import Entity.Product;
+import GUI.RefreshListener;
 import utill.read.ReadAll;
 
 import java.awt.*;
@@ -15,13 +16,15 @@ import javax.swing.border.LineBorder;
 import java.util.List;
 import java.awt.event.ItemEvent;
 
-public class Shop_parent extends JPanel {
+public class Shop_parent extends JPanel implements RefreshListener {
 
     private JCheckBox bookCheckBox, toy1CheckBox, toy2CheckBox, toy3CheckBox;
     private JTextField nameTextField, priceTextField;
     private JButton submitButton, confirmButton;
     private JLabel currentAccountLabel;
     private ShopParentController shopController;
+    private List<JButton> ButtonList;
+    private JPanel todoListPanel;
 
     // Define the custom colors
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
@@ -32,6 +35,7 @@ public class Shop_parent extends JPanel {
 
     public Shop_parent(ShopParentController controller) {
         this.shopController = controller;
+        this.shopController.setRefreshListener(this);
 
         setBackground(mainBgColor); // Set overall background
         initUI();
@@ -47,6 +51,15 @@ public class Shop_parent extends JPanel {
         add(createToDoListPanel(), BorderLayout.WEST);
         add(createUploadProductsPanel(), BorderLayout.CENTER);
         add(createAccountInfoPanel(), BorderLayout.SOUTH);
+    }
+
+    @Override
+    public void refreshUI() {
+        remove(todoListPanel);
+        todoListPanel = createToDoListPanel();
+        add(createToDoListPanel(), BorderLayout.WEST);
+        validate();
+        repaint();
     }
 
     // Create the header "Family Mall" with margin
@@ -66,7 +79,7 @@ public class Shop_parent extends JPanel {
 
 
     private JPanel createToDoListPanel() {
-        JPanel todoListPanel = new JPanel();
+        todoListPanel = new JPanel();
         todoListPanel.setLayout(new BorderLayout());
         todoListPanel.setBorder(new LineBorder(borderColor, 1));
         todoListPanel.setPreferredSize(new Dimension(270, 400));
@@ -185,6 +198,12 @@ public class Shop_parent extends JPanel {
 
         return accountInfoPanel;
     }
+
+    public List<JButton> getButtonList()
+    {
+        return ButtonList;
+    }
+
 
     public static void main(String[] args) {
         Kids kid = ReadAll.readall(String.valueOf(222));
