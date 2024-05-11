@@ -1,12 +1,13 @@
 package GUI.shop_page;
 
+import Entity.Kids;
+import GUI.shop_page.shop_parent_2;
+import GUI.templete_1;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import Entity.Kids;
-import utill.read.ReadAll;
 
 public class test_gui extends JFrame {
     private BorderLayout borderLayout;
@@ -15,25 +16,25 @@ public class test_gui extends JFrame {
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
 
-//    public static void main(String[] args) {
-//        Kids kid = ReadAll.readall(String.valueOf(222));
-//        Shop_kid page1 = new Shop_kid(kid);
-//        shop_parent page2 = new shop_parent();
-//        new test_gui(page1);
-//    }
-//
-//    public test_gui(JPanel panel) {
-//        super("demo");
-//        current_panel = panel;
-//        Jframe_Jpanel();
-//        navi_button();
-//        setVisible(true);
-//    }
+    public static void main(String[] args) {
+
+        shop_parent_2 page1 = new shop_parent_2();
+        new GUI.test_gui(page1);
+
+    }
+
+    public test_gui(JPanel panel) {
+        super("demo");
+        current_panel = panel;
+        Jframe_Jpanel();
+        navi_button();
+        setVisible(true);
+    }
 
     public void Jframe_Jpanel(){
         // 设置主窗口的标题
 
-        this.setSize(900,540);
+        this.setSize(960,540);
         borderLayout = new BorderLayout();
         menu = new JPanel();
         main_page = new JPanel(new BorderLayout());
@@ -41,7 +42,7 @@ public class test_gui extends JFrame {
         menu.setBackground(Color.pink);
         main_page.setBackground(Color.blue);
 
-//        menu.setPreferredSize(new Dimension(51, 540));
+        menu.setPreferredSize(new Dimension(51, 540));
 
         this.add(main_page,BorderLayout.CENTER);
         this.add(menu, BorderLayout.WEST);
@@ -123,6 +124,9 @@ public class test_gui extends JFrame {
         menu.add(button4);
         menu.add(new JLabel());
 
+
+    }
+    public void sub_page(templete_1 pg1){
 
     }
 
