@@ -24,6 +24,7 @@ public class history_page extends JPanel {
     private JPanel DetailPanel;
     private List<JLabel> dateList;
 
+
     // Define the custom colors
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
     private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
@@ -52,7 +53,6 @@ public class history_page extends JPanel {
         add(DetailPanel, BorderLayout.CENTER);
         add(createAccountInfoPanel(), BorderLayout.SOUTH);
     }
-
 
     public void refreshUI() {
         remove(DetailPanel);
