@@ -1,5 +1,6 @@
 package GUI.bank_page;
 
+import Controller.bank.HistoryController;
 import Entity.*;
 import utill.read.ReadAll;
 
@@ -19,6 +20,9 @@ public class history_page extends JPanel {
 
     private HistoryTransactionList transactionList;
     private JTextField nameTextField, priceTextField;
+    private HistoryController historyController;
+    private JPanel DetailPanel;
+    private List<JLabel> dateList;
 
     // Define the custom colors
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
@@ -27,11 +31,14 @@ public class history_page extends JPanel {
     private final Color submitButtonColor = new Color(103, 201, 86); // #67C956
     private final Color borderColor = new Color(105, 105, 105); // #696969
 
-    public history_page(Kids kid) {
-        this.transactionList = kid.getTransactionList();
+    public history_page(HistoryController controller) {
+        this.historyController = controller;
+        this.transactionList = controller.getKid().getTransactionList();
         setBackground(mainBgColor); // Set overall background
         initUI();
     }
+    public List<JLabel> getDateList(){return this.dateList;}
+
 
     private void initUI() {
         // Set the layout with padding around the entire layout
@@ -41,8 +48,18 @@ public class history_page extends JPanel {
 
         add(createHeaderPanel(), BorderLayout.NORTH);
         add(createDatePanel(), BorderLayout.WEST);
-        add(createDetailPanel(), BorderLayout.CENTER);
+        DetailPanel = createDetailPanel();
+        add(DetailPanel, BorderLayout.CENTER);
         add(createAccountInfoPanel(), BorderLayout.SOUTH);
+    }
+
+
+    public void refreshUI() {
+        remove(DetailPanel);
+        DetailPanel = createDetailPanel();
+        add(DetailPanel, BorderLayout.CENTER);
+        validate();
+        repaint();
     }
 
     // Create the header "Family Mall" with margin
@@ -74,10 +91,12 @@ public class history_page extends JPanel {
         scrollPane.setBorder(new LineBorder(borderColor, 1));  // Set a border to the scroll pane
 
         List<String> dates = transactionList.getDateList(); // Assuming you have this method to get dates
-
+        dateList = new ArrayList<>();
         for (String date : dates) {
             System.out.println(date);
             JLabel dateLabel = new JLabel(date);
+            dateList.add(dateLabel);
+
             dateLabel.setFont(new Font("Arial", Font.PLAIN, 16));
             dateLabel.setOpaque(true);
             dateLabel.setBackground(Color.WHITE);
@@ -98,7 +117,7 @@ public class history_page extends JPanel {
 
 
     // Create the Upload Products Panel
-    private JScrollPane createDetailPanel() {
+    private JPanel createDetailPanel() {
         JPanel uploadPanel = new JPanel(); // 使用默认的FlowLayout，改进自动布局
         uploadPanel.setLayout(new BoxLayout(uploadPanel, BoxLayout.Y_AXIS)); // 纵向排列
         uploadPanel.setBackground(panelBgColor);
@@ -111,7 +130,7 @@ public class history_page extends JPanel {
 //        scrollPane.setPreferredSize(new Dimension(540, 400)); // 设置滚动面板的首选大小
         scrollPane.setBorder(new LineBorder(borderColor, 1));  // 设置滚动面板的边框
 
-        List<String> details = transactionList.getTransactionDetails("2024/1/10");
+        List<String> details = transactionList.getTransactionDetails(historyController.getSelectedDate());
 
         for (String detail : details) {
             JLabel detailLabel = new JLabel(detail);
@@ -126,8 +145,9 @@ public class history_page extends JPanel {
             uploadPanel.add(detailLabel);
         }
 
-        return scrollPane; // 返回包含uploadPanel的滚动面板
+        return uploadPanel; // 返回包含uploadPanel的滚动面板
     }
+
 
     // Create the Account Information Panel
     private JPanel createAccountInfoPanel() {
@@ -165,7 +185,7 @@ public class history_page extends JPanel {
         Kids kid = ReadAll.readall(String.valueOf(222));
         JFrame frame = new JFrame("Shop Application");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(new history_page(kid));
+        frame.setContentPane(new history_page(new HistoryController(kid)));
         frame.pack();
         frame.setVisible(true);
     }

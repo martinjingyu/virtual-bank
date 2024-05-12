@@ -1,9 +1,9 @@
-Apple, 3.00
-bee, 1.00
-T-shirt,5.00
-Apple, 3.00
-bee, 5.00
-Apple, 3.00
-bee, 1.00
-T-shirt,5.00
-Apple, 3.00
+Apple,3.0
+bee,1.0
+T-shirt,5.0
+Apple,3.0
+bee,5.0
+Apple,3.0
+bee,1.0
+T-shirt,5.0
+Apple,3.0

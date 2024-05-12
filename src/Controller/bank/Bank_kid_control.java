@@ -16,8 +16,10 @@ public class Bank_kid_control {
     private static int clickCount=0;
     private Kids kid;
     private Bank_kid GUI;
+    private HistoryController historyController;
     public Bank_kid_control(Kids kid){
         this.kid = kid;
+        this.historyController = new HistoryController(kid);
 
     }
     public void setGUI(Bank_kid GUI){
@@ -60,7 +62,9 @@ public class Bank_kid_control {
                         }
                     });
                 } else if (buttonName.equals("Review")) {
-                    history_page review = new history_page(kid);
+                    history_page review = new history_page(historyController);
+                    historyController.setGUI(review);
+                    historyController.addButtonListener();
                     JFrame Review_win = new JFrame();
                     Review_win.setTitle("History");
                     Review_win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
