@@ -9,16 +9,15 @@ import GUI.bank_page.Bank_kid;
 import utill.read.ReadAll;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.*;
 
 public class HistoryController {
     private Kids kid;
     private history_page GUI;
     private HistoryTransactionList historyTransactionList;
+    private String SelectedDate;
     public HistoryController(Kids kid){
         this.kid = kid;
         historyTransactionList = kid.getTransactionList();
@@ -29,8 +28,26 @@ public class HistoryController {
     public Kids getKid(){
         return kid;
     }
+    public String getSelectedDate(){return SelectedDate;}
 
     public void addButtonListener(){
+        for(JLabel label: GUI.getDateList()){
+            label.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    for(JLabel c: GUI.getDateList()){
+                        c.setBackground(Color.white);
+                    }
+                    label.setBackground(Color.cyan);
+                    SelectedDate = label.getText();
+                    GUI.refreshUI();
+
+
+                }
+            });
+        }
+
     }
 
     public static void main(String[] args){
