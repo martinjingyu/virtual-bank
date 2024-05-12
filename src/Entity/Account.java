@@ -1,11 +1,43 @@
 package Entity;
 
+import java.time.LocalDateTime;
+
 public abstract class Account {
-    private double money;
-    public double getMoney(){
-        return this.money;
+    // Attributes
+    protected double balance;
+    protected double interestRate;
+
+    // Constructor
+    public Account(double initialBalance, double interestRate) {
+        this.balance = initialBalance;
+        this.interestRate = interestRate;
     }
-    public void setMoney(double amount){
-        this.money = amount;
+
+    // Set initial balance
+    public Account() {
+        this.balance = 0;
     }
+
+    // Common methods
+    public void deposit(double amount) {
+        balance += amount;
+        System.out.println("Deposited: " + amount);
+    }
+
+    public void withdraw(double amount) {
+        if (amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawn: " + amount);
+        } else {
+            System.out.println("Insufficient funds.");
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    // Abstract method for interest calculation
+    public abstract void calculateInterest();
 }
+

@@ -19,6 +19,7 @@ public class history_page extends JPanel {
 
     private HistoryTransactionList transactionList;
     private JTextField nameTextField, priceTextField;
+    private JPanel uploadPanel;
 
     // Define the custom colors
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
@@ -43,6 +44,15 @@ public class history_page extends JPanel {
         add(createDatePanel(), BorderLayout.WEST);
         add(createDetailPanel(), BorderLayout.CENTER);
         add(createAccountInfoPanel(), BorderLayout.SOUTH);
+    }
+
+    @Override
+    public void refreshUI() {
+        remove(uploadPanel);
+        uploadPanel = createDetailPanel();
+        add(uploadPanel, BorderLayout.WEST);
+        validate();
+        repaint();
     }
 
     // Create the header "Family Mall" with margin
@@ -98,8 +108,8 @@ public class history_page extends JPanel {
 
 
     // Create the Upload Products Panel
-    private JScrollPane createDetailPanel() {
-        JPanel uploadPanel = new JPanel(); // 使用默认的FlowLayout，改进自动布局
+    private JPanel createDetailPanel() {
+        uploadPanel = new JPanel(); // 使用默认的FlowLayout，改进自动布局
         uploadPanel.setLayout(new BoxLayout(uploadPanel, BoxLayout.Y_AXIS)); // 纵向排列
         uploadPanel.setBackground(panelBgColor);
         uploadPanel.setPreferredSize(new Dimension(540, 0));
@@ -126,7 +136,7 @@ public class history_page extends JPanel {
             uploadPanel.add(detailLabel);
         }
 
-        return scrollPane; // 返回包含uploadPanel的滚动面板
+        return uploadPanel; // 返回包含uploadPanel的滚动面板
     }
 
     // Create the Account Information Panel
