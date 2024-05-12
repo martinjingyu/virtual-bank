@@ -12,7 +12,7 @@ public class Paths {
         product_path = "data/Kids/"+id+"/Product.txt";
         task_path = "data/Kids/"+id+"/Task.txt";
         message_path = "data/Kids/"+id+"/Message.txt";
-        transactionHistory_path = "data/Kids/"+id+"/TransactionHistory";
+        transactionHistory_path = "data/Kids/"+id+"/TransactionHistory.txt";
         selectedProduct_path = "data/Kids/"+id+"/SelectedProduct.txt";
     }
 }

@@ -60,7 +60,7 @@ public class Bank_kid_control {
                         }
                     });
                 } else if (buttonName.equals("Review")) {
-                    history_page review = new history_page();
+                    history_page review = new history_page(kid);
                     JFrame Review_win = new JFrame();
                     Review_win.setTitle("History");
                     Review_win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
