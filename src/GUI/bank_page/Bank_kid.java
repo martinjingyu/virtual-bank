@@ -1,5 +1,6 @@
 package GUI.bank_page;
 
+import Entity.Kids;
 import GUI.MainFrame_kid;
 import Controller.bank.Bank_kid_control;
 
@@ -26,10 +27,12 @@ public class Bank_kid extends JPanel {
     private String saving;
     private String current;
     private Bank_kid_control bank_kid_control;
+    private Kids kid;
 
 
 
-    public Bank_kid() {
+    public Bank_kid(Kids kid) {
+        this.kid=kid;
         setLayout(null); // 使用绝对布局
         button1 = new JButton("INTO");
         button1.setBounds(590, 190, 140, 30);
@@ -65,12 +68,12 @@ public class Bank_kid extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //this.dispose();
-                history_page review = new history_page();
+//                history_page review = new history_page(this.kid);
                 JFrame Review_win = new JFrame();
                 Review_win.setTitle("History");
                 Review_win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 Review_win.setLocationRelativeTo(null);
-                Review_win.add(review);
+//                Review_win.add(review);
                 Review_win.setSize(800, 400);
                 Review_win.setVisible(true);
             }

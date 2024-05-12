@@ -21,6 +21,7 @@ public class ReadAll {
         ReadProduct.readProducts(paths.selectedProduct_path,selectedProductList);
         ReadTask.readTaskList(paths.task_path, taskList);
         ReadMessage.readMessage(paths.message_path, messageList);
+        ReadTransaction.readTransactions(paths.transactionHistory_path,historyTransactionList);
 
         return new Kids(bank,historyTransactionList,productList,selectedProductList,taskList,messageList);
 
