@@ -14,9 +14,14 @@ public abstract class Account {
         this.interestRate = interestRate;
     }
 
+
     // Set initial balance
     public Account() {
         this.balance = 0;
+    }
+
+    public void setInterestRate(double interestRate) {
+        this.interestRate = interestRate;
     }
 
     // Common methods
@@ -35,6 +40,9 @@ public abstract class Account {
     }
 
     public double getBalance() {
+        return balance;
+    }
+    public double getInterestRate() {
         return balance;
     }
 
