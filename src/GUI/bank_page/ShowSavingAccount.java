@@ -36,15 +36,13 @@ public class ShowSavingAccount extends JFrame {
         initUI();
 
 
-
-
-
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
     }
+    public void initData(){
 
+    }
     private void initUI(){
         setTitle("Saving Account");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,10 +59,10 @@ public class ShowSavingAccount extends JFrame {
         mainContent.add(createAccountGrid("1"),BorderLayout.CENTER);
 
         mainContent.add(createTotalInfoPanel(),BorderLayout.SOUTH);
-
-
 ;
     }
+
+
 
     private JPanel createComponents(){
         // 创建进度条并设置初始值
