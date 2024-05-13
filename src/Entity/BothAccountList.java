@@ -1,18 +1,14 @@
-package Controller.bank;
-
-import Entity.CurrentAccount;
-import Entity.Kids;
-import Entity.SavingAccount;
+package Entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountManager {
+public class BothAccountList {
     private List<CurrentAccount> currentAccounts;
     private List<SavingAccount> savingAccounts;
 
-    public AccountManager() {
+    public BothAccountList() {
         this.currentAccounts = new ArrayList<>();
         this.savingAccounts = new ArrayList<>();
     }
@@ -26,8 +22,7 @@ public class AccountManager {
     }
 
     // 添加活期账户
-    public void addCurrentAccount(CurrentAccount account, double initialBalance) {
-        account.deposit(initialBalance);
+    public void addCurrentAccount(CurrentAccount account) {
         currentAccounts.add(account);
     }
 
@@ -35,7 +30,9 @@ public class AccountManager {
     public void removeCurrentAccount(CurrentAccount account) {
         currentAccounts.remove(account);
     }
-
+    public void addSavingAccount(SavingAccount account) {
+        savingAccounts.add(account);
+    }
     // 添加储蓄账户
     public void addSavingAccount(SavingAccount account, LocalDateTime startTime, LocalDateTime endTime, double initialBalance, double interestRate) {
         account.setStartTime(startTime);

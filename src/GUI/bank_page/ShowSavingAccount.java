@@ -12,6 +12,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.border.*;
 
@@ -31,7 +32,7 @@ public class ShowSavingAccount extends JFrame {
     public ShowSavingAccount() {
 
         initUI();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
         setVisible(true);
     }
@@ -66,14 +67,14 @@ public class ShowSavingAccount extends JFrame {
         mainContent.add(createTotalInfoPanel(),BorderLayout.SOUTH);
         timer = new Timer(1000, e -> updateProgressBar(accountList,componentList.getBarlist()));
         timer.start();
+        pack();
+        setVisible(true);
     }
     private void initUI(){
         setTitle("Saving Account");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.mainContent = new JPanel();
         setContentPane(mainContent);
-
-
         mainContent.setPreferredSize(new Dimension(900, 540));
         mainContent.setLayout(new BorderLayout(20, 20)); // Added horizontal and vertical gaps
         mainContent.setBorder(new EmptyBorder(20, 40, 20, 40));
@@ -82,9 +83,10 @@ public class ShowSavingAccount extends JFrame {
 
     }
     private void createFinishPanelList(List<SavingAccount> accountList){
+        finishPanelList = new ArrayList<>();
         FinishList finishList = new FinishList(accountList);
         int i;
-        for(i=0;i<12;i++){
+        for(i=0;i<finishList.getButtonlist().size();i++){
             JPanel finish = new JPanel();
 
             finish.setLayout(new BoxLayout(finish, BoxLayout.Y_AXIS));

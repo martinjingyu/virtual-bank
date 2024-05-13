@@ -3,13 +3,15 @@ package Entity;
 import java.time.LocalDateTime;
 
 public abstract class Account {
+    private String name;
     // Attributes
     protected double balance;
     protected double interestRate;
 
 
     // Constructor
-    public Account(double initialBalance, double interestRate) {
+    public Account(String name, double initialBalance, double interestRate) {
+        this.name = name;
         this.balance = initialBalance;
         this.interestRate = interestRate;
     }

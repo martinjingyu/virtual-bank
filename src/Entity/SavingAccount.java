@@ -3,13 +3,16 @@ package Entity;
 import java.time.LocalDateTime;
 
 public class SavingAccount extends Account {
+
     // Additional attributes
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
     // Constructor
-    public SavingAccount(double initialBalance, double interestRate) {
-        super(initialBalance, interestRate);
+    public SavingAccount(String name,double initialBalance, double interestRate,LocalDateTime startTime, LocalDateTime endTime) {
+        super(name,initialBalance, interestRate);
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     // Time-bound methods

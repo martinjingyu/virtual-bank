@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FinishList {
@@ -13,6 +14,7 @@ public class FinishList {
     private List<JButton> Buttonlist;
 
     FinishList(List<SavingAccount> savingAccountList){
+        Buttonlist = new ArrayList<>();
         int i;
         this.savingAccountList = savingAccountList;
         for(i=0;i<savingAccountList.size();i++){

@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ComponentList {
@@ -14,6 +15,7 @@ public class ComponentList {
     private Timer timer;
 
     ComponentList(List<SavingAccount> savingAccountList){
+        barlist = new ArrayList<>();
         int i;
         this.savingAccountList = savingAccountList;
         for(i=0;i<savingAccountList.size();i++){
