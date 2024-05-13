@@ -10,7 +10,11 @@ public class SavingAccountController {
     SavingAccountController(Kids kid,ShowSavingAccount GUI){
         this.kid = kid;
         this.GUI = GUI;
-        GUI.initData();
+        GUI.initData(kid.getSavingAccountList());
+        addListener(GUI);
+    }
+
+    private void addListener(ShowSavingAccount GUI){
 
     }
 

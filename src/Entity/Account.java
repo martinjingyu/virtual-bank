@@ -7,6 +7,7 @@ public abstract class Account {
     protected double balance;
     protected double interestRate;
 
+
     // Constructor
     public Account(double initialBalance, double interestRate) {
         this.balance = initialBalance;

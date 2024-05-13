@@ -1,5 +1,7 @@
 package Entity;
 
+import java.util.List;
+
 public class Kids {
     private Bank bank;
     private ProductList productList;
@@ -7,6 +9,7 @@ public class Kids {
     private TaskList taskList;
     private HistoryTransactionList transactionList;
     private MessageList messagelist;
+    private List<SavingAccount> savingAccountList;
 
     public Kids(){
 
@@ -43,5 +46,9 @@ public class Kids {
 
     public MessageList getMessagelist() {
         return messagelist;
+    }
+
+    public List<SavingAccount> getSavingAccountList(){
+        return this.savingAccountList;
     }
 }
