@@ -8,30 +8,27 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class ComponentList {
+public class FinishList {
     private List<SavingAccount> savingAccountList;
-    private List<JProgressBar> barlist;
-    private Timer timer;
+    private List<JButton> Buttonlist;
 
-    ComponentList(List<SavingAccount> savingAccountList){
+    FinishList(List<SavingAccount> savingAccountList){
         int i;
         this.savingAccountList = savingAccountList;
         for(i=0;i<savingAccountList.size();i++){
-            JProgressBar progressBar = new JProgressBar(0, 100);
-            progressBar.setStringPainted(true); // 显示百分比
-            progressBar.setAlignmentX(Component.CENTER_ALIGNMENT);
-            barlist.add(progressBar);
+            JButton finishButton = new JButton("Take my Money!");
+            finishButton.setFont(new Font("Arial", Font.BOLD, 12));
+            finishButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            Buttonlist.add(finishButton);
         }
 
     }
-
-
 
     public List<SavingAccount> getSavingAccountList() {
         return savingAccountList;
     }
 
-    public List<JProgressBar> getBarlist() {
-        return barlist;
+    public List<JButton> getButtonlist() {
+        return Buttonlist;
     }
 }

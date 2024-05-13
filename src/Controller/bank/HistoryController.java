@@ -42,12 +42,9 @@ public class HistoryController {
                     label.setBackground(Color.cyan);
                     SelectedDate = label.getText();
                     GUI.refreshUI();
-
-
                 }
             });
         }
-
     }
 
     public static void main(String[] args){

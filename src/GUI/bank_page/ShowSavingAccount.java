@@ -18,6 +18,10 @@ import javax.swing.border.*;
 public class ShowSavingAccount extends JFrame {
     private JButton actionButton;
     private JPanel mainContent;
+    private ComponentList componentList;
+    private JPanel accountGrid;
+    private List<JPanel> finishPanelList;
+    private Timer timer;
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
     private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
     private final Color fontColor = new Color(49, 122, 232); // #317AE8
@@ -31,11 +35,37 @@ public class ShowSavingAccount extends JFrame {
         pack();
         setVisible(true);
     }
+    private void updateProgressBar(List<SavingAccount> savingAccountList, List<JProgressBar> progressBarList) {
+        // 计算已经过的时间比例
+        int i;
+        for(i=0;i<savingAccountList.size();i++){
+            SavingAccount savingAccount = savingAccountList.get(i);
+            JProgressBar progressBar = progressBarList.get(i);
+            LocalDateTime currentTime = LocalDateTime.now();
+            LocalDateTime startTime = savingAccount.getStartTime();
+            LocalDateTime endTime = savingAccount.getEndTime();
+            double progress = 100.0 * Duration.between(startTime, currentTime).toMillis() /
+                    Duration.between(startTime, endTime).toMillis();
+
+            // 更新进度条的值
+            progressBar.setValue((int) progress);
+
+            // 检查是否已完成
+            if (progress >= 100) {
+                System.out.println("finish");
+                accountGrid.remove(i);
+                accountGrid.add(finishPanelList.get(i));
+
+            }
+        }
+    }
 
     public void initData(List<SavingAccount> accountList){
+        createFinishPanelList(accountList);
         mainContent.add(createAccountGrid(accountList),BorderLayout.CENTER);
         mainContent.add(createTotalInfoPanel(),BorderLayout.SOUTH);
-
+        timer = new Timer(1000, e -> updateProgressBar(accountList,componentList.getBarlist()));
+        timer.start();
     }
     private void initUI(){
         setTitle("Saving Account");
@@ -43,11 +73,49 @@ public class ShowSavingAccount extends JFrame {
         this.mainContent = new JPanel();
         setContentPane(mainContent);
 
+
         mainContent.setPreferredSize(new Dimension(900, 540));
         mainContent.setLayout(new BorderLayout(20, 20)); // Added horizontal and vertical gaps
         mainContent.setBorder(new EmptyBorder(20, 40, 20, 40));
         mainContent.setBackground(mainBgColor);
         mainContent.add(createHeaderPanel(), BorderLayout.NORTH);
+
+    }
+    private void createFinishPanelList(List<SavingAccount> accountList){
+        FinishList finishList = new FinishList(accountList);
+        int i;
+        for(i=0;i<12;i++){
+            JPanel finish = new JPanel();
+
+            finish.setLayout(new BoxLayout(finish, BoxLayout.Y_AXIS));
+            finish.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 1), new EmptyBorder(5, 10, 5, 10)));
+            finish.setBackground(Color.white);
+            finish.setPreferredSize(new Dimension(200, 120));
+
+            // 创建标签并设置格式
+
+            JLabel nameLabel = new JLabel("name", SwingConstants.CENTER);
+            nameLabel.setFont(new Font("Arial", Font.BOLD, 12));
+            nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            JButton finishButton = finishList.getButtonlist().get(i);
+
+            JLabel totalIncome = new JLabel("Total income: something to be added", SwingConstants.CENTER);
+            nameLabel.setFont(new Font("Arial", Font.BOLD, 12));
+            nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
+
+            // 添加组件到面板
+            finish.add(nameLabel);
+            finish.add(Box.createVerticalStrut(0));
+            finish.add(totalIncome);
+            finish.add(Box.createVerticalStrut(0));
+            finish.add(finishButton);
+            finish.add(Box.createVerticalStrut(0));
+            finishPanelList.add(finish);
+
+        }
 
     }
 
@@ -130,11 +198,11 @@ public class ShowSavingAccount extends JFrame {
     }
 
     private JPanel createAccountGrid(List<SavingAccount> accountList) {
-        JPanel accountGrid = new JPanel();
+        accountGrid = new JPanel();
         accountGrid.setLayout(new GridLayout(4, 3, 10, 5)); // 增加了行列间的间隔
         accountGrid.setBackground(Color.LIGHT_GRAY);
         accountGrid.setBorder(new LineBorder(Color.BLACK, 2)); // 添加边框
-        ComponentList componentList = new ComponentList(accountList);
+        componentList = new ComponentList(accountList);
 
         for (int i = 0; i < accountList.size(); i++) {
             accountGrid.add(createComponents(i,componentList));
