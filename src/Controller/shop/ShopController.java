@@ -46,6 +46,7 @@ public class ShopController {
         }
     }
 
+
     public void buyProducts(JLabel selectedTotalLabel, JLabel currentAccountLabel,List<JRadioButton> toggleButtons) {
 //        if (selectedProductList.isEmpty()) {
 //            JOptionPane.showMessageDialog(null, "You haven't selected any products.", "No Products Selected!", JOptionPane.WARNING_MESSAGE);
@@ -68,5 +69,6 @@ public class ShopController {
 //        } catch (InsufficientFundsException e) {
 //            JOptionPane.showMessageDialog(null, e.getMessage(), "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
 //        }
+
     }
 }
