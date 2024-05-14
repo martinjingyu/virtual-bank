@@ -10,7 +10,7 @@ import java.util.List;
 import Entity.*;
 
 public class ReadAccount {
-    public static void readAccount(List<String> fileName, BothAccountList bothAccountList) {
+    public static void readAccount(List<String> fileName, AccountManager accountManager) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName.get(0)))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -20,7 +20,7 @@ public class ReadAccount {
                     String name = parts[0].trim();
                     double balance = Double.parseDouble(parts[1].trim());
                     CurrentAccount currentAccount = new CurrentAccount(name,balance);
-                    bothAccountList.addCurrentAccount(currentAccount);
+                    accountManager.addCurrentAccount(currentAccount);
                 } else {
                     System.out.println("Invalid product data: " + line);
                 }
@@ -44,7 +44,26 @@ public class ReadAccount {
 
 
                     SavingAccount savingAccount = new SavingAccount(name,balance,interest,startTime,endTime);
-                    bothAccountList.addSavingAccount(savingAccount);
+                    accountManager.addSavingAccount(savingAccount);
+                } else {
+                    System.out.println("Invalid product data: " + line);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName.get(2)))) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",",2);
+//                System.out.println(parts.length);
+                if (parts.length == 2) {
+                    String name = parts[0].trim();
+                    double saving_goal = Double.parseDouble(parts[1].trim());
+                    accountManager.setUserID(name);
+                    accountManager.setSavingGoal(saving_goal);
+
                 } else {
                     System.out.println("Invalid product data: " + line);
                 }
@@ -53,6 +72,4 @@ public class ReadAccount {
             System.out.println("Error reading file: " + e.getMessage());
         }
     }
-
-
 }

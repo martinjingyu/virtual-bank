@@ -1,34 +1,31 @@
 package Entity;
 
-import java.util.List;
-
 public class Kids {
-    private Bank bank;
+    private AccountManager accountManager;
     private ProductList productList;
     private ProductList selectedProduct;
     private TaskList taskList;
     private HistoryTransactionList transactionList;
     private MessageList messagelist;
-    private BothAccountList bothAccountList;
+
     public Kids(){
     }
 
 
-    public Kids(Bank bank, HistoryTransactionList transactionList,
-                ProductList productList, ProductList selectedProduct, TaskList taskList, MessageList messagelist, BothAccountList bothAccountList){
-        this.bank = bank;
+    public Kids(HistoryTransactionList transactionList,
+                ProductList productList, ProductList selectedProduct, TaskList taskList, MessageList messagelist, AccountManager accountManager){
         this.transactionList = transactionList;
         this.productList = productList;
         this.taskList = taskList;
         this.messagelist = messagelist;
         this.selectedProduct = selectedProduct;
         this.getMessagelist().setKids(this);
-        this.bothAccountList = bothAccountList;
+        this.accountManager = accountManager;
 
     }
 
-    public BothAccountList getBothAccountList() {
-        return bothAccountList;
+    public AccountManager getAccountManager() {
+        return accountManager;
     }
 
 
@@ -41,9 +38,6 @@ public class Kids {
 
     public HistoryTransactionList getTransactionList(){return this.transactionList;}
 
-    public Bank getBank() {
-        return bank;
-    }
 
     public TaskList getTaskList() {
         return taskList;

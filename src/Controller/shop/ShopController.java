@@ -9,13 +9,11 @@ import java.util.List;
 
 public class ShopController {
     private Kids kid;
-    private Bank bank;
     private MessageList messageList;
     private List<Product> selectedProductList;
 
     public ShopController(Kids kid) {
         this.kid = kid;
-        this.bank = kid.getBank();
         this.messageList = kid.getMessagelist();
         this.selectedProductList = new ArrayList<>();
     }
@@ -31,7 +29,7 @@ public class ShopController {
     }
 
     public void updateCurrentAccountDisplay(JLabel currentAccountLabel) {
-        currentAccountLabel.setText(String.format("Current Account: $%9.2f", bank.getCurrentTotal()));
+        currentAccountLabel.setText(String.format("Current Account: $%9.2f", kid.getAccountManager().getTotalCurrentBalance()));
     }
 
     public void updateSelectedTotalDisplay(JLabel selectedTotalLabel) {
@@ -48,27 +46,29 @@ public class ShopController {
         }
     }
 
-    public void buyProducts(JLabel selectedTotalLabel, JLabel currentAccountLabel,List<JRadioButton> toggleButtons,JComboBox<String> accountDropdown) {
-        if (selectedProductList.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "You haven't selected any products.", "No Products Selected!", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
 
-        double totalCost = calculateSelectedTotal();
-        try {
-            bank.changeCurrent(-totalCost);
-            if (totalCost > 0.8 * bank.getCurrentTotal()) {
-                messageList.addShopMessage(totalCost);
-            }
-            JOptionPane.showMessageDialog(null, "Purchase Successful!");
-            selectedProductList.clear();
-            updateSelectedTotalDisplay(selectedTotalLabel);
-            updateCurrentAccountDisplay(currentAccountLabel);
-            for (JToggleButton button : toggleButtons) {
-                button.setSelected(false);
-            }
-        } catch (InsufficientFundsException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
-        }
+    public void buyProducts(JLabel selectedTotalLabel, JLabel currentAccountLabel,List<JRadioButton> toggleButtons) {
+//        if (selectedProductList.isEmpty()) {
+//            JOptionPane.showMessageDialog(null, "You haven't selected any products.", "No Products Selected!", JOptionPane.WARNING_MESSAGE);
+//            return;
+//        }
+//
+//        double totalCost = calculateSelectedTotal();
+//        try {
+//            bank.changeCurrent(-totalCost);
+//            if (totalCost > 0.8 * bank.getCurrentTotal()) {
+//                messageList.addShopMessage(totalCost);
+//            }
+//            JOptionPane.showMessageDialog(null, "Purchase Successful!");
+//            selectedProductList.clear();
+//            updateSelectedTotalDisplay(selectedTotalLabel);
+//            updateCurrentAccountDisplay(currentAccountLabel);
+//            for (JToggleButton button : toggleButtons) {
+//                button.setSelected(false);
+//            }
+//        } catch (InsufficientFundsException e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage(), "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
+//        }
+
     }
 }

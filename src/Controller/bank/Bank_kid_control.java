@@ -42,7 +42,7 @@ public class Bank_kid_control {
                 // 根据点击次数的奇偶性设置文本框的可见性
                 if (clickCount % 2 == 1) {
                     savingGoalTextField.setVisible(true);
-                    getKid().getBank().changeSavingGoal(savingGoalTextField);
+
                     GUI.getMainFrame().revalidate();
                     GUI.getMainFrame().repaint();
                 } else {
@@ -57,7 +57,7 @@ public class Bank_kid_control {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JDialog dialog = new JDialog();
-                kid.getBank().transaction(dialog, "current", "saving");
+
                 dialog.addWindowListener(new WindowAdapter() {
                     @Override
                     public void windowClosed(WindowEvent e) {

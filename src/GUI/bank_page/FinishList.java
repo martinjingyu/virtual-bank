@@ -19,8 +19,6 @@ public class FinishList {
         this.savingAccountList = savingAccountList;
         for(i=0;i<savingAccountList.size();i++){
             JButton finishButton = new JButton("Take my Money!");
-            finishButton.setFont(new Font("Arial", Font.BOLD, 12));
-            finishButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             Buttonlist.add(finishButton);
         }
 

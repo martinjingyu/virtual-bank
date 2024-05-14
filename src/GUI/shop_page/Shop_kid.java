@@ -35,7 +35,7 @@ public class Shop_kid extends JPanel {
         this.productList = shopController.getKid().getProductList();
         this.selectedTotalLabel = new JLabel("Selected Total: $      0.00");
         this.selectedTotalLabel.setForeground(Color.BLACK);
-        this.currentAccountLabel = new JLabel(String.format("Current Account: $%9.2f", shopController.getKid().getBank().getCurrentTotal()));
+        this.currentAccountLabel = new JLabel(String.format("Current Account: $%9.2f", shopController.getKid().getAccountManager().getTotalCurrentBalance()));
         this.toggleButtons = new ArrayList<>();
 
         setLayout(new BorderLayout(10, 10));
