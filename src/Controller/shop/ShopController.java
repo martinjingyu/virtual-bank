@@ -48,7 +48,7 @@ public class ShopController {
         }
     }
 
-    public void buyProducts(JLabel selectedTotalLabel, JLabel currentAccountLabel,List<JRadioButton> toggleButtons) {
+    public void buyProducts(JLabel selectedTotalLabel, JLabel currentAccountLabel,List<JRadioButton> toggleButtons,JComboBox<String> accountDropdown) {
         if (selectedProductList.isEmpty()) {
             JOptionPane.showMessageDialog(null, "You haven't selected any products.", "No Products Selected!", JOptionPane.WARNING_MESSAGE);
             return;
