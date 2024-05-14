@@ -89,13 +89,19 @@ public class AccountManager {
         savingAccount.setEndTime(LocalDateTime.now());
         currentAccount.deposit(savingAccount.getBalance());
         savingAccount.withdraw(savingAccount.getBalance());
-
     }
-    public List<String> getCurrentAccountNames(){
+    public List<String> getSavingAccountNames(){
         List<String> names = new ArrayList<>();
-        for(CurrentAccount account: currentAccounts){
+        for(SavingAccount account: savingAccounts){
             names.add(account.getName());
         }
         return names;
+    }
+    public void withdrewToCurrent(int currentIndex, int savingIndex){
+        CurrentAccount currentAccount = currentAccounts.get(currentIndex);
+        SavingAccount savingAccount = savingAccounts.get(savingIndex);
+
+        savingAccount.withdraw(savingAccount.getBalance());
+
     }
 }

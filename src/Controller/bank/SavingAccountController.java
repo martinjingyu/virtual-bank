@@ -34,7 +34,7 @@ public class SavingAccountController {
                     JPanel panel = new JPanel(new BorderLayout());
 
                     // 添加组件到对话框中
-                    List<String> accountNames= kid.getAccountManager().getCurrentAccountNames();
+                    List<String> accountNames= kid.getAccountManager().getSavingAccountNames();
                     String[] namesArray = accountNames.toArray(new String[0]);
                     JComboBox<String> comboBox = new JComboBox<>(namesArray);
                     panel.add(comboBox, BorderLayout.CENTER);
@@ -77,7 +77,7 @@ public class SavingAccountController {
                         JPanel panel = new JPanel(new BorderLayout());
 
                         // 添加组件到对话框中
-                        List<String> accountNames= kid.getAccountManager().getCurrentAccountNames();
+                        List<String> accountNames= kid.getAccountManager().getSavingAccountNames();
                         String[] namesArray = accountNames.toArray(new String[0]);
                         JComboBox<String> comboBox = new JComboBox<>(namesArray);
                         panel.add(comboBox, BorderLayout.CENTER);
