@@ -1,7 +1,4 @@
 package GUI;
-import GUI.bank_page.bank_kid;
-
-import GUI.task_page.Depository;
 
 
 import javax.swing.*;
@@ -18,7 +15,6 @@ public class test_gui extends JFrame {
 
     public static void main(String[] args) {
 
-        Depository page1 = new Depository();
 
     }
 

@@ -5,9 +5,16 @@ import java.util.List;
 
 public class MessageList {
     private List<Message> messages;
+    private Kids kid;
+
 
     public MessageList() {
+
         this.messages = new ArrayList<>();
+    }
+
+    public void setKids(Kids kid) {
+        this.kid = kid;
     }
 
     public void addMessage(Message message) {
@@ -41,11 +48,34 @@ public class MessageList {
         return parentMessages;
     }
 
-//    这段代码用于hyz临时交互用，merge时候可直接删除
+
+    // Adding new methods to handle different types of messages
+    public void addTaskMessage(String type, Task task, String description) {
+        if(type.equals("Child_Opt")){
+            Message taskMessage = new Message("system",description);
+            messages.add(taskMessage);
+        }
+        if(type.equals("Parent_add")){
+            Message taskMessage = new Message("parent",description);
+            messages.add(taskMessage);
+        }
+
+    }
+
+    public void addBankMessage(Bank bank, double currentInterestRate,double savingInterestRate) {
+        String changeCurrent = String.format("Attention! Your current interest rate has changed to %d",currentInterestRate);
+        Message bankMessage = new Message("parent",changeCurrent);
+        messages.add(bankMessage);
+    }
+
+//    my宝宝，这块儿数据结构和我的不匹配，我给改了，保留我的就好
     public void addShopMessage(double price) {
-        String bigTransaction = String.format("Attention! You made a large expenditure, spending %d.", price);
-//        Message shopMessage = new Message("system",bigTransaction);
-//        messages.add(shopMessage);
+        String formattedString = String.format("Double value: %.2f", price);
+
+//     宝宝，这块儿参数是string要加双引号，你保留我的就会
+        Message shopMessage = new Message("system","bigTransaction");
+        messages.add(shopMessage);
+
     }
 
 

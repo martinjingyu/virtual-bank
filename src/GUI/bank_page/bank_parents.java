@@ -1,5 +1,7 @@
 package GUI.bank_page;
 
+import Entity.Kids;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,8 +15,10 @@ public class bank_parents extends JPanel implements ActionListener{
     private JButton button_transfer;
     private JButton button_yes;
     private JButton button_no;
+    private Kids kid;
 
-    public bank_parents() {
+    public bank_parents(Kids kid) {
+        this.kid=kid;
         setLayout(null); // 使用绝对布局
 
         changeRate_c = new JButton("change");
@@ -34,12 +38,12 @@ public class bank_parents extends JPanel implements ActionListener{
         button_history.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                history_page review = new history_page();
+//                history_page review = new history_page(this.kid);
                 JFrame Review_win = new JFrame();
                 Review_win.setTitle("History");
                 Review_win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 Review_win.setLocationRelativeTo(null);
-                Review_win.add(review);
+//                Review_win.add(review);
                 Review_win.setSize(800, 400);
                 Review_win.setVisible(true);
             }

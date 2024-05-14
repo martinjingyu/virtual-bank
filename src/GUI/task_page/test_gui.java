@@ -1,5 +1,6 @@
 package GUI.task_page;
 
+import Entity.Kids;
 import GUI.templete_1;
 
 import javax.swing.*;
@@ -16,7 +17,7 @@ public class test_gui extends JFrame {
 
     public static void main(String[] args) {
 
-        Depository page1 = new Depository();
+        Depository page1 = new Depository(new Kids());
         new GUI.test_gui(page1);
 
     }

@@ -1,8 +1,16 @@
+/**
+ * Title      : Error.java
+ * Description: This class is used to generate the error page to indicate that the input of user is error.
+ * Copyright  : Copyright (c) 2024/5/9
+ * @author      Weida Peng
+ * @version     1.0
+ */
+
 package GUI.log_in;
 
 import javax.swing.*;
+import Controller.login.ButtonControl;
 import java.awt.*;
-import java.awt.event.*;
 
 public class Error {
 
@@ -17,13 +25,13 @@ public class Error {
         JButton button = new JButton("back");
         button.setBounds(450, 280, 200, 50);
         button.setFont(new Font("Times New Roman", Font.BOLD, 30));
+        ButtonControl.addButtonListener(button, g);
+        // button.addActionListener(new ActionListener() {
+        // public void actionPerformed(ActionEvent e) {
+        // showCard(g, "basic");
 
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                showCard(g, "basic");
-
-            }
-        });
+        // }
+        // });
 
         joiningPanel.add(button);
         cardPanel.add(joiningPanel, "error");

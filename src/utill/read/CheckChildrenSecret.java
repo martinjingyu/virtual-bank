@@ -1,3 +1,10 @@
+/**
+ * Title      : Basic_login.java
+ * Description: This class is used to check if id and secret are correct.
+ * Copyright  : Copyright (c) 2024/5/9
+ * @author      Weida Peng
+ * @version     1.0
+ */
 package utill.read;
 
 import java.io.File;
@@ -9,10 +16,9 @@ public class CheckChildrenSecret {
     public static boolean checkChildrenSecret(String text1, String text2, String filePath) {
         try {
             String contents = "";
-            // 打开文件
-            File file = new File(filePath); // 替换为您的文件路径
+            File file = new File(filePath);
 
-            // 创建 Scanner 对象来读取文件内容
+            // Create Scanner objects to read file contents
             Scanner scanner = new Scanner(file);
             contents = scanner.next();
             System.out.println("content:" + contents);
@@ -50,10 +56,10 @@ public class CheckChildrenSecret {
             System.out.println("final_error_secret");
             scanner.close();
             return false;
-            // // 读取直到第一个空格
+            //
             // contents = scanner.next();
 
-            // // 打印结果
+            //
             // System.out.println("Content until first space: " + contents);
             // if (text1.equals(contents)) {
             // System.out.println("text1_right");
@@ -73,7 +79,7 @@ public class CheckChildrenSecret {
             // showCard(g, "error");
             // }
 
-            // 关闭 Scanner
+            //
 
         } catch (IOException error) {
             System.out.println("error_parent");

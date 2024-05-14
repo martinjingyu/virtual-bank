@@ -19,7 +19,9 @@ public class Task_kid_control extends MouseAdapter {
         this.task_kid = GUI;
     }
     public void addButtonControl(){
+
         //task_kid.getButton(1).addMouseListener(this);
+
 //        task_kid.getButton(2).addMouseListener(this);
 //        task_kid.getButton(3).addMouseListener(this);
 //        task_kid.getButton(4).addMouseListener(this);
@@ -30,6 +32,7 @@ public class Task_kid_control extends MouseAdapter {
         return kid;
     }
 
+
     public boolean taskButton(int index){
         if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
             task_kid.showWarning();
@@ -38,6 +41,7 @@ public class Task_kid_control extends MouseAdapter {
             //task_kid.showDialog(index);
             kid.getMessagelist().addTaskMessage("Child_Opt",kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
             return true;
+
         }
     }
 
@@ -67,6 +71,7 @@ public class Task_kid_control extends MouseAdapter {
         if (taskButton(i)) {  // 只有当 taskButton 返回 true 时，继续执行
             task_kid.showDialog(i);
         }
+
 
 
     }

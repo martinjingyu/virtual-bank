@@ -1,33 +1,33 @@
+/**
+ * Title      : Children.java
+ * Description: This class is used to generate the login page for children.
+ * Copyright  : Copyright (c) 2024/5/9
+ * @author      Weida Peng
+ * @version     1.0
+ */
 package GUI.log_in;
 
 import javax.swing.*;
-
+import Controller.login.ButtonControl;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.util.Scanner;
 
 public class Children {
     public static String fileName = "data/children_secret.txt";
 
     public static void addChildrenPanel(JPanel cardPanel, CardLayout cardLayout, GUIMain g) {
         BackPanel childrenPanel = new BackPanel("image/background.jpg");
-        // 添加 childrenPanel 的组件和逻辑
-        // 添加 childrenPanel 的组件和逻辑
 
         JLabel head_label_1 = new JLabel("WELCOME TO ONLINE BANK");
         head_label_1.setBounds(250, 50, 1000, 50);
-        // 创建 Font 对象，设置字体为宋体，大小为16
         head_label_1.setFont(new Font("Times New Roman", Font.BOLD, 40));
         childrenPanel.add(head_label_1);
 
         JLabel head_label = new JLabel("Please choose your identity");
         head_label.setBounds(300, 100, 1000, 50);
-        // 创建 Font 对象，设置字体为宋体，大小为16
         head_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
         childrenPanel.add(head_label);
 
-        ImageIcon children_img = new ImageIcon("image/children.jpg"); // 图片路径
+        ImageIcon children_img = new ImageIcon("image/children.jpg");
         JLabel children_img_label = new JLabel(children_img);
         children_img_label.setBounds(100, 150, 300, 300);
         childrenPanel.add(children_img_label);
@@ -35,31 +35,31 @@ public class Children {
         JButton mainButton1 = new JButton("parent");
         mainButton1.setBounds(80, 500, 150, 50);
         mainButton1.setFont(new Font("Times New Roman", Font.BOLD, 30));
-        mainButton1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                showCard(g, "parent");
+        ButtonControl.addButtonListener(mainButton1, g);
+        // mainButton1.addActionListener(new ActionListener() {
+        // public void actionPerformed(ActionEvent e) {
+        // showCard(g, "parent");
 
-            }
-        });
+        // }
+        // });
         childrenPanel.add(mainButton1);
 
         JButton mainButton2 = new JButton("children");
         mainButton2.setBounds(260, 500, 150, 50);
         mainButton2.setFont(new Font("Times New Roman", Font.BOLD, 30));
-        mainButton2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                showCard(g, "children");
+        ButtonControl.addButtonListener(mainButton2, g);
+        // mainButton2.addActionListener(new ActionListener() {
+        // public void actionPerformed(ActionEvent e) {
+        // showCard(g, "children");
 
-            }
-        });
+        // }
+        // });
         childrenPanel.add(mainButton2);
 
         JLabel children_label = new JLabel("You are children");
         children_label.setBounds(620, 250, 1000, 50);
         children_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
-
         childrenPanel.add(children_label);
-        // children_label.setText("New Text"); // 更改文本
 
         JLabel id_label = new JLabel("ID : ");
         id_label.setBounds(550, 320, 260, 50);
@@ -82,24 +82,25 @@ public class Children {
         JButton logButton = new JButton("log in");
         logButton.setBounds(700, 450, 110, 50);
         logButton.setFont(new Font("Times New Roman", Font.BOLD, 30));
-
         childrenPanel.add(logButton);
+        ButtonControl.addButtonListener2(logButton, g, textField_1, textField_2);
 
-        logButton.addActionListener(new ActionListener() {
-            // 在登录按钮的 ActionListener 中调用此方法
-            public void actionPerformed(ActionEvent e) {
+        // logButton.addActionListener(new ActionListener() {
+        // // 在登录按钮的 ActionListener 中调用此方法
+        // public void actionPerformed(ActionEvent e) {
 
-                String text2 = textField_2.getText();
-                String text1 = textField_1.getText();
-                if (utill.read.CheckChildrenSecret.checkChildrenSecret(text1, text2, "data/secret.txt") == true) {
-                    g.frame.dispose();
-                    g.loginListener.onLogin(text1);
-                } else {
-                    showCard(g, "error");
-                }
+        // String text2 = textField_2.getText();
+        // String text1 = textField_1.getText();
+        // if (utill.read.CheckChildrenSecret.checkChildrenSecret(text1, text2,
+        // "data/secret.txt") == true) {
+        // g.frame.dispose();
+        // g.loginListener.onLogin(text1);
+        // } else {
+        // showCard(g, "error");
+        // }
 
-            }
-        });
+        // }
+        // });
 
         childrenPanel.setLayout(null);
 

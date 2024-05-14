@@ -33,6 +33,10 @@ public class HistoryTransaction {
     public String getDate() {
         return date;
     }
+    public String getDay(){
+        String[] parts = getDate().split("\\s+");
+        return parts[0];
+    }
 
     public void setDate(String date) {
         this.date = date;

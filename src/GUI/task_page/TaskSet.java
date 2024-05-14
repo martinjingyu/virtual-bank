@@ -25,6 +25,12 @@ public class TaskSet extends JPanel {
         Dimension preferredSize = new Dimension(540, 540);
         Container.setPreferredSize(preferredSize);
         add(Container);
+        JFrame frame = new JFrame("Depository Window");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  
+        frame.setContentPane(this); 
+        frame.pack();  
+        frame.setLocationRelativeTo(null);  
+        frame.setVisible(true);  
     }
 
     public static void main(String[] args) {
