@@ -219,7 +219,7 @@ public class Task_kid extends JPanel {
         if (moneyFont != null) money.setFont(moneyFont);
         money.setForeground(new Color(-9975466));
 
-        money.setText("$"+task_kid_control.getKid().getBank().getSavingTotal()+"/$"+task_kid_control.getKid().getBank().getSavingGoal());
+        money.setText("$"+task_kid_control.getKid().getAccountManager().getTotalCurrentBalance()+"/$"+task_kid_control.getKid().getAccountManager().getSavingGoal());
 
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
@@ -238,7 +238,7 @@ public class Task_kid extends JPanel {
         progressBar1.setMinimum(0);
         progressBar1.setStringPainted(false);
 
-        progressBar1.setValue((int)((task_kid_control.getKid().getBank().getSavingTotal()/task_kid_control.getKid().getBank().getSavingGoal())*100));
+        progressBar1.setValue((int)((task_kid_control.getKid().getAccountManager().getTotalCurrentBalance()/task_kid_control.getKid().getAccountManager().getSavingGoal())*100));
 
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -252,7 +252,7 @@ public class Task_kid extends JPanel {
         if (progressFont != null) progress.setFont(progressFont);
         progress.setForeground(new Color(-12763843));
 
-        progress.setText(task_kid_control.getKid().getBank().getSavingTotal()/task_kid_control.getKid().getBank().getSavingGoal()*100+"%");
+        progress.setText(task_kid_control.getKid().getAccountManager().getTotalCurrentBalance()/task_kid_control.getKid().getAccountManager().getSavingGoal()*100+"%");
 
         gbc = new GridBagConstraints();
         gbc.gridx = 1;

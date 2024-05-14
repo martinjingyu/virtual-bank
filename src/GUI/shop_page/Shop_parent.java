@@ -190,7 +190,7 @@ public class Shop_parent extends JPanel implements RefreshListener {
         accountLabel.setFont(new Font("Arial", Font.BOLD, 26));
         accountLabel.setForeground(fontColor);
 
-        currentAccountLabel = new JLabel(String.format("$%.2f", shopController.getKid().getBank().getCurrentTotal()));
+        currentAccountLabel = new JLabel(String.format("$%.2f", shopController.getKid().getAccountManager().getTotalCurrentBalance()));
         currentAccountLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 
         accountInfoPanel.add(accountLabel);

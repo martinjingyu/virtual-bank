@@ -16,7 +16,7 @@ public class SavingAccountController {
     SavingAccountController(Kids kid,ShowSavingAccount GUI){
         this.kid = kid;
         this.GUI = GUI;
-        GUI.initData(kid.getBothAccountList().getSavingAccounts());
+        GUI.initData(kid.getAccountManager().getSavingAccounts());
         addListener(GUI);
     }
 
@@ -34,7 +34,7 @@ public class SavingAccountController {
                     JPanel panel = new JPanel(new BorderLayout());
 
                     // 添加组件到对话框中
-                    List<String> accountNames= kid.getBothAccountList().getCurrentAccountNames();
+                    List<String> accountNames= kid.getAccountManager().getCurrentAccountNames();
                     String[] namesArray = accountNames.toArray(new String[0]);
                     JComboBox<String> comboBox = new JComboBox<>(namesArray);
                     panel.add(comboBox, BorderLayout.CENTER);
@@ -47,8 +47,8 @@ public class SavingAccountController {
                             int selectedIndex = comboBox.getSelectedIndex();
 
                             // 执行 earlyWithdrew 方法
-                            kid.getBothAccountList().earlyWithdrew(selectedIndex, finalI);
-                            GUI.refresh(kid.getBothAccountList().getSavingAccounts());
+                            kid.getAccountManager().earlyWithdrew(selectedIndex, finalI);
+                            GUI.refresh(kid.getAccountManager().getSavingAccounts());
                             // 关闭对话框
                             frame.dispose();
                         }
@@ -77,7 +77,7 @@ public class SavingAccountController {
                         JPanel panel = new JPanel(new BorderLayout());
 
                         // 添加组件到对话框中
-                        List<String> accountNames= kid.getBothAccountList().getCurrentAccountNames();
+                        List<String> accountNames= kid.getAccountManager().getCurrentAccountNames();
                         String[] namesArray = accountNames.toArray(new String[0]);
                         JComboBox<String> comboBox = new JComboBox<>(namesArray);
                         panel.add(comboBox, BorderLayout.CENTER);
@@ -90,8 +90,8 @@ public class SavingAccountController {
                                 int selectedIndex = comboBox.getSelectedIndex();
 
                                 // 执行 earlyWithdrew 方法
-                                kid.getBothAccountList().earlyWithdrew(selectedIndex, finalI);
-                                GUI.refresh(kid.getBothAccountList().getSavingAccounts());
+                                kid.getAccountManager().earlyWithdrew(selectedIndex, finalI);
+                                GUI.refresh(kid.getAccountManager().getSavingAccounts());
                                 // 关闭对话框
                                 frame.dispose();
                             }

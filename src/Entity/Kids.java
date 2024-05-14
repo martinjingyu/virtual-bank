@@ -1,20 +1,19 @@
 package Entity;
 
 public class Kids {
-    private Bank bank;
+    private AccountManager accountManager;
     private ProductList productList;
     private ProductList selectedProduct;
     private TaskList taskList;
     private HistoryTransactionList transactionList;
     private MessageList messagelist;
-    private AccountManager accountManager;
+
     public Kids(){
     }
 
 
-    public Kids(Bank bank, HistoryTransactionList transactionList,
+    public Kids(HistoryTransactionList transactionList,
                 ProductList productList, ProductList selectedProduct, TaskList taskList, MessageList messagelist, AccountManager accountManager){
-        this.bank = bank;
         this.transactionList = transactionList;
         this.productList = productList;
         this.taskList = taskList;
@@ -25,7 +24,7 @@ public class Kids {
 
     }
 
-    public AccountManager getBothAccountList() {
+    public AccountManager getAccountManager() {
         return accountManager;
     }
 
@@ -39,9 +38,6 @@ public class Kids {
 
     public HistoryTransactionList getTransactionList(){return this.transactionList;}
 
-    public Bank getBank() {
-        return bank;
-    }
 
     public TaskList getTaskList() {
         return taskList;

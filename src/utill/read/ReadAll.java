@@ -9,7 +9,7 @@ public class ReadAll {
 
         Paths paths = new Paths(id);
 
-        Bank bank = ReadBank.readBank(paths.bank_path);
+
         ProductList productList = new ProductList();
         ProductList selectedProductList = new ProductList();
         TaskList taskList = new TaskList();
@@ -24,7 +24,7 @@ public class ReadAll {
         ReadTransaction.readTransactions(paths.transactionHistory_path,historyTransactionList);
         ReadAccount.readAccount(paths.account_path, accountManager);
 
-        return new Kids(bank,historyTransactionList,productList,selectedProductList,taskList,messageList, accountManager);
+        return new Kids(historyTransactionList,productList,selectedProductList,taskList,messageList, accountManager);
 
     }
 }
