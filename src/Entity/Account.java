@@ -47,6 +47,9 @@ public abstract class Account {
     public double getInterestRate() {
         return balance;
     }
+    public String getName(){
+        return  name;
+    }
 
     // Abstract method for interest calculation
     public abstract void calculateInterest();
