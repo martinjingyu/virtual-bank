@@ -79,6 +79,24 @@ public class TaskList{
         return -10;
     }
 
+    public String descriptionSet(Task task){
+        StringBuilder htmlBuilder = new StringBuilder("<html>");
+        int length = 0;
+        int maxLineLength = 59;
+        for (String word : task.getDescription().split(" ")) {
+            // Check if adding this word would exceed the max line length
+            if (length + word.length() > maxLineLength) {
+                htmlBuilder.append("<br>");
+                length = 0;
+            }
+            htmlBuilder.append(word).append(" ");
+            length += word.length() + 1; // add 1 for the space
+        }
+
+        htmlBuilder.append("</html>");
+        return htmlBuilder.toString();
+    }
+
 
     // You can add more methods as needed
 
@@ -87,7 +105,7 @@ public class TaskList{
         TaskList taskList = new TaskList();
 
         // Add some tasks
-        taskList.addTask(new Task("Clean the room", 5.0,"checking","111","saving"));
+        taskList.addTask(new Task("Clean the room", 5.0,"checking","Please sweep the floor in the living room and kitchen.Please sweep the floor in the living room and kitchen.Please sweep the floor in the living room and kitchen.","saving"));
         taskList.addTask(new Task("Do homework", 3.0,"done","111","current"));
         taskList.addTask(new Task("Wash dishes", 2.0,"processing","111","current"));
         taskList.addTask(new Task("Wash dishes", 2.0,"released","111","current"));
@@ -105,7 +123,7 @@ public class TaskList{
 //            System.out.println(task);
 //        }
 
-        System.out.println(taskList.getIndex("Clean the room"));
+        System.out.println(taskList.descriptionSet(taskList.getTask(0)));
 
 
         // Get a task by name
