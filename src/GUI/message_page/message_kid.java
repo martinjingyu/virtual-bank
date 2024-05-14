@@ -167,3 +167,4 @@ public class message_kid extends JPanel {
         frame.setVisible(true);
     }
 }
+
