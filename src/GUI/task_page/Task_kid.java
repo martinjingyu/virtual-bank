@@ -18,6 +18,8 @@ import java.util.List;
 
 import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 
 public class Task_kid extends JPanel {
 
@@ -27,24 +29,35 @@ public class Task_kid extends JPanel {
     private JLabel money;
     private JLabel progress;
     private JPanel Container;
-
-    private JPanel SavingBlock;
-    private JPanel Goals;
-    private JPanel Progress;
-    private JPanel TaskBlock;
-    private JPanel Task1Con;
-    private JPanel Task1Info;
-    private JPanel Task2Con;
-    private JPanel Task3Con;
-    private JPanel Task4Con;
-    private JPanel Deposit;
-    private JPanel Task2Info;
-    private JPanel Task3Info;
-    private JPanel Task4Info;
+    private JPanel progressbar;
+    private JPanel taskLiast;
+    private JPanel taskTitle;
+    private JLabel task_title;
+    private JScrollPane TaskList;
+    private JList list1;
+    private JPanel TaskShown;
+    private JPanel taskInfomation;
+    private JLabel infotitle;
+    private JLabel name;
+    private JPanel ShownPanel;
+    private JPanel taskDetails;
+    private JLabel Salary;
+    private JLabel Status;
+    private JLabel Description;
+    private JPanel Button;
+    private JLabel buttonlabel;
+    private JPanel SavingGoals;
+    private JPanel SavingTitle;
+    private JPanel Tasks;
+    private JLabel MoreInfo;
+    private JPanel depository;
     private MainFrame_kid mainFrame;
-    private JLabel button1,button2,button3,button4,button5;
     private Task_kid_control task_kid_control;
-    private int index;
+    private JLabel button1, button2, button3, button4, button5;
+    private int i;//get List index
+    private MouseAdapter myMouseListener;
+
+
 
     public Task_kid() {
         $$$setupUI$$$(); // Ensures all GUI components are initialized first
@@ -68,39 +81,67 @@ public class Task_kid extends JPanel {
         // Debug to ensure components are initialized
     }
 
-    public JLabel getButton(int index){
-        switch (index) {
-            case 1:
-                return button1;
-            case 2:
-                return button2;
-            case 3:
-                return button3;
-            case 4:
-                return button4;
-            default:
-                return button5;
-        }
+
+    private void updateTaskDetails() {
+        Salary.setText("$" + task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getReward());
+        Status.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState());
+        Description.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getDescription());
+        name.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getName());
+        buttonlabel.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState()));
+//        buttonlabel.removeMouseListener(myMouseListener);
+//        buttonlabel.addMouseListener(myMouseListener);
+
+        Tasks.revalidate();
+        Tasks.repaint();
+//        buttonlabel.removeMouseListener(myMouseListener);
     }
 
+
+
+//    public JLabel getButton(int index) {
+//        switch (index) {
+//            case 1:
+//                return button1;
+//            case 2:
+//                return button2;
+//            case 3:
+//                return button3;
+//            case 4:
+//                return button4;
+//            case 5:
+//                return button1;
+//            case 6:
+//                return button7;
+//            case 7:
+//                return button8;
+//            case 8:
+//                return button9;
+//            default:
+//                return button10;
+//        }
+//    }
+
     // 弹出对话框方法
-    private void showDialog(int index) {
-        if(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState())=="Submitted"){
+    public void showDialog(int index) {
+        if (task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()) == "Submitted") {
             JOptionPane.showMessageDialog(this, "You have submitted this task, please wait for parent's confirmation", "Message", JOptionPane.WARNING_MESSAGE);
-        }else {
+        } else {
             // 使用 JOptionPane 来显示消息
             int response = JOptionPane.showConfirmDialog(this, task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCon1(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Confirmation", JOptionPane.YES_NO_OPTION);
 
             if (response == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(this, task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCon2(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Message", JOptionPane.INFORMATION_MESSAGE);
-                task_kid_control.getKid().getTaskList().updateTask(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName(),task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).taskOperation(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index)));
-                mainFrame.refresh();
+
+                task_kid_control.getKid().getTaskList().updateTask(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName(), task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).taskOperation(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index)));
+                updateTaskDetails();
             }
         }
 
     }
-    public void showWarning(){
+
+    public void showWarning() {
         JOptionPane.showMessageDialog(this, "Please select your account first.", "Message", JOptionPane.WARNING_MESSAGE);
+
     }
 
 //    public String taskInfo(int index){
@@ -113,46 +154,54 @@ public class Task_kid extends JPanel {
 //        }
 //    }
 
-    public void Info_show(){
-        // this.taskInfo(index);
-        this.showDialog(index);
+//    public void Info_show() {
+//        // this.taskInfo(index);
+//        //this.showDialog(index);
+//    }
+
+
+
+    public int ListRefresh(String task_name) {
+        return task_kid_control.getKid().getTaskList().getNonConfirmedTask().getIndex(task_name);
     }
 
 
-
-
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
     private void $$$setupUI$$$() {
 
-
-
-
+        myMouseListener=new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                task_kid_control.mouseClicked(e,i);
+            }
+        };
         Container = new JPanel();
         Container.setLayout(new GridBagLayout());
         Container.setBackground(new Color(-4137489));
         Container.setEnabled(true);
-
-
-
-        SavingBlock = new JPanel();
-        SavingBlock.setLayout(new BorderLayout(0, 0));
-        SavingBlock.setBackground(new Color(-1052689));
-
+        SavingGoals = new JPanel();
+        SavingGoals.setLayout(new BorderLayout(0, 0));
+        SavingGoals.setBackground(new Color(-1052689));
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(20, 10, 10, 10);
-
-        Container.add(SavingBlock, gbc);
-        Goals = new JPanel();
-        Goals.setLayout(new GridBagLayout());
-        Goals.setBackground(new Color(-1052689));
-        Goals.setPreferredSize(new Dimension(400, 70));
-        SavingBlock.add(Goals, BorderLayout.NORTH);
-
+        gbc.weighty = 0.8;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(2, 15, 0, 15);
+        Container.add(SavingGoals, gbc);
+        SavingTitle = new JPanel();
+        SavingTitle.setLayout(new GridBagLayout());
+        SavingTitle.setBackground(new Color(-1052689));
+        SavingTitle.setPreferredSize(new Dimension(400, 70));
+        SavingGoals.add(SavingTitle, BorderLayout.NORTH);
         saving = new JLabel();
         Font savingFont = this.$$$getFont$$$("Arial Black", Font.BOLD, 36, saving.getFont());
         if (savingFont != null) saving.setFont(savingFont);
@@ -164,11 +213,7 @@ public class Task_kid extends JPanel {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.WEST;
-
-        Goals.add(saving, gbc);
-
-        //read file for goal and progress
-
+        SavingTitle.add(saving, gbc);
         money = new JLabel();
         Font moneyFont = this.$$$getFont$$$("Arial Black", Font.BOLD, 28, money.getFont());
         if (moneyFont != null) money.setFont(moneyFont);
@@ -182,22 +227,17 @@ public class Task_kid extends JPanel {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.EAST;
-
-        Goals.add(money, gbc);
-
-
-        Progress = new JPanel();
-        Progress.setLayout(new GridBagLayout());
-        Progress.setBackground(new Color(-1052689));
-        SavingBlock.add(Progress, BorderLayout.SOUTH);
-
+        SavingTitle.add(money, gbc);
+        progressbar = new JPanel();
+        progressbar.setLayout(new GridBagLayout());
+        progressbar.setBackground(new Color(-1052689));
+        SavingGoals.add(progressbar, BorderLayout.SOUTH);
         progressBar1 = new JProgressBar();
         progressBar1.setBackground(new Color(-2565928));
         progressBar1.setForeground(new Color(-1010247));
         progressBar1.setMinimum(0);
         progressBar1.setStringPainted(false);
 
-        //System.out.println(bankKid.getSavingTotal()/bankKid.getSavingGoal());
         progressBar1.setValue((int)((task_kid_control.getKid().getBank().getSavingTotal()/task_kid_control.getKid().getBank().getSavingGoal())*100));
 
         gbc = new GridBagConstraints();
@@ -206,9 +246,7 @@ public class Task_kid extends JPanel {
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-
-        Progress.add(progressBar1, gbc);
-
+        progressbar.add(progressBar1, gbc);
         progress = new JLabel();
         Font progressFont = this.$$$getFont$$$("Arial Black", -1, 16, progress.getFont());
         if (progressFont != null) progress.setFont(progressFont);
@@ -222,19 +260,10 @@ public class Task_kid extends JPanel {
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.EAST;
 
-        Progress.add(progress, gbc);
-
-
-
-
-        //Tasks set up
-        int size = task_kid_control.getKid().getTaskList().getNonConfirmedTask().getSize();
-
-        //int[] index=kid.getTaskList().getNonConfirmedIndex(size);
-        TaskBlock = new JPanel();
-        TaskBlock.setLayout(new GridBagLayout());
-        TaskBlock.setAlignmentY(0.5f);
-        TaskBlock.setBackground(new Color(-4137489));
+        progressbar.add(progress, gbc);
+        Tasks = new JPanel();
+        Tasks.setLayout(new GridBagLayout());
+        Tasks.setBackground(new Color(-4137489));
 
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -243,411 +272,221 @@ public class Task_kid extends JPanel {
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(0, 10, 0, 10);
 
-        Container.add(TaskBlock, gbc);
-
-        //Task 1
-        if(size>=1) {
-            index=0;
-            Task1Con = new JPanel();
-            Task1Con.setLayout(new GridBagLayout());
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            gbc.fill = GridBagConstraints.BOTH;
-            gbc.insets = new Insets(10, 10, 10, 10);
-            TaskBlock.add(Task1Con, gbc);
-            Task1Info = new JPanel();
-            Task1Info.setLayout(new GridBagLayout());
-            Task1Info.setBackground(new Color(-1052689));
-            Task1Info.setOpaque(true);
-            Task1Info.setRequestFocusEnabled(true);
-            Task1Info.setVisible(true);
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            Task1Con.add(Task1Info, gbc);
-            final JPanel panel1 = new JPanel();
-            panel1.setLayout(new GridBagLayout());
-            panel1.setBackground(new Color(-1052689));
-            gbc = new GridBagConstraints();
-            gbc.gridx = 2;
-            gbc.gridy = 0;
-            gbc.gridheight = 2;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.EAST;
-            Task1Info.add(panel1, gbc);
-            final JLabel label1 = new JLabel();
-            this.button1 = label1;
-            label1.setBackground(new Color(-1052689));
-            label1.setEnabled(true);
-            Font label1Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 22, label1.getFont());
-            if (label1Font != null) label1.setFont(label1Font);
-            label1.setForeground(new Color(-12763843));
-            //button1
-            label1.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getState()));
-
-
-            System.out.println("after");
-            System.out.println(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getState()));
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            panel1.add(label1, gbc);
-            final JLabel label2 = new JLabel();
-            label2.setEnabled(true);
-            Font label2Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 20, label2.getFont());
-            if (label2Font != null) label2.setFont(label2Font);
-            label2.setForeground(new Color(-9975466));
-            label2.setText("$"+task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getReward());
-            gbc = new GridBagConstraints();
-            gbc.gridx = 1;
-            gbc.gridy = 0;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.NORTHEAST;
-            Task1Info.add(label2, gbc);
-            final JLabel label3 = new JLabel();
-            Font label3Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 24, label3.getFont());
-            if (label3Font != null) label3.setFont(label3Font);
-            label3.setForeground(new Color(-13534488));
-            label3.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getName());
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.NORTHWEST;
-            Task1Info.add(label3, gbc);
-            final JLabel label4 = new JLabel();
-            label4.setFocusable(false);
-            Font label4Font = this.$$$getFont$$$("Arial", Font.ITALIC, 24, label4.getFont());
-            if (label4Font != null) label4.setFont(label4Font);
-            label4.setForeground(new Color(-12763843));
-            label4.setText(task_kid_control.getKid().getTaskList().getTask(0).getText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getState()));
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 1;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.NORTHWEST;
-            Task1Info.add(label4, gbc);
-
+        gbc.insets = new Insets(0, 0, 10, 5);
+        Container.add(Tasks, gbc);
+        taskLiast = new JPanel();
+        taskLiast.setLayout(new GridBagLayout());
+        taskLiast.setBackground(new Color(-4137489));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        Tasks.add(taskLiast, gbc);
+        taskTitle = new JPanel();
+        taskTitle.setLayout(new GridBagLayout());
+        taskTitle.setBackground(new Color(-4137489));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.2;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.insets = new Insets(0, 0, 20, 0);
+        taskLiast.add(taskTitle, gbc);
+        task_title = new JLabel();
+        Font task_titleFont = this.$$$getFont$$$("Arial Black", Font.BOLD, 26, task_title.getFont());
+        if (task_titleFont != null) task_title.setFont(task_titleFont);
+        task_title.setForeground(new Color(-12763843));
+        task_title.setText("Task List");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        taskTitle.add(task_title, gbc);
+        MoreInfo = new JLabel();
+        MoreInfo.setForeground(new Color(-10262674));
+        MoreInfo.setText("Click the task to see more");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;
+        taskTitle.add(MoreInfo, gbc);
+        TaskList = new JScrollPane();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 5, 0, 0);
+        taskLiast.add(TaskList, gbc);
+        list1 = new JList();
+        final DefaultListModel defaultListModel1 = new DefaultListModel();
+        List<Task> allTasks = task_kid_control.getKid().getTaskList().getNonConfirmedTask().getAllTasks();
+        int index = 0;
+        for (Task task : allTasks) {
+            defaultListModel1.addElement(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName());
+            index++;
         }
+//        defaultListModel1.addElement("Sweep floor;");
+//        defaultListModel1.addElement("Independent study;");
+        final AtomicInteger i1 = new AtomicInteger();
+        list1.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                JList source = (JList) e.getSource();
+                String selected = (String) source.getSelectedValue();
+                i = ListRefresh(selected);
+                updateTaskDetails();
 
-        //Task 2
-        /*if(size>=2) {
-            int index=1;
-            Task2Con = new JPanel();
-            Task2Con.setLayout(new GridBagLayout());
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 1;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            gbc.fill = GridBagConstraints.BOTH;
-            gbc.insets = new Insets(10, 10, 10, 10);
-            TaskBlock.add(Task2Con, gbc);
-            Task2Info = new JPanel();
-            Task2Info.setLayout(new GridBagLayout());
-            Task2Info.setBackground(new Color(-1052689));
-            Task2Info.setOpaque(true);
-            Task2Info.setRequestFocusEnabled(true);
-            Task2Info.setVisible(true);
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            Task2Con.add(Task2Info, gbc);
-            final JPanel panel2 = new JPanel();
-            panel2.setLayout(new GridBagLayout());
-            panel2.setBackground(new Color(-1052689));
-            gbc = new GridBagConstraints();
-            gbc.gridx = 2;
-            gbc.gridy = 0;
-            gbc.gridheight = 2;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.EAST;
-            Task2Info.add(panel2, gbc);
-            final JLabel label5 = new JLabel();
-            this.button2 = label5;
-            label5.setBackground(new Color(-1052689));
-            label5.setEnabled(true);
-            Font label5Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 22, label5.getFont());
-            if (label5Font != null) label5.setFont(label5Font);
-            label5.setForeground(new Color(-12763843));
-            label5.setText(kid.getTaskList().getNonConfirmedTask().getTask(1).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(1).getState()));
-            label5.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
-                        showWarning();
-                    }else {
-                        taskInfo(index);
-                        showDialog(index);
-                        kid.getMessagelist().addTaskMessage(kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
-                    }
-                }
+            }
+        });
 
-            });
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            panel2.add(label5, gbc);
-            final JLabel label6 = new JLabel();
-            Font label6Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 24, label6.getFont());
-            if (label6Font != null) label6.setFont(label6Font);
-            label6.setForeground(new Color(-13534488));
-            label6.setText(kid.getTaskList().getNonConfirmedTask().getTask(1).getName());
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.NORTHWEST;
-            Task2Info.add(label6, gbc);
-            final JLabel label7 = new JLabel();
-            label7.setFocusable(false);
-            Font label7Font = this.$$$getFont$$$("Arial", Font.ITALIC, 24, label7.getFont());
-            if (label7Font != null) label7.setFont(label7Font);
-            label7.setForeground(new Color(-12763843));
-            label7.setText(kid.getTaskList().getNonConfirmedTask().getTask(1).getText(kid.getTaskList().getNonConfirmedTask().getTask(1).getState()));
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 1;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.NORTHWEST;
-            Task2Info.add(label7, gbc);
-            final JLabel label8 = new JLabel();
-            label8.setEnabled(true);
-            Font label8Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 20, label8.getFont());
-            if (label8Font != null) label8.setFont(label8Font);
-            label8.setForeground(new Color(-9975466));
-            label8.setText("$"+kid.getTaskList().getNonConfirmedTask().getTask(1).getReward());
-            gbc = new GridBagConstraints();
-            gbc.gridx = 1;
-            gbc.gridy = 0;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.NORTHEAST;
-            Task2Info.add(label8, gbc);
+        list1.setModel(defaultListModel1);
+        TaskList.setViewportView(list1);
+        TaskShown = new JPanel();
+        TaskShown.setLayout(new GridBagLayout());
+        TaskShown.setBackground(new Color(-4137489));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.7;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(30, 10, 20, 10);
+        Tasks.add(TaskShown, gbc);
+        taskInfomation = new JPanel();
+        taskInfomation.setLayout(new GridBagLayout());
+        taskInfomation.setBackground(new Color(-4137489));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.33;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 0, 10, 0);
+        TaskShown.add(taskInfomation, gbc);
+        infotitle = new JLabel();
+        Font infotitleFont = this.$$$getFont$$$("Arial Black", Font.BOLD, 26, infotitle.getFont());
+        if (infotitleFont != null) infotitle.setFont(infotitleFont);
+        infotitle.setForeground(new Color(-12763843));
+        infotitle.setText("Task Information");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.insets = new Insets(0, 0, 10, 0);
+        taskInfomation.add(infotitle, gbc);
+        ShownPanel = new JPanel();
+        ShownPanel.setLayout(new GridBagLayout());
+        ShownPanel.setBackground(new Color(-992809));
+        ShownPanel.setMinimumSize(new Dimension(510, 450));
+        ShownPanel.setPreferredSize(new Dimension(510, 210));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.2;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(0, 0, 50, 0);
+        TaskShown.add(ShownPanel, gbc);
+        taskDetails = new JPanel();
+        taskDetails.setLayout(new BorderLayout(0, 0));
+        taskDetails.setBackground(new Color(-921103));
+        taskDetails.setPreferredSize(new Dimension(440, 101));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 4.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        ShownPanel.add(taskDetails, gbc);
+        Salary = new JLabel();
+        Font SalaryFont = this.$$$getFont$$$("Arial Black", -1, 20, Salary.getFont());
+        if (SalaryFont != null) Salary.setFont(SalaryFont);
+        Salary.setForeground(new Color(-9975466));
+        Salary.setHorizontalAlignment(2);
+        Salary.setText("$"+task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getReward());
+        Salary.setVerticalAlignment(1);
+        taskDetails.add(Salary, BorderLayout.EAST);
+        Status = new JLabel();
+        Font StatusFont = this.$$$getFont$$$("Arial Black", -1, 22, Status.getFont());
+        if (StatusFont != null) Status.setFont(StatusFont);
+        Status.setForeground(new Color(-10262674));
+        Status.setText(task_kid_control.getKid().getTaskList().getTask(i).getText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState()));
+        taskDetails.add(Status, BorderLayout.SOUTH);
 
-
-        }
-
-        //Task 3
-        if(size>=3) {
-            int index=2;
-            Task3Con = new JPanel();
-            Task3Con.setLayout(new GridBagLayout());
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 3;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            gbc.fill = GridBagConstraints.BOTH;
-            gbc.insets = new Insets(10, 10, 10, 10);
-            TaskBlock.add(Task3Con, gbc);
-            Task3Info = new JPanel();
-            Task3Info.setLayout(new GridBagLayout());
-            Task3Info.setBackground(new Color(-1052689));
-            Task3Info.setOpaque(true);
-            Task3Info.setRequestFocusEnabled(true);
-            Task3Info.setVisible(true);
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            Task3Con.add(Task3Info, gbc);
-            final JPanel panel3 = new JPanel();
-            panel3.setLayout(new GridBagLayout());
-            panel3.setBackground(new Color(-1052689));
-            gbc = new GridBagConstraints();
-            gbc.gridx = 2;
-            gbc.gridy = 0;
-            gbc.gridheight = 2;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.EAST;
-            Task3Info.add(panel3, gbc);
-            final JLabel label9 = new JLabel();
-            this.button3 = label9
-            label9.setBackground(new Color(-1052689));
-            label9.setEnabled(true);
-            Font label9Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 22, label9.getFont());
-            if (label9Font != null) label9.setFont(label9Font);
-            label9.setForeground(new Color(-12763843));
-            label9.setText(kid.getTaskList().getNonConfirmedTask().getTask(2).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(2).getState()));
-            label9.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
-                        showWarning();
-                    }else {
-                        taskInfo(index);
-                        showDialog(index);
-                        kid.getMessagelist().addTaskMessage(kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
-                    }
-
-                }
-
-            });
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            panel3.add(label9, gbc);
-            final JLabel label10 = new JLabel();
-            Font label10Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 24, label10.getFont());
-            if (label10Font != null) label10.setFont(label10Font);
-            label10.setForeground(new Color(-13534488));
-            label10.setText(kid.getTaskList().getNonConfirmedTask().getNonConfirmedTask().getTask(2).getName());
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.NORTHWEST;
-            Task3Info.add(label10, gbc);
-            final JLabel label11 = new JLabel();
-            label11.setFocusable(false);
-            Font label11Font = this.$$$getFont$$$("Arial", Font.ITALIC, 24, label11.getFont());
-            if (label11Font != null) label11.setFont(label11Font);
-            label11.setForeground(new Color(-12763843));
-            label11.setText(kid.getTaskList().getNonConfirmedTask().getTask(2).getText(kid.getTaskList().getNonConfirmedTask().getTask(2).getState()));
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 1;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.NORTHWEST;
-            Task3Info.add(label11, gbc);
-            final JLabel label12 = new JLabel();
-            label12.setEnabled(true);
-            Font label12Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 20, label12.getFont());
-            if (label12Font != null) label12.setFont(label12Font);
-            label12.setForeground(new Color(-9975466));
-            label12.setText("$"+kid.getTaskList().getNonConfirmedTask().getTask(2).getReward());
-            gbc = new GridBagConstraints();
-            gbc.gridx = 1;
-            gbc.gridy = 0;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.NORTHEAST;
-            Task3Info.add(label12, gbc);
-        }
-
-        //Task 4
-        if(size==4) {
-            int index=3;
-            Task4Con = new JPanel();
-            Task4Con.setLayout(new GridBagLayout());
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 2;
-            gbc.fill = GridBagConstraints.BOTH;
-            gbc.insets = new Insets(10, 10, 10, 10);
-            TaskBlock.add(Task4Con, gbc);
-            Task4Info = new JPanel();
-            Task4Info.setLayout(new GridBagLayout());
-            Task4Info.setBackground(new Color(-1052689));
-            Task4Info.setOpaque(true);
-            Task4Info.setRequestFocusEnabled(true);
-            Task4Info.setVisible(true);
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            Task4Con.add(Task4Info, gbc);
-            final JPanel panel4 = new JPanel();
-            panel4.setLayout(new GridBagLayout());
-            panel4.setBackground(new Color(-1052689));
-            gbc = new GridBagConstraints();
-            gbc.gridx = 2;
-            gbc.gridy = 0;
-            gbc.gridheight = 2;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.EAST;
-            Task4Info.add(panel4, gbc);
-            final JLabel label13 = new JLabel();
-            this.button4 = label13;
-            label13.setBackground(new Color(-1052689));
-            label13.setEnabled(true);
-            Font label13Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 22, label13.getFont());
-            if (label13Font != null) label13.setFont(label13Font);
-            label13.setForeground(new Color(-12763843));
-            label13.setText(kid.getTaskList().getNonConfirmedTask().getTask(3).getCondition(kid.getTaskList().getNonConfirmedTask().getTask(3).getState()));
-            label13.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
-                        showWarning();
-                    }else {
-                        taskInfo(index);
-                        showDialog(index);
-                        kid.getMessagelist().addTaskMessage(kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
-                    }
-                }
-
-            });
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
-            panel4.add(label13, gbc);
-            final JLabel label14 = new JLabel();
-            label14.setFocusable(false);
-            Font label14Font = this.$$$getFont$$$("Arial", Font.ITALIC, 24, label14.getFont());
-            if (label14Font != null) label14.setFont(label14Font);
-            label14.setForeground(new Color(-12763843));
-            label14.setText(kid.getTaskList().getNonConfirmedTask().getTask(3).getText(kid.getTaskList().getNonConfirmedTask().getTask(3).getState()));
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 1;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.NORTHWEST;
-            Task4Info.add(label14, gbc);
-            final JLabel label15 = new JLabel();
-            label15.setEnabled(true);
-            Font label15Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 20, label15.getFont());
-            if (label15Font != null) label15.setFont(label15Font);
-            label15.setForeground(new Color(-9975466));
-            label15.setText("$"+kid.getTaskList().getNonConfirmedTask().getTask(3).getReward());
-            gbc = new GridBagConstraints();
-            gbc.gridx = 1;
-            gbc.gridy = 0;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.NORTHEAST;
-            Task4Info.add(label15, gbc);
-            final JLabel label16 = new JLabel();
-            Font label16Font = this.$$$getFont$$$("Arial Black", Font.BOLD, 24, label16.getFont());
-            if (label16Font != null) label16.setFont(label16Font);
-            label16.setForeground(new Color(-13534488));
-            label16.setText(kid.getTaskList().getNonConfirmedTask().getTask(3).getName());
-            gbc = new GridBagConstraints();
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.weighty = 1.0;
-            gbc.anchor = GridBagConstraints.NORTHWEST;
-            Task4Info.add(label16, gbc);
-        }*/
-        Deposit = new JPanel();
-
-        Deposit.setLayout(new GridBagLayout());
-        Deposit.addMouseListener(new MouseAdapter() {
+        Description = new JLabel();
+        Font DescriptionFont = this.$$$getFont$$$("Arial Black", -1, 16, Description.getFont());
+        if (DescriptionFont != null) Description.setFont(DescriptionFont);
+        Description.setForeground(new Color(-13947600));
+        Description.setHorizontalAlignment(4);
+        Description.setHorizontalTextPosition(2);
+        Description.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getDescription());
+        Description.setVerticalAlignment(0);
+        taskDetails.add(Description, BorderLayout.WEST);
+        name = new JLabel();
+        Font nameFont = this.$$$getFont$$$("Arial Black", -1, 28, name.getFont());
+        if (nameFont != null) name.setFont(nameFont);
+        name.setForeground(new Color(-13534488));
+        name.setHorizontalAlignment(0);
+        name.setHorizontalTextPosition(0);
+        name.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getName());
+        name.setVerticalAlignment(3);
+        taskDetails.add(name, BorderLayout.NORTH);
+        Button = new JPanel();
+        Button.setLayout(new GridBagLayout());
+        Button.setBackground(new Color(-992809));
+        Button.setPreferredSize(new Dimension(90, 29));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.weightx =4.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.WEST;  // 对齐到东侧（右侧）
+        ShownPanel.add(Button, gbc);
+        buttonlabel = new JLabel();
+        buttonlabel.addMouseListener(myMouseListener);
+        Font buttonlabelFont = this.$$$getFont$$$("Arial Black", Font.BOLD, 15, buttonlabel.getFont());
+        if (buttonlabelFont != null) buttonlabel.setFont(buttonlabelFont);
+        buttonlabel.setForeground(new Color(-1010247));
+        buttonlabel.setHorizontalAlignment(SwingConstants.LEFT);
+        buttonlabel.setHorizontalTextPosition(SwingConstants.LEFT);
+        buttonlabel.setPreferredSize(new Dimension(140, 23));
+        buttonlabel.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getState()));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.EAST;
+        Button.add(buttonlabel, gbc);
+        depository = new JPanel();
+        depository.setLayout(new GridBagLayout());
+        depository.setBackground(new Color(-1052689));
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.weightx = 1.0;
+        gbc.weighty = 0.8;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(0, 15, 30, 15);
+        Tasks.add(depository, gbc);
+        final JLabel label1 = new JLabel();
+        Font label1Font = this.$$$getFont$$$("Arial Black", -1, 20, label1.getFont());
+        if (label1Font != null) label1.setFont(label1Font);
+        label1.setForeground(new Color(-1010247));
+        label1.setText("Select an account for task Salary Depository");
+        label1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 new Depository(task_kid_control.getKid());
@@ -656,39 +495,16 @@ public class Task_kid extends JPanel {
         });
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(0, 0, 10, 0);
-
-        TaskBlock.add(Deposit, gbc);
-        final JPanel panel5 = new JPanel();
-        panel5.setLayout(new GridBagLayout());
-        panel5.setBackground(new Color(-1052689));
-
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-
-        Deposit.add(panel5, gbc);
-
-        final JLabel label17 = new JLabel();
-        Font label17Font = this.$$$getFont$$$("Arial Black", -1, 20, label17.getFont());
-        if (label17Font != null) label17.setFont(label17Font);
-        label17.setForeground(new Color(-1010247));
-        label17.setText("Select an account for task Salary Depository");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-
-        panel5.add(label17, gbc);
+        gbc.anchor = GridBagConstraints.NORTH;
+        depository.add(label1, gbc);
     }
 
-
-
+    /**
+     * @noinspection ALL
+     */
     private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
         if (currentFont == null) return null;
         String resultName;
@@ -708,31 +524,12 @@ public class Task_kid extends JPanel {
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
 
-
-
-
+    /**
+     * @noinspection ALL
+     */
     public JComponent $$$getRootComponent$$$() {
         return Container;
     }
 
-
-    private Font $$$getFont1$$$(String fontName, int style, int size, Font currentFont) {
-        if (currentFont == null) return null;
-        String resultName;
-        if (fontName == null) {
-            resultName = currentFont.getName();
-        } else {
-            Font testFont = new Font(fontName, Font.PLAIN, 10);
-            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
-                resultName = fontName;
-            } else {
-                resultName = currentFont.getName();
-            }
-        }
-        Font font = new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
-        boolean isMac = System.getProperty("os.name", "").toLowerCase(Locale.ENGLISH).startsWith("mac");
-        Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
-        return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
-    }
 
 }

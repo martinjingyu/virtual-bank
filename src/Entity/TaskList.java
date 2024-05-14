@@ -70,6 +70,15 @@ public class TaskList{
         }
         return null;
     }
+    public int getIndex(String name){
+        for (Task task : taskList) {
+            if (task.getName().equals(name)) {
+                return taskList.indexOf(task);
+            }
+        }
+        return -10;
+    }
+
 
     // You can add more methods as needed
 
@@ -84,13 +93,19 @@ public class TaskList{
         taskList.addTask(new Task("Wash dishes", 2.0,"released","111","current"));
 
         // Get all tasks
-        List<Task> allTasks = taskList.getAllTasks();
-        System.out.println("All tasks:");
-        for (Task task : allTasks) {
-            System.out.println(task);
-        }
+//        List<Task> allTasks = taskList.getAllTasks();
+//        System.out.println("All tasks:");
+//        for (Task task : allTasks) {
+//            System.out.println(task);
+//        }
+//        taskList.changeDepository("saving");
+//        List<Task> allTasks1 = taskList.getAllTasks();
+//        System.out.println("All tasks1:");
+//        for (Task task : allTasks1) {
+//            System.out.println(task);
+//        }
 
-
+        System.out.println(taskList.getIndex("Clean the room"));
 
 
         // Get a task by name

@@ -19,7 +19,9 @@ public class Task_kid_control extends MouseAdapter {
         this.task_kid = GUI;
     }
     public void addButtonControl(){
-        task_kid.getButton(1).addMouseListener(this);
+
+        //task_kid.getButton(1).addMouseListener(this);
+
 //        task_kid.getButton(2).addMouseListener(this);
 //        task_kid.getButton(3).addMouseListener(this);
 //        task_kid.getButton(4).addMouseListener(this);
@@ -30,12 +32,16 @@ public class Task_kid_control extends MouseAdapter {
         return kid;
     }
 
-    public void taskButton(int index){
+
+    public boolean taskButton(int index){
         if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
             task_kid.showWarning();
+            return false;
         }else {
-            task_kid.Info_show();
+            //task_kid.showDialog(index);
             kid.getMessagelist().addTaskMessage("Child_Opt",kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
+            return true;
+
         }
     }
 
@@ -51,17 +57,22 @@ public class Task_kid_control extends MouseAdapter {
 
 
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        if(e.getSource()==task_kid.getButton(1)){
-            taskButton(1);
-        } else if(e.getSource()==task_kid.getButton(2)){
-            taskButton(2);
-        } else if(e.getSource()==task_kid.getButton(3)){
-            taskButton(3);
-        } else if(e.getSource()==task_kid.getButton(4)){
-            taskButton(4);
+//    @Override
+    public void mouseClicked(MouseEvent e,int i) {
+//        if(e.getSource()==task_kid.getButton(1)){
+//            taskButton(1);
+//        } else if(e.getSource()==task_kid.getButton(2)){
+//            taskButton(2);
+//        } else if(e.getSource()==task_kid.getButton(3)){
+//            taskButton(3);
+//        } else if(e.getSource()==task_kid.getButton(4)){
+//            taskButton(4);
+//        }
+        if (taskButton(i)) {  // 只有当 taskButton 返回 true 时，继续执行
+            task_kid.showDialog(i);
         }
+
+
 
     }
 
