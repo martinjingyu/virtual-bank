@@ -21,5 +21,6 @@ public class Paths {
         selectedProduct_path = "data/Kids/"+id+"/SelectedProduct.txt";
         account_path.add("data/Kids/"+id+"/CurrentAccount.txt");
         account_path.add("data/Kids/"+id+"/SavingAccount.txt");
+        account_path.add("data/Kids/"+id+"/User.txt");
     }
 }

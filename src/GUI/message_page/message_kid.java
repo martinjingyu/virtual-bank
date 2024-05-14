@@ -3,214 +3,168 @@ package GUI.message_page;
 import Controller.message.Message_kid_controller;
 import Entity.Kids;
 import Entity.Message;
+import utill.read.ReadAll;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.*;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
 public class message_kid extends JPanel {
-    private JList<Message> messagesList;
-    private DefaultListModel<Message> messageModel;
+    private Message_kid_controller controller;
     private JList<String> contactsList;
-    private JLabel contactNameLabel;
+    private DefaultListModel<Message> messageModel;
     private JTextField messageInput;
-    private Map<String, Message[]> messagesData;
-    private Message_kid_controller message_kid_controller;
+    private JLabel contactNameLabel;
+    private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
+    private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
+    private final Color borderColor = new Color(220, 220, 220); // #696969
+    private final Color fontColor = new Color(49, 122, 232); // #317AE8
 
-    public message_kid(){
+    public message_kid(Message_kid_controller controller) {
+        this.controller = controller;
+        initUI();
+        this.controller.setGUI(this);
+        this.controller.setupListeners();
 
     }
 
-    public message_kid(Message_kid_controller message_kid_controller) {
-        this.message_kid_controller = message_kid_controller;
-        this.setLayout(new BorderLayout(10, 10));
-        this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    private void initUI() {
+        setPreferredSize(new Dimension(900, 540));
+        setLayout(new BorderLayout(20, 20));
+        setBackground(mainBgColor);
+        setBorder(new EmptyBorder(20, 40, 20, 40));
 
+        add(createHeaderPanel(), BorderLayout.NORTH);
+        contactNameLabel = new JLabel("Select a contact", SwingConstants.CENTER);
+        contactNameLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        add(createMessagesPanel(), BorderLayout.CENTER);
+        add(createContactsPanel(), BorderLayout.WEST);
+    }
 
+    private JPanel createHeaderPanel() {
+        JPanel headerPanel = new JPanel();
+        headerPanel.setBackground(mainBgColor);
+        JLabel titleLabel = new JLabel("Messages", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
+        titleLabel.setForeground(fontColor);
+        headerPanel.add(titleLabel);
+        return headerPanel;
+    }
 
+    private JPanel createContactsPanel() {
+        contactsList = new JList<>(new String[]{"Parents", "System Alerts"});
+        contactsList.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        contactsList.setBackground(panelBgColor);
+        contactsList.setForeground(Color.BLACK);
+        contactsList.setSelectionBackground(borderColor);
+        contactsList.setSelectionForeground(Color.WHITE);
+        JScrollPane scrollPane = new JScrollPane(contactsList);
+        scrollPane.setPreferredSize(new Dimension(350, 250));
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(scrollPane, BorderLayout.CENTER);
+        return panel;
+    }
 
-
-        // 初始化消息数据
-        initializeMessages();
-
-        // 创建联系人列表
-        String[] contacts = {"Parents", "System Alerts"};
-        contactsList = new JList<>(contacts);
-        JScrollPane contactsScrollPane = new JScrollPane(contactsList);
-        JPanel contactsPanel = createSectionPanel("Contacts", contactsScrollPane);
-        Color customColor1 = new Color(186, 223, 243);  // 自定义的 RGB 值
-        contactsList.setBackground(customColor1);
-        contactsPanel.setPreferredSize(new Dimension(350, 250));
-
-
-        // 创建消息列表
+    private JPanel createMessagesPanel() {
         messageModel = new DefaultListModel<>();
-        messagesList = new JList<>(messageModel);
+        JList<Message> messagesList = new JList<>(messageModel);
         messagesList.setCellRenderer(new MessageCellRenderer());
-        JScrollPane messagesScrollPane = new JScrollPane(messagesList);
-        Color customColor2 = new Color(255, 225, 229);  // 自定义的 RGB 值
-        messagesList.setBackground(customColor2);
-        messagesScrollPane.setPreferredSize(new Dimension(400, 350));
-
-        // 创建信息输入框
-        messageInput = new JTextField();
-
-
-
-        contactNameLabel = new JLabel("Select a contact");
-        contactNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//        contactNameLabel.setFont(new Font("Arial", Font.PLAIN, 24));
-
-        // 消息面板设置
-        JPanel messagesPanel = new JPanel(new BorderLayout());
-        messagesPanel.add(contactNameLabel, BorderLayout.NORTH);
-        messagesPanel.add(messagesScrollPane, BorderLayout.CENTER);
-        messagesPanel.add(messageInput, BorderLayout.SOUTH);  // 添加输入框到面板底部
-        messagesPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-
-        // 添加到面板
-        this.add(messagesPanel, BorderLayout.CENTER);
-        this.add(contactsPanel, BorderLayout.EAST);
-
-        // 添加监听器到联系人列表
-
-        message_kid_controller.setGUI(this);
-        message_kid_controller.addButtonListener();
-
+        messagesList.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        messagesList.setBackground(panelBgColor);
+        JScrollPane scrollPane = new JScrollPane(messagesList);
+        scrollPane.setPreferredSize(new Dimension(400, 350));
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(contactNameLabel, BorderLayout.NORTH);
+        panel.add(scrollPane, BorderLayout.CENTER);
+        panel.add(createInputPanel(), BorderLayout.SOUTH);
+        return panel;
     }
 
-    public JTextField getMessageInput(){
+    private JPanel createInputPanel() {
+        messageInput = new JTextField("Please select a contact");
+        messageInput.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        messageInput.setForeground(Color.GRAY);
+        messageInput.setEnabled(false);
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(messageInput, BorderLayout.CENTER);
+        return panel;
+    }
+
+    // Accessor methods for the controller to use
+    public JTextField getMessageInput() {
         return messageInput;
     }
-    public JList<String> getContactList(){
+
+    public JList<String> getContactList() {
         return contactsList;
     }
-    public DefaultListModel<Message> getMessageModel(){
+
+    public DefaultListModel<Message> getMessageModel() {
         return messageModel;
     }
 
-    private JPanel createSectionPanel(String title, JScrollPane scrollPane) {
-        JPanel sectionPanel = new JPanel(new BorderLayout());
-        JLabel titleLabel = new JLabel(title, SwingConstants.CENTER);
-        sectionPanel.add(titleLabel, BorderLayout.NORTH);
-        sectionPanel.add(scrollPane, BorderLayout.CENTER);
-        return sectionPanel;
+    public void updateContactSelection(String contact) {
+        contactNameLabel.setText(contact);
+        messageModel.clear();  // Optionally delegate to controller to handle updating model
     }
-
-    private void initializeMessages() {
-        messagesData = new HashMap<>();
-        System.out.println(message_kid_controller.getKid().getMessagelist().getAllMessages());
-
-        Message[] parentMessages = message_kid_controller.getKid().getMessagelist().getParentKidMessages().toArray(new Message[0]);
-        Message[] systemMessages = message_kid_controller.getKid().getMessagelist().getSystemMessages().toArray(new Message[0]);
-        messagesData.put("Parents", parentMessages);
-        messagesData.put("System Alerts", systemMessages);
-
-
-
-
-    }
-
-    public void updateMessages(String contact) {
-        contactNameLabel.setText(contact);  // 更新顶部标签为当前选中的联系人名字
-        messageModel.clear();
-        if (messagesData.containsKey(contact)) {
-            for (Message msg : messagesData.get(contact)) {
-                messageModel.addElement(msg);
-            }
-        }
-    }
-
-    {
-// GUI initializer generated by IntelliJ IDEA GUI Designer
-// >>> IMPORTANT!! <<<
-// DO NOT EDIT OR ADD ANY CODE HERE!
-        $$$setupUI$$$();
-    }
-
-    /**
-     * Method generated by IntelliJ IDEA GUI Designer
-     * >>> IMPORTANT!! <<<
-     * DO NOT edit this method OR call it in your code!
-     *
-     * @noinspection ALL
-     */
-    private void $$$setupUI$$$() {
-        final JPanel panel1 = new JPanel();
-        // 设置布局为 GridBagLayout
-        panel1.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        // 初始化约束条件
-        gbc.gridx = 0;  // 组件所在的列
-        gbc.gridy = 0;  // 组件所在的行
-        gbc.gridwidth = 1;  // 组件占据的列数
-        gbc.gridheight = 1;  // 组件占据的行数
-        gbc.fill = GridBagConstraints.BOTH;  // 如何填充空间
-        gbc.insets = new Insets(0, 0, 0, 0);  // 外边距
-        gbc.weightx = 1.0;  // 横向扩展权重
-        gbc.weighty = 1.0;  // 纵向扩展权重
-
-        // 添加组件，可以是任意的 Swing 组件
-//        panel1.add(yourComponent, gbc);
-    }
-
-
-
-
-//    static class MessageCellRenderer extends JLabel implements ListCellRenderer<Message> {
-//        @Override
-//        public Component getListCellRendererComponent(JList<? extends Message> list, Message value, int index, boolean isSelected, boolean cellHasFocus) {
-//            setText(value.getContent());
-//            setOpaque(true);
-//            if (value.getSender().equals("kid")) {
-//                setHorizontalAlignment(SwingConstants.RIGHT);
-//                setBackground(Color.LIGHT_GRAY);
-//            } else {
-//                setHorizontalAlignment(SwingConstants.LEFT);
-//                setBackground(Color.WHITE);
-//            }
-//            return this;
-//        }
-//    }
-
-//    static class MessageCellRenderer extends JLabel implements ListCellRenderer<Message> {
-//        @Override
-//        public Component getListCellRendererComponent(JList<? extends Message> list, Message value, int index, boolean isSelected, boolean cellHasFocus) {
-//            setText(value.toString()); // This will now include both the timestamp and the content.
-//            setOpaque(true);
-//            if (value.getSender().equals("kid")) {
-//                setHorizontalAlignment(SwingConstants.RIGHT);
-//                setBackground(Color.LIGHT_GRAY);
-//            } else {
-//                setHorizontalAlignment(SwingConstants.LEFT);
-//                setBackground(Color.WHITE);
-//            }
-//            return this;
-//        }
-//    }
 
     static class MessageCellRenderer extends JLabel implements ListCellRenderer<Message> {
+        private static final Color kidMessageColor = new Color(239, 239, 239); // Light blue for kid's messages
+        private static final Color parentMessageColor = new Color(225, 226, 226); // Light orange for parent's messages
+        private static final Color systemMessageColor = new Color(225, 226, 226); // Light grey for system messages
+        private static final Color selectedColor = new Color(173, 216, 230); // Light blue for selected messages
+
         @Override
         public Component getListCellRendererComponent(JList<? extends Message> list, Message value, int index, boolean isSelected, boolean cellHasFocus) {
-            // Using HTML to format the text into two lines and align it
-            String formattedText = "<html><div style='text-align: " + (value.getSender().equals("kid") ? "right" : "left") + ";'>" +
-                    value.getTimestamp() + "<br/>" +
-                    value.getContent() + "</div></html>";
-            setText(formattedText);
+            setText(formatMessage(value));
             setOpaque(true);
-            if (value.getSender().equals("kid")) {
+            setFont(list.getFont());
+            setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10)); // Consistent padding to prevent shifting
+
+            // Determine alignment based on the sender
+            if ("kid".equals(value.getSender()) || "system".equals(value.getSender())) {
                 setHorizontalAlignment(SwingConstants.RIGHT);
-                setBackground(Color.LIGHT_GRAY);
             } else {
                 setHorizontalAlignment(SwingConstants.LEFT);
-                setBackground(Color.WHITE);
+            }
+
+            if (isSelected) {
+                setBackground(selectedColor);
+                setForeground(Color.WHITE);
+            } else {
+                setForeground(Color.DARK_GRAY);
+                switch (value.getSender()) {
+                    case "kid":
+                        setBackground(kidMessageColor);
+                        break;
+                    case "parent":
+                        setBackground(parentMessageColor);
+                        break;
+                    case "system":
+                        setBackground(systemMessageColor);
+                        break;
+                    default:
+                        setBackground(list.getBackground());
+                }
             }
             return this;
         }
-    }
 
+        private String formatMessage(Message message) {
+            return "<html><div style='text-align: " + (message.getSender().equals("kid") || message.getSender().equals("system") ? "right" : "left") + ";'>" +
+                    message.getTimestamp() + "<br/>" +
+                    message.getContent() + "</div></html>";
+        }
+    }
+    public static void main(String[] args) {
+        Kids kid = ReadAll.readall(String.valueOf(222));
+        Message_kid_controller messageController = new Message_kid_controller(kid);
+        message_kid messageKid = new message_kid(messageController);
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(messageKid);
+        frame.setSize(800, 600);
+        frame.setVisible(true);
+    }
 }
+

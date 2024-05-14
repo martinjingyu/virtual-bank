@@ -1,10 +1,8 @@
 package GUI.task_page;
 
-import Controller.MainController;
 import Controller.task.Task_kid_control;
 import Entity.*;
 import GUI.MainFrame_kid;
-import utill.read.ReadBank;
 
 
 import javax.swing.*;
@@ -17,9 +15,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Supplier;
 
 public class Task_kid extends JPanel {
 
@@ -215,7 +211,11 @@ public class Task_kid extends JPanel {
         Font moneyFont = this.$$$getFont$$$("Arial Black", Font.BOLD, 28, money.getFont());
         if (moneyFont != null) money.setFont(moneyFont);
         money.setForeground(new Color(-9975466));
-        money.setText("$"+task_kid_control.getKid().getBank().getSavingTotal()+"/$"+task_kid_control.getKid().getBank().getSavingGoal());
+
+
+        money.setText("$"+task_kid_control.getKid().getAccountManager().getTotalCurrentBalance()+"/$"+task_kid_control.getKid().getAccountManager().getSavingGoal());
+
+
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -232,7 +232,10 @@ public class Task_kid extends JPanel {
         progressBar1.setForeground(new Color(-1010247));
         progressBar1.setMinimum(0);
         progressBar1.setStringPainted(false);
-        progressBar1.setValue((int)((task_kid_control.getKid().getBank().getSavingTotal()/task_kid_control.getKid().getBank().getSavingGoal())*100));
+
+        progressBar1.setValue((int)((task_kid_control.getKid().getAccountManager().getTotalCurrentBalance()/task_kid_control.getKid().getAccountManager().getSavingGoal())*100));
+
+
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -244,7 +247,11 @@ public class Task_kid extends JPanel {
         Font progressFont = this.$$$getFont$$$("Arial Black", -1, 16, progress.getFont());
         if (progressFont != null) progress.setFont(progressFont);
         progress.setForeground(new Color(-12763843));
-        progress.setText(task_kid_control.getKid().getBank().getSavingTotal()/task_kid_control.getKid().getBank().getSavingGoal()*100+"%");
+
+
+        progress.setText(task_kid_control.getKid().getAccountManager().getTotalCurrentBalance()/task_kid_control.getKid().getAccountManager().getSavingGoal()*100+"%");
+
+
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 0;

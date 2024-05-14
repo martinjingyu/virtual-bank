@@ -4,13 +4,29 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BothAccountList {
+public class AccountManager {
+    private String userID;
+    private double savingGoal;
     private List<CurrentAccount> currentAccounts;
     private List<SavingAccount> savingAccounts;
 
-    public BothAccountList() {
+
+    public AccountManager() {
         this.currentAccounts = new ArrayList<>();
         this.savingAccounts = new ArrayList<>();
+    }
+    public String getUserID() {
+        return userID;
+    }
+    public void setUserID(String name){
+        this.userID = name;
+    }
+    public void setSavingGoal(double amount){
+        this.savingGoal= amount;
+    }
+
+    public double getSavingGoal() {
+        return savingGoal;
     }
 
     public List<CurrentAccount> getCurrentAccounts() {
@@ -65,5 +81,27 @@ public class BothAccountList {
     // 打印所有储蓄账户的详情
     public void printSavingAccountDetails() {
         savingAccounts.forEach(account -> System.out.println("Saving Account Balance: " + account.getBalance()));
+    }
+    public void earlyWithdrew(int currentIndex, int savingIndex){
+        CurrentAccount currentAccount = currentAccounts.get(currentIndex);
+        SavingAccount savingAccount = savingAccounts.get(savingIndex);
+
+        savingAccount.setEndTime(LocalDateTime.now());
+        currentAccount.deposit(savingAccount.getBalance());
+        savingAccount.withdraw(savingAccount.getBalance());
+    }
+    public List<String> getSavingAccountNames(){
+        List<String> names = new ArrayList<>();
+        for(SavingAccount account: savingAccounts){
+            names.add(account.getName());
+        }
+        return names;
+    }
+    public void withdrewToCurrent(int currentIndex, int savingIndex){
+        CurrentAccount currentAccount = currentAccounts.get(currentIndex);
+        SavingAccount savingAccount = savingAccounts.get(savingIndex);
+
+        savingAccount.withdraw(savingAccount.getBalance());
+
     }
 }

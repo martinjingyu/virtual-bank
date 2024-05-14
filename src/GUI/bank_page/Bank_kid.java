@@ -137,7 +137,7 @@ public class Bank_kid extends JPanel {
         g.setFont(titleFont);
         g.drawString("Saving Goals", 570, 60);
         g.setColor(Color.green);
-        g.drawString(String.format("%.2f",bank_kid_control.getKid().getBank().getSavingGoal()), 610, 100);
+        g.drawString(String.format("%.2f",bank_kid_control.getKid().getAccountManager().getSavingGoal()), 610, 100);
 //        g.drawString("300.00", 610, 100);
 
         g.setColor(Color.WHITE);
@@ -148,7 +148,7 @@ public class Bank_kid extends JPanel {
 //        g.drawString("Interest Rate", 150, 170);
         g.drawString("Total", 280, 170);
 //        g.drawString(String.format("%.2f",bank_kid_control.getKid().getBank().getCurrentInterestRate()), 150, 220);
-        g.drawString(String.format("%.2f",bank_kid_control.getKid().getBank().getCurrentTotal()), 280, 220);
+        g.drawString(String.format("%.2f",bank_kid_control.getKid().getAccountManager().getTotalCurrentBalance()), 280, 220);
 
         g.setColor(Color.WHITE);
         g.fillRect(70, 270, 700, 90);

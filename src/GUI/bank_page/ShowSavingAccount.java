@@ -21,7 +21,11 @@ public class ShowSavingAccount extends JFrame {
     private JPanel mainContent;
     private ComponentList componentList;
     private JPanel accountGrid;
+    private JPanel infoPanel;
     private List<JPanel> finishPanelList;
+    private FinishList finishList;
+    private List<Duration> remainingTime;
+    private JPanel addButton;
     private Timer timer;
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
     private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
@@ -38,6 +42,7 @@ public class ShowSavingAccount extends JFrame {
     }
     private void updateProgressBar(List<SavingAccount> savingAccountList, List<JProgressBar> progressBarList) {
         // 计算已经过的时间比例
+        createFinishPanelList(savingAccountList);
         int i;
         for(i=0;i<savingAccountList.size();i++){
             SavingAccount savingAccount = savingAccountList.get(i);
@@ -54,28 +59,49 @@ public class ShowSavingAccount extends JFrame {
             // 检查是否已完成
             if (progress >= 100) {
                 System.out.println("finish");
-                accountGrid.remove(i);
-                accountGrid.add(finishPanelList.get(i));
+                Component[] list = accountGrid.getComponents();
+                list[i] = finishPanelList.get(i);
 
+                accountGrid.removeAll();
+                for(int j=0; j< list.length;j++){
+                    accountGrid.add(list[j]);
+                }
             }
+        }
+
+    }
+    private void updateRemaining(List<SavingAccount> accountList){
+        for (int i = 0; i < accountList.size(); i++) {
+            SavingAccount account = accountList.get(i);
+            Duration remaining = Duration.between(LocalDateTime.now(), account.getEndTime());
+            long hours = remaining.toHours();
+            long minutes = remaining.toMinutesPart();
+            long seconds = remaining.toSecondsPart();
+            String remainingTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+            componentList.getRemainingList().get(i).setText("Remaining time: " + remainingTime);
         }
     }
 
     public void initData(List<SavingAccount> accountList){
         createFinishPanelList(accountList);
-        mainContent.add(createAccountGrid(accountList),BorderLayout.CENTER);
-        mainContent.add(createTotalInfoPanel(),BorderLayout.SOUTH);
-        timer = new Timer(1000, e -> updateProgressBar(accountList,componentList.getBarlist()));
+        accountGrid = createAccountGrid(accountList);
+        mainContent.add(accountGrid,BorderLayout.CENTER);
+        infoPanel = createTotalInfoPanel();
+        mainContent.add(infoPanel,BorderLayout.SOUTH);
+        timer = new Timer(1000, e -> {updateProgressBar(accountList,componentList.getBarlist());updateRemaining(accountList);});
         timer.start();
         pack();
         setVisible(true);
+    }
+    public void refresh(List<SavingAccount> accountList){
+        createFinishPanelList(accountList);
     }
     private void initUI(){
         setTitle("Saving Account");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.mainContent = new JPanel();
         setContentPane(mainContent);
-        mainContent.setPreferredSize(new Dimension(900, 540));
+        mainContent.setPreferredSize(new Dimension(900, 700));
         mainContent.setLayout(new BorderLayout(20, 20)); // Added horizontal and vertical gaps
         mainContent.setBorder(new EmptyBorder(20, 40, 20, 40));
         mainContent.setBackground(mainBgColor);
@@ -84,44 +110,44 @@ public class ShowSavingAccount extends JFrame {
     }
     private void createFinishPanelList(List<SavingAccount> accountList){
         finishPanelList = new ArrayList<>();
-        FinishList finishList = new FinishList(accountList);
+        finishList = new FinishList(accountList);
         int i;
         for(i=0;i<finishList.getButtonlist().size();i++){
             JPanel finish = new JPanel();
-
+            // 创建标签并设置格式
             finish.setLayout(new BoxLayout(finish, BoxLayout.Y_AXIS));
             finish.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 1), new EmptyBorder(5, 10, 5, 10)));
             finish.setBackground(Color.white);
-            finish.setPreferredSize(new Dimension(200, 120));
-
-            // 创建标签并设置格式
-
-            JLabel nameLabel = new JLabel("name", SwingConstants.CENTER);
+            finish.setPreferredSize(new Dimension(200, 150));
+            JLabel nameLabel = new JLabel(accountList.get(i).getName(), SwingConstants.CENTER);
             nameLabel.setFont(new Font("Arial", Font.BOLD, 12));
-            nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            nameLabel.setAlignmentX(finish.CENTER_ALIGNMENT);
 
             JButton finishButton = finishList.getButtonlist().get(i);
+            finishButton.setFont(new Font("Arial", Font.PLAIN, 12));
+            finishButton.setAlignmentX(finish.CENTER_ALIGNMENT);
 
-            JLabel totalIncome = new JLabel("Total income: something to be added", SwingConstants.CENTER);
-            nameLabel.setFont(new Font("Arial", Font.BOLD, 12));
-            nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
+            JLabel totalIncome = new JLabel("Total income: something", SwingConstants.CENTER);
+            totalIncome.setFont(new Font("Arial", Font.PLAIN, 12));
+            totalIncome.setAlignmentX(finish.CENTER_ALIGNMENT);
 
 
             // 添加组件到面板
+            finish.add(Box.createVerticalStrut(15));
             finish.add(nameLabel);
-            finish.add(Box.createVerticalStrut(0));
+            finish.add(Box.createVerticalStrut(5));
             finish.add(totalIncome);
-            finish.add(Box.createVerticalStrut(0));
+            finish.add(Box.createVerticalStrut(5));
             finish.add(finishButton);
             finish.add(Box.createVerticalStrut(0));
+            if (accountList.get(i).getBalance()==0){
+                totalIncome.setText("this account is empty");
+                finishButton.setText("Deposit");
+            }
             finishPanelList.add(finish);
-
         }
 
     }
-
-
 
     private JPanel createComponents(int i, ComponentList componentList) {
         // 创建组件的面板
@@ -130,23 +156,29 @@ public class ShowSavingAccount extends JFrame {
         component.setLayout(new BoxLayout(component, BoxLayout.Y_AXIS));
         component.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 1), new EmptyBorder(5, 10, 5, 10)));
         component.setBackground(Color.white);
-        component.setPreferredSize(new Dimension(200, 120));
+        component.setPreferredSize(new Dimension(200, 150));
 
         // 创建标签并设置格式
         SavingAccount account = componentList.getSavingAccountList().get(i);
         JProgressBar progressBar = componentList.getBarlist().get(i);
+        JButton cancel = componentList.getCancelButton().get(i);
 
-        JLabel nameLabel = new JLabel("name", SwingConstants.CENTER);
-        nameLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel nameLabel = new JLabel(componentList.getSavingAccountList().get(i).getName(), SwingConstants.CENTER);
 
-        JLabel remainLabel = new JLabel("Remain: xxxx:xx:xx", SwingConstants.CENTER);
-        remainLabel.setFont(new Font("Arial", Font.BOLD, 12));
-        remainLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel startEndLabel = new JLabel("Start time: "+account.getStartTime()+" End time: "+ account.getEndTime(), SwingConstants.CENTER);
-        startEndLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-        startEndLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel remainLabel = componentList.getRemainingList().get(i);
+
+        JLabel startLabel = new JLabel("Start time: "+account.getStartTime(), SwingConstants.CENTER);
+        startLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+        startLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel endLabel = new JLabel(" End time: "+ account.getEndTime(), SwingConstants.CENTER);
+        endLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+        endLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
+        cancel.setFont(new Font("Arial", Font.PLAIN, 10));
+        cancel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
 
@@ -157,7 +189,11 @@ public class ShowSavingAccount extends JFrame {
         component.add(Box.createVerticalStrut(0));
         component.add(remainLabel);
         component.add(Box.createVerticalStrut(0));
-        component.add(startEndLabel);
+        component.add(startLabel);
+        component.add(Box.createVerticalStrut(0));
+        component.add(endLabel);
+        component.add(Box.createVerticalStrut(0));
+        component.add(cancel);
 
         return component;
     }
@@ -207,19 +243,22 @@ public class ShowSavingAccount extends JFrame {
         componentList = new ComponentList(accountList);
 
         for (int i = 0; i < accountList.size(); i++) {
-            accountGrid.add(createComponents(i,componentList));
+            if(accountList.get(i).getEndTime().isAfter(LocalDateTime.now())&&accountList.get(i).getBalance()>0){
+                accountGrid.add(createComponents(i,componentList));
+            }
+            else{accountGrid.add(finishPanelList.get(i));
+            }
+
         }
-        accountGrid.add(createAddComponents());
+        addButton = createAddComponents();
+        accountGrid.add(addButton);
         for (int i = 0; i < 11-accountList.size(); i++) {
             accountGrid.add(new JPanel());
         }
 
-
         return accountGrid;
 
     }
-
-
     private JPanel createAddComponents(){
         JPanel addPanel = new JPanel();
         addPanel.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 1), new EmptyBorder(5, 10, 5, 10)));
@@ -231,6 +270,17 @@ public class ShowSavingAccount extends JFrame {
         addLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         addPanel.add(addLabel);
         return addPanel;
+    }
+    public JPanel getAddButton(){
+        return addButton;
+    }
+
+    public ComponentList getComponentList() {
+        return componentList;
+    }
+
+    public FinishList getFinishList() {
+        return finishList;
     }
 
     public static void main(String[] args) {

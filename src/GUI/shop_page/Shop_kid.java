@@ -1,6 +1,7 @@
 package GUI.shop_page;
 
 import Controller.shop.ShopController;
+import Entity.CurrentAccount;
 import Entity.Kids;
 import Entity.Product;
 import Entity.ProductList;
@@ -11,6 +12,7 @@ import java.awt.*;
 import java.util.List;
 import java.awt.event.ItemEvent;
 import javax.swing.JRadioButton;
+import javax.swing.border.Border;
 import java.util.ArrayList;
 
 public class Shop_kid extends JPanel {
@@ -20,13 +22,20 @@ public class Shop_kid extends JPanel {
     private ShopController shopController;
     private JLabel selectedTotalLabel;
     private JLabel currentAccountLabel;
+    private JComboBox<String> accountDropdown;
+    // Define the custom colors
+    private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
+    private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
+    private final Color fontColor = new Color(49, 122, 232); // #317AE8
+    private final Color submitButtonColor = new Color(103, 201, 86); // #67C956
+    private final Color borderColor = new Color(105, 105, 105); // #696969
 
     public Shop_kid(ShopController shopController) {
         this.shopController = shopController;
         this.productList = shopController.getKid().getProductList();
         this.selectedTotalLabel = new JLabel("Selected Total: $      0.00");
         this.selectedTotalLabel.setForeground(Color.BLACK);
-        this.currentAccountLabel = new JLabel(String.format("Current Account: $%9.2f", shopController.getKid().getBank().getCurrentTotal()));
+        this.currentAccountLabel = new JLabel(String.format("Current Account: $%9.2f", shopController.getKid().getAccountManager().getTotalCurrentBalance()));
         this.toggleButtons = new ArrayList<>();
 
         setLayout(new BorderLayout(10, 10));
@@ -35,19 +44,56 @@ public class Shop_kid extends JPanel {
     }
 
     private void initUI() {
-        add(createHeader(), BorderLayout.NORTH);
+        add(createHeaderPanel(), BorderLayout.NORTH);
         add(createProductsPanel(), BorderLayout.CENTER);
         add(createFooter(), BorderLayout.SOUTH);
     }
 
-    private JPanel createHeader() {
-        JPanel header = new JPanel();
-        header.setBackground(new Color(173, 216, 230));
-        JLabel titleLabel = new JLabel("FAMILY MALL", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        header.add(titleLabel);
-        return header;
+    private JPanel createHeaderPanel() {
+        JPanel headerPanel = new JPanel(new GridBagLayout());
+        headerPanel.setBackground(mainBgColor);
+        Border headerBorder = BorderFactory.createMatteBorder(0, 0, 3, 0, borderColor); // Added bottom border
+        headerPanel.setBorder(headerBorder);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.WEST; // Align components to the left
+        gbc.weightx = 1.0; // Distribute space evenly
+
+        // Title label
+        JLabel titleLabel = new JLabel("FAMILY MALL");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
+        titleLabel.setForeground(fontColor);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        gbc.gridwidth = GridBagConstraints.REMAINDER; // End row after this component
+        headerPanel.add(titleLabel, gbc);
+
+        // Reset gridwidth for next components
+        gbc.gridwidth = 1; // Allow next component in the same row
+        gbc.weightx = 0; // Do not stretch this component horizontally
+
+        // Payment label
+        JLabel label = new JLabel("Choose one to pay:");
+        label.setFont(new Font("Arial", Font.PLAIN, 18)); // Adjust font to match your design
+        headerPanel.add(label, gbc);
+
+        // Adjust insets to reduce space between label and dropdown
+        gbc.insets = new Insets(0, 5, 0, 5); // Reduce space by setting small insets, adjust as needed
+
+        // Account dropdown
+        accountDropdown = new JComboBox<>();
+        // Assuming BothAccountList is accessible via Kids class
+        for (CurrentAccount account : shopController.getKid().getBothAccountList().getCurrentAccounts()) {
+            accountDropdown.addItem(account.getName());
+        }
+        accountDropdown.setSelectedItem("CA1"); // Set the default selection to "CA1"
+        gbc.fill = GridBagConstraints.NONE; // Don't expand the dropdown
+        gbc.gridwidth = GridBagConstraints.REMAINDER; // End row after this component
+        headerPanel.add(accountDropdown, gbc);
+
+        return headerPanel;
     }
+
 
     private JScrollPane createProductsPanel() {
         JPanel productsPanel = new JPanel(new GridLayout(0, 4, 10, 10)); // 动态行数，固定4列
@@ -130,7 +176,7 @@ public class Shop_kid extends JPanel {
         gbc.gridy = 2; // 第三行
         footer.add(currentAccountLabel, gbc);
 
-        buyButton.addActionListener(e -> shopController.buyProducts(selectedTotalLabel, currentAccountLabel,toggleButtons));
+        buyButton.addActionListener(e -> shopController.buyProducts(selectedTotalLabel, currentAccountLabel,toggleButtons,accountDropdown));
 
 
         return footer;
