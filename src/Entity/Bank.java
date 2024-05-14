@@ -268,6 +268,5 @@ public class Bank {
         return savingTotal;
     }
 
-
 }
 
