@@ -26,6 +26,11 @@ public class ShopParentController {
     public Kids getKid() {
         return kid;
     }
+
+    public void addListener(RefreshListener listener) {
+        this.refreshListener = listener;
+    }
+
     public void updateBoughtProductList(Product product, boolean isSelected) {
         if (isSelected) {
             boughtProduct.add(product);

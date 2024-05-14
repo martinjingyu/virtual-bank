@@ -13,10 +13,10 @@ public class test_gui extends JFrame {
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
 
-    public static void main(String[] args) {
-        message_kid page4 = new message_kid();
-        new test_gui(page4);
-    }
+//    public static void main(String[] args) {
+//        message_kid page4 = new message_kid();
+//        new test_gui(page4);
+//    }
 
     public test_gui(JPanel panel) {
         super("demo");
