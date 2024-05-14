@@ -66,4 +66,20 @@ public class BothAccountList {
     public void printSavingAccountDetails() {
         savingAccounts.forEach(account -> System.out.println("Saving Account Balance: " + account.getBalance()));
     }
+    public void earlyWithdrew(int currentIndex, int savingIndex){
+        CurrentAccount currentAccount = currentAccounts.get(currentIndex);
+        SavingAccount savingAccount = savingAccounts.get(savingIndex);
+
+        savingAccount.setEndTime(LocalDateTime.now());
+        currentAccount.deposit(savingAccount.getBalance());
+        savingAccount.withdraw(savingAccount.getBalance());
+
+    }
+    public List<String> getCurrentAccountNames(){
+        List<String> names = new ArrayList<>();
+        for(CurrentAccount account: currentAccounts){
+            names.add(account.getName());
+        }
+        return names;
+    }
 }
