@@ -1,5 +1,11 @@
-Sweep the floor,20.0,Confirmed,description1,x
-Independent study1,11.0,ToBeTaken,description1,x
-Independent study2,12.0,Taken,description2,x
-Independent study3,13.0,ToBeConfirmed,description3,x
-Independent study4,14.0,ToBeTaken,description4,x
+Sweep the floor,20.0,Confirmed,description1,current
+Independent study1,11.0,Taken,Please sweep the floor in the living room and kitchen. Make sure to remove all dust and debris. Please also ensure that the corners are well cleaned.,current
+Independent study2,12.0,ToBeTaken,description2,current
+Independent study3,13.0,ToBeTaken,description3,current
+Independent study4,14.0,ToBeTaken,description4,current
+Independent study5,11.0,Taken,description1,current
+Independent study6,12.0,ToBeConfirmed,description2,current
+Independent study7,13.0,ToBeConfirmed,description3,current
+Independent study8,14.0,ToBeConfirmed,description4,current
+Independent study9,11.0,ToBeConfirmed,description1,current
+Independent study10,12.0,ToBeConfirmed,description2,current

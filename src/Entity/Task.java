@@ -66,6 +66,16 @@ public class Task {
         };
     }
 
+    public String getCondition1(String state){
+        return switch (state) {
+            case "ToBeConfirmed" -> "Confirm";
+            case "ToBeTaken" -> "Delete";
+            case "Taken" -> "Pending";
+            default -> null;
+        };
+    }
+
+
     public String getM(String state){
         return switch (state) {
             case "ToBeConfirmed" -> "Please wait patiently for parent's confirmation, you have submitted the task";
@@ -121,6 +131,8 @@ public class Task {
         }
         return task;
     }
+
+
 
 
     @Override
