@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Task_kid extends JPanel {
@@ -120,19 +121,75 @@ public class Task_kid extends JPanel {
 
     // 弹出对话框方法
     public void showDialog(int index) {
-        if (task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()) == "Submitted") {
-            JOptionPane.showMessageDialog(this, "You have submitted this task, please wait for parent's confirmation", "Message", JOptionPane.WARNING_MESSAGE);
-        } else {
-            // 使用 JOptionPane 来显示消息
-            int response = JOptionPane.showConfirmDialog(this, task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCon1(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Confirmation", JOptionPane.YES_NO_OPTION);
+//        if (Objects.equals(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Submitted")) {
+//            JOptionPane.showMessageDialog(this, "You have submitted this task, please wait for parent's confirmation", "Message", JOptionPane.WARNING_MESSAGE);
+//        } else if (Objects.equals(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Action") {
+//
+//       } else {
+//            // 使用 JOptionPane 来显示消息
+//            int response = JOptionPane.showConfirmDialog(this, task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCon1(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Confirmation", JOptionPane.YES_NO_OPTION);
+//
+//            if (response == JOptionPane.YES_OPTION) {
+//                JOptionPane.showMessageDialog(this, task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCon2(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Message", JOptionPane.INFORMATION_MESSAGE);
+//                task_kid_control.getKid().getTaskList().updateTask(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName(), task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).taskOperation(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index)));
+//                updateTaskDetails();
+//            }
+//        }
+        String state = task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState());
+        switch (state) {
+            case "Submitted":
+                JOptionPane.showMessageDialog(this, "You have submitted this task, please wait for parent's confirmation", "Message", JOptionPane.WARNING_MESSAGE);
+                break;
+            case "Action":
+                int initialResponse = JOptionPane.showConfirmDialog(this,
+                        "Submit the task or cancel the taken status? Yes for Submit, No for Cancel",
+                        "Submit or Cancel",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
 
-            if (response == JOptionPane.YES_OPTION) {
-                JOptionPane.showMessageDialog(this, task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCon2(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Message", JOptionPane.INFORMATION_MESSAGE);
-                task_kid_control.getKid().getTaskList().updateTask(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName(), task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).taskOperation(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index)));
+                if (initialResponse == JOptionPane.YES_OPTION) {
+                    // 第一次确认提交任务
+                    int confirmSubmit = JOptionPane.showConfirmDialog(this,
+                            "Are you sure you want to submit the task?",
+                            "Confirm Submit",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
+
+                    if (confirmSubmit == JOptionPane.YES_OPTION) {
+                        task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).setState("ToBeConfirmed");
+                        // 确认提交任务的逻辑
+                        JOptionPane.showMessageDialog(this,
+                                "Task has been submitted.",
+                                "Task Submitted",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else if (initialResponse == JOptionPane.NO_OPTION) {
+                    // 第一次确认取消任务
+                    int confirmCancel = JOptionPane.showConfirmDialog(this,
+                            "Are you sure you want to cancel the mission?",
+                            "Confirm Cancel",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.WARNING_MESSAGE);
+
+                    if (confirmCancel == JOptionPane.YES_OPTION) {
+                        task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).setState("ToBeTaken");
+                        // 确认取消任务的逻辑
+                        JOptionPane.showMessageDialog(this,
+                                "Task has been canceled.",
+                                "Task Canceled",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
                 updateTaskDetails();
-            }
+                break;
+            case "Pick it":
+                int response1 = JOptionPane.showConfirmDialog(this, task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCon1(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Confirmation", JOptionPane.YES_NO_OPTION);
+                if (response1 == JOptionPane.YES_OPTION) {
+                    JOptionPane.showMessageDialog(this, task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCon2(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Message", JOptionPane.INFORMATION_MESSAGE);
+                    task_kid_control.getKid().getTaskList().updateTask(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName(), task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).taskOperation(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index)));
+                    updateTaskDetails();
+                }
         }
-
     }
 
     public void showWarning() {
