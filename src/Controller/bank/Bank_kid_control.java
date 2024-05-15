@@ -56,7 +56,7 @@ public class Bank_kid_control {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ShowCurrentAccount showCurrentAccount = new ShowCurrentAccount();
-                CurrentAccountController currentAccountController = new CurrentAccountController(kid,showCurrentAccount);
+                CurrentAccountController currentAccountController = new CurrentAccountController(kid,showCurrentAccount,false);
             }
         });
     }
@@ -66,7 +66,7 @@ public class Bank_kid_control {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ShowSavingAccount showSavingAccount = new ShowSavingAccount();
-                SavingAccountController savingAccountController = new SavingAccountController(kid,showSavingAccount);
+                SavingAccountController savingAccountController = new SavingAccountController(kid,showSavingAccount,false);
             }
         });
     }

@@ -2,6 +2,8 @@ package Controller.bank;
 
 import Entity.Kids;
 import GUI.MainFrame_parent;
+import GUI.bank_page.ShowCurrentAccount;
+import GUI.bank_page.ShowSavingAccount;
 import GUI.bank_page.bank_parents;
 import GUI.bank_page.history_page;
 
@@ -53,4 +55,25 @@ public class Bank_parent_controller {
             }
         });
     }
+    public void addCurrentDetails(JButton button){
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ShowCurrentAccount showCurrentAccount = new ShowCurrentAccount();
+                CurrentAccountController currentAccountController = new CurrentAccountController(kid,showCurrentAccount,true);
+
+            }
+        });
+
+    }
+    public void addSavingAccountListener(JButton button){
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ShowSavingAccount showSavingAccount = new ShowSavingAccount();
+                SavingAccountController savingAccountController = new SavingAccountController(kid, showSavingAccount, true);
+            }
+        });
+    }
 }
+

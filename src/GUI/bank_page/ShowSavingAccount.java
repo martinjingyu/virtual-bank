@@ -77,9 +77,9 @@ public class ShowSavingAccount extends JFrame {
         }
     }
 
-    public void initData(List<SavingAccount> accountList){
-        createFinishPanelList(accountList);
-        accountGrid = createAccountGrid(accountList);
+    public void initData(List<SavingAccount> accountList,Boolean whetherParent){
+        createFinishPanelList(accountList,whetherParent);
+        accountGrid = createAccountGrid(accountList,whetherParent);
         mainContent.add(accountGrid,BorderLayout.CENTER);
         infoPanel = createTotalInfoPanel();
         mainContent.add(infoPanel,BorderLayout.SOUTH);
@@ -88,8 +88,8 @@ public class ShowSavingAccount extends JFrame {
         pack();
         setVisible(true);
     }
-    public void refresh(List<SavingAccount> accountList){
-        createFinishPanelList(accountList);
+    public void refresh(List<SavingAccount> accountList,Boolean whetherParent){
+        createFinishPanelList(accountList,whetherParent);
     }
     private void initUI(){
         setTitle("Saving Account");
@@ -103,7 +103,7 @@ public class ShowSavingAccount extends JFrame {
         mainContent.add(createHeaderPanel(), BorderLayout.NORTH);
 
     }
-    private void createFinishPanelList(List<SavingAccount> accountList){
+    private void createFinishPanelList(List<SavingAccount> accountList,Boolean whetherParent){
         finishPanelList = new ArrayList<>();
         finishList = new FinishList(accountList);
         int i;
@@ -133,7 +133,10 @@ public class ShowSavingAccount extends JFrame {
             finish.add(Box.createVerticalStrut(5));
             finish.add(totalIncome);
             finish.add(Box.createVerticalStrut(5));
-            finish.add(finishButton);
+            if(whetherParent==false){
+                finish.add(finishButton);
+            }
+
             finish.add(Box.createVerticalStrut(0));
             if (accountList.get(i).getBalance()==0){
                 totalIncome.setText("this account is empty");
@@ -144,7 +147,7 @@ public class ShowSavingAccount extends JFrame {
 
     }
 
-    private JPanel createComponents(int i, SavingComponentList savingComponentList) {
+    private JPanel createComponents(int i, SavingComponentList savingComponentList,Boolean whetherParent) {
         // 创建组件的面板
         JPanel component = new JPanel();
 
@@ -187,8 +190,11 @@ public class ShowSavingAccount extends JFrame {
         component.add(startLabel);
         component.add(Box.createVerticalStrut(0));
         component.add(endLabel);
-        component.add(Box.createVerticalStrut(0));
-        component.add(cancel);
+        if(whetherParent==false){
+            component.add(Box.createVerticalStrut(0));
+            component.add(cancel);
+        }
+
 
         return component;
     }
@@ -230,7 +236,7 @@ public class ShowSavingAccount extends JFrame {
 
     }
 
-    private JPanel createAccountGrid(List<SavingAccount> accountList) {
+    private JPanel createAccountGrid(List<SavingAccount> accountList,Boolean whetherParent) {
         accountGrid = new JPanel();
         accountGrid.setLayout(new GridLayout(4, 3, 10, 5)); // 增加了行列间的间隔
         accountGrid.setBackground(Color.LIGHT_GRAY);
@@ -239,7 +245,7 @@ public class ShowSavingAccount extends JFrame {
 
         for (int i = 0; i < accountList.size(); i++) {
             if(accountList.get(i).getEndTime().isAfter(LocalDateTime.now())&&accountList.get(i).getBalance()>0){
-                accountGrid.add(createComponents(i, savingComponentList));
+                accountGrid.add(createComponents(i, savingComponentList,whetherParent));
             }
             else{accountGrid.add(finishPanelList.get(i));
             }
@@ -247,6 +253,7 @@ public class ShowSavingAccount extends JFrame {
         }
         addButton = createAddComponents();
         accountGrid.add(addButton);
+
         for (int i = 0; i < 11-accountList.size(); i++) {
             accountGrid.add(new JPanel());
         }

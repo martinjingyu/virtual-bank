@@ -33,12 +33,12 @@ public class bank_parents extends JPanel{
 
         currentDetails = new JButton("Details");
         currentDetails.setBounds(590, 190, 140, 30);
-//        bank_parent_controller.addCurrentDetails(currentDetails);
+        bank_parent_controller.addCurrentDetails(currentDetails);
         add(currentDetails);
 
         savingDetails = new JButton("Details");
         savingDetails.setBounds(590, 310, 140, 30);
-//        bank_kid_control.addSavingAccountListener(button3);
+        bank_parent_controller.addSavingAccountListener(savingDetails);
         add(savingDetails);
 
         button_history = new JButton("Review");

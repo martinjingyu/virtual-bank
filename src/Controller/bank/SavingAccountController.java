@@ -14,10 +14,10 @@ public class SavingAccountController {
     private Kids kid;
     private ShowSavingAccount GUI;
 
-    SavingAccountController(Kids kid,ShowSavingAccount GUI){
+    SavingAccountController(Kids kid,ShowSavingAccount GUI,Boolean whetherParent){
         this.kid = kid;
         this.GUI = GUI;
-        GUI.initData(kid.getAccountManager().getSavingAccounts());
+        GUI.initData(kid.getAccountManager().getSavingAccounts(),whetherParent);
         addListener(GUI);
     }
 
@@ -49,7 +49,7 @@ public class SavingAccountController {
 
                             // 执行 earlyWithdrew 方法
                             kid.getAccountManager().earlyWithdrew(selectedIndex, finalI);
-                            refresh();
+                            refresh(true);
                             // 关闭对话框
                             frame.dispose();
                         }
@@ -98,7 +98,7 @@ public class SavingAccountController {
                                 try{
                                     double value = Double.parseDouble(textField.getText());
                                     kid.getAccountManager().deposit(selectedIndex, finalI,value);
-                                    refresh();
+                                    refresh(true);
                                     // 关闭对话框
                                     frame.dispose();
                                 }
@@ -143,7 +143,7 @@ public class SavingAccountController {
 
                                 // 执行 earlyWithdrew 方法
                                 kid.getAccountManager().savingWithdrewToCurrent(selectedIndex, finalI);
-                                refresh();
+                                refresh(true);
                                 // 关闭对话框
                                 frame.dispose();
                             }
@@ -163,8 +163,8 @@ public class SavingAccountController {
 
 
     }
-    public void refresh(){
-        GUI.refresh(kid.getAccountManager().getSavingAccounts());
+    public void refresh(Boolean whetherParent){
+        GUI.refresh(kid.getAccountManager().getSavingAccounts(),whetherParent);
         addListener(GUI);
     }
     public ShowSavingAccount getGUI(){
