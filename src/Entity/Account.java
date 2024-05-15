@@ -28,8 +28,10 @@ public abstract class Account {
 
     // Common methods
     public void deposit(double amount) {
+        System.out.println("Balance: " + balance);
         balance += amount;
         System.out.println("Deposited: " + amount);
+        System.out.println("Balance after: " + balance);
     }
 
     public void withdraw(double amount) {
@@ -53,5 +55,9 @@ public abstract class Account {
 
     // Abstract method for interest calculation
     public abstract void calculateInterest();
+
+    public static void main(String[] args) {
+
+    }
 }
 

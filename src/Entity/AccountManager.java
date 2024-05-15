@@ -1,5 +1,7 @@
 package Entity;
 
+import Exceptions.InsufficientFundsException;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,15 @@ public class AccountManager {
     public List<SavingAccount> getSavingAccounts() {
         return savingAccounts;
     }
+    public Account getCurrentAccountByName(String name){
+        for (Account account : currentAccounts) {
+            if (account.getName().equals(name)) {
+                return account;
+            }
+        }
+//        return -1;
+        return null;
+    }
 
     // 添加活期账户
     public void addCurrentAccount(CurrentAccount account) {
@@ -68,6 +79,18 @@ public class AccountManager {
         return currentAccounts.stream().mapToDouble(CurrentAccount::getBalance).sum();
     }
 
+    public double getCurrentAccountBalance(String accountName) {
+        System.out.println(currentAccounts);
+        for (CurrentAccount account : currentAccounts) {
+            System.out.println(account.getName());
+            if (account.getName().equals(accountName)) {
+
+                return account.getBalance();
+            }
+        }
+        return -1;  // Or you could throw an exception
+    }
+
     // 获取所有储蓄账户的总余额
     public double getTotalSavingBalance() {
         return savingAccounts.stream().mapToDouble(SavingAccount::getBalance).sum();
@@ -97,11 +120,45 @@ public class AccountManager {
         }
         return names;
     }
+    public List<String> getCurrentAccountNames(){
+        List<String> names = new ArrayList<>();
+        for(CurrentAccount account: currentAccounts){
+            names.add(account.getName());
+        }
+        return names;
+    }
     public void withdrewToCurrent(int currentIndex, int savingIndex){
         CurrentAccount currentAccount = currentAccounts.get(currentIndex);
         SavingAccount savingAccount = savingAccounts.get(savingIndex);
 
         savingAccount.withdraw(savingAccount.getBalance());
 
+    }
+
+    /**
+     * Withdraws an amount from a CurrentAccount by name.
+     * @param accountName The name of the account.
+     * @param amount The amount to withdraw.
+     * @return true if the operation was successful, false otherwise.
+     */
+    public boolean withdrawFromCurrentAccount(String accountName, double amount) throws InsufficientFundsException {
+        for (CurrentAccount account : currentAccounts) {
+            if (account.getName().equals(accountName)) {
+                if (account.getBalance() >= amount) {
+                    account.withdraw(amount);
+                    return true;
+                } else {
+                    throw new InsufficientFundsException("Insufficient funds for withdrawal.");
+                }
+            }
+        }
+        throw new InsufficientFundsException("Account not found.");
+    }
+    public void deposit(int currentIndex, int savingIndex, double value){
+        CurrentAccount currentAccount = currentAccounts.get(currentIndex);
+        SavingAccount savingAccount = savingAccounts.get(savingIndex);
+
+        currentAccount.withdraw(value);
+        savingAccount.deposit(value);
     }
 }
