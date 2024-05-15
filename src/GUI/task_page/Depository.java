@@ -19,6 +19,7 @@ public class Depository extends JPanel {
     private JPanel saving;
     private JPanel current;
     private Kids kid;
+    private JFrame frame;
 
     public Depository(Kids kid) {
         this.kid=kid;
@@ -28,7 +29,7 @@ public class Depository extends JPanel {
         add(Container);
         // Debug to ensure components are initialized
         // 创建并设置 JFrame
-        JFrame frame = new JFrame("Depository Window");
+        frame = new JFrame("Depository Window");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  // 点击关闭按钮时释放窗口资源
         frame.setContentPane(this);  // 将当前 Depository JPanel 设置为内容面板
         frame.pack();  // 根据内容调整大小
@@ -47,7 +48,9 @@ public class Depository extends JPanel {
 
             if (response == JOptionPane.YES_OPTION) {
                 JOptionPane.showMessageDialog(this,"You have switch your account to "+destination+" successfully.", "Message", JOptionPane.INFORMATION_MESSAGE);
+                //frame.setVisible(false);
                 kid.getTaskList().changeDepository(destination);
+                frame.setVisible(false);
             }
         }
 
