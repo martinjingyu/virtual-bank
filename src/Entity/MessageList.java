@@ -64,7 +64,7 @@ public class MessageList {
 
 
     // Adding new methods to handle different types of messages
-    public void addTaskMessage(String type, Task task, String description) {
+    public void addTaskMessage(String type, String description) {
         if(type.equals("Child_Opt")){
             Message taskMessage = new Message("system",description);
             messages.add(taskMessage);
@@ -75,6 +75,7 @@ public class MessageList {
         }
 
     }
+
 
     public void completeTaskMessage(String type, Task task, String description) {
         if(type.equals("Child_Opt")){
@@ -87,7 +88,9 @@ public class MessageList {
 //        }
 
     }
-    public void addBankMessage(Bank bank, double currentInterestRate,double savingInterestRate) {
+
+    public void addBankMessage(double currentInterestRate,double savingInterestRate) {
+
         String changeCurrent = String.format("Attention! Your current interest rate has changed to %d",currentInterestRate);
         Message bankMessage = new Message("parent",changeCurrent);
         messages.add(bankMessage);

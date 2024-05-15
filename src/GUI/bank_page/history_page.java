@@ -35,8 +35,11 @@ public class history_page extends JPanel {
     public history_page(HistoryController controller) {
         this.historyController = controller;
         this.transactionList = controller.getKid().getTransactionList();
+        controller.setGUI(this);
+
         setBackground(mainBgColor); // Set overall background
         initUI();
+        controller.addButtonListener();
     }
     public List<JLabel> getDateList(){return this.dateList;}
 

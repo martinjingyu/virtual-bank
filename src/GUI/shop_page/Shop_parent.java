@@ -1,6 +1,7 @@
 package GUI.shop_page;
 
 import Controller.shop.ShopParentController;
+import Entity.CurrentAccount;
 import Entity.Kids;
 import Entity.Product;
 import GUI.RefreshListener;
@@ -25,6 +26,7 @@ public class Shop_parent extends JPanel implements RefreshListener {
     private ShopParentController shopController;
     private List<JButton> ButtonList;
     private JPanel todoListPanel;
+    private JComboBox<String> accountDropdown;
 
     // Define the custom colors
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
@@ -69,13 +71,15 @@ public class Shop_parent extends JPanel implements RefreshListener {
         Border headerBorder = BorderFactory.createMatteBorder(0, 0, 3, 0, borderColor); // Added bottom border
         headerPanel.setBorder(headerBorder);
 
-        JLabel titleLabel = new JLabel("FAMILY MALL");
+        JLabel titleLabel = new JLabel("Transaction History");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
         titleLabel.setForeground(fontColor);
 
         headerPanel.add(titleLabel);
         return headerPanel;
     }
+
+
 
 
     private JPanel createToDoListPanel() {
@@ -190,7 +194,7 @@ public class Shop_parent extends JPanel implements RefreshListener {
         accountLabel.setFont(new Font("Arial", Font.BOLD, 26));
         accountLabel.setForeground(fontColor);
 
-        currentAccountLabel = new JLabel(String.format("$%.2f", shopController.getKid().getBank().getCurrentTotal()));
+        currentAccountLabel = new JLabel(String.format("$%.2f", shopController.getKid().getAccountManager().getTotalCurrentBalance()));
         currentAccountLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 
         accountInfoPanel.add(accountLabel);

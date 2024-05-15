@@ -8,7 +8,7 @@ public class WriteAll {
     public static void writeAll(String id, Kids kid){
         Paths paths = new Paths(id);
 
-        WriteBank.writeBank(kid.getBank(),paths.bank_path);
+
         WriteProduct.writeProducts(kid.getProductList().getAllProducts(),paths.product_path);
         WriteTask.writeTaskList(kid.getTaskList().getAllTasks(),paths.task_path);
         WriteMessage.writeMessage(kid.getMessagelist(),paths.message_path);

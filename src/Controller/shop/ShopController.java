@@ -9,15 +9,21 @@ import java.util.List;
 
 public class ShopController {
     private Kids kid;
-    private Bank bank;
     private MessageList messageList;
     private List<Product> selectedProductList;
+    private AccountManager accountManager;
+    private String selectedAccountName;
 
     public ShopController(Kids kid) {
         this.kid = kid;
-        this.bank = kid.getBank();
         this.messageList = kid.getMessagelist();
         this.selectedProductList = new ArrayList<>();
+        this.accountManager = kid.getAccountManager();
+    }
+
+    public void setSelectedAccountName(String accountName,JLabel currentAccountLabel) {
+        this.selectedAccountName = accountName;
+        updateCurrentAccountDisplay(currentAccountLabel);
     }
 
     public Kids getKid(){return kid;}
@@ -31,7 +37,9 @@ public class ShopController {
     }
 
     public void updateCurrentAccountDisplay(JLabel currentAccountLabel) {
-        currentAccountLabel.setText(String.format("Current Account: $%9.2f", bank.getCurrentTotal()));
+        System.out.println(selectedAccountName);
+        System.out.println(accountManager.getCurrentAccountBalance(selectedAccountName));
+        currentAccountLabel.setText(String.format("Current Account: $%9.2f", accountManager.getCurrentAccountBalance(selectedAccountName)));
     }
 
     public void updateSelectedTotalDisplay(JLabel selectedTotalLabel) {
@@ -48,6 +56,7 @@ public class ShopController {
         }
     }
 
+
     public void buyProducts(JLabel selectedTotalLabel, JLabel currentAccountLabel,List<JRadioButton> toggleButtons) {
         if (selectedProductList.isEmpty()) {
             JOptionPane.showMessageDialog(null, "You haven't selected any products.", "No Products Selected!", JOptionPane.WARNING_MESSAGE);
@@ -55,9 +64,10 @@ public class ShopController {
         }
 
         double totalCost = calculateSelectedTotal();
+        double currentBalance = accountManager.getCurrentAccountBalance(selectedAccountName);
         try {
-            bank.changeCurrent(-totalCost);
-            if (totalCost > 0.8 * bank.getCurrentTotal()) {
+            accountManager.withdrawFromCurrentAccount(selectedAccountName,totalCost);
+            if (totalCost > 0.8 * currentBalance) {
                 messageList.addShopMessage(totalCost);
             }
             JOptionPane.showMessageDialog(null, "Purchase Successful!");
@@ -70,5 +80,6 @@ public class ShopController {
         } catch (InsufficientFundsException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
         }
+
     }
 }

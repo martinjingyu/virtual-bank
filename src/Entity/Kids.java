@@ -1,23 +1,19 @@
 package Entity;
-import Controller.bank.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Kids {
-    private Bank bank;
+    private AccountManager accountManager;
     private ProductList productList;
     private ProductList selectedProduct;
     private TaskList taskList;
     private HistoryTransactionList transactionList;
     private MessageList messagelist;
-    private List<SavingAccount> savingAccountList;
-    private AccountManager accountManager;
+
+    public Kids(){
+    }
 
 
-    public Kids(Bank bank,HistoryTransactionList transactionList,
-                ProductList productList, ProductList selectedProduct, TaskList taskList, MessageList messagelist,AccountManager accountManager){
-        this.bank = bank;
+    public Kids(HistoryTransactionList transactionList,
+                ProductList productList, ProductList selectedProduct, TaskList taskList, MessageList messagelist, AccountManager accountManager){
         this.transactionList = transactionList;
         this.productList = productList;
         this.taskList = taskList;
@@ -42,9 +38,6 @@ public class Kids {
 
     public HistoryTransactionList getTransactionList(){return this.transactionList;}
 
-    public Bank getBank() {
-        return bank;
-    }
 
     public TaskList getTaskList() {
         return taskList;
@@ -54,7 +47,4 @@ public class Kids {
         return messagelist;
     }
 
-    public List<SavingAccount> getSavingAccountList(){
-        return this.savingAccountList;
-    }
 }

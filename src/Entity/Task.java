@@ -61,10 +61,20 @@ public class Task {
         return switch (state) {
             case "ToBeConfirmed" -> "Submitted";
             case "ToBeTaken" -> "Pick it";
-            case "Taken" -> "Submit";
+            case "Taken" -> "Action";
             default -> null;
         };
     }
+
+    public String getCondition1(String state){
+        return switch (state) {
+            case "ToBeConfirmed" -> "Review";
+            case "ToBeTaken" -> "Delete";
+            case "Taken" -> "Pending";
+            default -> null;
+        };
+    }
+
 
     public String getM(String state){
         return switch (state) {
@@ -80,7 +90,7 @@ public class Task {
         return switch (state) {
             case "ToBeConfirmed" -> "Submitted";
             case "ToBeTaken" -> "Do you want to pick this task?";
-            case "Taken" -> "Do you want to submit this task?";
+            case "Taken" -> "Do you want to submit or cancel this task? Yes for submit, No for cancel.";
             default -> null;
         };
     }
@@ -121,6 +131,12 @@ public class Task {
         }
         return task;
     }
+
+//    public void addSalary(Task task, String destination){
+//        double current = task.getReward();
+//
+//    }
+
 
 
     @Override

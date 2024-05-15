@@ -1,0 +1,173 @@
+package Entity;
+
+import Exceptions.InsufficientFundsException;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+public class AccountManager {
+    private String userID;
+    private double savingGoal;
+    private List<CurrentAccount> currentAccounts;
+    private List<SavingAccount> savingAccounts;
+
+
+    public AccountManager() {
+        this.currentAccounts = new ArrayList<>();
+        this.savingAccounts = new ArrayList<>();
+    }
+    public String getUserID() {
+        return userID;
+    }
+    public void setUserID(String name){
+        this.userID = name;
+    }
+    public void setSavingGoal(double amount){
+        this.savingGoal= amount;
+    }
+
+    public double getSavingGoal() {
+        return savingGoal;
+    }
+
+    public List<CurrentAccount> getCurrentAccounts() {
+        return currentAccounts;
+    }
+
+    public List<SavingAccount> getSavingAccounts() {
+        return savingAccounts;
+    }
+    public Account getCurrentAccountByName(String name){
+        for (Account account : currentAccounts) {
+            if (account.getName().equals(name)) {
+                return account;
+            }
+        }
+//        return -1;
+        return null;
+    }
+
+    // 添加活期账户
+    public void addCurrentAccount(CurrentAccount account) {
+        currentAccounts.add(account);
+    }
+
+    // 删除活期账户
+    public void removeCurrentAccount(CurrentAccount account) {
+        currentAccounts.remove(account);
+    }
+    public void addSavingAccount(SavingAccount account) {
+        savingAccounts.add(account);
+    }
+    // 添加储蓄账户
+    public void addSavingAccount(SavingAccount account, LocalDateTime startTime, LocalDateTime endTime, double initialBalance, double interestRate) {
+        account.setStartTime(startTime);
+        account.setEndTime(endTime);
+        account.deposit(initialBalance); // Deposit initial balance
+        account.setInterestRate(interestRate);
+        savingAccounts.add(account);
+    }
+
+    // 删除储蓄账户
+    public void removeSavingAccount(SavingAccount account) {
+        savingAccounts.remove(account);
+    }
+
+    // 获取所有活期账户的总余额
+    public double getTotalCurrentBalance() {
+        return currentAccounts.stream().mapToDouble(CurrentAccount::getBalance).sum();
+    }
+
+    public double getCurrentAccountBalance(String accountName) {
+        System.out.println(currentAccounts);
+        for (CurrentAccount account : currentAccounts) {
+            System.out.println(account.getName());
+            if (account.getName().equals(accountName)) {
+
+                return account.getBalance();
+            }
+        }
+        return -1;  // Or you could throw an exception
+    }
+
+    // 获取所有储蓄账户的总余额
+    public double getTotalSavingBalance() {
+        return savingAccounts.stream().mapToDouble(SavingAccount::getBalance).sum();
+    }
+
+    // 打印所有活期账户的详情
+    public void printCurrentAccountDetails() {
+        currentAccounts.forEach(account -> System.out.println("Current Account Balance: " + account.getBalance()));
+    }
+
+    // 打印所有储蓄账户的详情
+    public void printSavingAccountDetails() {
+        savingAccounts.forEach(account -> System.out.println("Saving Account Balance: " + account.getBalance()));
+    }
+    public void earlyWithdrew(int currentIndex, int savingIndex){
+        CurrentAccount currentAccount = currentAccounts.get(currentIndex);
+        SavingAccount savingAccount = savingAccounts.get(savingIndex);
+
+        savingAccount.setEndTime(LocalDateTime.now());
+        currentAccount.deposit(savingAccount.getBalance());
+        savingAccount.withdraw(savingAccount.getBalance());
+    }
+    public List<String> getSavingAccountNames(){
+        List<String> names = new ArrayList<>();
+        for(SavingAccount account: savingAccounts){
+            names.add(account.getName());
+        }
+        return names;
+    }
+    public List<String> getCurrentAccountNames(){
+        List<String> names = new ArrayList<>();
+        for(CurrentAccount account: currentAccounts){
+            names.add(account.getName());
+        }
+        return names;
+    }
+    public void savingWithdrewToCurrent(int currentIndex, int savingIndex){
+        CurrentAccount currentAccount = currentAccounts.get(currentIndex);
+        SavingAccount savingAccount = savingAccounts.get(savingIndex);
+
+        savingAccount.calculateInterest();
+        currentAccount.deposit(savingAccount.getBalance());
+        savingAccount.withdraw(savingAccount.getBalance());
+
+    }
+
+    /**
+     * Withdraws an amount from a CurrentAccount by name.
+     * @param accountName The name of the account.
+     * @param amount The amount to withdraw.
+     * @return true if the operation was successful, false otherwise.
+     */
+    public boolean withdrawFromCurrentAccount(String accountName, double amount) throws InsufficientFundsException {
+        for (CurrentAccount account : currentAccounts) {
+            if (account.getName().equals(accountName)) {
+                if (account.getBalance() >= amount) {
+                    account.withdraw(amount);
+                    return true;
+                } else {
+                    throw new InsufficientFundsException("Insufficient funds for withdrawal.");
+                }
+            }
+        }
+        throw new InsufficientFundsException("Account not found.");
+    }
+    public void transfer(int from, int to, double value){
+        CurrentAccount currentAccountFrom = currentAccounts.get(from);
+        CurrentAccount currentAccountTo = currentAccounts.get(to);
+
+        currentAccountFrom.withdraw(value);
+        currentAccountTo.deposit(value);
+    }
+    public void deposit(int currentIndex, int savingIndex, double value){
+        CurrentAccount currentAccount = currentAccounts.get(currentIndex);
+        SavingAccount savingAccount = savingAccounts.get(savingIndex);
+
+        currentAccount.withdraw(value);
+        savingAccount.deposit(value);
+    }
+}

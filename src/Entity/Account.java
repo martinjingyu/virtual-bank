@@ -3,13 +3,15 @@ package Entity;
 import java.time.LocalDateTime;
 
 public abstract class Account {
+    private String name;
     // Attributes
     protected double balance;
     protected double interestRate;
 
 
     // Constructor
-    public Account(double initialBalance, double interestRate) {
+    public Account(String name, double initialBalance, double interestRate) {
+        this.name = name;
         this.balance = initialBalance;
         this.interestRate = interestRate;
     }
@@ -26,8 +28,10 @@ public abstract class Account {
 
     // Common methods
     public void deposit(double amount) {
+        System.out.println("Balance: " + balance);
         balance += amount;
         System.out.println("Deposited: " + amount);
+        System.out.println("Balance after: " + balance);
     }
 
     public void withdraw(double amount) {
@@ -45,8 +49,15 @@ public abstract class Account {
     public double getInterestRate() {
         return balance;
     }
+    public String getName(){
+        return  name;
+    }
 
     // Abstract method for interest calculation
     public abstract void calculateInterest();
+
+    public static void main(String[] args) {
+
+    }
 }
 
