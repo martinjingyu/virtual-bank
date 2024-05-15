@@ -127,10 +127,12 @@ public class AccountManager {
         }
         return names;
     }
-    public void withdrewToCurrent(int currentIndex, int savingIndex){
+    public void savingWithdrewToCurrent(int currentIndex, int savingIndex){
         CurrentAccount currentAccount = currentAccounts.get(currentIndex);
         SavingAccount savingAccount = savingAccounts.get(savingIndex);
 
+        savingAccount.calculateInterest();
+        currentAccount.deposit(savingAccount.getBalance());
         savingAccount.withdraw(savingAccount.getBalance());
 
     }
@@ -153,6 +155,13 @@ public class AccountManager {
             }
         }
         throw new InsufficientFundsException("Account not found.");
+    }
+    public void transfer(int from, int to, double value){
+        CurrentAccount currentAccountFrom = currentAccounts.get(from);
+        CurrentAccount currentAccountTo = currentAccounts.get(to);
+
+        currentAccountFrom.withdraw(value);
+        currentAccountTo.deposit(value);
     }
     public void deposit(int currentIndex, int savingIndex, double value){
         CurrentAccount currentAccount = currentAccounts.get(currentIndex);

@@ -4,19 +4,17 @@ import Entity.SavingAccount;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComponentList {
+public class SavingComponentList {
     private List<SavingAccount> savingAccountList;
     private List<JProgressBar> barlist;
     private List<JButton> cancelButton;
     private List<JLabel> remainingList;
 
 
-    ComponentList(List<SavingAccount> savingAccountList){
+    SavingComponentList(List<SavingAccount> savingAccountList){
         barlist = new ArrayList<>();
         cancelButton = new ArrayList<>();
         remainingList = new ArrayList<>();

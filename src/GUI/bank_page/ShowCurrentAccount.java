@@ -1,30 +1,21 @@
 package GUI.bank_page;
 
-import Controller.bank.CurrentAccountController;
-import Entity.Account;
-import Entity.HistoryTransactionList;
-import Entity.SavingAccount;
-
+import Entity.CurrentAccount;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.border.*;
 
 public class ShowCurrentAccount extends JFrame {
     private JButton actionButton;
     private JPanel mainContent;
-    private ComponentList componentList;
+    private CurrentComponentList currentComponentList;
     private JPanel accountGrid;
     private JPanel infoPanel;
-    private List<JPanel> finishPanelList;
-    private FinishList finishList;
-    private List<Duration> remainingTime;
     private JPanel addButton;
     private Timer timer;
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
@@ -41,7 +32,7 @@ public class ShowCurrentAccount extends JFrame {
         setVisible(true);
     }
 
-    public void initData(List<SavingAccount> accountList){
+    public void initData(List<CurrentAccount> accountList){
         accountGrid = createAccountGrid(accountList);
         mainContent.add(accountGrid,BorderLayout.CENTER);
         infoPanel = createTotalInfoPanel();
@@ -50,7 +41,10 @@ public class ShowCurrentAccount extends JFrame {
         pack();
         setVisible(true);
     }
-    public void refresh(List<SavingAccount> accountList){
+    public void refresh(List<CurrentAccount> accountList){
+        mainContent.remove(accountGrid);
+        mainContent.remove(infoPanel);
+        initData(accountList);
     }
     private void initUI(){
         setTitle("Current Account");
@@ -64,7 +58,7 @@ public class ShowCurrentAccount extends JFrame {
         mainContent.add(createHeaderPanel(), BorderLayout.NORTH);
 
     }
-    private JPanel createComponents(int i, ComponentList componentList) {
+    private JPanel createComponents(int i, CurrentComponentList currentComponentList) {
         // 创建组件的面板
         JPanel component = new JPanel();
 
@@ -74,41 +68,33 @@ public class ShowCurrentAccount extends JFrame {
         component.setPreferredSize(new Dimension(200, 150));
 
         // 创建标签并设置格式
-        SavingAccount account = componentList.getSavingAccountList().get(i);
-        JProgressBar progressBar = componentList.getBarlist().get(i);
-        JButton cancel = componentList.getCancelButton().get(i);
+        CurrentAccount account = currentComponentList.getCurrentAccountList().get(i);
+        JButton transferButton = currentComponentList.getTransferButton().get(i);
 
-        JLabel nameLabel = new JLabel(componentList.getSavingAccountList().get(i).getName(), SwingConstants.CENTER);
-
-
-        JLabel remainLabel = componentList.getRemainingList().get(i);
-
-        JLabel startLabel = new JLabel("Start time: "+account.getStartTime(), SwingConstants.CENTER);
-        startLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-        startLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JLabel endLabel = new JLabel(" End time: "+ account.getEndTime(), SwingConstants.CENTER);
-        endLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-        endLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel nameLabel = new JLabel(currentComponentList.getCurrentAccountList().get(i).getName(), SwingConstants.CENTER);
+        nameLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+        nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
-        cancel.setFont(new Font("Arial", Font.PLAIN, 10));
-        cancel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel balanceLabel = new JLabel("Balance:"+currentComponentList.getCurrentAccountList().get(i).getBalance()+"$", SwingConstants.CENTER);
+        balanceLabel.setFont(new Font("Arial", Font.PLAIN, 10));
+        balanceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+
+        transferButton.setFont(new Font("Arial", Font.PLAIN, 10));
+        transferButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
 
         // 添加组件到面板
+        component.add(Box.createVerticalStrut(20));
         component.add(nameLabel);
-        component.add(Box.createVerticalStrut(0));
-        component.add(progressBar);
-        component.add(Box.createVerticalStrut(0));
-        component.add(remainLabel);
-        component.add(Box.createVerticalStrut(0));
-        component.add(startLabel);
-        component.add(Box.createVerticalStrut(0));
-        component.add(endLabel);
-        component.add(Box.createVerticalStrut(0));
-        component.add(cancel);
+        component.add(Box.createVerticalStrut(10));
+        component.add(balanceLabel);
+        component.add(Box.createVerticalStrut(10));
+
+        component.add(transferButton);
+        component.add(Box.createVerticalStrut(20));
 
         return component;
     }
@@ -119,7 +105,7 @@ public class ShowCurrentAccount extends JFrame {
         Border headerBorder = BorderFactory.createMatteBorder(0, 0, 3, 0, borderColor); // Added bottom border
         headerPanel.setBorder(headerBorder);
 
-        JLabel titleLabel = new JLabel("Saving Account");
+        JLabel titleLabel = new JLabel("Current Account");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
         titleLabel.setForeground(fontColor);
 
@@ -150,20 +136,16 @@ public class ShowCurrentAccount extends JFrame {
 
     }
 
-    private JPanel createAccountGrid(List<SavingAccount> accountList) {
+    private JPanel createAccountGrid(List<CurrentAccount> accountList) {
         accountGrid = new JPanel();
         accountGrid.setLayout(new GridLayout(4, 3, 10, 5)); // 增加了行列间的间隔
         accountGrid.setBackground(Color.LIGHT_GRAY);
         accountGrid.setBorder(new LineBorder(Color.BLACK, 2)); // 添加边框
-        componentList = new ComponentList(accountList);
+        currentComponentList = new CurrentComponentList(accountList);
+
 
         for (int i = 0; i < accountList.size(); i++) {
-            if(accountList.get(i).getEndTime().isAfter(LocalDateTime.now())&&accountList.get(i).getBalance()>0){
-                accountGrid.add(createComponents(i,componentList));
-            }
-            else{accountGrid.add(finishPanelList.get(i));
-            }
-
+            accountGrid.add(createComponents(i, currentComponentList));
         }
         addButton = createAddComponents();
         accountGrid.add(addButton);
@@ -189,8 +171,8 @@ public class ShowCurrentAccount extends JFrame {
     public JPanel getAddButton(){
         return addButton;
     }
-    public ComponentList getComponentList() {
-        return componentList;
+    public CurrentComponentList getComponentList() {
+        return currentComponentList;
     }
 
     public static void main(String[] args) {

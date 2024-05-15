@@ -1,8 +1,5 @@
 package GUI.bank_page;
 
-import Controller.bank.SavingAccountController;
-import Entity.Account;
-import Entity.HistoryTransactionList;
 import Entity.SavingAccount;
 
 import javax.swing.*;
@@ -19,7 +16,7 @@ import javax.swing.border.*;
 public class ShowSavingAccount extends JFrame {
     private JButton actionButton;
     private JPanel mainContent;
-    private ComponentList componentList;
+    private SavingComponentList savingComponentList;
     private JPanel accountGrid;
     private JPanel infoPanel;
     private List<JPanel> finishPanelList;
@@ -76,7 +73,7 @@ public class ShowSavingAccount extends JFrame {
             long minutes = remaining.toMinutesPart();
             long seconds = remaining.toSecondsPart();
             String remainingTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-            componentList.getRemainingList().get(i).setText("Remaining time: " + remainingTime);
+            savingComponentList.getRemainingList().get(i).setText("Remaining time: " + remainingTime);
         }
     }
 
@@ -86,7 +83,7 @@ public class ShowSavingAccount extends JFrame {
         mainContent.add(accountGrid,BorderLayout.CENTER);
         infoPanel = createTotalInfoPanel();
         mainContent.add(infoPanel,BorderLayout.SOUTH);
-        timer = new Timer(1000, e -> {updateProgressBar(accountList,componentList.getBarlist());updateRemaining(accountList);});
+        timer = new Timer(1000, e -> {updateProgressBar(accountList, savingComponentList.getBarlist());updateRemaining(accountList);});
         timer.start();
         pack();
         setVisible(true);
@@ -147,7 +144,7 @@ public class ShowSavingAccount extends JFrame {
 
     }
 
-    private JPanel createComponents(int i, ComponentList componentList) {
+    private JPanel createComponents(int i, SavingComponentList savingComponentList) {
         // 创建组件的面板
         JPanel component = new JPanel();
 
@@ -157,14 +154,14 @@ public class ShowSavingAccount extends JFrame {
         component.setPreferredSize(new Dimension(200, 150));
 
         // 创建标签并设置格式
-        SavingAccount account = componentList.getSavingAccountList().get(i);
-        JProgressBar progressBar = componentList.getBarlist().get(i);
-        JButton cancel = componentList.getCancelButton().get(i);
+        SavingAccount account = savingComponentList.getSavingAccountList().get(i);
+        JProgressBar progressBar = savingComponentList.getBarlist().get(i);
+        JButton cancel = savingComponentList.getCancelButton().get(i);
 
-        JLabel nameLabel = new JLabel(componentList.getSavingAccountList().get(i).getName(), SwingConstants.CENTER);
+        JLabel nameLabel = new JLabel(savingComponentList.getSavingAccountList().get(i).getName(), SwingConstants.CENTER);
 
 
-        JLabel remainLabel = componentList.getRemainingList().get(i);
+        JLabel remainLabel = savingComponentList.getRemainingList().get(i);
 
         JLabel startLabel = new JLabel("Start time: "+account.getStartTime(), SwingConstants.CENTER);
         startLabel.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -238,11 +235,11 @@ public class ShowSavingAccount extends JFrame {
         accountGrid.setLayout(new GridLayout(4, 3, 10, 5)); // 增加了行列间的间隔
         accountGrid.setBackground(Color.LIGHT_GRAY);
         accountGrid.setBorder(new LineBorder(Color.BLACK, 2)); // 添加边框
-        componentList = new ComponentList(accountList);
+        savingComponentList = new SavingComponentList(accountList);
 
         for (int i = 0; i < accountList.size(); i++) {
             if(accountList.get(i).getEndTime().isAfter(LocalDateTime.now())&&accountList.get(i).getBalance()>0){
-                accountGrid.add(createComponents(i,componentList));
+                accountGrid.add(createComponents(i, savingComponentList));
             }
             else{accountGrid.add(finishPanelList.get(i));
             }
@@ -273,8 +270,8 @@ public class ShowSavingAccount extends JFrame {
         return addButton;
     }
 
-    public ComponentList getComponentList() {
-        return componentList;
+    public SavingComponentList getComponentList() {
+        return savingComponentList;
     }
 
     public FinishList getFinishList() {

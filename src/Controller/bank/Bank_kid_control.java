@@ -2,6 +2,7 @@ package Controller.bank;
 
 import Entity.Kids;
 
+import GUI.bank_page.ShowCurrentAccount;
 import GUI.bank_page.ShowSavingAccount;
 import GUI.bank_page.history_page;
 import GUI.bank_page.Bank_kid;
@@ -9,8 +10,6 @@ import GUI.bank_page.Bank_kid;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class Bank_kid_control {
     private static JTextField savingGoalTextField;
@@ -52,18 +51,12 @@ public class Bank_kid_control {
         });
     }
 
-    public void addcurrentTosavingListener(JButton button){
+    public void addCurrentAccountListener(JButton button){
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JDialog dialog = new JDialog();
-
-                dialog.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosed(WindowEvent e) {
-                        GUI.getMainFrame().refresh();
-                    }
-                });
+                ShowCurrentAccount showCurrentAccount = new ShowCurrentAccount();
+                CurrentAccountController currentAccountController = new CurrentAccountController(kid,showCurrentAccount);
             }
         });
     }

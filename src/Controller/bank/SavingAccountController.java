@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+
 public class SavingAccountController {
     private Kids kid;
     private ShowSavingAccount GUI;
@@ -75,7 +76,6 @@ public class SavingAccountController {
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("aaaaa");
                     if(button.getText().equals("Deposit")){
                         System.out.println("Deposit1111");
                         JFrame frame = new JFrame("Select Current Account");
@@ -87,6 +87,7 @@ public class SavingAccountController {
                         JComboBox<String> comboBox = new JComboBox<>(namesArray);
                         panel.add(comboBox, BorderLayout.CENTER);
 
+                        JTextField textField = new JTextField();
 
                         JButton confirmButton = new JButton("Confirm");
                         confirmButton.addActionListener(new ActionListener() {
@@ -94,15 +95,25 @@ public class SavingAccountController {
                             public void actionPerformed(ActionEvent e) {
                                 // 获取用户选择的 current account
                                 int selectedIndex = comboBox.getSelectedIndex();
+                                try{
+                                    double value = Double.parseDouble(textField.getText());
+                                    kid.getAccountManager().deposit(selectedIndex, finalI,value);
+                                    refresh();
+                                    // 关闭对话框
+                                    frame.dispose();
+                                }
+                                catch (Exception e1){
+                                    System.out.println("wrong input");
+                                    textField.setText("");
+                                    frame.dispose();
+                                }
 
                                 // 执行 earlyWithdrew 方法
-                                kid.getAccountManager().earlyWithdrew(selectedIndex, finalI);
-                                refresh();
-                                // 关闭对话框
-                                frame.dispose();
+
                             }
                         });
                         panel.add(confirmButton, BorderLayout.SOUTH);
+                        panel.add(textField,BorderLayout.NORTH);
 
                         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         frame.getContentPane().add(panel);
@@ -131,7 +142,7 @@ public class SavingAccountController {
                                 int selectedIndex = comboBox.getSelectedIndex();
 
                                 // 执行 earlyWithdrew 方法
-                                kid.getAccountManager().earlyWithdrew(selectedIndex, finalI);
+                                kid.getAccountManager().savingWithdrewToCurrent(selectedIndex, finalI);
                                 refresh();
                                 // 关闭对话框
                                 frame.dispose();

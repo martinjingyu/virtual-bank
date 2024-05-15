@@ -99,7 +99,7 @@ public class SelectAccount {
             double value = Double.parseDouble(textField.getText());
 
             accountManager.deposit(selectIndex,this.selectedAccount,value);
-            controller.refresh();
+
             // 关闭对话框
             frame.dispose();
         }
@@ -107,8 +107,8 @@ public class SelectAccount {
             int selectedIndex = comboBox.getSelectedIndex();
 
             // 执行 earlyWithdrew 方法
-            accountManager.withdrewToCurrent( selectedIndex,this.selectedAccount);
-            controller.refresh();
+            //accountManager.withdrewToCurrent( selectedIndex,this.selectedAccount);
+
             // 关闭对话框
             frame.dispose();
         }
