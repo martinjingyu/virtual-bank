@@ -97,6 +97,13 @@ public class AccountManager {
         }
         return names;
     }
+    public List<String> getCurrentAccountNames(){
+        List<String> names = new ArrayList<>();
+        for(CurrentAccount account: currentAccounts){
+            names.add(account.getName());
+        }
+        return names;
+    }
     public void withdrewToCurrent(int currentIndex, int savingIndex){
         CurrentAccount currentAccount = currentAccounts.get(currentIndex);
         SavingAccount savingAccount = savingAccounts.get(savingIndex);
@@ -105,5 +112,12 @@ public class AccountManager {
         savingAccount.calculateInterest();
         currentAccount.deposit(savingAccount.getBalance());
         savingAccount.withdraw(savingAccount.getBalance());
+    }
+    public void deposit(int currentIndex, int savingIndex, double value){
+        CurrentAccount currentAccount = currentAccounts.get(currentIndex);
+        SavingAccount savingAccount = savingAccounts.get(savingIndex);
+
+        currentAccount.withdraw(value);
+        savingAccount.deposit(value);
     }
 }

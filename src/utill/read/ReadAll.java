@@ -27,4 +27,9 @@ public class ReadAll {
         return new Kids(historyTransactionList,productList,selectedProductList,taskList,messageList, accountManager);
 
     }
+    public static void main(String[] str){
+
+        Kids kid  = ReadAll.readall("222");
+        System.out.println(kid.getAccountManager().getCurrentAccounts());
+    }
 }
