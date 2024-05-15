@@ -3,6 +3,7 @@ package GUI.task_page;
 import Controller.task.Task_parent_control;
 import Entity.Task;
 import GUI.MainFrame_kid;
+import GUI.MainFrame_parent;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
@@ -31,9 +32,9 @@ public class TaskSet extends JPanel {
     private JLabel description;
     private JFrame frame;
     private Task_parent_control task_parent_control;
-    private MainFrame_kid mainFrame;//这里等parent登录写好了要改成parent，下面也是
+    private MainFrame_parent mainFrame;//这里等parent登录写好了要改成parent，下面也是
 
-    public TaskSet(Task_parent_control task_parent_control,MainFrame_kid mainFrame) {
+    public TaskSet(Task_parent_control task_parent_control, MainFrame_parent mainFrame) {
         $$$setupUI$$$();
         this.task_parent_control = task_parent_control;
         this.mainFrame = mainFrame;
