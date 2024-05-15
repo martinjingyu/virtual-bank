@@ -11,7 +11,7 @@ public class ReadTask {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
+                String[] parts = line.split("\\*");
 //                System.out.println(parts.length);
                 if (parts.length == 5) {
                     String name = parts[0].trim();
