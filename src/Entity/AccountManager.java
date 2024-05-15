@@ -38,6 +38,15 @@ public class AccountManager {
     public List<SavingAccount> getSavingAccounts() {
         return savingAccounts;
     }
+    public Account getCurrentAccountByName(String name){
+        for (Account account : currentAccounts) {
+            if (account.getName().equals(name)) {
+                return account;
+            }
+        }
+//        return -1;
+        return null;
+    }
 
     // 添加活期账户
     public void addCurrentAccount(CurrentAccount account) {

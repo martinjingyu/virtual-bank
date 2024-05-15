@@ -96,8 +96,17 @@ public class Task_parent extends JPanel {
                     if (confirmResponse == JOptionPane.YES_OPTION) {
                         //发信息
                         // 加钱
-                        task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i));
+                        String destination = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getDestination();
+                        double salary = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getReward();
+                        System.out.println("salary： ");
+                        System.out.println(salary);
+                        task_parent_control.getKid().getAccountManager().getCurrentAccountByName(destination).deposit(salary);
                         // 删除任务
+                        task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i));
+                        // 显示状态
+                        JOptionPane.showMessageDialog(this,
+                                "This task has completed successfully!",
+                                "Task Completed!", JOptionPane.INFORMATION_MESSAGE);
                     }
                 } else if (response == JOptionPane.NO_OPTION) {
                     // 第一次确认拒绝后，显示第二次确认对话框

@@ -13,8 +13,8 @@ public class WriteTask {
     public static void writeTaskList(List<Task> taskList, String fileName) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
             for (Task task : taskList) {
-                // 将任务信息以逗号分隔的格式写入文件
-                bw.write(task.getName() + "*" + task.getReward() + "*" + task.getState() + "*" + task.getDescription() + "*" + "x");
+                // 将任务信息以星号分隔的格式写入文件
+                bw.write(task.getName() + "*" + task.getReward() + "*" + task.getState() + "*" + task.getDescription() + "*" + task.getDestination());
                 bw.newLine(); // 写入新行
             }
         } catch (IOException e) {
