@@ -68,7 +68,7 @@ public class Task {
 
     public String getCondition1(String state){
         return switch (state) {
-            case "ToBeConfirmed" -> "Confirm";
+            case "ToBeConfirmed" -> "Review";
             case "ToBeTaken" -> "Delete";
             case "Taken" -> "Pending";
             default -> null;
