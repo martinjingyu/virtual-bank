@@ -15,6 +15,7 @@ public class TaskList{
         taskList.add(task);
     }
 
+
     public void removeTask(Task task) {
         taskList.remove(task);
     }
@@ -79,11 +80,11 @@ public class TaskList{
         return -10;
     }
 
-    public String descriptionSet(Task task){
+    public String descriptionSet(String description){
         StringBuilder htmlBuilder = new StringBuilder("<html>");
         int length = 0;
-        int maxLineLength = 59;
-        for (String word : task.getDescription().split(" ")) {
+        int maxLineLength = 45;
+        for (String word : description.split(" ")) {
             // Check if adding this word would exceed the max line length
             if (length + word.length() > maxLineLength) {
                 htmlBuilder.append("<br>");
@@ -123,7 +124,7 @@ public class TaskList{
 //            System.out.println(task);
 //        }
 
-        System.out.println(taskList.descriptionSet(taskList.getTask(0)));
+//        System.out.println(taskList.descriptionSet(taskList.getTask(0)));
 
 
         // Get a task by name

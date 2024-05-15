@@ -14,7 +14,7 @@ public class WriteTask {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
             for (Task task : taskList) {
                 // 将任务信息以逗号分隔的格式写入文件
-                bw.write(task.getName() + "," + task.getReward() + "," + task.getState() + "," + task.getDescription() + "," + task.getDestination());
+                bw.write(task.getName() + "*" + task.getReward() + "*" + task.getState() + "*" + task.getDescription() + "*" + "x");
                 bw.newLine(); // 写入新行
             }
         } catch (IOException e) {

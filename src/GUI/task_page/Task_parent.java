@@ -6,12 +6,14 @@ import Controller.task.Task_parent_control;
 import Entity.*;
 import GUI.MainFrame_kid;
 import GUI.MainFrame_parent;
-import utill.read.ReadBank;
+//import utill.read.ReadBank;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -67,7 +69,8 @@ public class Task_parent extends JPanel {
     private void updateTaskDetails() {
         Salary.setText("$" + task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getReward());
         Status.setText(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState());
-        Description.setText(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getDescription());
+        String des1 = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getDescription();
+        Description.setText(task_parent_control.getKid().getTaskList().descriptionSet(des1));
         name.setText(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getName());
         buttonlabel.setText(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getCondition1(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState()));
 //        buttonlabel.removeMouseListener(myMouseListener);
@@ -77,11 +80,61 @@ public class Task_parent extends JPanel {
         ShownPanel.repaint();
 //        buttonlabel.removeMouseListener(myMouseListener);
     }
-    private void showDialog1(int index){
-        switch (task_parent_control.getKid().getTaskList().getTask(i).getState()){
+    public void showDialog1(int index){
+        switch (task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState()){
             case "ToBeConfirmed":
-                JOptionPane.showConfirmDialog(this, "Please check to see if Task " + task_parent_control.getKid().getTaskList().getTask(i).getName()+" has been completed, and if so, please confirm.", "Confirmation", JOptionPane.YES_NO_OPTION);
+                int response = JOptionPane.showConfirmDialog(this, "Please check if your child has completed the task "
+                                + task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getName()
+                                + ". If they have, click 'Yes' to confirm. If not, click 'No' to reject the task.",
+                        "Confirmation", JOptionPane.YES_NO_OPTION);
 
+                if (response == JOptionPane.YES_OPTION) {
+                    // 第一次确认通过后，显示第二次确认对话框
+                    int confirmResponse = JOptionPane.showConfirmDialog(this,
+                            "Are you sure you want to confirm the task completion?",
+                            "Final Confirmation", JOptionPane.YES_NO_OPTION);
+                    if (confirmResponse == JOptionPane.YES_OPTION) {
+                        //发信息
+                        // 加钱
+                        task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i));
+                        // 删除任务
+                    }
+                } else if (response == JOptionPane.NO_OPTION) {
+                    // 第一次确认拒绝后，显示第二次确认对话框
+                    int rejectResponse = JOptionPane.showConfirmDialog(this,
+                            "Are you sure you want to reject the task?",
+                            "Final Confirmation", JOptionPane.YES_NO_OPTION);
+                    if (rejectResponse == JOptionPane.YES_OPTION) {
+                        // 拒绝任务的逻辑
+                        // 把ToBeConfirmed打回到Taken
+                        // 发消息
+                        task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).setState("Taken");
+                    }
+                }
+                mainFrame.refresh();
+                break;
+            case "Taken":
+                JOptionPane.showMessageDialog(this,
+                        "The task has been accepted by the child. Please wait patiently for the child to complete the task.",
+                        "Task Accepted",
+                        JOptionPane.INFORMATION_MESSAGE);
+                break;
+            case "ToBeTaken":
+                int response1 = JOptionPane.showConfirmDialog(this,
+                        "Are you sure you want to delete this task?",
+                        "Delete Task Confirmation",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                if (response1 == JOptionPane.YES_OPTION) {
+                    // 执行删除任务的逻辑
+                    task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i));
+                    JOptionPane.showMessageDialog(this,
+                            "Task has been deleted.",
+                            "Task Deleted",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    mainFrame.refresh();
+                }
 
         }
     }
@@ -244,7 +297,7 @@ public class Task_parent extends JPanel {
         Font StatusFont = this.$$$getFont$$$("Arial Black", -1, 18, Status.getFont());
         if (StatusFont != null) Status.setFont(StatusFont);
         Status.setForeground(new Color(-10262674));
-        Status.setText("Taken/Completed");
+        Status.setText(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getState());
         taskDetails.add(Status, BorderLayout.SOUTH);
         Description = new JLabel();
         Font DescriptionFont = this.$$$getFont$$$("Arial Black", -1, 16, Description.getFont());
@@ -252,7 +305,8 @@ public class Task_parent extends JPanel {
         Description.setForeground(new Color(-13947600));
         Description.setHorizontalAlignment(4);
         Description.setHorizontalTextPosition(2);
-        Description.setText(task_parent_control.getKid().getTaskList().descriptionSet(task_parent_control.getKid().getTaskList().getTask(1)));
+        String des1 = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getDescription();
+        Description.setText(task_parent_control.getKid().getTaskList().descriptionSet(des1));
         Description.setVerticalAlignment(0);
         Description.setVerticalTextPosition(1);
         taskDetails.add(Description, BorderLayout.WEST);
@@ -260,7 +314,7 @@ public class Task_parent extends JPanel {
         Font nameFont = this.$$$getFont$$$("Arial Black", -1, 26, name.getFont());
         if (nameFont != null) name.setFont(nameFont);
         name.setForeground(new Color(-13534488));
-        name.setText("Sweep floor");
+        name.setText(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getName());
         taskDetails.add(name, BorderLayout.NORTH);
         Button = new JPanel();
         Button.setLayout(new GridBagLayout());
@@ -273,6 +327,7 @@ public class Task_parent extends JPanel {
         gbc.weighty = 1.0;
         ShownPanel.add(Button, gbc);
         buttonlabel = new JLabel();
+        buttonlabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         buttonlabel.addMouseListener(myMouseListener);
         Font buttonlabelFont = this.$$$getFont$$$("Arial Black", Font.BOLD, 18, buttonlabel.getFont());
         if (buttonlabelFont != null) buttonlabel.setFont(buttonlabelFont);
@@ -280,7 +335,7 @@ public class Task_parent extends JPanel {
         buttonlabel.setHorizontalTextPosition(SwingConstants.LEFT);
         buttonlabel.setPreferredSize(new Dimension(160, 23));
         buttonlabel.setForeground(new Color(-1010247));
-        buttonlabel.setText("Confirm");
+        buttonlabel.setText(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getCondition1(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState()));
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -289,6 +344,13 @@ public class Task_parent extends JPanel {
         gbc.anchor = GridBagConstraints.WEST;
         Button.add(buttonlabel, gbc);
         setNewTaskButton = new JButton();
+        setNewTaskButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new TaskSet(task_parent_control,mainFrame);
+            }
+
+        });
         setNewTaskButton.setBackground(new Color(-992809));
         Font setNewTaskButtonFont = this.$$$getFont$$$("Arial Black", -1, 16, setNewTaskButton.getFont());
         if (setNewTaskButtonFont != null) setNewTaskButton.setFont(setNewTaskButtonFont);

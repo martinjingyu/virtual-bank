@@ -81,7 +81,8 @@ public class Task_kid extends JPanel {
     private void updateTaskDetails() {
         Salary.setText("$" + task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getReward());
         Status.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState()));
-        Description.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getDescription());
+        String des1 = task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getDescription();
+        Description.setText(task_kid_control.getKid().getTaskList().descriptionSet(des1));
         name.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getName());
         buttonlabel.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState()));
 //        buttonlabel.removeMouseListener(myMouseListener);
@@ -425,7 +426,8 @@ public class Task_kid extends JPanel {
         Description.setForeground(new Color(-13947600));
         Description.setHorizontalAlignment(SwingConstants.LEFT);
         Description.setHorizontalTextPosition(SwingConstants.LEFT);
-        Description.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getDescription());
+        String des1 = task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getDescription();
+        Description.setText(task_kid_control.getKid().getTaskList().descriptionSet(des1));
         Description.setVerticalAlignment(0);
         taskDetails.add(Description, BorderLayout.WEST);
         name = new JLabel();
@@ -449,6 +451,7 @@ public class Task_kid extends JPanel {
         gbc.anchor = GridBagConstraints.WEST;  // 对齐到东侧（右侧）
         ShownPanel.add(Button, gbc);
         buttonlabel = new JLabel();
+        buttonlabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
         buttonlabel.addMouseListener(myMouseListener);
         Font buttonlabelFont = this.$$$getFont$$$("Arial Black", Font.BOLD, 15, buttonlabel.getFont());
         if (buttonlabelFont != null) buttonlabel.setFont(buttonlabelFont);
