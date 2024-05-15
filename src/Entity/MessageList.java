@@ -6,6 +6,7 @@ import java.util.List;
 public class MessageList {
     private List<Message> messages;
     private Kids kid;
+    private Parent parent;
 
 
     public MessageList() {
@@ -15,6 +16,9 @@ public class MessageList {
 
     public void setKids(Kids kid) {
         this.kid = kid;
+    }
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 
     public void addMessage(Message message) {
@@ -37,6 +41,16 @@ public class MessageList {
             }
         }
         return parentMessages;
+    }
+
+    public List<Message> getKidParentMessages() {
+        List<Message> kidMessages = new ArrayList<>();
+        for (Message message : messages) {
+            if (message.getSender().equals("parent")||message.getSender().equals("kid")) {
+                kidMessages.add(message);
+            }
+        }
+        return kidMessages;
     }
     public List<Message> getSystemMessages() {
         List<Message> parentMessages = new ArrayList<>();
@@ -62,20 +76,36 @@ public class MessageList {
 
     }
 
+
+    public void completeTaskMessage(String type, Task task, String description) {
+        if(type.equals("Child_Opt")){
+            Message taskMessage = new Message("kid",description);
+            messages.add(taskMessage);
+        }
+//        if(type.equals("Parent_add")){
+//            Message taskMessage = new Message("parent",description);
+//            messages.add(taskMessage);
+//        }
+
+    }
+
     public void addBankMessage(double currentInterestRate,double savingInterestRate) {
+
         String changeCurrent = String.format("Attention! Your current interest rate has changed to %d",currentInterestRate);
         Message bankMessage = new Message("parent",changeCurrent);
         messages.add(bankMessage);
     }
 
-//    my宝宝，这块儿数据结构和我的不匹配，我给改了，保留我的就好
+    public void warnBankMessage(Bank bank, double currentInterestRate,double savingInterestRate) {
+        String changeCurrent2 = String.format("Attention! You have already changes the current interest rate to %d",currentInterestRate);
+        Message bankMessage = new Message("system",changeCurrent2);
+        messages.add(bankMessage);
+    }
+
     public void addShopMessage(double price) {
         String formattedString = String.format("Double value: %.2f", price);
-
-//     宝宝，这块儿参数是string要加双引号，你保留我的就会
         Message shopMessage = new Message("system","bigTransaction");
         messages.add(shopMessage);
-
     }
 
 
