@@ -49,6 +49,7 @@ public class SavingAccountController {
                             // 执行 earlyWithdrew 方法
                             kid.getAccountManager().earlyWithdrew(selectedIndex, finalI);
                             GUI.refresh(kid.getAccountManager().getSavingAccounts());
+                            addListener(GUI);
                             // 关闭对话框
                             frame.dispose();
                         }
@@ -67,12 +68,17 @@ public class SavingAccountController {
 
         List<JButton> finishButtons = GUI.getFinishList().getButtonlist();
         for(i = 0;i<finishButtons.size();i++){
+
             JButton button = finishButtons.get(i);
+            System.out.println(i);
+            System.out.println(button.getText());
             int finalI = i;
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    System.out.println("aaaaa");
                     if(button.getText().equals("Deposit")){
+                        System.out.println("Deposit1111");
                         JFrame frame = new JFrame("Select Current Account");
                         JPanel panel = new JPanel(new BorderLayout());
 
@@ -81,6 +87,7 @@ public class SavingAccountController {
                         String[] namesArray = accountNames.toArray(new String[0]);
                         JComboBox<String> comboBox = new JComboBox<>(namesArray);
                         panel.add(comboBox, BorderLayout.CENTER);
+
 
                         JButton confirmButton = new JButton("Confirm");
                         confirmButton.addActionListener(new ActionListener() {
@@ -92,6 +99,7 @@ public class SavingAccountController {
                                 // 执行 earlyWithdrew 方法
                                 kid.getAccountManager().earlyWithdrew(selectedIndex, finalI);
                                 GUI.refresh(kid.getAccountManager().getSavingAccounts());
+                                addListener(GUI);
                                 // 关闭对话框
                                 frame.dispose();
                             }
@@ -106,8 +114,39 @@ public class SavingAccountController {
 
                     }
                     else if (button.getText().equals("Take my Money!")) {
+                        System.out.println("take");
+                        JFrame frame = new JFrame("Select Current Account");
+                        JPanel panel = new JPanel(new BorderLayout());
+
+                        // 添加组件到对话框中
+                        List<String> accountNames= kid.getAccountManager().getSavingAccountNames();
+                        String[] namesArray = accountNames.toArray(new String[0]);
+                        JComboBox<String> comboBox = new JComboBox<>(namesArray);
+                        panel.add(comboBox, BorderLayout.CENTER);
 
 
+                        JButton confirmButton = new JButton("Confirm");
+                        confirmButton.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                // 获取用户选择的 current account
+                                int selectedIndex = comboBox.getSelectedIndex();
+
+                                // 执行 earlyWithdrew 方法
+                                kid.getAccountManager().earlyWithdrew(selectedIndex, finalI);
+                                GUI.refresh(kid.getAccountManager().getSavingAccounts());
+                                addListener(GUI);
+                                // 关闭对话框
+                                frame.dispose();
+                            }
+                        });
+                        panel.add(confirmButton, BorderLayout.SOUTH);
+
+                        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        frame.getContentPane().add(panel);
+                        frame.pack();
+                        frame.setLocationRelativeTo(null); // 居中显示
+                        frame.setVisible(true);
                     }
                 }
             });
