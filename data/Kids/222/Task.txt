@@ -1,11 +1,9 @@
-Sweep the floor,20.0,Confirmed,description1,current
-Independent study1,11.0,Taken,Please sweep the floor in the living room and kitchen. Make sure to remove all dust and debris. Please also ensure that the corners are well cleaned.,current
-Independent study2,12.0,ToBeTaken,description2,current
-Independent study3,13.0,ToBeTaken,description3,current
-Independent study4,14.0,ToBeTaken,description4,current
-Independent study5,11.0,Taken,description1,current
-Independent study6,12.0,ToBeConfirmed,description2,current
-Independent study7,13.0,ToBeConfirmed,description3,current
-Independent study8,14.0,ToBeConfirmed,description4,current
-Independent study9,11.0,ToBeConfirmed,description1,current
-Independent study10,12.0,ToBeConfirmed,description2,current
+Independent study1*11.0*Taken*Please sweep the floor in the living room and kitchen. Make sure to remove all dust and debris. Please also ensure that the corners are well cleaned.*x
+Independent study2*12.0*ToBeTaken*Complete your math homework and review the chapter on algebra.*x
+Independent study3*13.0*ToBeTaken*Practice playing a song on your musical instrument for at least 30 minutes, focusing on improving your technique and accuracy with each session.*x
+Independent study4*14.0*Taken*Wash the dishes after dinner and wipe down the kitchen counters.*x
+Independent study5*15.0*Taken*Help with laundry by sorting clothes into appropriate loads, loading the washing machine, transferring clothes to the dryer, and folding clean clothes neatly.*x
+Independent study6*16.0*ToBeTaken*Study for your upcoming science test by reviewing your notes, creating flashcards for key concepts, and completing practice questions for better retention.*x
+Independent study7*17.0*ToBeConfirmed*Help with grocery shopping by making a list of needed items, checking off each item as you find it, and helping to carry the groceries into the house.*x
+Independent study8*18.0*Taken*Complete a 20-minute workout session, including stretching, strength exercises, and a short cardio routine to improve your overall fitness and health.*x
+Independent study9*19.0*ToBeConfirmed*Write a thank-you note to your teacher, expressing your gratitude for their support and guidance, and include specific examples of how they've helped you.*x
