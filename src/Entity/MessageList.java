@@ -62,7 +62,7 @@ public class MessageList {
 
     }
 
-    public void addBankMessage(Bank bank, double currentInterestRate,double savingInterestRate) {
+    public void addBankMessage(double currentInterestRate,double savingInterestRate) {
         String changeCurrent = String.format("Attention! Your current interest rate has changed to %d",currentInterestRate);
         Message bankMessage = new Message("parent",changeCurrent);
         messages.add(bankMessage);

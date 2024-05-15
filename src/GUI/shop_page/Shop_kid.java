@@ -83,7 +83,7 @@ public class Shop_kid extends JPanel {
         // Account dropdown
         accountDropdown = new JComboBox<>();
         // Assuming BothAccountList is accessible via Kids class
-        for (CurrentAccount account : shopController.getKid().getBothAccountList().getCurrentAccounts()) {
+        for (CurrentAccount account : shopController.getKid().getAccountManager().getCurrentAccounts()) {
             accountDropdown.addItem(account.getName());
         }
         accountDropdown.setSelectedItem("CA1"); // Set the default selection to "CA1"
@@ -176,7 +176,7 @@ public class Shop_kid extends JPanel {
         gbc.gridy = 2; // 第三行
         footer.add(currentAccountLabel, gbc);
 
-        buyButton.addActionListener(e -> shopController.buyProducts(selectedTotalLabel, currentAccountLabel,toggleButtons,accountDropdown));
+        buyButton.addActionListener(e -> shopController.buyProducts(selectedTotalLabel, currentAccountLabel,toggleButtons));
 
 
         return footer;

@@ -42,7 +42,6 @@ public class ShowSavingAccount extends JFrame {
     }
     private void updateProgressBar(List<SavingAccount> savingAccountList, List<JProgressBar> progressBarList) {
         // 计算已经过的时间比例
-        createFinishPanelList(savingAccountList);
         int i;
         for(i=0;i<savingAccountList.size();i++){
             SavingAccount savingAccount = savingAccountList.get(i);
@@ -58,7 +57,6 @@ public class ShowSavingAccount extends JFrame {
 
             // 检查是否已完成
             if (progress >= 100) {
-                System.out.println("finish");
                 Component[] list = accountGrid.getComponents();
                 list[i] = finishPanelList.get(i);
 
