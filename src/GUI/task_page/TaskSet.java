@@ -12,7 +12,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Locale;
 
-import static sun.tools.jconsole.inspector.XDataViewer.dispose;
 
 public class TaskSet extends JPanel {
     private JPanel Container;
