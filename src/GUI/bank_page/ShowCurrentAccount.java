@@ -32,8 +32,8 @@ public class ShowCurrentAccount extends JFrame {
         setVisible(true);
     }
 
-    public void initData(List<CurrentAccount> accountList){
-        accountGrid = createAccountGrid(accountList);
+    public void initData(List<CurrentAccount> accountList, Boolean whetherParent){
+        accountGrid = createAccountGrid(accountList,whetherParent);
         mainContent.add(accountGrid,BorderLayout.CENTER);
         infoPanel = createTotalInfoPanel();
         mainContent.add(infoPanel,BorderLayout.SOUTH);
@@ -44,7 +44,7 @@ public class ShowCurrentAccount extends JFrame {
     public void refresh(List<CurrentAccount> accountList){
         mainContent.remove(accountGrid);
         mainContent.remove(infoPanel);
-        initData(accountList);
+        initData(accountList,false);
     }
     private void initUI(){
         setTitle("Current Account");
@@ -58,7 +58,7 @@ public class ShowCurrentAccount extends JFrame {
         mainContent.add(createHeaderPanel(), BorderLayout.NORTH);
 
     }
-    private JPanel createComponents(int i, CurrentComponentList currentComponentList) {
+    private JPanel createComponents(int i, CurrentComponentList currentComponentList,Boolean whetherParent) {
         // 创建组件的面板
         JPanel component = new JPanel();
 
@@ -92,9 +92,11 @@ public class ShowCurrentAccount extends JFrame {
         component.add(Box.createVerticalStrut(10));
         component.add(balanceLabel);
         component.add(Box.createVerticalStrut(10));
+        if(whetherParent==false){
+            component.add(transferButton);
+            component.add(Box.createVerticalStrut(20));
+        }
 
-        component.add(transferButton);
-        component.add(Box.createVerticalStrut(20));
 
         return component;
     }
@@ -136,7 +138,7 @@ public class ShowCurrentAccount extends JFrame {
 
     }
 
-    private JPanel createAccountGrid(List<CurrentAccount> accountList) {
+    private JPanel createAccountGrid(List<CurrentAccount> accountList,Boolean whetherParent) {
         accountGrid = new JPanel();
         accountGrid.setLayout(new GridLayout(4, 3, 10, 5)); // 增加了行列间的间隔
         accountGrid.setBackground(Color.LIGHT_GRAY);
@@ -145,10 +147,11 @@ public class ShowCurrentAccount extends JFrame {
 
 
         for (int i = 0; i < accountList.size(); i++) {
-            accountGrid.add(createComponents(i, currentComponentList));
+            accountGrid.add(createComponents(i, currentComponentList,whetherParent));
         }
         addButton = createAddComponents();
         accountGrid.add(addButton);
+
         for (int i = 0; i < 11-accountList.size(); i++) {
             accountGrid.add(new JPanel());
         }

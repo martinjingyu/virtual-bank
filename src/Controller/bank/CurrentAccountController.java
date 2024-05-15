@@ -13,10 +13,11 @@ public class CurrentAccountController {
     private Kids kid;
     private ShowCurrentAccount GUI;
 
-    CurrentAccountController(Kids kid,ShowCurrentAccount GUI){
+
+    CurrentAccountController(Kids kid,ShowCurrentAccount GUI,Boolean whetherParent){
         this.kid = kid;
         this.GUI = GUI;
-        GUI.initData(kid.getAccountManager().getCurrentAccounts());
+        GUI.initData(kid.getAccountManager().getCurrentAccounts(),whetherParent);
         addListener(GUI);
     }
 
