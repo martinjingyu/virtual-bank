@@ -11,11 +11,19 @@ public class ShopController {
     private Kids kid;
     private MessageList messageList;
     private List<Product> selectedProductList;
+    private AccountManager accountManager;
+    private String selectedAccountName;
 
     public ShopController(Kids kid) {
         this.kid = kid;
         this.messageList = kid.getMessagelist();
         this.selectedProductList = new ArrayList<>();
+        this.accountManager = kid.getAccountManager();
+    }
+
+    public void setSelectedAccountName(String accountName,JLabel currentAccountLabel) {
+        this.selectedAccountName = accountName;
+        updateCurrentAccountDisplay(currentAccountLabel);
     }
 
     public Kids getKid(){return kid;}
@@ -29,7 +37,9 @@ public class ShopController {
     }
 
     public void updateCurrentAccountDisplay(JLabel currentAccountLabel) {
-        currentAccountLabel.setText(String.format("Current Account: $%9.2f", kid.getAccountManager().getTotalCurrentBalance()));
+        System.out.println(selectedAccountName);
+        System.out.println(accountManager.getCurrentAccountBalance(selectedAccountName));
+        currentAccountLabel.setText(String.format("Current Account: $%9.2f", accountManager.getCurrentAccountBalance(selectedAccountName)));
     }
 
     public void updateSelectedTotalDisplay(JLabel selectedTotalLabel) {
@@ -48,27 +58,28 @@ public class ShopController {
 
 
     public void buyProducts(JLabel selectedTotalLabel, JLabel currentAccountLabel,List<JRadioButton> toggleButtons) {
-//        if (selectedProductList.isEmpty()) {
-//            JOptionPane.showMessageDialog(null, "You haven't selected any products.", "No Products Selected!", JOptionPane.WARNING_MESSAGE);
-//            return;
-//        }
-//
-//        double totalCost = calculateSelectedTotal();
-//        try {
-//            bank.changeCurrent(-totalCost);
-//            if (totalCost > 0.8 * bank.getCurrentTotal()) {
-//                messageList.addShopMessage(totalCost);
-//            }
-//            JOptionPane.showMessageDialog(null, "Purchase Successful!");
-//            selectedProductList.clear();
-//            updateSelectedTotalDisplay(selectedTotalLabel);
-//            updateCurrentAccountDisplay(currentAccountLabel);
-//            for (JToggleButton button : toggleButtons) {
-//                button.setSelected(false);
-//            }
-//        } catch (InsufficientFundsException e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage(), "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
-//        }
+        if (selectedProductList.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "You haven't selected any products.", "No Products Selected!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        double totalCost = calculateSelectedTotal();
+        double currentBalance = accountManager.getCurrentAccountBalance(selectedAccountName);
+        try {
+            accountManager.withdrawFromCurrentAccount(selectedAccountName,totalCost);
+            if (totalCost > 0.8 * currentBalance) {
+                messageList.addShopMessage(totalCost);
+            }
+            JOptionPane.showMessageDialog(null, "Purchase Successful!");
+            selectedProductList.clear();
+            updateSelectedTotalDisplay(selectedTotalLabel);
+            updateCurrentAccountDisplay(currentAccountLabel);
+            for (JToggleButton button : toggleButtons) {
+                button.setSelected(false);
+            }
+        } catch (InsufficientFundsException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 }
