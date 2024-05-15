@@ -1,8 +1,12 @@
 package GUI;
 import Controller.MainController;
+import Controller.MainController_Parent;
 import GUI.bank_page.Bank_kid;
+import GUI.bank_page.bank_parents;
 import GUI.shop_page.Shop_kid;
+import GUI.shop_page.Shop_parent;
 import GUI.task_page.Task_kid;
+import GUI.task_page.Task_parent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,22 +18,26 @@ public class MainFrame_parent extends JFrame {
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
     private JPanel pg1, pg2,pg3,pg4;
-    private MainController mainController;
-    private Bank_kid bankKid;
-    private Shop_kid shopKid;
-    private Task_kid taskKid;
+    private MainController_Parent mainController_parent;
 
-    public MainFrame_parent(MainController mainController) {
+    public MainFrame_parent(MainController_Parent mainController) {
         super("demo");
-        this.mainController = mainController;
+        this.mainController_parent = mainController;
         InitiateAll();
 
-        current_panel = new JPanel();
+        current_panel = this.pg1;
         frame_panel();
         navi_button();
+        mainController.mainFrameController_parent.setGUI(this);
+        mainController.mainFrameController_parent.addButtonListener();
+        mainController.mainFrameController_parent.addFrameListener();
         setVisible(true);
     }
     private void InitiateAll(){
+        this.pg1 = new bank_parents(mainController_parent.bank_parent_controller);
+        this.pg2 = new Shop_parent(mainController_parent.shopParentController);
+        this.pg3 = new Task_parent(mainController_parent.task_parent_control,this);
+
 //        this.pg1 = new Bank_kid();
 //        this.pg2 = new Shop_kid(mainController.ShopController);
 //        this.pg3 = new Task_kid(mainController.task_kid_control, this);

@@ -38,7 +38,7 @@ public class Task_parent extends JPanel {
     private JLabel name;
     private JLabel infotitle;
     private JLabel buttonlabel;
-    private MainFrame_kid mainFrame;
+    private MainFrame_parent mainFrame;
     private Task_parent_control task_parent_control;
     private int i;
     private MouseAdapter myMouseListener;
@@ -52,7 +52,7 @@ public class Task_parent extends JPanel {
 
     }
 
-    public Task_parent(Task_parent_control controller, MainFrame_kid mainFrame) {
+    public Task_parent(Task_parent_control controller, MainFrame_parent mainFrame) {
         this.mainFrame = mainFrame;
         this.task_parent_control = controller;
 
