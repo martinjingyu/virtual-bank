@@ -50,7 +50,7 @@ public class MessageList {
 
 
     // Adding new methods to handle different types of messages
-    public void addTaskMessage(String type, Task task, String description) {
+    public void addTaskMessage(String type, String description) {
         if(type.equals("Child_Opt")){
             Message taskMessage = new Message("system",description);
             messages.add(taskMessage);
