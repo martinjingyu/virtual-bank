@@ -48,8 +48,7 @@ public class SavingAccountController {
 
                             // 执行 earlyWithdrew 方法
                             kid.getAccountManager().earlyWithdrew(selectedIndex, finalI);
-                            GUI.refresh(kid.getAccountManager().getSavingAccounts());
-                            addListener(GUI);
+                            refresh();
                             // 关闭对话框
                             frame.dispose();
                         }
@@ -98,8 +97,7 @@ public class SavingAccountController {
 
                                 // 执行 earlyWithdrew 方法
                                 kid.getAccountManager().earlyWithdrew(selectedIndex, finalI);
-                                GUI.refresh(kid.getAccountManager().getSavingAccounts());
-                                addListener(GUI);
+                                refresh();
                                 // 关闭对话框
                                 frame.dispose();
                             }
@@ -134,8 +132,7 @@ public class SavingAccountController {
 
                                 // 执行 earlyWithdrew 方法
                                 kid.getAccountManager().earlyWithdrew(selectedIndex, finalI);
-                                GUI.refresh(kid.getAccountManager().getSavingAccounts());
-                                addListener(GUI);
+                                refresh();
                                 // 关闭对话框
                                 frame.dispose();
                             }
@@ -154,6 +151,13 @@ public class SavingAccountController {
         }
 
 
+    }
+    public void refresh(){
+        GUI.refresh(kid.getAccountManager().getSavingAccounts());
+        addListener(GUI);
+    }
+    public ShowSavingAccount getGUI(){
+        return GUI;
     }
 
 
