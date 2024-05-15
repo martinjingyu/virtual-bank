@@ -101,7 +101,9 @@ public class AccountManager {
         CurrentAccount currentAccount = currentAccounts.get(currentIndex);
         SavingAccount savingAccount = savingAccounts.get(savingIndex);
 
-        savingAccount.withdraw(savingAccount.getBalance());
 
+        savingAccount.calculateInterest();
+        currentAccount.deposit(savingAccount.getBalance());
+        savingAccount.withdraw(savingAccount.getBalance());
     }
 }
