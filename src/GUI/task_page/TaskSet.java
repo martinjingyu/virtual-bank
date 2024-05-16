@@ -214,7 +214,7 @@ public class TaskSet extends JPanel {
                 TaskName = task_name.getText();
                 TaskSalary = task_salary.getText();
                 TaskDescription = task_description.getText();
-                if(task_parent_control.validateName(TaskName) && task_parent_control.validateDescription(TaskDescription) && task_parent_control.validateSalary(TaskSalary)){
+                if(task_parent_control.validateName(TaskName) && task_parent_control.validateDescription(TaskDescription) && task_parent_control.validateSalary(TaskSalary) && task_parent_control.getKid().getTaskList().checkDuplicateName(TaskName)){
                     // 显示确认对话框
                     int response = JOptionPane.showConfirmDialog(null,
                             "Are you sure you want to set this task as new task?",
@@ -249,6 +249,11 @@ public class TaskSet extends JPanel {
                     JOptionPane.showMessageDialog(null,
                             "Task salary should only contain numbers and at most one decimal point.",
                             "Invalid Task Salary",
+                            JOptionPane.WARNING_MESSAGE);
+                } else if(!(task_parent_control.getKid().getTaskList().checkDuplicateName(TaskName))){
+                    JOptionPane.showMessageDialog(null,
+                            "The task name '" + TaskName + "' already exists in the task list.",
+                            "Duplicate Task Name",
                             JOptionPane.WARNING_MESSAGE);
                 }
 
