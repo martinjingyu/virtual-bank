@@ -81,7 +81,8 @@ public class Task_parent extends JPanel {
 //        buttonlabel.removeMouseListener(myMouseListener);
     }
     public void showDialog1(int index){
-        switch (task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState()){
+        String state = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState();
+        switch (state){
             case "ToBeConfirmed":
                 int response = JOptionPane.showConfirmDialog(this, "Please check if your child has completed the task "
                                 + task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getName()
@@ -94,15 +95,27 @@ public class Task_parent extends JPanel {
                             "Are you sure you want to confirm the task completion?",
                             "Final Confirmation", JOptionPane.YES_NO_OPTION);
                     if (confirmResponse == JOptionPane.YES_OPTION) {
-                        //发信息
-                        // 加钱
-                        String destination = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getDestination();
+
+                        // 发信息
+                        String name = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
                         double salary = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getReward();
+                        String destination = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getDestination();
+                        task_parent_control.getKid().getMessagelist().addTaskMessage("Parent_Opt","You have confirmed the task "+ name);
+                        task_parent_control.getKid().getMessagelist().addTaskMessage("Child_Opt","Your submission for task "+ name +
+                                "has been confirmed. You have received reward $" + salary +
+                                " to your current account "+ destination);
+
+
+                        // 加钱
+                        // String destination = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getDestination();
+                        // double salary = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getReward();
                         System.out.println("salary： ");
                         System.out.println(salary);
                         task_parent_control.getKid().getAccountManager().getCurrentAccountByName(destination).deposit(salary);
+
                         // 删除任务
                         task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i));
+
                         // 显示状态
                         JOptionPane.showMessageDialog(this,
                                 "This task has completed successfully!",
@@ -114,10 +127,16 @@ public class Task_parent extends JPanel {
                             "Are you sure you want to reject the task?",
                             "Final Confirmation", JOptionPane.YES_NO_OPTION);
                     if (rejectResponse == JOptionPane.YES_OPTION) {
+
                         // 拒绝任务的逻辑
                         // 把ToBeConfirmed打回到Taken
-                        // 发消息
                         task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).setState("Taken");
+
+                        // 发信息
+                        String name = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
+                        task_parent_control.getKid().getMessagelist().addTaskMessage("Parent_Opt","You have rejected the task "+ name);
+                        task_parent_control.getKid().getMessagelist().addTaskMessage("Child_Opt","Your submission for task "+ name + "has been rejected." +
+                                " Please redo and resubmit it.");
                     }
                 }
                 mainFrame.refresh();
@@ -137,7 +156,15 @@ public class Task_parent extends JPanel {
 
                 if (response1 == JOptionPane.YES_OPTION) {
                     // 执行删除任务的逻辑
+                    // 删除任务
                     task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i));
+
+                    // 发信息
+                    String name = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
+                    task_parent_control.getKid().getMessagelist().addTaskMessage("Parent_Opt","You have delete the task "+ name);
+
+
+                    // 显示状态
                     JOptionPane.showMessageDialog(this,
                             "Task has been deleted.",
                             "Task Deleted",
@@ -293,7 +320,7 @@ public class Task_parent extends JPanel {
         if (SalaryFont != null) Salary.setFont(SalaryFont);
         Salary.setForeground(new Color(-9975466));
         Salary.setHorizontalAlignment(2);
-        Salary.setText("$12");
+        Salary.setText("$"+task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getReward());
         Salary.setVerticalAlignment(1);
         taskDetails.add(Salary, BorderLayout.EAST);
         Status = new JLabel();
