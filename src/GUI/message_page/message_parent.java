@@ -159,11 +159,11 @@ public class message_parent extends JPanel {
     }
     public static void main(String[] args) {
         Kids parent = ReadAll.readall(String.valueOf(222));
-        Message_parent_controller messageController = new Message_parent_controller(parent);
-        message_parent messageParent = new message_parent(messageController);
+        //Message_parent_controller messageController = new Message_parent_controller(parent);
+        //message_parent messageParent = new message_parent(messageController);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(messageParent);
+        //frame.getContentPane().add(messageParent);
         frame.setSize(800, 600);
         frame.setVisible(true);
     }

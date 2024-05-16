@@ -163,11 +163,26 @@ public class AccountManager {
         currentAccountFrom.withdraw(value);
         currentAccountTo.deposit(value);
     }
-    public void deposit(int currentIndex, int savingIndex, double value){
+    public void depositCurrentToSaving(int currentIndex, int savingIndex, double value, String selectedDuration){
         CurrentAccount currentAccount = currentAccounts.get(currentIndex);
         SavingAccount savingAccount = savingAccounts.get(savingIndex);
 
         currentAccount.withdraw(value);
         savingAccount.deposit(value);
+        savingAccount.setStartTime(LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime result = now;
+        switch (selectedDuration) {
+            case "15 days":
+                result = now.plusDays(15);
+                break;
+            case "1 month":
+                result = now.plusMonths(1);
+                break;
+            case "3 months":
+                result = now.plusMonths(3);
+                break;
+        }
+        savingAccount.setEndTime(result);
     }
 }

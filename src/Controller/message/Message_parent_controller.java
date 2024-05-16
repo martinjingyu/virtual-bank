@@ -14,9 +14,6 @@ public class Message_parent_controller {
     private message_parent gui;
     private String selectedContact = null;  // Maintain the state of the selected contact
 
-    public Message_parent_controller(Parent parent) {
-        this.parent = parent;
-    }
 
     public void setGUI(message_parent gui) {
         this.gui = gui;
@@ -84,10 +81,10 @@ public class Message_parent_controller {
 
     private void loadMessagesForContact(String contact) {
         gui.getMessageModel().clear();
-        Message[] messages = contact.equals("Kids") ? parent.getMessagelist().getKidParentMessages().toArray(new Message[0]) :
-                parent.getMessagelist().getSystemMessages().toArray(new Message[0]);
-        for (Message msg : messages) {
-            gui.getMessageModel().addElement(msg);
-        }
+//        Message[] messages = contact.equals("Kids") ? parent.getMessagelist().getKidParentMessages().toArray(new Message[0]) :
+//                parent.getMessagelist().getSystemMessages().toArray(new Message[0]);
+//        for (Message msg : messages) {
+//            gui.getMessageModel().addElement(msg);
+//        }
     }
 }
