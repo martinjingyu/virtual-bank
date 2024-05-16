@@ -3,6 +3,7 @@ import Controller.MainController;
 import Controller.MainController_Parent;
 import GUI.bank_page.Bank_kid;
 import GUI.bank_page.bank_parents;
+import GUI.message_page.message_parent;
 import GUI.shop_page.Shop_kid;
 import GUI.shop_page.Shop_parent;
 import GUI.task_page.Task_kid;
@@ -37,6 +38,7 @@ public class MainFrame_parent extends JFrame {
         this.pg1 = new bank_parents(mainController_parent.bank_parent_controller);
         this.pg2 = new Shop_parent(mainController_parent.shopParentController);
         this.pg3 = new Task_parent(mainController_parent.task_parent_control,this);
+        this.pg4 = new message_parent(mainController_parent.messageParentController);
 
 //        this.pg1 = new Bank_kid();
 //        this.pg2 = new Shop_kid(mainController.ShopController);
@@ -202,7 +204,7 @@ public class MainFrame_parent extends JFrame {
     }
 
     public static void main(String[] args) {
-        MainFrame_kid main = new MainFrame_kid(new MainController("222"));
+        MainFrame_parent main = new MainFrame_parent(new MainController_Parent("222"));
     }
 
 }
