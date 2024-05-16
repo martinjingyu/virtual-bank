@@ -1,7 +1,7 @@
 package GUI.message_page;
 
 import Controller.message.Message_parent_controller;
-import Entity.Parent;
+import Entity.Kids;
 import Entity.Message;
 import utill.read.ReadAll;
 
@@ -158,7 +158,7 @@ public class message_parent extends JPanel {
         }
     }
     public static void main(String[] args) {
-        Parent parent = ReadAll.readall(String.valueOf(222));
+        Kids parent = ReadAll.readall(String.valueOf(222));
         Message_parent_controller messageController = new Message_parent_controller(parent);
         message_parent messageParent = new message_parent(messageController);
         JFrame frame = new JFrame();
