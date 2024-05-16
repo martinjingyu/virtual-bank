@@ -63,21 +63,17 @@ public class SavingAccountController {
                     frame.setVisible(true);
                 }
             });
-
         }
 
         List<JButton> finishButtons = GUI.getFinishList().getButtonlist();
         for(i = 0;i<finishButtons.size();i++){
 
             JButton button = finishButtons.get(i);
-            System.out.println(i);
-            System.out.println(button.getText());
             int finalI = i;
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(button.getText().equals("Deposit")){
-                        System.out.println("Deposit1111");
                         JFrame frame = new JFrame("Select Current Account");
                         JPanel panel = new JPanel(new BorderLayout());
 
@@ -85,7 +81,10 @@ public class SavingAccountController {
                         List<String> accountNames= kid.getAccountManager().getSavingAccountNames();
                         String[] namesArray = accountNames.toArray(new String[0]);
                         JComboBox<String> comboBox = new JComboBox<>(namesArray);
+                        JComboBox<String> time = new JComboBox<>(new String[]{"15 days","1 month","3 months"});
+
                         panel.add(comboBox, BorderLayout.CENTER);
+                        panel.add(time,BorderLayout.CENTER);
 
                         JTextField textField = new JTextField();
 
@@ -95,9 +94,10 @@ public class SavingAccountController {
                             public void actionPerformed(ActionEvent e) {
                                 // 获取用户选择的 current account
                                 int selectedIndex = comboBox.getSelectedIndex();
+                                String selectedTime = (String) time.getSelectedItem();
                                 try{
                                     double value = Double.parseDouble(textField.getText());
-                                    kid.getAccountManager().deposit(selectedIndex, finalI,value);
+                                    kid.getAccountManager().depositCurrentToSaving(selectedIndex, finalI,value,selectedTime);
                                     refresh(true);
                                     // 关闭对话框
                                     frame.dispose();
@@ -123,7 +123,7 @@ public class SavingAccountController {
 
                     }
                     else if (button.getText().equals("Take my Money!")) {
-                        System.out.println("take");
+                        System.out.println(kid.getAccountManager().getSavingAccounts().get(finalI).getEndTime());
                         JFrame frame = new JFrame("Select Current Account");
                         JPanel panel = new JPanel(new BorderLayout());
 
@@ -158,20 +158,14 @@ public class SavingAccountController {
                     }
                 }
             });
-
         }
-
-
     }
     public void refresh(Boolean whetherParent){
         GUI.refresh(kid.getAccountManager().getSavingAccounts(),whetherParent);
-        addListener(GUI);
     }
     public ShowSavingAccount getGUI(){
         return GUI;
     }
-
-
     public Kids getKid() {
         return kid;
     }

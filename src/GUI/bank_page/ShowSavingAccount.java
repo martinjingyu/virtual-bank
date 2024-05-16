@@ -1,5 +1,6 @@
 package GUI.bank_page;
 
+import Controller.bank.Bank_kid_control;
 import Entity.SavingAccount;
 
 import javax.swing.*;
@@ -7,6 +8,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,12 +20,14 @@ public class ShowSavingAccount extends JFrame {
     private JPanel mainContent;
     private SavingComponentList savingComponentList;
     private JPanel accountGrid;
+    private List<JPanel> accountPanelList;
     private JPanel infoPanel;
     private List<JPanel> finishPanelList;
     private FinishList finishList;
     private List<Duration> remainingTime;
     private JPanel addButton;
     private Timer timer;
+    private ActionListener actionListener;
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
     private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
     private final Color fontColor = new Color(49, 122, 232); // #317AE8
@@ -53,6 +57,16 @@ public class ShowSavingAccount extends JFrame {
             progressBar.setValue((int) progress);
 
             // 检查是否已完成
+            if(progress<100){
+                Component[] list = accountGrid.getComponents();
+                list[i] = accountPanelList.get(i);
+                accountGrid.removeAll();
+                for(int j=0; j< list.length;j++){
+                    accountGrid.add(list[j]);
+                }
+                accountGrid.revalidate(); // 用于重新布局组件
+                accountGrid.repaint();    // 用于请求重绘组件
+            }
             if (progress >= 100) {
                 Component[] list = accountGrid.getComponents();
                 list[i] = finishPanelList.get(i);
@@ -60,7 +74,10 @@ public class ShowSavingAccount extends JFrame {
                 accountGrid.removeAll();
                 for(int j=0; j< list.length;j++){
                     accountGrid.add(list[j]);
+
                 }
+                accountGrid.revalidate(); // 用于重新布局组件
+                accountGrid.repaint();    // 用于请求重绘组件
             }
         }
 
@@ -89,7 +106,8 @@ public class ShowSavingAccount extends JFrame {
         setVisible(true);
     }
     public void refresh(List<SavingAccount> accountList,Boolean whetherParent){
-        createFinishPanelList(accountList,whetherParent);
+        refreshFinishPanelList(accountList);
+
     }
     private void initUI(){
         setTitle("Saving Account");
@@ -145,6 +163,26 @@ public class ShowSavingAccount extends JFrame {
             finishPanelList.add(finish);
         }
 
+    }
+
+    private void refreshFinishPanelList(List<SavingAccount> accountList){
+        for(int i=0; i<accountList.size();i++){
+            if (accountList.get(i).getBalance()==0){
+                int labelCount =0;
+                Component[] list= finishPanelList.get(i).getComponents();
+                for(Component component: list){
+                    if(component instanceof JButton){
+                        ((JButton) component).setText("Deposit");
+                    }
+                    if(component instanceof JLabel){
+                        labelCount++;
+                        if(labelCount==2){
+                            ((JLabel) component).setText("this account is empty");
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private JPanel createComponents(int i, SavingComponentList savingComponentList,Boolean whetherParent) {
@@ -238,6 +276,7 @@ public class ShowSavingAccount extends JFrame {
 
     private JPanel createAccountGrid(List<SavingAccount> accountList,Boolean whetherParent) {
         accountGrid = new JPanel();
+        accountPanelList = new ArrayList<>();
         accountGrid.setLayout(new GridLayout(4, 3, 10, 5)); // 增加了行列间的间隔
         accountGrid.setBackground(Color.LIGHT_GRAY);
         accountGrid.setBorder(new LineBorder(Color.BLACK, 2)); // 添加边框
@@ -245,9 +284,14 @@ public class ShowSavingAccount extends JFrame {
 
         for (int i = 0; i < accountList.size(); i++) {
             if(accountList.get(i).getEndTime().isAfter(LocalDateTime.now())&&accountList.get(i).getBalance()>0){
-                accountGrid.add(createComponents(i, savingComponentList,whetherParent));
+                JPanel component = createComponents(i, savingComponentList,whetherParent);
+                accountGrid.add(component);
+                accountPanelList.add(component);
             }
-            else{accountGrid.add(finishPanelList.get(i));
+            else{
+                JPanel component = createComponents(i, savingComponentList,whetherParent);
+                accountPanelList.add(component);
+                accountGrid.add(finishPanelList.get(i));
             }
 
         }
@@ -287,7 +331,6 @@ public class ShowSavingAccount extends JFrame {
 
     public static void main(String[] args) {
         // 创建 JFrame 并显示
-        JFrame frame = new ShowSavingAccount();
     }
 }
 

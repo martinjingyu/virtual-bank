@@ -98,7 +98,7 @@ public class SelectAccount {
             // 执行 earlyWithdrew 方法
             double value = Double.parseDouble(textField.getText());
 
-            accountManager.deposit(selectIndex,this.selectedAccount,value);
+            //accountManager.deposit(selectIndex,this.selectedAccount,value);
 
             // 关闭对话框
             frame.dispose();
