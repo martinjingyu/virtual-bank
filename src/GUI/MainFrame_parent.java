@@ -3,6 +3,7 @@ import Controller.MainController;
 import Controller.MainController_Parent;
 import GUI.bank_page.Bank_kid;
 import GUI.bank_page.bank_parents;
+import GUI.message_page.message_parent;
 import GUI.shop_page.Shop_kid;
 import GUI.shop_page.Shop_parent;
 import GUI.task_page.Task_kid;
@@ -28,6 +29,7 @@ public class MainFrame_parent extends JFrame {
         current_panel = this.pg1;
         frame_panel();
         navi_button();
+
         mainController.mainFrameController_parent.setGUI(this);
         mainController.mainFrameController_parent.addButtonListener();
         mainController.mainFrameController_parent.addFrameListener();
@@ -37,7 +39,7 @@ public class MainFrame_parent extends JFrame {
         this.pg1 = new bank_parents(mainController_parent.bank_parent_controller);
         this.pg2 = new Shop_parent(mainController_parent.shopParentController);
         this.pg3 = new Task_parent(mainController_parent.task_parent_control,this);
-
+        this.pg4 = new message_parent(mainController_parent.messageParentController);
 //        this.pg1 = new Bank_kid();
 //        this.pg2 = new Shop_kid(mainController.ShopController);
 //        this.pg3 = new Task_kid(mainController.task_kid_control, this);
@@ -95,9 +97,6 @@ public class MainFrame_parent extends JFrame {
         InitiateAll();
 
 
-
-//        this.pg3 = new Task_kid(this);
-
         switch (tempIndex) {
             case 1:
                 current_panel = pg1;
@@ -112,7 +111,6 @@ public class MainFrame_parent extends JFrame {
                 current_panel = pg4;
                 break;
             default:
-// 如果没有确定的索引，则默认显示 pg1
                 current_panel = pg1;
                 break;
         }
@@ -156,7 +154,7 @@ public class MainFrame_parent extends JFrame {
 
         this.add(menu, BorderLayout.WEST);
         main_page.add(current_panel,BorderLayout.CENTER);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
     }
     public void navi_button(){

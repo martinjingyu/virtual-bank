@@ -52,9 +52,11 @@ public class MainFrameController_Parent extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent e) {
         if(e.getSource()== mainFrameParent.getButton(1)){
+            System.out.println("asaaaa");
             mainFrameParent.changePanel(1);
         }
         else if (e.getSource()== mainFrameParent.getButton(2)) {
+            System.out.println("bbbaa");
             mainFrameParent.changePanel(2);
         }
         else if (e.getSource()== mainFrameParent.getButton(3)) {
