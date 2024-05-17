@@ -2,6 +2,10 @@ package Entity;
 
 public class CurrentAccount extends Account {
     // Constructor
+
+    public CurrentAccount(String name){
+        super(name,0,0);
+    }
     public CurrentAccount(String name,double initialBalance) {
         super(name,initialBalance, 0);  // Set interest rate to 0 as current accounts do not earn interest
     }
