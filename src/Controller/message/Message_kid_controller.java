@@ -27,7 +27,10 @@ public class Message_kid_controller {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 1) {
                     String currentSelected = gui.getContactList().getSelectedValue();
+
+                    System.out.println(gui.getContactList());
                     if (currentSelected != null) {
+
                         selectedContact = currentSelected;  // Update the selected contact
                         gui.updateContactSelection(selectedContact);
                         loadMessagesForContact(selectedContact);
