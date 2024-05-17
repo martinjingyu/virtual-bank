@@ -1,5 +1,6 @@
 package GUI.bank_page;
 
+import Entity.AccountManager;
 import Entity.CurrentAccount;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -149,8 +150,10 @@ public class ShowCurrentAccount extends JFrame {
         for (int i = 0; i < accountList.size(); i++) {
             accountGrid.add(createComponents(i, currentComponentList,whetherParent));
         }
-        addButton = createAddComponents();
-        accountGrid.add(addButton);
+        if(accountList.size()<12){
+            addButton = createAddComponents();
+            accountGrid.add(addButton);
+        }
 
         for (int i = 0; i < 11-accountList.size(); i++) {
             accountGrid.add(new JPanel());
@@ -170,6 +173,14 @@ public class ShowCurrentAccount extends JFrame {
         addLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         addPanel.add(addLabel);
         return addPanel;
+    }
+    public void afterAddAccount(AccountManager accountManager, String name){
+        accountManager.createNewCurrentAccount(name);
+        mainContent.removeAll();
+        mainContent.add(createHeaderPanel(), BorderLayout.NORTH);
+        initData(accountManager.getCurrentAccounts(),false);
+        pack();
+        setVisible(true);
     }
     public JPanel getAddButton(){
         return addButton;

@@ -1,6 +1,7 @@
 package GUI.bank_page;
 
 import Controller.bank.Bank_kid_control;
+import Entity.AccountManager;
 import Entity.SavingAccount;
 
 import javax.swing.*;
@@ -295,8 +296,11 @@ public class ShowSavingAccount extends JFrame {
             }
 
         }
-        addButton = createAddComponents();
-        accountGrid.add(addButton);
+        if(accountList.size()<12){
+            addButton = createAddComponents();
+            accountGrid.add(addButton);
+        }
+
 
         for (int i = 0; i < 11-accountList.size(); i++) {
             accountGrid.add(new JPanel());
@@ -316,6 +320,15 @@ public class ShowSavingAccount extends JFrame {
         addLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         addPanel.add(addLabel);
         return addPanel;
+    }
+    public void afterAddAccount(AccountManager accountManager, String name){
+        timer.stop();
+        accountManager.createNewSavingAccount(name);
+        mainContent.removeAll();
+        mainContent.add(createHeaderPanel(), BorderLayout.NORTH);
+        initData(accountManager.getSavingAccounts(),false);
+        pack();
+        setVisible(true);
     }
     public JPanel getAddButton(){
         return addButton;

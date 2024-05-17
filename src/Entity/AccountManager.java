@@ -185,4 +185,11 @@ public class AccountManager {
         }
         savingAccount.setEndTime(result);
     }
+
+    public void createNewSavingAccount(String name){
+        savingAccounts.add(new SavingAccount(name));
+    }
+    public void createNewCurrentAccount(String name){
+        currentAccounts.add(new CurrentAccount(name));
+    }
 }

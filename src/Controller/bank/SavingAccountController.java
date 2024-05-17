@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 
@@ -17,6 +19,7 @@ public class SavingAccountController {
     SavingAccountController(Kids kid,ShowSavingAccount GUI,Boolean whetherParent){
         this.kid = kid;
         this.GUI = GUI;
+
         GUI.initData(kid.getAccountManager().getSavingAccounts(),whetherParent);
         addListener(GUI);
     }
@@ -158,7 +161,59 @@ public class SavingAccountController {
                     }
                 }
             });
+
         }
+        if(GUI.getAddButton() != null)
+        {
+            GUI.getAddButton().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    super.mouseClicked(e);
+                    createNewAccount();
+                }
+            });
+        }
+
+    }
+    public void createNewAccount(){
+        JDialog dialog = new JDialog(GUI, "Create New Account", true);
+        dialog.setLayout(new BorderLayout());
+        dialog.setSize(300, 200);
+        dialog.setLocationRelativeTo(GUI);
+
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new GridLayout(2, 1));
+        JLabel nameLabel = new JLabel("Enter Account Name:");
+        JTextField nameField = new JTextField();
+        inputPanel.add(nameLabel);
+        inputPanel.add(nameField);
+
+        JButton confirmButton = new JButton("Confirm");
+        confirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String accountName = nameField.getText().trim();
+                if (!accountName.isEmpty()) {
+                    GUI.afterAddAccount(kid.getAccountManager(),accountName);
+                    dialog.dispose();
+                    addListener(GUI);
+
+                } else {
+                    JOptionPane.showMessageDialog(dialog, "Account name cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+        });
+        inputPanel.add(nameLabel);
+        inputPanel.add(Box.createVerticalStrut(10));
+        inputPanel.add(nameField);
+        inputPanel.add(Box.createVerticalStrut(10));
+        inputPanel.add(confirmButton);
+
+        dialog.getContentPane().add(inputPanel);
+        dialog.pack();
+        dialog.setVisible(true);
+
     }
     public void refresh(Boolean whetherParent){
         GUI.refresh(kid.getAccountManager().getSavingAccounts(),whetherParent);
