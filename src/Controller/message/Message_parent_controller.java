@@ -1,21 +1,25 @@
 package Controller.message;
 
+import Entity.Kids;
 import Entity.Message;
 import GUI.message_page.message_parent;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 public class Message_parent_controller {
+    private Kids kid;
     private message_parent gui;
     private String selectedContact = null;  // Maintain the state of the selected contact
 
+    public Message_parent_controller(Kids kid)
+    {
+        this.kid = kid;
+    }
 
-    public void setGUI(message_parent gui) {
+    public void setGUI(message_parent gui)
+    {
         this.gui = gui;
         setupListeners();
     }
@@ -23,9 +27,12 @@ public class Message_parent_controller {
     public void setupListeners() {
         gui.getContactList().addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+
                 if (e.getClickCount() == 1) {
                     String currentSelected = gui.getContactList().getSelectedValue();
+                    System.out.println(gui.getContactList());
                     if (currentSelected != null) {
+
                         selectedContact = currentSelected;  // Update the selected contact
                         gui.updateContactSelection(selectedContact);
                         loadMessagesForContact(selectedContact);
@@ -81,10 +88,10 @@ public class Message_parent_controller {
 
     private void loadMessagesForContact(String contact) {
         gui.getMessageModel().clear();
-//        Message[] messages = contact.equals("Kids") ? parent.getMessagelist().getKidParentMessages().toArray(new Message[0]) :
-//                parent.getMessagelist().getSystemMessages().toArray(new Message[0]);
-//        for (Message msg : messages) {
-//            gui.getMessageModel().addElement(msg);
-//        }
+        Message[] messages = contact.equals("Kids") ? kid.getMessagelist().getKidParentMessages().toArray(new Message[0]) :
+                kid.getMessagelist().getSystemMessages().toArray(new Message[0]);
+        for (Message msg : messages) {
+            gui.getMessageModel().addElement(msg);
+        }
     }
 }

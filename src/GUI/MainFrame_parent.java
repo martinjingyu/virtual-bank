@@ -1,19 +1,16 @@
 package GUI;
-import Controller.MainController;
+
 import Controller.MainController_Parent;
-import GUI.bank_page.Bank_kid;
+
 import GUI.bank_page.bank_parents;
 import GUI.message_page.message_parent;
-import GUI.shop_page.Shop_kid;
 import GUI.shop_page.Shop_parent;
-import GUI.task_page.Task_kid;
 import GUI.task_page.Task_parent;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame_parent extends JFrame {
-    private BorderLayout borderLayout;
     private JPanel main_page;
     private JPanel menu;
     private JLabel button1, button2, button3, button4;
@@ -25,7 +22,6 @@ public class MainFrame_parent extends JFrame {
         super("demo");
         this.mainController_parent = mainController;
         InitiateAll();
-
         current_panel = this.pg1;
         frame_panel();
         navi_button();
@@ -33,6 +29,7 @@ public class MainFrame_parent extends JFrame {
         mainController.mainFrameController_parent.setGUI(this);
         mainController.mainFrameController_parent.addButtonListener();
         mainController.mainFrameController_parent.addFrameListener();
+
         setVisible(true);
     }
     private void InitiateAll(){
@@ -40,10 +37,6 @@ public class MainFrame_parent extends JFrame {
         this.pg2 = new Shop_parent(mainController_parent.shopParentController);
         this.pg3 = new Task_parent(mainController_parent.task_parent_control,this);
         this.pg4 = new message_parent(mainController_parent.messageParentController);
-//        this.pg1 = new Bank_kid();
-//        this.pg2 = new Shop_kid(mainController.ShopController);
-//        this.pg3 = new Task_kid(mainController.task_kid_control, this);
-//        this.pg4 = new Shop_kid(mainController.ShopController);
     }
 
 
@@ -67,7 +60,6 @@ public class MainFrame_parent extends JFrame {
                 current_panel = pg1;
                 break;
         }
-        InitiateAll();
         main_page.add(current_panel, BorderLayout.CENTER);
         revalidate();
         repaint();
@@ -141,7 +133,6 @@ public class MainFrame_parent extends JFrame {
         // 设置主窗口的标题
 
         this.setSize(960,540);
-        borderLayout = new BorderLayout();
         menu = new JPanel();
         main_page = new JPanel(new BorderLayout());
 
@@ -200,7 +191,6 @@ public class MainFrame_parent extends JFrame {
     }
 
     public static void main(String[] args) {
-        MainFrame_kid main = new MainFrame_kid(new MainController("222"));
     }
 
 }

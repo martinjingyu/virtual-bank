@@ -22,7 +22,7 @@ public class MainController_Parent {
         bank_parent_controller = new Bank_parent_controller(kid);
         task_parent_control = new Task_parent_control(kid);
         shopParentController = new ShopParentController(kid);
-        messageParentController = new Message_parent_controller();
+        messageParentController = new Message_parent_controller(kid);
 
     }
 }
