@@ -1,5 +1,6 @@
 package GUI.message_page;
 
+import Controller.message.Message_controller;
 import Controller.message.Message_parent_controller;
 import Entity.Kids;
 import Entity.Message;
@@ -8,7 +9,6 @@ import utill.read.ReadAll;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-
 
 public class message_parent extends JPanel {
     private Message_parent_controller controller;
@@ -52,7 +52,7 @@ public class message_parent extends JPanel {
     }
 
     private JPanel createContactsPanel() {
-        contactsList = new JList<>(new String[]{"Kids", "System Alerts"});
+        contactsList = new JList<>(new String[]{"Kid", "System Alerts"});
         contactsList.setFont(new Font("SansSerif", Font.PLAIN, 16));
         contactsList.setBackground(panelBgColor);
         contactsList.setForeground(Color.BLACK);
@@ -122,10 +122,10 @@ public class message_parent extends JPanel {
             setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10)); // Consistent padding to prevent shifting
 
             // Determine alignment based on the sender
-            if ("parent".equals(value.getSender()) || "system".equals(value.getSender())) {
-                setHorizontalAlignment(SwingConstants.RIGHT);
-            } else {
+            if ("kid".equals(value.getSender()) || "system".equals(value.getSender())) {
                 setHorizontalAlignment(SwingConstants.LEFT);
+            } else {
+                setHorizontalAlignment(SwingConstants.RIGHT);
             }
 
             if (isSelected) {
@@ -151,18 +151,21 @@ public class message_parent extends JPanel {
         }
 
         private String formatMessage(Message message) {
-            return "<html><div style='text-align: " + (message.getSender().equals("parent") || message.getSender().equals("system") ? "right" : "left") + ";'>" +
+            return "<html><div style='text-align: " + (message.getSender().equals("kid") || message.getSender().equals("system") ? "right" : "left") + ";'>" +
                     message.getTimestamp() + "<br/>" +
                     message.getContent() + "</div></html>";
         }
     }
     public static void main(String[] args) {
-        Kids parent = ReadAll.readall(String.valueOf(222));
-        Message_parent_controller messageController = new Message_parent_controller(parent);
-        message_parent messageParent = new message_parent(messageController);
+        Kids kid = ReadAll.readall(String.valueOf(222));
+        Message_parent_controller messageController = new Message_parent_controller(kid);
+        message_parent messageKid = new message_parent(messageController);
+        //Kids parent = ReadAll.readall(String.valueOf(222));
+        //Message_parent_controller messageController = new Message_parent_controller(parent);
+       // message_parent messageParent = new message_parent(messageController);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(messageParent);
+        frame.getContentPane().add(messageKid);
         frame.setSize(800, 600);
         frame.setVisible(true);
     }

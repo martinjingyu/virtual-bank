@@ -2,6 +2,7 @@ package Controller.message;
 
 import Entity.Kids;
 import Entity.Message;
+import GUI.message_page.message_kid;
 import GUI.message_page.message_parent;
 
 import javax.swing.*;
@@ -13,13 +14,11 @@ public class Message_parent_controller {
     private message_parent gui;
     private String selectedContact = null;  // Maintain the state of the selected contact
 
-    public Message_parent_controller(Kids kid)
-    {
+    public Message_parent_controller(Kids kid) {
         this.kid = kid;
     }
 
-    public void setGUI(message_parent gui)
-    {
+    public void setGUI(message_parent gui) {
         this.gui = gui;
         setupListeners();
     }
@@ -30,10 +29,9 @@ public class Message_parent_controller {
 
                 if (e.getClickCount() == 1) {
                     String currentSelected = gui.getContactList().getSelectedValue();
-                    System.out.println(gui.getContactList());
                     if (currentSelected != null) {
-
                         selectedContact = currentSelected;  // Update the selected contact
+                        System.out.println(selectedContact);
                         gui.updateContactSelection(selectedContact);
                         loadMessagesForContact(selectedContact);
                         gui.getMessageInput().setEnabled(true);  // Enable the input field
@@ -83,11 +81,13 @@ public class Message_parent_controller {
             JOptionPane.showMessageDialog(gui, "Please enter a message.");
             return;
         }
+        gui.getMessageModel().addElement(new Message("kid", message));  // Assuming constructor exists
         gui.getMessageModel().addElement(new Message("parent", message));  // Assuming constructor exists
     }
 
     private void loadMessagesForContact(String contact) {
         gui.getMessageModel().clear();
+        Message[] messages = contact.equals("Kid") ? kid.getMessagelist().getParentKidMessages().toArray(new Message[0]) :
         Message[] messages = contact.equals("Kids") ? kid.getMessagelist().getKidParentMessages().toArray(new Message[0]) :
                 kid.getMessagelist().getSystemMessages().toArray(new Message[0]);
         for (Message msg : messages) {

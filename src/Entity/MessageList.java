@@ -87,10 +87,10 @@ public class MessageList {
 
     }
 
-    public void addBankMessage(double currentInterestRate,double savingInterestRate) {
+    public void addBankMessage(double savingInterestRate) {
 
-        String changeCurrent = String.format("Attention! Your current interest rate has changed to %d",currentInterestRate);
-        Message bankMessage = new Message("parent",changeCurrent);
+        String changeCurrent = String.format("Attention! You have successfully create a new saving account with interest rate to be %d",savingInterestRate);
+        Message bankMessage = new Message("system",changeCurrent);
         messages.add(bankMessage);
     }
 
@@ -99,6 +99,7 @@ public class MessageList {
 //        Message bankMessage = new Message("system",changeCurrent2);
 //        messages.add(bankMessage);
 //    }
+
 
     public void addShopMessage(double price) {
         String formattedString = String.format("Double value: %.2f", price);

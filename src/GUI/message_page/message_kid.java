@@ -1,6 +1,6 @@
 package GUI.message_page;
 
-import Controller.message.Message_kid_controller;
+import Controller.message.Message_controller;
 import Entity.Kids;
 import Entity.Message;
 import utill.read.ReadAll;
@@ -10,7 +10,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class message_kid extends JPanel {
-    private Message_kid_controller controller;
+    private Message_controller controller;
     private JList<String> contactsList;
     private DefaultListModel<Message> messageModel;
     private JTextField messageInput;
@@ -20,7 +20,7 @@ public class message_kid extends JPanel {
     private final Color borderColor = new Color(220, 220, 220); // #696969
     private final Color fontColor = new Color(49, 122, 232); // #317AE8
 
-    public message_kid(Message_kid_controller controller) {
+    public message_kid(Message_controller controller) {
         this.controller = controller;
         initUI();
         this.controller.setGUI(this);
@@ -122,7 +122,7 @@ public class message_kid extends JPanel {
             setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10)); // Consistent padding to prevent shifting
 
             // Determine alignment based on the sender
-            if ("kid".equals(value.getSender()) || "system".equals(value.getSender())) {
+            if ("kid".equals(value.getSender())) {
                 setHorizontalAlignment(SwingConstants.RIGHT);
             } else {
                 setHorizontalAlignment(SwingConstants.LEFT);
@@ -158,7 +158,7 @@ public class message_kid extends JPanel {
     }
     public static void main(String[] args) {
         Kids kid = ReadAll.readall(String.valueOf(222));
-        Message_kid_controller messageController = new Message_kid_controller(kid);
+        Message_controller messageController = new Message_controller(kid);
         message_kid messageKid = new message_kid(messageController);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
