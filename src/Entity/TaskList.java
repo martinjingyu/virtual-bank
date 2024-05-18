@@ -71,6 +71,16 @@ public class TaskList{
         }
         return null;
     }
+
+    public boolean checkDuplicateName(String name) {
+        for (Task task : taskList) {
+            if (task.getName().equals(name)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public int getIndex(String name){
         for (Task task : taskList) {
             if (task.getName().equals(name)) {

@@ -11,7 +11,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Bank_kid_control {
+
+public class Bank_kid_control{
     private static JTextField savingGoalTextField;
     private static int clickCount=0;
     private Kids kid;
@@ -68,6 +69,11 @@ public class Bank_kid_control {
                 ShowSavingAccount showSavingAccount = new ShowSavingAccount();
                 SavingAccountController savingAccountController = new SavingAccountController(kid,showSavingAccount,false);
             }
+            public void refreshSaving(){
+                ShowSavingAccount showSavingAccount = new ShowSavingAccount();
+                SavingAccountController savingAccountController = new SavingAccountController(kid,showSavingAccount,false);
+            }
+
         });
     }
 
@@ -86,5 +92,6 @@ public class Bank_kid_control {
             }
         });
     }
+
 
 }

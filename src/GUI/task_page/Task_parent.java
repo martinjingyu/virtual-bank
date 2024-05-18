@@ -320,7 +320,7 @@ public class Task_parent extends JPanel {
         if (SalaryFont != null) Salary.setFont(SalaryFont);
         Salary.setForeground(new Color(-9975466));
         Salary.setHorizontalAlignment(2);
-        Salary.setText("$12");
+        Salary.setText("$"+task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(0).getReward());
         Salary.setVerticalAlignment(1);
         taskDetails.add(Salary, BorderLayout.EAST);
         Status = new JLabel();

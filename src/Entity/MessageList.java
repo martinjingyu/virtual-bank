@@ -6,7 +6,7 @@ import java.util.List;
 public class MessageList {
     private List<Message> messages;
     private Kids kid;
-    private Parent parent;
+
 
 
     public MessageList() {
@@ -17,9 +17,7 @@ public class MessageList {
     public void setKids(Kids kid) {
         this.kid = kid;
     }
-    public void setParent(Parent parent) {
-        this.parent = parent;
-    }
+
 
     public void addMessage(Message message) {
         messages.add(message);
@@ -96,11 +94,12 @@ public class MessageList {
         messages.add(bankMessage);
     }
 
-    public void warnBankMessage(double savingInterestRate) {
-        String changeCurrent2 = String.format("Attention! Your kid have successfully create a new saving account with interest rate to be %d",savingInterestRate);
-        Message bankMessage = new Message("system",changeCurrent2);
-        messages.add(bankMessage);
-    }
+//    public void warnBankMessage(Bank bank, double currentInterestRate,double savingInterestRate) {
+//        String changeCurrent2 = String.format("Attention! You have already changes the current interest rate to %d",currentInterestRate);
+//        Message bankMessage = new Message("system",changeCurrent2);
+//        messages.add(bankMessage);
+//    }
+
 
     public void addShopMessage(double price) {
         String formattedString = String.format("Double value: %.2f", price);

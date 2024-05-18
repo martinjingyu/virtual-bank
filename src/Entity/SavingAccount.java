@@ -9,6 +9,11 @@ public class SavingAccount extends Account {
     private LocalDateTime endTime;
 
     // Constructor
+    public SavingAccount(String name){
+        super(name,0, 0);
+        this.startTime = LocalDateTime.now();
+        this.endTime = LocalDateTime.now();
+    }
     public SavingAccount(String name,double initialBalance, double interestRate,LocalDateTime startTime, LocalDateTime endTime) {
         super(name,initialBalance, interestRate);
         this.startTime = startTime;
