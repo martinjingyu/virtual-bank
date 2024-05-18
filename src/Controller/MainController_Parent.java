@@ -16,7 +16,6 @@ public class MainController_Parent {
 
 
 
-
     public MainController_Parent(String id){
         Kids kid = ReadAll.readall(id);
         mainFrameController_parent = new MainFrameController_Parent(id,kid);
@@ -24,6 +23,8 @@ public class MainController_Parent {
         task_parent_control = new Task_parent_control(kid);
         shopParentController = new ShopParentController(kid);
         messageParentController = new Message_parent_controller(kid);
+
+
 
     }
 }
