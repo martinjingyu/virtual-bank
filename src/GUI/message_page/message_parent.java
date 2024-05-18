@@ -25,7 +25,6 @@ public class message_parent extends JPanel {
         this.controller = controller;
         initUI();
         this.controller.setGUI(this);
-        this.controller.setupListeners();
 
     }
 
@@ -161,6 +160,9 @@ public class message_parent extends JPanel {
         Kids kid = ReadAll.readall(String.valueOf(222));
         Message_parent_controller messageController = new Message_parent_controller(kid);
         message_parent messageKid = new message_parent(messageController);
+        //Kids parent = ReadAll.readall(String.valueOf(222));
+        //Message_parent_controller messageController = new Message_parent_controller(parent);
+       // message_parent messageParent = new message_parent(messageController);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(messageKid);

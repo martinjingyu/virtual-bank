@@ -16,6 +16,7 @@ public class Bank_parent_controller {
     private Kids kid;
     private bank_parents GUI;
     private HistoryController historyController;
+    private JFrame currentFrame; // 用于存储当前打开的 JFrame 引用
 
     public Bank_parent_controller(Kids kid) {
         this.kid = kid;
@@ -46,6 +47,7 @@ public class Bank_parent_controller {
 //                HistoryController historyController1 = new HistoryController(kid);
                 history_page review = new history_page(historyController);
                 JFrame Review_win = new JFrame();
+                openNewFrame(Review_win);
                 Review_win.setTitle("History");
                 Review_win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 Review_win.setLocationRelativeTo(null);
@@ -61,7 +63,7 @@ public class Bank_parent_controller {
             public void actionPerformed(ActionEvent e) {
                 ShowCurrentAccount showCurrentAccount = new ShowCurrentAccount();
                 CurrentAccountController currentAccountController = new CurrentAccountController(kid,showCurrentAccount,true);
-
+                openNewFrame(showCurrentAccount);
             }
         });
 
@@ -72,8 +74,20 @@ public class Bank_parent_controller {
             public void actionPerformed(ActionEvent e) {
                 ShowSavingAccount showSavingAccount = new ShowSavingAccount();
                 SavingAccountController savingAccountController = new SavingAccountController(kid, showSavingAccount, true);
+                openNewFrame(showSavingAccount);
             }
         });
+    }
+    private void openNewFrame(JFrame newFrame) {
+        // 关闭当前打开的 JFrame
+        if (currentFrame != null) {
+            currentFrame.dispose();
+        }
+
+        // 更新 currentFrame 并显示新的 JFrame
+        currentFrame = newFrame;
+        currentFrame.setLocationRelativeTo(null);
+        currentFrame.setVisible(true);
     }
 }
 

@@ -24,7 +24,5 @@ public class MainController_Parent {
         shopParentController = new ShopParentController(kid);
         messageParentController = new Message_parent_controller(kid);
 
-
-
     }
 }

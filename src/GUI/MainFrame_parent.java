@@ -1,19 +1,17 @@
 package GUI;
-import Controller.MainController;
+
 import Controller.MainController_Parent;
-import GUI.bank_page.Bank_kid;
+
 import GUI.bank_page.bank_parents;
 import GUI.message_page.message_parent;
 import GUI.shop_page.Shop_kid;
 import GUI.shop_page.Shop_parent;
-import GUI.task_page.Task_kid;
 import GUI.task_page.Task_parent;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame_parent extends JFrame {
-    private BorderLayout borderLayout;
     private JPanel main_page;
     private JPanel menu;
     private JLabel button1, button2, button3, button4;
@@ -25,13 +23,14 @@ public class MainFrame_parent extends JFrame {
         super("demo");
         this.mainController_parent = mainController;
         InitiateAll();
-
         current_panel = this.pg1;
         frame_panel();
         navi_button();
+
         mainController.mainFrameController_parent.setGUI(this);
         mainController.mainFrameController_parent.addButtonListener();
         mainController.mainFrameController_parent.addFrameListener();
+
         setVisible(true);
     }
     private void InitiateAll(){
@@ -45,6 +44,7 @@ public class MainFrame_parent extends JFrame {
 //        this.pg2 = new Shop_kid(mainController.ShopController);
 //        this.pg3 = new Task_kid(mainController.task_kid_control, this);
 //        this.pg4 = new Shop_kid(mainController.ShopController);
+
     }
 
 
@@ -68,7 +68,6 @@ public class MainFrame_parent extends JFrame {
                 current_panel = pg1;
                 break;
         }
-        InitiateAll();
         main_page.add(current_panel, BorderLayout.CENTER);
         revalidate();
         repaint();
@@ -98,9 +97,6 @@ public class MainFrame_parent extends JFrame {
         InitiateAll();
 
 
-
-//        this.pg3 = new Task_kid(this);
-
         switch (tempIndex) {
             case 1:
                 current_panel = pg1;
@@ -115,7 +111,6 @@ public class MainFrame_parent extends JFrame {
                 current_panel = pg4;
                 break;
             default:
-// 如果没有确定的索引，则默认显示 pg1
                 current_panel = pg1;
                 break;
         }
@@ -146,7 +141,6 @@ public class MainFrame_parent extends JFrame {
         // 设置主窗口的标题
 
         this.setSize(960,540);
-        borderLayout = new BorderLayout();
         menu = new JPanel();
         main_page = new JPanel(new BorderLayout());
 
@@ -159,7 +153,7 @@ public class MainFrame_parent extends JFrame {
 
         this.add(menu, BorderLayout.WEST);
         main_page.add(current_panel,BorderLayout.CENTER);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
     }
 
@@ -211,6 +205,7 @@ public class MainFrame_parent extends JFrame {
 
     public static void main(String[] args) {
         MainFrame_parent main = new MainFrame_parent(new MainController_Parent("222"));
+
     }
 
 }

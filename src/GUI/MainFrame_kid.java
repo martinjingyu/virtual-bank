@@ -1,5 +1,6 @@
 package GUI;
 import Controller.MainController;
+
 import GUI.bank_page.Bank_kid;
 import GUI.message_page.message_kid;
 import GUI.shop_page.Shop_kid;
@@ -11,26 +12,25 @@ import java.awt.*;
 
 //public class MainFrame extends JFrame implements RefreshListener{
 public class MainFrame_kid extends JFrame {
-    private BorderLayout borderLayout;
     private JPanel main_page;
     private JPanel menu;
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
     private JPanel pg1, pg2,pg3,pg4;
     private MainController mainController;
-    private Bank_kid bankKid;
-    private Shop_kid shopKid;
-    private Task_kid taskKid;
+
 //    private Message_kid messageKid;
 
     public MainFrame_kid(MainController mainController) {
         super("demo");
         this.mainController = mainController;
-        mainController.mainFrameController.setGUI(this);
+
         InitiateAll();
         current_panel = pg1;
         frame_panel();
         navi_button();
+
+        mainController.mainFrameController.setGUI(this);
         mainController.mainFrameController.addButtonListener();
         mainController.mainFrameController.addFrameListener();
 
@@ -73,58 +73,6 @@ public class MainFrame_kid extends JFrame {
 
 
 
-//    @Override
-    public void refresh() {
-        int tempIndex = 0;
-        main_page.remove(current_panel);
-        if(current_panel == pg1){
-            tempIndex = 1;
-        }
-        else if (current_panel == pg2) {
-            tempIndex =2;
-
-        }
-        else if(current_panel == pg3){
-            tempIndex = 3;
-        }
-        else if(current_panel == pg4){
-            tempIndex = 4;
-        }
-        else{
-            tempIndex = 1;
-        }
-        InitiateAll();
-
-
-
-//        this.pg3 = new Task_kid(this);
-
-        switch (tempIndex) {
-            case 1:
-                current_panel = pg1;
-                break;
-            case 2:
-                current_panel = pg2;
-                break;
-            case 3:
-                current_panel = pg3;
-                break;
-            case 4:
-                current_panel = pg4;
-                break;
-            default:
-// 如果没有确定的索引，则默认显示 pg1
-                current_panel = pg1;
-                break;
-        }
-
-        main_page.add(current_panel, BorderLayout.CENTER);
-        revalidate();
-        repaint();
-
-    }
-
-
     public JLabel getButton(int index){
         switch (index) {
             case 1:
@@ -144,7 +92,6 @@ public class MainFrame_kid extends JFrame {
         // 设置主窗口的标题
 
         this.setSize(960,540);
-        borderLayout = new BorderLayout();
         menu = new JPanel();
         main_page = new JPanel(new BorderLayout());
 

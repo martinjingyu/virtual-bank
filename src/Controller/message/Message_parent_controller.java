@@ -26,6 +26,7 @@ public class Message_parent_controller {
     public void setupListeners() {
         gui.getContactList().addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
+
                 if (e.getClickCount() == 1) {
                     String currentSelected = gui.getContactList().getSelectedValue();
                     if (currentSelected != null) {
@@ -81,15 +82,16 @@ public class Message_parent_controller {
             return;
         }
         gui.getMessageModel().addElement(new Message("kid", message));  // Assuming constructor exists
+        gui.getMessageModel().addElement(new Message("parent", message));  // Assuming constructor exists
     }
 
     private void loadMessagesForContact(String contact) {
         gui.getMessageModel().clear();
         Message[] messages = contact.equals("Kid") ? kid.getMessagelist().getParentKidMessages().toArray(new Message[0]) :
+        Message[] messages = contact.equals("Kids") ? kid.getMessagelist().getKidParentMessages().toArray(new Message[0]) :
                 kid.getMessagelist().getSystemMessages().toArray(new Message[0]);
         for (Message msg : messages) {
             gui.getMessageModel().addElement(msg);
         }
     }
 }
-

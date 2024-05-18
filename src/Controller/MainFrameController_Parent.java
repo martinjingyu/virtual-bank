@@ -77,6 +77,7 @@ public class MainFrameController_Parent extends MouseAdapter {
             currentSelectedButton = selectedButton;
             String iconName = getIconNameForButton(selectedButton);
             selectedButton.setIcon(mainFrameParent.createButtonWithSize(iconName+"_white").getIcon());
+
         }
     }
 
