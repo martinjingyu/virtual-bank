@@ -1,25 +1,28 @@
 package Entity;
 
 public class HistoryTransaction {
-    private String type; // 交易类型（例如存款、取款等）
+    private String Source;
+    private String Destination; // 交易类型（例如存款、取款等）
     private double amount; // 交易金额
     private String date; // 交易日期
 
     // 构造方法
-    public HistoryTransaction(String type, double amount, String date) {
-        this.type = type;
+    public HistoryTransaction(String source,String destination, double amount, String date) {
+        this.Source = source;
+        this.Destination = destination;
         this.amount = amount;
         this.date = date;
     }
 
     // 各属性的 getter 和 setter 方法
-
-    public String getType() {
-        return type;
+    public String getSource(){ return Source;}
+    public void setSource(){ this.Source = Source;}
+    public String getDestination() {
+        return Destination;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setDestination(String type) {
+        this.Destination = Destination;
     }
 
     public double getAmount() {
@@ -43,7 +46,5 @@ public class HistoryTransaction {
     }
 
     @Override
-    public String toString() {
-        return "Transaction: " + type + ", Amount: " + amount + ", Date: " + date;
-    }
+    public String toString() {return Source + ", " + Destination + ", " + amount + ", "+ date;}
 }

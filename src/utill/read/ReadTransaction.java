@@ -13,13 +13,14 @@ public class ReadTransaction {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",", 3);  // 使用限制，确保只分割前两个逗号
-                if (parts.length == 3) {
-                    String type = parts[0].trim();
-                    String amountStr = parts[1].trim();
+                String[] parts = line.split(",", 4);  // 使用限制，确保只分割前两个逗号
+                if (parts.length == 4) {
+                    String Source = parts[0].trim();
+                    String Destination = parts[1].trim();
+                    String amountStr = parts[2].trim();
                     double amount = Double.parseDouble(amountStr);  // 直接将金额解析为double
-                    String date = parts[2].trim().replace(":", "/"); // 替换冒号为斜杠，正确处理日期和时间
-                    HistoryTransaction transaction = new HistoryTransaction(type, amount, date);
+                    String date = parts[3].trim().replace(":", "/"); // 替换冒号为斜杠，正确处理日期和时间
+                    HistoryTransaction transaction = new HistoryTransaction(Source, Destination, amount, date);
                     historyTransactionList.addTransaction(transaction);
                 } else {
                     System.out.println("Invalid transaction data: " + line);

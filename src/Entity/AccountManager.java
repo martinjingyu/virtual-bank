@@ -3,6 +3,8 @@ package Entity;
 import Exceptions.InsufficientFundsException;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +13,13 @@ public class AccountManager {
     private double savingGoal;
     private List<CurrentAccount> currentAccounts;
     private List<SavingAccount> savingAccounts;
+    private HistoryTransactionList historyTransactionList;
 
 
     public AccountManager() {
         this.currentAccounts = new ArrayList<>();
         this.savingAccounts = new ArrayList<>();
+        this.historyTransactionList = new HistoryTransactionList();
     }
     public String getUserID() {
         return userID;
@@ -112,6 +116,7 @@ public class AccountManager {
         savingAccount.setEndTime(LocalDateTime.now());
         currentAccount.deposit(savingAccount.getBalance());
         savingAccount.withdraw(savingAccount.getBalance());
+
     }
     public List<String> getSavingAccountNames(){
         List<String> names = new ArrayList<>();
@@ -135,6 +140,15 @@ public class AccountManager {
         currentAccount.deposit(savingAccount.getBalance());
         savingAccount.withdraw(savingAccount.getBalance());
 
+        LocalDateTime now0 = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:M:d HH:mm:ss");
+        String formattedDate0 = now0.format(formatter);
+
+        HistoryTransaction historyTransaction= new HistoryTransaction(currentAccount.getName(),savingAccount.getName(),savingAccount.getBalance(),formattedDate0);
+        historyTransactionList.addTransaction(historyTransaction);
+
+        System.out.println(historyTransaction);
+
     }
 
     /**
@@ -148,6 +162,15 @@ public class AccountManager {
             if (account.getName().equals(accountName)) {
                 if (account.getBalance() >= amount) {
                     account.withdraw(amount);
+
+                    LocalDateTime now1 = LocalDateTime.now();
+                    DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyy:M:d HH:mm:ss");
+                    String formattedDate1 = now1.format(formatter1);
+                    HistoryTransaction historyTransaction= new HistoryTransaction(account.getName(),"shop",amount,formattedDate1);
+                    historyTransactionList.addTransaction(historyTransaction);
+
+                    System.out.println(historyTransaction);
+
                     return true;
                 } else {
                     throw new InsufficientFundsException("Insufficient funds for withdrawal.");
@@ -162,6 +185,14 @@ public class AccountManager {
 
         currentAccountFrom.withdraw(value);
         currentAccountTo.deposit(value);
+
+        LocalDateTime now2 = LocalDateTime.now();
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy:M:d HH:mm:ss");
+        String formattedDate2 = now2.format(formatter2);
+        HistoryTransaction historyTransaction= new HistoryTransaction(currentAccountFrom.getName(),currentAccountTo.getName(),value,formattedDate2);
+        historyTransactionList.addTransaction(historyTransaction);
+
+        System.out.println(historyTransaction);
     }
     public void depositCurrentToSaving(int currentIndex, int savingIndex, double value, String selectedDuration){
         CurrentAccount currentAccount = currentAccounts.get(currentIndex);
@@ -184,6 +215,12 @@ public class AccountManager {
                 break;
         }
         savingAccount.setEndTime(result);
+
+        DateTimeFormatter formatter3 = DateTimeFormatter.ofPattern("yyyy:M:d HH:mm:ss");
+        String formattedDate3 = now.format(formatter3);
+        HistoryTransaction historyTransaction= new HistoryTransaction(currentAccount.getName(),savingAccount.getName(),value,formattedDate3);
+        HistoryTransactionList.addTransaction(historyTransaction);
+        System.out.println(historyTransaction);
     }
 
     public void createNewSavingAccount(String name){
