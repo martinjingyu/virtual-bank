@@ -1,6 +1,5 @@
 package GUI.message_page;
 
-import Controller.message.Message_controller;
 import Controller.message.Message_parent_controller;
 import Entity.Kids;
 import Entity.Message;

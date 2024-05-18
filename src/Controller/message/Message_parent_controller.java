@@ -2,7 +2,6 @@ package Controller.message;
 
 import Entity.Kids;
 import Entity.Message;
-import GUI.message_page.message_kid;
 import GUI.message_page.message_parent;
 
 import javax.swing.*;
@@ -88,7 +87,6 @@ public class Message_parent_controller {
     private void loadMessagesForContact(String contact) {
         gui.getMessageModel().clear();
         Message[] messages = contact.equals("Kid") ? kid.getMessagelist().getParentKidMessages().toArray(new Message[0]) :
-        Message[] messages = contact.equals("Kids") ? kid.getMessagelist().getKidParentMessages().toArray(new Message[0]) :
                 kid.getMessagelist().getSystemMessages().toArray(new Message[0]);
         for (Message msg : messages) {
             gui.getMessageModel().addElement(msg);

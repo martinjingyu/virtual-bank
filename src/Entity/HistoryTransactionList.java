@@ -7,14 +7,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class HistoryTransactionList {
-    private List<HistoryTransaction> transactions;
+    private static List<HistoryTransaction> transactions;
 
     // 构造方法
     public HistoryTransactionList() {
         transactions = new ArrayList<>();
     }
     // 添加交易记录
-    public void addTransaction(HistoryTransaction transaction) {
+    public static void addTransaction(HistoryTransaction transaction) {
         transactions.add(transaction);
     }
 
@@ -33,7 +33,7 @@ public class HistoryTransactionList {
     public List<String> getTransactionDetails() {
         List<String> details = new ArrayList<>(); // 使用 List 保持插入顺序
         for (HistoryTransaction transaction : transactions) {
-            String detail = transaction.getDate() + " - " + transaction.getType() + ": $" + transaction.getAmount();
+            String detail = transaction.getDate() + " - from " + transaction.getSource() +" to " +transaction.getDestination() + " : $ " + transaction.getAmount();
             details.add(detail);
         }
         return details;
@@ -43,7 +43,8 @@ public class HistoryTransactionList {
         List<String> details = new ArrayList<>();
         for (HistoryTransaction transaction : transactions) {
             if (specificDate == null || transaction.getDate().startsWith(specificDate)) {  // 检查是否指定日期或返回所有
-                String detail = transaction.getDate() + " - " + transaction.getType() + ": $" + transaction.getAmount();
+//                String detail = transaction.getDate() + " - " + transaction.getType() + ": $" + transaction.getAmount();
+                String detail = transaction.getDate() + " - from " + transaction.getSource() +" to " +transaction.getDestination() + " : $ " + transaction.getAmount();
                 details.add(detail);
             }
         }
