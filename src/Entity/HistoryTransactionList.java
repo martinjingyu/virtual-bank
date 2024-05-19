@@ -14,7 +14,7 @@ public class HistoryTransactionList {
         transactions = new ArrayList<>();
     }
     // 添加交易记录
-    public static void addTransaction(HistoryTransaction transaction) {
+    public void addTransaction(HistoryTransaction transaction) {
         transactions.add(transaction);
     }
 

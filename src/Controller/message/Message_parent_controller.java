@@ -87,7 +87,7 @@ public class Message_parent_controller {
     private void loadMessagesForContact(String contact) {
         gui.getMessageModel().clear();
         Message[] messages = contact.equals("Kid") ? kid.getMessagelist().getParentKidMessages().toArray(new Message[0]) :
-                kid.getMessagelist().getSystemMessages().toArray(new Message[0]);
+                kid.getMessagelist().getSystemMessages("parent").toArray(new Message[0]);
         for (Message msg : messages) {
             gui.getMessageModel().addElement(msg);
         }

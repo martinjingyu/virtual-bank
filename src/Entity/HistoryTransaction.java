@@ -1,5 +1,8 @@
 package Entity;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class HistoryTransaction {
     private String Source;
     private String Destination; // 交易类型（例如存款、取款等）
@@ -7,6 +10,15 @@ public class HistoryTransaction {
     private String date; // 交易日期
 
     // 构造方法
+    public HistoryTransaction(String source,String destination, double amount){
+        this.Source = source;
+        this.Destination = destination;
+        this.amount = amount;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:M:d HH:mm:ss");
+        String formattedDate = LocalDate.now().format(formatter);
+
+        this.date = formattedDate;
+    }
     public HistoryTransaction(String source,String destination, double amount, String date) {
         this.Source = source;
         this.Destination = destination;
