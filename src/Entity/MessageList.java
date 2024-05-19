@@ -50,25 +50,32 @@ public class MessageList {
         }
         return kidMessages;
     }
-    public List<Message> getSystemMessages() {
-        List<Message> parentMessages = new ArrayList<>();
+    public List<Message> getSystemMessages(String user) {
+        List<Message> systemMessages = new ArrayList<>();
         for (Message message : messages) {
-            if (message.getSender().equals("system")) {
-                parentMessages.add(message);
+            if(user.equals("kid")) {
+                if (message.getSender().equals("system_kid")) {
+                    systemMessages.add(message);
+                }
+            }
+            if(user.equals("parent")){
+                if (message.getSender().equals("system_parent")) {
+                    systemMessages.add(message);
+                }
             }
         }
-        return parentMessages;
+        return systemMessages;
     }
 
 
     // Adding new methods to handle different types of messages
     public void addTaskMessage(String type, String description) {
         if(type.equals("Child_Opt")){
-            Message taskMessage = new Message("system",description);
+            Message taskMessage = new Message("system_kid",description);
             messages.add(taskMessage);
         }
-        if(type.equals("Parent_add")){
-            Message taskMessage = new Message("parent",description);
+        if(type.equals("Parent_Opt")){
+            Message taskMessage = new Message("system_parent",description);
             messages.add(taskMessage);
         }
 
