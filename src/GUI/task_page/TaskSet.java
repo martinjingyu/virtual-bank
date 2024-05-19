@@ -3,6 +3,8 @@ package GUI.task_page;
 import Controller.task.Task_parent_control;
 import Entity.Task;
 import GUI.MainFrame_kid;
+import GUI.MainFrame_parent;
+import utill.Validate;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
@@ -10,6 +12,7 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -31,9 +34,9 @@ public class TaskSet extends JPanel {
     private JLabel description;
     private JFrame frame;
     private Task_parent_control task_parent_control;
-    private MainFrame_kid mainFrame;//这里等parent登录写好了要改成parent，下面也是
+    private MainFrame_parent mainFrame;//这里等parent登录写好了要改成parent，下面也是
 
-    public TaskSet(Task_parent_control task_parent_control,MainFrame_kid mainFrame) {
+    public TaskSet(Task_parent_control task_parent_control, MainFrame_parent mainFrame) {
         $$$setupUI$$$();
         this.task_parent_control = task_parent_control;
         this.mainFrame = mainFrame;
@@ -213,7 +216,7 @@ public class TaskSet extends JPanel {
                 TaskName = task_name.getText();
                 TaskSalary = task_salary.getText();
                 TaskDescription = task_description.getText();
-                if(task_parent_control.validateName(TaskName) && task_parent_control.validateDescription(TaskDescription) && task_parent_control.validateSalary(TaskSalary) && task_parent_control.getKid().getTaskList().checkDuplicateName(TaskName)){
+                if(Validate.validateName(TaskName) && Validate.validateDescription(TaskDescription) && Validate.validateSalary(TaskSalary) && task_parent_control.getKid().getTaskList().checkDuplicateName(TaskName)){
                     // 显示确认对话框
                     int response = JOptionPane.showConfirmDialog(null,
                             "Are you sure you want to set this task as new task?",
@@ -223,7 +226,11 @@ public class TaskSet extends JPanel {
                     // 检查用户的响应
                     if (response == JOptionPane.YES_OPTION) {
                         task_parent_control.getKid().getTaskList().addTask(new Task(TaskName,Double.parseDouble(TaskSalary),"ToBeTaken",TaskDescription,"x"));
-
+                        List<Task> allTasks =  task_parent_control.getKid().getTaskList().getNonConfirmedTask().getAllTasks();
+                        System.out.println("taskSet: ");
+                        for (Task task : allTasks) {
+                            System.out.println(task);
+                        }
                         // 用户确认保存
                         JOptionPane.showMessageDialog(null,"New task has set.","Save",
                                 JOptionPane.INFORMATION_MESSAGE);
@@ -234,17 +241,17 @@ public class TaskSet extends JPanel {
 
                     }
                     // 如果用户选择 "No"，不执行保存操作
-                } else if (!(task_parent_control.validateName(TaskName))) {
+                } else if (!(Validate.validateName(TaskName))) {
                     JOptionPane.showMessageDialog(null,
                             "Task name should not contain special characters or be empty, and it should contain letters.",
                             "Invalid Task Name",
                             JOptionPane.WARNING_MESSAGE);
-                } else if (!(task_parent_control.validateDescription(TaskDescription))) {
+                } else if (!(Validate.validateDescription(TaskDescription))) {
                     JOptionPane.showMessageDialog(null,
                             "Task description should only contain letters, numbers, and spaces, and must not exceed 150 characters.",
                             "Invalid Task Description",
                             JOptionPane.WARNING_MESSAGE);
-                } else if(!(task_parent_control.validateSalary(TaskSalary))){
+                } else if(!(Validate.validateSalary(TaskSalary))){
                     JOptionPane.showMessageDialog(null,
                             "Task salary should only contain numbers and at most one decimal point.",
                             "Invalid Task Salary",
