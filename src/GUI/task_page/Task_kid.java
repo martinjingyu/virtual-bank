@@ -159,6 +159,9 @@ public class Task_kid extends JPanel {
                     if (confirmSubmit == JOptionPane.YES_OPTION) {
                         task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).setState("ToBeConfirmed");
                         // 确认提交任务的逻辑
+                        // 发信息
+                        String name = task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
+                        task_kid_control.getKid().getMessagelist().addTaskMessage("Child_Opt","You have taken the task "+ name);
                         JOptionPane.showMessageDialog(this,
                                 "Task has been submitted.",
                                 "Task Submitted",
@@ -174,6 +177,9 @@ public class Task_kid extends JPanel {
 
                     if (confirmCancel == JOptionPane.YES_OPTION) {
                         task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).setState("ToBeTaken");
+                        // 发信息
+                        String name = task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
+                        task_kid_control.getKid().getMessagelist().addTaskMessage("Child_Opt","You have cancel taken the task "+ name);
                         // 确认取消任务的逻辑
                         JOptionPane.showMessageDialog(this,
                                 "Task has been canceled.",
@@ -188,6 +194,9 @@ public class Task_kid extends JPanel {
                 if (response1 == JOptionPane.YES_OPTION) {
                     JOptionPane.showMessageDialog(this, task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCon2(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Message", JOptionPane.INFORMATION_MESSAGE);
                     task_kid_control.getKid().getTaskList().updateTask(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName(), task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).taskOperation(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index)));
+                    // 发信息
+                    String name = task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
+                    task_kid_control.getKid().getMessagelist().addTaskMessage("Child_Opt","You have taken the task "+ name);
                     updateTaskDetails();
                 }
         }

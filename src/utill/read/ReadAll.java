@@ -15,7 +15,7 @@ public class ReadAll {
         TaskList taskList = new TaskList();
         MessageList messageList =new MessageList();
         HistoryTransactionList historyTransactionList = new HistoryTransactionList();
-        AccountManager accountManager = new AccountManager();
+        AccountManager accountManager = new AccountManager(historyTransactionList);
 
         ReadProduct.readProducts(paths.product_path,productList);
         ReadProduct.readProducts(paths.selectedProduct_path,selectedProductList);
@@ -26,5 +26,10 @@ public class ReadAll {
 
         return new Kids(historyTransactionList,productList,selectedProductList,taskList,messageList, accountManager);
 
+    }
+    public static void main(String[] str){
+
+        Kids kid  = ReadAll.readall("222");
+        System.out.println(kid.getAccountManager().getCurrentAccounts());
     }
 }

@@ -4,38 +4,41 @@ import Entity.Kids;
 import GUI.MainFrame_kid;
 import utill.write.WriteAll;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import java.awt.event.*;
 
 public class MainFrameController extends MouseAdapter {
     private MainFrame_kid mainFrameKid;
     private String ID;
     private Kids kid;
-    public MainFrameController() {
+    private JLabel currentSelectedButton;
 
-    }
     public MainFrameController(String id, Kids kid) {
         this.ID = id;
         this.kid = kid;
+
     }
 
-    public MainFrameController(MainFrame_kid mainFrameKid) {
+    public void setGUI(MainFrame_kid mainFrameKid) {
         this.mainFrameKid = mainFrameKid;
+    }
+
+    public void addButtonListener() {
         mainFrameKid.getButton(1).addMouseListener(this);
         mainFrameKid.getButton(2).addMouseListener(this);
         mainFrameKid.getButton(3).addMouseListener(this);
         mainFrameKid.getButton(4).addMouseListener(this);
     }
-    public void setGUI(MainFrame_kid mainFrameKid){
-        this.mainFrameKid = mainFrameKid;
+
+    private int getPanelIndex(JLabel button) {
+        if (button == mainFrameKid.getButton(1)) return 1;
+        if (button == mainFrameKid.getButton(2)) return 2;
+        if (button == mainFrameKid.getButton(3)) return 3;
+        if (button == mainFrameKid.getButton(4)) return 4;
+        return 0; // Default case or error
     }
-    public void addButtonListener(){
-        mainFrameKid.getButton(1).addMouseListener(this);
-        mainFrameKid.getButton(2).addMouseListener(this);
-        mainFrameKid.getButton(3).addMouseListener(this);
-        mainFrameKid.getButton(4).addMouseListener(this);
-    }
-    public void addFrameListener(){
+
+    public void addFrameListener() {
         mainFrameKid.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -52,23 +55,49 @@ public class MainFrameController extends MouseAdapter {
             }
         });
     }
+
+    // Method to update icons for selected button
+    public void updateIcons(JLabel selectedButton) {
+        if (currentSelectedButton != selectedButton) {
+            // Reset all buttons to normal icon
+            resetAllIcons();
+            // Update the icon for the new selected button
+            currentSelectedButton = selectedButton;
+            String iconName = getIconNameForButton(selectedButton);
+            selectedButton.setIcon(mainFrameKid.createButtonWithSize(iconName + "_white").getIcon());
+        }
+    }
+
+    private void resetIcon(JLabel button, String iconName) {
+//        button.setIcon(new ImageIcon("image/" + iconName + ".png"));
+        button.setIcon(mainFrameKid.createButtonWithSize(iconName).getIcon());
+    }
+
+    private String getIconNameForButton(JLabel button) {
+        if (button == mainFrameKid.getButton(1)) return "bank";
+        if (button == mainFrameKid.getButton(2)) return "shop";
+        if (button == mainFrameKid.getButton(3)) return "task";
+        if (button == mainFrameKid.getButton(4)) return "message";
+        return "";
+    }
+
+    private void resetAllIcons() {
+        resetIcon(mainFrameKid.getButton(1), "bank");
+        resetIcon(mainFrameKid.getButton(2), "shop");
+        resetIcon(mainFrameKid.getButton(3), "task");
+        resetIcon(mainFrameKid.getButton(4), "message");
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(e.getSource()== mainFrameKid.getButton(1)){
-            mainFrameKid.changePanel(1);
-        }
-        else if (e.getSource()== mainFrameKid.getButton(2)) {
-            mainFrameKid.changePanel(2);
-        }
-        else if (e.getSource()== mainFrameKid.getButton(3)) {
-            mainFrameKid.changePanel(3);
-        }
-        else if (e.getSource()== mainFrameKid.getButton(4)) {
-            mainFrameKid.changePanel(4);
-        }
-
+        JLabel clickedButton = (JLabel) e.getSource();
+        updateIcons(clickedButton);
+        mainFrameKid.changePanel(getPanelIndex(clickedButton));
     }
-    public void WriteKidToFile(){
+
+
+    public void WriteKidToFile() {
         WriteAll.writeAll(this.ID, this.kid);
     }
+
 }

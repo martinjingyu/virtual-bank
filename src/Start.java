@@ -2,6 +2,7 @@
 // [pwd]:4/25：作为启动文件，用于启动整个项目
 
 import Controller.MainController;
+import Controller.MainController_Parent;
 import GUI.MainFrame_kid;
 import GUI.MainFrame_parent;
 import GUI.log_in.LoginListener;
@@ -21,7 +22,7 @@ public class Start implements LoginListener {
         MainFrame_kid mainFrameKid = new MainFrame_kid(mainController);
     }
     public void onLogin_parent(String id){
-        MainController mainController = new MainController(id);
+        MainController_Parent mainController = new MainController_Parent(id);
 
         MainFrame_parent mainFrameParent = new MainFrame_parent(mainController);
     }

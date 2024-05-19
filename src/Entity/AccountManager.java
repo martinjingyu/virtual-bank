@@ -3,6 +3,8 @@ package Entity;
 import Exceptions.InsufficientFundsException;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +13,13 @@ public class AccountManager {
     private double savingGoal;
     private List<CurrentAccount> currentAccounts;
     private List<SavingAccount> savingAccounts;
+    private HistoryTransactionList historyTransactionList;
 
 
-    public AccountManager() {
+    public AccountManager(HistoryTransactionList historyTransactionList) {
         this.currentAccounts = new ArrayList<>();
         this.savingAccounts = new ArrayList<>();
+        this.historyTransactionList = historyTransactionList;
     }
     public String getUserID() {
         return userID;
@@ -112,6 +116,7 @@ public class AccountManager {
         savingAccount.setEndTime(LocalDateTime.now());
         currentAccount.deposit(savingAccount.getBalance());
         savingAccount.withdraw(savingAccount.getBalance());
+
     }
     public List<String> getSavingAccountNames(){
         List<String> names = new ArrayList<>();
@@ -127,11 +132,19 @@ public class AccountManager {
         }
         return names;
     }
-    public void withdrewToCurrent(int currentIndex, int savingIndex){
+    public void savingWithdrewToCurrent(int currentIndex, int savingIndex){
         CurrentAccount currentAccount = currentAccounts.get(currentIndex);
         SavingAccount savingAccount = savingAccounts.get(savingIndex);
 
+        savingAccount.calculateInterest();
+        currentAccount.deposit(savingAccount.getBalance());
         savingAccount.withdraw(savingAccount.getBalance());
+
+
+        HistoryTransaction historyTransaction= new HistoryTransaction(currentAccount.getName(),savingAccount.getName(),savingAccount.getBalance());
+        historyTransactionList.addTransaction(historyTransaction);
+
+        System.out.println(historyTransaction);
 
     }
 
@@ -146,6 +159,12 @@ public class AccountManager {
             if (account.getName().equals(accountName)) {
                 if (account.getBalance() >= amount) {
                     account.withdraw(amount);
+
+                    HistoryTransaction historyTransaction= new HistoryTransaction(account.getName(),"shop",amount);
+                    historyTransactionList.addTransaction(historyTransaction);
+
+                    System.out.println(historyTransaction);
+
                     return true;
                 } else {
                     throw new InsufficientFundsException("Insufficient funds for withdrawal.");
@@ -154,11 +173,49 @@ public class AccountManager {
         }
         throw new InsufficientFundsException("Account not found.");
     }
-    public void deposit(int currentIndex, int savingIndex, double value){
+    public void transfer(int from, int to, double value){
+        CurrentAccount currentAccountFrom = currentAccounts.get(from);
+        CurrentAccount currentAccountTo = currentAccounts.get(to);
+
+        currentAccountFrom.withdraw(value);
+        currentAccountTo.deposit(value);
+
+        HistoryTransaction historyTransaction= new HistoryTransaction(currentAccountFrom.getName(),currentAccountTo.getName(),value);
+        historyTransactionList.addTransaction(historyTransaction);
+
+        System.out.println(historyTransaction);
+    }
+    public void depositCurrentToSaving(int currentIndex, int savingIndex, double value, String selectedDuration){
         CurrentAccount currentAccount = currentAccounts.get(currentIndex);
         SavingAccount savingAccount = savingAccounts.get(savingIndex);
 
         currentAccount.withdraw(value);
         savingAccount.deposit(value);
+        savingAccount.setStartTime(LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime result = now;
+        switch (selectedDuration) {
+            case "15 days":
+                result = now.plusDays(15);
+                break;
+            case "1 month":
+                result = now.plusMonths(1);
+                break;
+            case "3 months":
+                result = now.plusMonths(3);
+                break;
+        }
+        savingAccount.setEndTime(result);
+
+        HistoryTransaction historyTransaction= new HistoryTransaction(currentAccount.getName(),savingAccount.getName(),value);
+        historyTransactionList.addTransaction(historyTransaction);
+        System.out.println(historyTransaction);
+    }
+
+    public void createNewSavingAccount(String name){
+        savingAccounts.add(new SavingAccount(name));
+    }
+    public void createNewCurrentAccount(String name){
+        currentAccounts.add(new CurrentAccount(name));
     }
 }

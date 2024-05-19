@@ -1,7 +1,5 @@
 package GUI.bank_page;
 
-import Entity.HistoryTransaction;
-import Entity.HistoryTransactionList;
 import Entity.Kids;
 import GUI.MainFrame_kid;
 import Controller.bank.Bank_kid_control;
@@ -10,8 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class Bank_kid extends JPanel {
     private JPanel bank;
@@ -100,6 +96,7 @@ public class Bank_kid extends JPanel {
 
         button1 = new JButton("Details");
         button1.setBounds(590, 190, 140, 30);
+        bank_kid_control.addCurrentAccountListener(button1);
         add(button1);
 
         button3 = new JButton("Details");

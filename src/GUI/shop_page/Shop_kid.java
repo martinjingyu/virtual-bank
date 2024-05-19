@@ -35,7 +35,7 @@ public class Shop_kid extends JPanel {
         this.productList = shopController.getKid().getProductList();
         this.selectedTotalLabel = new JLabel("Selected Total: $      0.00");
         this.selectedTotalLabel.setForeground(Color.BLACK);
-        this.currentAccountLabel = new JLabel(String.format("Current Account: $%9.2f", shopController.getKid().getAccountManager().getTotalCurrentBalance()));
+        this.currentAccountLabel = new JLabel(String.format("Current Account: $%9.2f", shopController.getKid().getAccountManager().getCurrentAccountBalance("CA1")));
         this.toggleButtons = new ArrayList<>();
 
         setLayout(new BorderLayout(10, 10));
@@ -83,10 +83,16 @@ public class Shop_kid extends JPanel {
         // Account dropdown
         accountDropdown = new JComboBox<>();
         // Assuming BothAccountList is accessible via Kids class
-        for (CurrentAccount account : shopController.getKid().getBothAccountList().getCurrentAccounts()) {
+        for (CurrentAccount account : shopController.getKid().getAccountManager().getCurrentAccounts()) {
             accountDropdown.addItem(account.getName());
         }
         accountDropdown.setSelectedItem("CA1"); // Set the default selection to "CA1"
+        accountDropdown.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                shopController.setSelectedAccountName((String) e.getItem(),currentAccountLabel);
+            }
+        });
+
         gbc.fill = GridBagConstraints.NONE; // Don't expand the dropdown
         gbc.gridwidth = GridBagConstraints.REMAINDER; // End row after this component
         headerPanel.add(accountDropdown, gbc);
@@ -176,7 +182,7 @@ public class Shop_kid extends JPanel {
         gbc.gridy = 2; // 第三行
         footer.add(currentAccountLabel, gbc);
 
-        buyButton.addActionListener(e -> shopController.buyProducts(selectedTotalLabel, currentAccountLabel,toggleButtons,accountDropdown));
+        buyButton.addActionListener(e -> shopController.buyProducts(selectedTotalLabel, currentAccountLabel,toggleButtons));
 
 
         return footer;

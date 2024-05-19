@@ -1,8 +1,7 @@
 package GUI.bank_page;
 
-import Controller.bank.SavingAccountController;
-import Entity.Account;
-import Entity.HistoryTransactionList;
+import Controller.bank.Bank_kid_control;
+import Entity.AccountManager;
 import Entity.SavingAccount;
 
 import javax.swing.*;
@@ -10,6 +9,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,14 +19,16 @@ import javax.swing.border.*;
 public class ShowSavingAccount extends JFrame {
     private JButton actionButton;
     private JPanel mainContent;
-    private ComponentList componentList;
+    private SavingComponentList savingComponentList;
     private JPanel accountGrid;
+    private List<JPanel> accountPanelList;
     private JPanel infoPanel;
     private List<JPanel> finishPanelList;
     private FinishList finishList;
     private List<Duration> remainingTime;
     private JPanel addButton;
     private Timer timer;
+    private ActionListener actionListener;
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
     private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
     private final Color fontColor = new Color(49, 122, 232); // #317AE8
@@ -42,7 +44,6 @@ public class ShowSavingAccount extends JFrame {
     }
     private void updateProgressBar(List<SavingAccount> savingAccountList, List<JProgressBar> progressBarList) {
         // 计算已经过的时间比例
-        createFinishPanelList(savingAccountList);
         int i;
         for(i=0;i<savingAccountList.size();i++){
             SavingAccount savingAccount = savingAccountList.get(i);
@@ -57,15 +58,27 @@ public class ShowSavingAccount extends JFrame {
             progressBar.setValue((int) progress);
 
             // 检查是否已完成
+            if(progress<100){
+                Component[] list = accountGrid.getComponents();
+                list[i] = accountPanelList.get(i);
+                accountGrid.removeAll();
+                for(int j=0; j< list.length;j++){
+                    accountGrid.add(list[j]);
+                }
+                accountGrid.revalidate(); // 用于重新布局组件
+                accountGrid.repaint();    // 用于请求重绘组件
+            }
             if (progress >= 100) {
-                System.out.println("finish");
                 Component[] list = accountGrid.getComponents();
                 list[i] = finishPanelList.get(i);
 
                 accountGrid.removeAll();
                 for(int j=0; j< list.length;j++){
                     accountGrid.add(list[j]);
+
                 }
+                accountGrid.revalidate(); // 用于重新布局组件
+                accountGrid.repaint();    // 用于请求重绘组件
             }
         }
 
@@ -78,23 +91,24 @@ public class ShowSavingAccount extends JFrame {
             long minutes = remaining.toMinutesPart();
             long seconds = remaining.toSecondsPart();
             String remainingTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-            componentList.getRemainingList().get(i).setText("Remaining time: " + remainingTime);
+            savingComponentList.getRemainingList().get(i).setText("Remaining time: " + remainingTime);
         }
     }
 
-    public void initData(List<SavingAccount> accountList){
-        createFinishPanelList(accountList);
-        accountGrid = createAccountGrid(accountList);
+    public void initData(List<SavingAccount> accountList,Boolean whetherParent){
+        createFinishPanelList(accountList,whetherParent);
+        accountGrid = createAccountGrid(accountList,whetherParent);
         mainContent.add(accountGrid,BorderLayout.CENTER);
         infoPanel = createTotalInfoPanel();
         mainContent.add(infoPanel,BorderLayout.SOUTH);
-        timer = new Timer(1000, e -> {updateProgressBar(accountList,componentList.getBarlist());updateRemaining(accountList);});
+        timer = new Timer(1000, e -> {updateProgressBar(accountList, savingComponentList.getBarlist());updateRemaining(accountList);});
         timer.start();
         pack();
         setVisible(true);
     }
-    public void refresh(List<SavingAccount> accountList){
-        createFinishPanelList(accountList);
+    public void refresh(List<SavingAccount> accountList,Boolean whetherParent){
+        refreshFinishPanelList(accountList);
+
     }
     private void initUI(){
         setTitle("Saving Account");
@@ -108,7 +122,7 @@ public class ShowSavingAccount extends JFrame {
         mainContent.add(createHeaderPanel(), BorderLayout.NORTH);
 
     }
-    private void createFinishPanelList(List<SavingAccount> accountList){
+    private void createFinishPanelList(List<SavingAccount> accountList,Boolean whetherParent){
         finishPanelList = new ArrayList<>();
         finishList = new FinishList(accountList);
         int i;
@@ -138,7 +152,10 @@ public class ShowSavingAccount extends JFrame {
             finish.add(Box.createVerticalStrut(5));
             finish.add(totalIncome);
             finish.add(Box.createVerticalStrut(5));
-            finish.add(finishButton);
+            if(whetherParent==false){
+                finish.add(finishButton);
+            }
+
             finish.add(Box.createVerticalStrut(0));
             if (accountList.get(i).getBalance()==0){
                 totalIncome.setText("this account is empty");
@@ -149,7 +166,27 @@ public class ShowSavingAccount extends JFrame {
 
     }
 
-    private JPanel createComponents(int i, ComponentList componentList) {
+    private void refreshFinishPanelList(List<SavingAccount> accountList){
+        for(int i=0; i<accountList.size();i++){
+            if (accountList.get(i).getBalance()==0){
+                int labelCount =0;
+                Component[] list= finishPanelList.get(i).getComponents();
+                for(Component component: list){
+                    if(component instanceof JButton){
+                        ((JButton) component).setText("Deposit");
+                    }
+                    if(component instanceof JLabel){
+                        labelCount++;
+                        if(labelCount==2){
+                            ((JLabel) component).setText("this account is empty");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private JPanel createComponents(int i, SavingComponentList savingComponentList,Boolean whetherParent) {
         // 创建组件的面板
         JPanel component = new JPanel();
 
@@ -159,14 +196,14 @@ public class ShowSavingAccount extends JFrame {
         component.setPreferredSize(new Dimension(200, 150));
 
         // 创建标签并设置格式
-        SavingAccount account = componentList.getSavingAccountList().get(i);
-        JProgressBar progressBar = componentList.getBarlist().get(i);
-        JButton cancel = componentList.getCancelButton().get(i);
+        SavingAccount account = savingComponentList.getSavingAccountList().get(i);
+        JProgressBar progressBar = savingComponentList.getBarlist().get(i);
+        JButton cancel = savingComponentList.getCancelButton().get(i);
 
-        JLabel nameLabel = new JLabel(componentList.getSavingAccountList().get(i).getName(), SwingConstants.CENTER);
+        JLabel nameLabel = new JLabel(savingComponentList.getSavingAccountList().get(i).getName(), SwingConstants.CENTER);
 
 
-        JLabel remainLabel = componentList.getRemainingList().get(i);
+        JLabel remainLabel = savingComponentList.getRemainingList().get(i);
 
         JLabel startLabel = new JLabel("Start time: "+account.getStartTime(), SwingConstants.CENTER);
         startLabel.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -192,8 +229,11 @@ public class ShowSavingAccount extends JFrame {
         component.add(startLabel);
         component.add(Box.createVerticalStrut(0));
         component.add(endLabel);
-        component.add(Box.createVerticalStrut(0));
-        component.add(cancel);
+        if(whetherParent==false){
+            component.add(Box.createVerticalStrut(0));
+            component.add(cancel);
+        }
+
 
         return component;
     }
@@ -235,23 +275,33 @@ public class ShowSavingAccount extends JFrame {
 
     }
 
-    private JPanel createAccountGrid(List<SavingAccount> accountList) {
+    private JPanel createAccountGrid(List<SavingAccount> accountList,Boolean whetherParent) {
         accountGrid = new JPanel();
+        accountPanelList = new ArrayList<>();
         accountGrid.setLayout(new GridLayout(4, 3, 10, 5)); // 增加了行列间的间隔
         accountGrid.setBackground(Color.LIGHT_GRAY);
         accountGrid.setBorder(new LineBorder(Color.BLACK, 2)); // 添加边框
-        componentList = new ComponentList(accountList);
+        savingComponentList = new SavingComponentList(accountList);
 
         for (int i = 0; i < accountList.size(); i++) {
             if(accountList.get(i).getEndTime().isAfter(LocalDateTime.now())&&accountList.get(i).getBalance()>0){
-                accountGrid.add(createComponents(i,componentList));
+                JPanel component = createComponents(i, savingComponentList,whetherParent);
+                accountGrid.add(component);
+                accountPanelList.add(component);
             }
-            else{accountGrid.add(finishPanelList.get(i));
+            else{
+                JPanel component = createComponents(i, savingComponentList,whetherParent);
+                accountPanelList.add(component);
+                accountGrid.add(finishPanelList.get(i));
             }
 
         }
-        addButton = createAddComponents();
-        accountGrid.add(addButton);
+        if(accountList.size()<12){
+            addButton = createAddComponents();
+            accountGrid.add(addButton);
+        }
+
+
         for (int i = 0; i < 11-accountList.size(); i++) {
             accountGrid.add(new JPanel());
         }
@@ -271,12 +321,21 @@ public class ShowSavingAccount extends JFrame {
         addPanel.add(addLabel);
         return addPanel;
     }
+    public void afterAddAccount(AccountManager accountManager, String name){
+        timer.stop();
+        accountManager.createNewSavingAccount(name);
+        mainContent.removeAll();
+        mainContent.add(createHeaderPanel(), BorderLayout.NORTH);
+        initData(accountManager.getSavingAccounts(),false);
+        pack();
+        setVisible(true);
+    }
     public JPanel getAddButton(){
         return addButton;
     }
 
-    public ComponentList getComponentList() {
-        return componentList;
+    public SavingComponentList getComponentList() {
+        return savingComponentList;
     }
 
     public FinishList getFinishList() {
@@ -285,7 +344,6 @@ public class ShowSavingAccount extends JFrame {
 
     public static void main(String[] args) {
         // 创建 JFrame 并显示
-        JFrame frame = new ShowSavingAccount();
     }
 }
 

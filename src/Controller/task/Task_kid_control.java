@@ -34,12 +34,13 @@ public class Task_kid_control extends MouseAdapter {
 
 
     public boolean taskButton(int index){
-        if(Objects.equals(kid.getTaskList().getTask(0).getDestination(), "x")){
+        if(Objects.equals(kid.getTaskList().getTask(index).getDestination(), "x")){
             task_kid.showWarning();
             return false;
         }else {
-            //task_kid.showDialog(index);
-            kid.getMessagelist().addTaskMessage("Child_Opt",kid.getTaskList().getNonConfirmedTask().getTask(index),taskInfo(index));
+            // 发送信息
+//            String state = kid.getTaskList().getNonConfirmedTask().getTask(index).getState();
+//            kid.getMessagelist().addTaskMessage("Child_Opt",kid.getTaskList().getNonConfirmedTask().getTask(index).getM(state));
             return true;
 
         }

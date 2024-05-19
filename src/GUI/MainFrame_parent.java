@@ -1,39 +1,50 @@
 package GUI;
-import Controller.MainController;
-import GUI.bank_page.Bank_kid;
+
+import Controller.MainController_Parent;
+
+import GUI.bank_page.bank_parents;
+import GUI.message_page.message_parent;
 import GUI.shop_page.Shop_kid;
-import GUI.task_page.Task_kid;
+import GUI.shop_page.Shop_parent;
+import GUI.task_page.Task_parent;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainFrame_parent extends JFrame {
-    private BorderLayout borderLayout;
     private JPanel main_page;
     private JPanel menu;
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
     private JPanel pg1, pg2,pg3,pg4;
-    private MainController mainController;
-    private Bank_kid bankKid;
-    private Shop_kid shopKid;
-    private Task_kid taskKid;
+    private MainController_Parent mainController_parent;
 
-    public MainFrame_parent(MainController mainController) {
+    public MainFrame_parent(MainController_Parent mainController) {
         super("demo");
-        this.mainController = mainController;
+        this.mainController_parent = mainController;
         InitiateAll();
-
-        current_panel = new JPanel();
+        current_panel = this.pg1;
         frame_panel();
         navi_button();
+
+        mainController.mainFrameController_parent.setGUI(this);
+        mainController.mainFrameController_parent.addButtonListener();
+        mainController.mainFrameController_parent.addFrameListener();
+
         setVisible(true);
     }
     private void InitiateAll(){
+        this.pg1 = new bank_parents(mainController_parent.bank_parent_controller);
+        this.pg2 = new Shop_parent(mainController_parent.shopParentController);
+        this.pg3 = new Task_parent(mainController_parent.task_parent_control,this);
+        this.pg4 = new message_parent(mainController_parent.messageParentController);
+
+
 //        this.pg1 = new Bank_kid();
 //        this.pg2 = new Shop_kid(mainController.ShopController);
 //        this.pg3 = new Task_kid(mainController.task_kid_control, this);
 //        this.pg4 = new Shop_kid(mainController.ShopController);
+
     }
 
 
@@ -57,7 +68,6 @@ public class MainFrame_parent extends JFrame {
                 current_panel = pg1;
                 break;
         }
-        InitiateAll();
         main_page.add(current_panel, BorderLayout.CENTER);
         revalidate();
         repaint();
@@ -87,9 +97,6 @@ public class MainFrame_parent extends JFrame {
         InitiateAll();
 
 
-
-//        this.pg3 = new Task_kid(this);
-
         switch (tempIndex) {
             case 1:
                 current_panel = pg1;
@@ -104,7 +111,6 @@ public class MainFrame_parent extends JFrame {
                 current_panel = pg4;
                 break;
             default:
-// 如果没有确定的索引，则默认显示 pg1
                 current_panel = pg1;
                 break;
         }
@@ -135,7 +141,6 @@ public class MainFrame_parent extends JFrame {
         // 设置主窗口的标题
 
         this.setSize(960,540);
-        borderLayout = new BorderLayout();
         menu = new JPanel();
         main_page = new JPanel(new BorderLayout());
 
@@ -148,53 +153,59 @@ public class MainFrame_parent extends JFrame {
 
         this.add(menu, BorderLayout.WEST);
         main_page.add(current_panel,BorderLayout.CENTER);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
     }
-    public void navi_button(){
-
-        button1 = new JLabel();
-        ImageIcon icon = new ImageIcon("bank.png");
-        Image img = icon.getImage();
-        Image scaledImg = img.getScaledInstance(25, 25, Image.SCALE_SMOOTH); // 自动调整宽度，高度等比例缩放
-        button1.setIcon(new ImageIcon(scaledImg)); // 替换为您的图片路径
-        button1.setHorizontalAlignment(SwingConstants.CENTER); // 设置水平居中对齐
-
-        button2 = new JLabel();
-        button2.setIcon(new ImageIcon(scaledImg)); // 替换为您的图片路径
 
 
-        button2.setHorizontalAlignment(SwingConstants.CENTER); // 设置水平居中对齐
 
-        button3 = new JLabel();
-        button3.setIcon(new ImageIcon(scaledImg)); // 替换为您的图片路径
-        button3.setHorizontalAlignment(SwingConstants.CENTER); // 设置水平居中对齐
+    public void navi_button() {
+        // Initialize buttons with their default icons
+        // Initialize buttons with their specific icon sizes
+        button1 = createButtonWithSize("bank_white");  // Larger size for button1
+        button2 = createButtonWithSize("shop");  // Smaller size for button2
+        button3 = createButtonWithSize("task");  // Standard size for button3
+        button4 = createButtonWithSize("message");  // Standard size for button4
 
-        button4 = new JLabel();
-        button4.setIcon(new ImageIcon(scaledImg)); // 替换为您的图片路径
-        button4.setHorizontalAlignment(SwingConstants.CENTER); // 设置水平居中对齐
+        // Set layout for the menu panel
+        menu.setLayout(new GridLayout(15, 1, 0, 5)); // Adjust grid layout for spacing if needed
 
-        menu.setLayout(new GridLayout(15, 1)); // 竖直排列按钮
-        menu.add(new JLabel());
-        menu.add(new JLabel());
-
+        // Add buttons to the menu panel
+        menu.add(new JLabel()); // Add spacing if needed
         menu.add(button1);
-        menu.add(new JLabel());
-
+        menu.add(new JLabel()); // Add spacing between buttons
         menu.add(button2);
-        menu.add(new JLabel());
-
+        menu.add(new JLabel()); // Add spacing between buttons
         menu.add(button3);
-        menu.add(new JLabel());
-
+        menu.add(new JLabel()); // Add spacing between buttons
         menu.add(button4);
-        menu.add(new JLabel());
-
-
     }
+
+    public JLabel createButtonWithSize(String iconName) {
+        int width = 25; // 默认宽度和高度
+        int height = 25;
+
+        if (iconName.equals("bank")||iconName.equals("bank_white")) {
+            width = height = 32; // bank图标的特定尺寸
+        } else if (iconName.equals("shop")||iconName.equals("shop_white")) {
+            width = height = 20; // shop图标的特定尺寸
+        }
+
+        // 路径可能包括选中状态的特定图标
+        String iconPath = "image/" + iconName +  ".png";
+        ImageIcon icon = new ImageIcon(iconPath);
+        Image img = icon.getImage();
+        Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
+        JLabel button = new JLabel(new ImageIcon(scaledImg));
+        button.setHorizontalAlignment(SwingConstants.CENTER);
+        return button;
+    }
+
 
     public static void main(String[] args) {
-        MainFrame_kid main = new MainFrame_kid(new MainController("222"));
+        MainFrame_parent main = new MainFrame_parent(new MainController_Parent("222"));
+
     }
 
 }
