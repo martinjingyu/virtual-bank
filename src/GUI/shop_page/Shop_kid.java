@@ -1,6 +1,6 @@
 package GUI.shop_page;
 
-import Controller.shop.ShopController;
+import Controller.shop.ShopKidController;
 import Entity.CurrentAccount;
 import Entity.Kids;
 import Entity.Product;
@@ -19,7 +19,7 @@ public class Shop_kid extends JPanel {
     private JButton buyButton;
     private List<JRadioButton> toggleButtons;
     private ProductList productList;
-    private ShopController shopController;
+    private ShopKidController shopController;
     private JLabel selectedTotalLabel;
     private JLabel currentAccountLabel;
     private JComboBox<String> accountDropdown;
@@ -30,7 +30,7 @@ public class Shop_kid extends JPanel {
     private final Color submitButtonColor = new Color(103, 201, 86); // #67C956
     private final Color borderColor = new Color(105, 105, 105); // #696969
 
-    public Shop_kid(ShopController shopController) {
+    public Shop_kid(ShopKidController shopController) {
         this.shopController = shopController;
         this.productList = shopController.getKid().getProductList();
         this.selectedTotalLabel = new JLabel("Selected Total: $      0.00");
@@ -190,7 +190,7 @@ public class Shop_kid extends JPanel {
 
     public static void main(String[] args) {
         Kids kid = ReadAll.readall(String.valueOf(222));
-        ShopController ShopController = new ShopController(kid);
+        ShopKidController ShopController = new ShopKidController(kid);
         Shop_kid shopKid = new Shop_kid(ShopController);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
