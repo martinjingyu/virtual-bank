@@ -3,6 +3,8 @@ package Entity;
 import Exceptions.InsufficientFundsException;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +13,13 @@ public class AccountManager {
     private double savingGoal;
     private List<CurrentAccount> currentAccounts;
     private List<SavingAccount> savingAccounts;
+    private HistoryTransactionList historyTransactionList;
 
 
-    public AccountManager() {
+    public AccountManager(HistoryTransactionList historyTransactionList) {
         this.currentAccounts = new ArrayList<>();
         this.savingAccounts = new ArrayList<>();
+        this.historyTransactionList = historyTransactionList;
     }
     public String getUserID() {
         return userID;
@@ -112,6 +116,7 @@ public class AccountManager {
         savingAccount.setEndTime(LocalDateTime.now());
         currentAccount.deposit(savingAccount.getBalance());
         savingAccount.withdraw(savingAccount.getBalance());
+
     }
     public List<String> getSavingAccountNames(){
         List<String> names = new ArrayList<>();
@@ -135,6 +140,12 @@ public class AccountManager {
         currentAccount.deposit(savingAccount.getBalance());
         savingAccount.withdraw(savingAccount.getBalance());
 
+
+        HistoryTransaction historyTransaction= new HistoryTransaction(currentAccount.getName(),savingAccount.getName(),savingAccount.getBalance());
+        historyTransactionList.addTransaction(historyTransaction);
+
+        System.out.println(historyTransaction);
+
     }
 
     /**
@@ -148,6 +159,12 @@ public class AccountManager {
             if (account.getName().equals(accountName)) {
                 if (account.getBalance() >= amount) {
                     account.withdraw(amount);
+
+                    HistoryTransaction historyTransaction= new HistoryTransaction(account.getName(),"shop",amount);
+                    historyTransactionList.addTransaction(historyTransaction);
+
+                    System.out.println(historyTransaction);
+
                     return true;
                 } else {
                     throw new InsufficientFundsException("Insufficient funds for withdrawal.");
@@ -162,6 +179,11 @@ public class AccountManager {
 
         currentAccountFrom.withdraw(value);
         currentAccountTo.deposit(value);
+
+        HistoryTransaction historyTransaction= new HistoryTransaction(currentAccountFrom.getName(),currentAccountTo.getName(),value);
+        historyTransactionList.addTransaction(historyTransaction);
+
+        System.out.println(historyTransaction);
     }
     public void depositCurrentToSaving(int currentIndex, int savingIndex, double value, String selectedDuration){
         CurrentAccount currentAccount = currentAccounts.get(currentIndex);
@@ -184,6 +206,10 @@ public class AccountManager {
                 break;
         }
         savingAccount.setEndTime(result);
+
+        HistoryTransaction historyTransaction= new HistoryTransaction(currentAccount.getName(),savingAccount.getName(),value);
+        historyTransactionList.addTransaction(historyTransaction);
+        System.out.println(historyTransaction);
     }
 
     public void createNewSavingAccount(String name){

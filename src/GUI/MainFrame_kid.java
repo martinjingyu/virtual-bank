@@ -58,6 +58,7 @@ public class MainFrame_kid extends JFrame {
                 current_panel = pg3;
                 break;
             case 4:
+                this.pg4 = new message_kid(mainController.message_kid_controller);
                 current_panel = pg4;
                 break;
             default:

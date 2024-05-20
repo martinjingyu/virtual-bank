@@ -1,7 +1,7 @@
 package Controller;
 
 import Controller.bank.Bank_kid_control;
-import Controller.message.Message_controller;
+import Controller.message.Message_kid_controller;
 import Controller.shop.ShopController;
 //import Controller.task.Task_kid_control;
 import Controller.task.Task_kid_control;
@@ -16,7 +16,7 @@ public class MainController {
     public Bank_kid_control bank_kid_control;
     public ShopController ShopController;
     public MainFrameController mainFrameController;
-    public Message_controller message_kid_controller;
+    public Message_kid_controller message_kid_controller;
 
     public Task_kid_control task_kid_control;
     public MainController(String id){
@@ -27,7 +27,7 @@ public class MainController {
         bank_kid_control = new Bank_kid_control(kid);
         ShopController = new ShopController(kid);
         task_kid_control = new Task_kid_control(kid);
-        message_kid_controller = new Message_controller(kid);
+        message_kid_controller = new Message_kid_controller(kid);
 
     }
 

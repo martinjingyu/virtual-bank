@@ -18,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Task_parent extends JPanel {
     private JPanel Container;
@@ -112,6 +113,8 @@ public class Task_parent extends JPanel {
                         System.out.println("salary： ");
                         System.out.println(salary);
                         task_parent_control.getKid().getAccountManager().getCurrentAccountByName(destination).deposit(salary);
+                        HistoryTransaction historyTransaction = new HistoryTransaction("parent",task_parent_control.getKid().getAccountManager().getCurrentAccountByName(destination).getName(),salary);
+                        task_parent_control.getKid().getTransactionList().addTransaction(historyTransaction);
 
                         // 删除任务
                         task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i));
@@ -155,13 +158,22 @@ public class Task_parent extends JPanel {
                         JOptionPane.WARNING_MESSAGE);
 
                 if (response1 == JOptionPane.YES_OPTION) {
-                    // 执行删除任务的逻辑
-                    // 删除任务
-                    task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i));
-
                     // 发信息
+
+
                     String name = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
                     task_parent_control.getKid().getMessagelist().addTaskMessage("Parent_Opt","You have delete the task "+ name);
+
+
+//                    List<Task> allTasks =  task_parent_control.getKid().getTaskList().getAllTasks();
+//                    System.out.println("task: ");
+//                    for (Task task : allTasks) {
+//                        System.out.println(task);
+//                    }
+                    // 执行删除任务的逻辑
+                    // 删除任务
+                    task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getTask(i-1));
+
 
 
                     // 显示状态
