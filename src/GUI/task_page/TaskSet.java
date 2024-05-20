@@ -2,10 +2,9 @@ package GUI.task_page;
 
 import Controller.task.Task_parent_control;
 import Entity.Task;
-import GUI.MainFrame_kid;
 import GUI.MainFrame_parent;
 
-import utill.Validate;
+import utill.validate.Validate;
 
 
 import javax.swing.*;
