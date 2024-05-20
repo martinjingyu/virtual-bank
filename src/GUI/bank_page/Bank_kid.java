@@ -29,6 +29,7 @@ public class Bank_kid extends JPanel {
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
     private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
     private final Color fontColor = new Color(49, 122, 232); // #317AE8
+    private final Font font = new Font("Arial", Font.PLAIN, 20);
 
 
 
@@ -87,6 +88,7 @@ public class Bank_kid extends JPanel {
         this.bank_kid_control = bank_kid_control;
         bank_kid_control.setGUI(this);
         setLayout(null); // 使用绝对布局
+        initData();
 
         setBackground(mainBgColor);
         button_goal = new JButton("Edit");
@@ -113,6 +115,34 @@ public class Bank_kid extends JPanel {
         this.bank_kid_control =bank_kid_control;
     }
     public MainFrame_kid getMainFrame(){return this.mainFrameKid;}
+    public void initData(){
+        JLabel income = new JLabel(String.valueOf(bank_kid_control.getKid().getTransactionList().getIncomeForDate("2024/3/10")));
+        income.setBounds(150,70,100,50);
+        income.setFont(font);
+        add(income);
+
+        JLabel expenses = new JLabel(String.valueOf(bank_kid_control.getKid().getTransactionList().getExpensesForDate("2024/3/10")));
+        expenses.setBounds(280,70,100,50);
+        expenses.setFont(font);
+        add(expenses);
+
+        JLabel savingGoal = new JLabel(String.valueOf(bank_kid_control.getKid().getAccountManager().getSavingGoal()));
+        savingGoal.setBounds(590,70,100,50);
+        savingGoal.setFont(font);
+        add(savingGoal);
+
+        JLabel currentTotal = new JLabel(String.valueOf(bank_kid_control.getKid().getAccountManager().getTotalCurrentBalance()));
+        currentTotal.setBounds(280,190,100,50);
+        currentTotal.setFont(font);
+        add(currentTotal);
+
+        JLabel savingTotal = new JLabel(String.valueOf(bank_kid_control.getKid().getAccountManager().getTotalSavingBalance()));
+        savingTotal.setFont(font);
+        savingTotal.setBounds(280,310,100,50);
+        add(savingTotal);
+
+
+    }
 
     protected void paintComponent(Graphics g) {
         Font titleFont = new Font("Arial", Font.PLAIN, 20);
@@ -122,40 +152,28 @@ public class Bank_kid extends JPanel {
         g.setColor(Color.BLACK);
         g.setFont(titleFont);
         g.drawString("Income", 150, 60); // 在框内写字
-//        g.drawString(HistoryTransactionList.formatAmount(Controller.getKid().getTransactionList());
         g.drawString("Expenses", 280, 60);
         g.setColor(Color.green);
-//        g.drawString("+50.00", 150, 100); // 在下方显示 +50
-//        g.drawString("-20.00", 280, 100);
 
         g.setColor(Color.WHITE);
         g.fillRect(500, 40, 270, 80);
         g.setColor(Color.black);
         g.setFont(titleFont);
         g.drawString("Saving Goals", 570, 60);
-        g.setColor(Color.green);
-        g.drawString(String.format("%.2f",bank_kid_control.getKid().getAccountManager().getSavingGoal()), 610, 100);
-//        g.drawString("300.00", 610, 100);
 
         g.setColor(Color.WHITE);
         g.fillRect(70, 150, 700, 90);
         g.setColor(Color.black);
         g.setFont(titleFont);
         g.drawString("Current", 90, 220);
-//        g.drawString("Interest Rate", 150, 170);
         g.drawString("Total", 280, 170);
-//        g.drawString(String.format("%.2f",bank_kid_control.getKid().getBank().getCurrentInterestRate()), 150, 220);
-        g.drawString(String.format("%.2f",bank_kid_control.getKid().getAccountManager().getTotalCurrentBalance()), 280, 220);
 
         g.setColor(Color.WHITE);
         g.fillRect(70, 270, 700, 90);
         g.setColor(Color.black);
         g.setFont(titleFont);
         g.drawString("Saving", 90, 340);
-//        g.drawString("Interest Rate", 150, 290);
         g.drawString("Total", 280, 290);
-//        g.drawString(String.format("%.2f",bank_kid_control.getKid().getBank().getSavingInterestRate()), 150, 340);
-//        g.drawString(String.format("%.2f",bank_kid_control.getKid().getBank().getSavingTotal()), 280, 340);
 
         g.setColor(Color.WHITE);
         g.fillRect(70, 390, 700, 80);
