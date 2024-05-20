@@ -1,7 +1,6 @@
 package GUI.shop_page;
 
 import Controller.shop.ShopParentController;
-import Entity.CurrentAccount;
 import Entity.Kids;
 import Entity.Product;
 import GUI.RefreshListener;
@@ -9,22 +8,19 @@ import utill.read.ReadAll;
 
 import java.awt.*;
 import java.util.ArrayList;
-
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.util.List;
 import java.awt.event.ItemEvent;
 
 public class Shop_parent extends JPanel implements RefreshListener {
 
-    private JCheckBox bookCheckBox, toy1CheckBox, toy2CheckBox, toy3CheckBox;
     private JTextField nameTextField, priceTextField;
     private JButton submitButton, confirmButton;
     private JLabel currentAccountLabel;
     private ShopParentController shopController;
-    private List<JButton> ButtonList;
     private JPanel todoListPanel;
     private JComboBox<String> accountDropdown;
 
@@ -59,12 +55,12 @@ public class Shop_parent extends JPanel implements RefreshListener {
     public void refreshUI() {
         remove(todoListPanel);
         todoListPanel = createToDoListPanel();
-        add(createToDoListPanel(), BorderLayout.WEST);
+        add(todoListPanel, BorderLayout.WEST);
         validate();
         repaint();
     }
 
-    // Create the header "Family Mall" with margin
+    // Create the header "Transaction History" with margin
     private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel();
         headerPanel.setBackground(mainBgColor);
@@ -78,9 +74,6 @@ public class Shop_parent extends JPanel implements RefreshListener {
         headerPanel.add(titleLabel);
         return headerPanel;
     }
-
-
-
 
     private JPanel createToDoListPanel() {
         todoListPanel = new JPanel();
@@ -124,7 +117,7 @@ public class Shop_parent extends JPanel implements RefreshListener {
         todoListPanel.add(scrollPane, BorderLayout.CENTER);
 
         // Confirm Button
-        JButton confirmButton = new JButton("Confirm");
+        confirmButton = new JButton("Confirm");
         confirmButton.setFont(new Font("Arial", Font.BOLD, 25));
         confirmButton.setBackground(new Color(192, 192, 192));
         confirmButton.setForeground(Color.BLACK);
@@ -137,7 +130,6 @@ public class Shop_parent extends JPanel implements RefreshListener {
 
         return todoListPanel;
     }
-
 
     // Create the Upload Products Panel
     private JPanel createUploadProductsPanel() {
@@ -176,7 +168,7 @@ public class Shop_parent extends JPanel implements RefreshListener {
         gbc.gridy = 3;
 
         submitButton.addActionListener(e -> {
-            shopController.updateProducts(nameTextField.getText(),priceTextField.getText());
+            shopController.updateProducts(nameTextField.getText(), priceTextField.getText());
         });
 
         uploadPanel.add(submitButton, gbc);
@@ -203,11 +195,6 @@ public class Shop_parent extends JPanel implements RefreshListener {
         return accountInfoPanel;
     }
 
-    public List<JButton> getButtonList()
-    {
-        return ButtonList;
-    }
-
     public static void main(String[] args) {
         Kids kid = ReadAll.readall(String.valueOf(222));
         ShopParentController ShopController = new ShopParentController(kid);
@@ -220,4 +207,3 @@ public class Shop_parent extends JPanel implements RefreshListener {
         frame.setVisible(true);
     }
 }
-

@@ -7,14 +7,14 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopController {
+public class ShopKidController {
     private Kids kid;
     private MessageList messageList;
     private List<Product> selectedProductList;
     private AccountManager accountManager;
     private String selectedAccountName;
 
-    public ShopController(Kids kid) {
+    public ShopKidController(Kids kid) {
         this.kid = kid;
         this.messageList = kid.getMessagelist();
         this.selectedProductList = new ArrayList<>();
