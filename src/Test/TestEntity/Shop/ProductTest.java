@@ -1,5 +1,6 @@
-package Entity;
+package Test.TestEntity.Shop;
 
+import Entity.Product;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

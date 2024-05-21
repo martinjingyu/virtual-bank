@@ -3,11 +3,17 @@ package GUI.message_page;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The {@code message} class represents a GUI for displaying messages and contacts.
+ */
 public class message {
     private JFrame frame;
     private JList<String> systemMessagesList;
     private JList<String> contactsList;
 
+    /**
+     * Constructs a {@code message} object and initializes the GUI components.
+     */
     public message() {
         frame = new JFrame("Messages and Contacts");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -15,27 +21,33 @@ public class message {
         JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // 创建系统消息列表
+        // Create the system messages list
         systemMessagesList = new JList<>(new String[]{"[Security Warning] Illegal transaction...", "[System] Welcome back!"});
         JScrollPane systemMessagesScrollPane = new JScrollPane(systemMessagesList);
         JPanel systemMessagesPanel = createSectionPanel("System Messages", systemMessagesScrollPane);
 
-        // 创建联系人列表
+        // Create the contacts list
         contactsList = new JList<>(new String[]{"System message", "Parent", "New user"});
         JScrollPane contactsScrollPane = new JScrollPane(contactsList);
         JPanel contactsPanel = createSectionPanel("Contacts", contactsScrollPane);
 
-        // 将两个分区面板添加到主面板
+        // Add the two section panels to the main panel
         mainPanel.add(systemMessagesPanel, BorderLayout.WEST);
         mainPanel.add(contactsPanel, BorderLayout.CENTER);
 
         frame.setContentPane(mainPanel);
-        frame.setSize(new Dimension(600, 400)); // 设置窗口初始大小
-        frame.setLocationRelativeTo(null); // 居中窗口
+        frame.setSize(new Dimension(600, 400)); // Set the initial size of the window
+        frame.setLocationRelativeTo(null); // Center the window
         frame.setVisible(true);
     }
 
-    // 创建带标题和滚动面板的分区面板
+    /**
+     * Creates a panel with a title and a scroll pane.
+     *
+     * @param title      the title of the panel
+     * @param scrollPane the scroll pane to be added to the panel
+     * @return the created panel
+     */
     private JPanel createSectionPanel(String title, JScrollPane scrollPane) {
         JPanel sectionPanel = new JPanel(new BorderLayout());
         sectionPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -43,8 +55,8 @@ public class message {
         JLabel titleLabel = new JLabel(title, SwingConstants.CENTER);
         titleLabel.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
 
-        // 设置滚动面板的首选大小
-        scrollPane.setPreferredSize(new Dimension(100, 400)); // 适当调整宽度和高度
+        // Set the preferred size of the scroll pane
+        scrollPane.setPreferredSize(new Dimension(100, 400)); // Adjust width and height appropriately
 
         sectionPanel.add(titleLabel, BorderLayout.NORTH);
         sectionPanel.add(scrollPane, BorderLayout.CENTER);
@@ -52,6 +64,11 @@ public class message {
         return sectionPanel;
     }
 
+    /**
+     * Main method to create and display the message GUI.
+     *
+     * @param args the command-line arguments (not used)
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new message());
     }

@@ -1,5 +1,7 @@
-package Entity;
+package Test.TestEntity.Shop;
 
+import Entity.Product;
+import Entity.ProductList;
 import org.junit.Before;
 import org.junit.Test;
 
