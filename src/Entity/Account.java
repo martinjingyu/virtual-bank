@@ -1,5 +1,7 @@
 package Entity;
 
+import Exceptions.InsufficientFundsException;
+
 import java.time.LocalDateTime;
 
 public abstract class Account {
@@ -34,12 +36,14 @@ public abstract class Account {
         System.out.println("Balance after: " + balance);
     }
 
-    public void withdraw(double amount) {
+    public void withdraw(double amount) throws InsufficientFundsException {
         if (amount <= balance) {
             balance -= amount;
             System.out.println("Withdrawn: " + amount);
         } else {
+
             System.out.println("Insufficient funds.");
+            throw new InsufficientFundsException("Insufficient funds.");
         }
     }
 

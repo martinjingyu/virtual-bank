@@ -1,7 +1,9 @@
 package Controller.bank;
 
 import Entity.Kids;
+import Exceptions.InsufficientFundsException;
 import GUI.bank_page.ShowSavingAccount;
+import utill.validate.Validate;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,8 +36,13 @@ public class SavingAccountController {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    JFrame frame = new JFrame("Select Current Account");
+                    JDialog frame = new JDialog();
+                    frame.setResizable(false);
+                    frame.setModal(true);
+                    frame.setTitle("Select Current Account");
+
                     JPanel panel = new JPanel(new BorderLayout());
+                    frame.setSize(300,100);
 
                     // 添加组件到对话框中
                     List<String> accountNames= kid.getAccountManager().getSavingAccountNames();
@@ -61,7 +68,6 @@ public class SavingAccountController {
 
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     frame.getContentPane().add(panel);
-                    frame.pack();
                     frame.setLocationRelativeTo(null); // 居中显示
                     frame.setVisible(true);
                 }
@@ -77,17 +83,24 @@ public class SavingAccountController {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(button.getText().equals("Deposit")){
-                        JFrame frame = new JFrame("Select Current Account");
+                        JDialog frame = new JDialog();
+                        frame.setTitle("Select Current Account");
+                        frame.setModal(true);
+                        frame.setResizable(false);
                         JPanel panel = new JPanel(new BorderLayout());
+                        frame.setSize(300,150);
 
                         // 添加组件到对话框中
                         List<String> accountNames= kid.getAccountManager().getSavingAccountNames();
                         String[] namesArray = accountNames.toArray(new String[0]);
+                        JPanel middle = new JPanel(new BorderLayout());
                         JComboBox<String> comboBox = new JComboBox<>(namesArray);
                         JComboBox<String> time = new JComboBox<>(new String[]{"15 days","1 month","3 months"});
 
-                        panel.add(comboBox, BorderLayout.CENTER);
-                        panel.add(time,BorderLayout.CENTER);
+                        middle.add(comboBox, BorderLayout.CENTER);
+                        middle.add(time,BorderLayout.SOUTH);
+
+                        panel.add(middle,BorderLayout.CENTER);
 
                         JTextField textField = new JTextField();
 
@@ -99,17 +112,20 @@ public class SavingAccountController {
                                 int selectedIndex = comboBox.getSelectedIndex();
                                 String selectedTime = (String) time.getSelectedItem();
                                 try{
-                                    double value = Double.parseDouble(textField.getText());
+                                    double value = Validate.validateNumber(textField.getText());
                                     kid.getAccountManager().depositCurrentToSaving(selectedIndex, finalI,value,selectedTime);
                                     refresh(true);
                                     // 关闭对话框
                                     frame.dispose();
                                 }
-                                catch (Exception e1){
-                                    System.out.println("wrong input");
+                                catch (InsufficientFundsException e2){
+                                    JOptionPane.showMessageDialog(null, "Insufficient Funds", "Error", JOptionPane.ERROR_MESSAGE);
                                     textField.setText("");
-                                    frame.dispose();
                                 }
+                                catch (Exception e1){
+                                    textField.setText("");
+                                }
+
 
                                 // 执行 earlyWithdrew 方法
 
@@ -119,21 +135,28 @@ public class SavingAccountController {
                         panel.add(textField,BorderLayout.NORTH);
 
                         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                        frame.getContentPane().add(panel);
-                        frame.pack();
+                        frame.setContentPane(panel);
                         frame.setLocationRelativeTo(null); // 居中显示
                         frame.setVisible(true);
 
                     }
                     else if (button.getText().equals("Take my Money!")) {
                         System.out.println(kid.getAccountManager().getSavingAccounts().get(finalI).getEndTime());
-                        JFrame frame = new JFrame("Select Current Account");
+                        JDialog frame = new JDialog();
+                        frame.setModal(true);
+                        frame.setResizable(false);
+                        frame.setTitle("Select Current Account");
+
+                        frame.setResizable(false);
                         JPanel panel = new JPanel(new BorderLayout());
+                        frame.setSize(300,100);
+
 
                         // 添加组件到对话框中
                         List<String> accountNames= kid.getAccountManager().getSavingAccountNames();
                         String[] namesArray = accountNames.toArray(new String[0]);
                         JComboBox<String> comboBox = new JComboBox<>(namesArray);
+
                         panel.add(comboBox, BorderLayout.CENTER);
 
 
@@ -155,7 +178,6 @@ public class SavingAccountController {
 
                         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                         frame.getContentPane().add(panel);
-                        frame.pack();
                         frame.setLocationRelativeTo(null); // 居中显示
                         frame.setVisible(true);
                     }
@@ -177,6 +199,7 @@ public class SavingAccountController {
     }
     public void createNewAccount(){
         JDialog dialog = new JDialog(GUI, "Create New Account", true);
+        dialog.setResizable(false);
         dialog.setLayout(new BorderLayout());
         dialog.setSize(300, 200);
         dialog.setLocationRelativeTo(GUI);
@@ -200,6 +223,7 @@ public class SavingAccountController {
 
                 } else {
                     JOptionPane.showMessageDialog(dialog, "Account name cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+                    nameField.setText("");
                 }
 
             }

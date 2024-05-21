@@ -34,7 +34,11 @@ public class CurrentAccountController {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    JFrame frame = new JFrame("Select Current Account");
+                    JDialog frame = new JDialog();
+                    frame.setResizable(false);
+                    frame.setTitle("Select Current Account");
+                    frame.setModal(true);
+                    frame.setSize(300,120);
                     JPanel panel = new JPanel(new BorderLayout());
 
                     // 添加组件到对话框中
@@ -70,7 +74,6 @@ public class CurrentAccountController {
 
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     frame.getContentPane().add(panel);
-                    frame.pack();
                     frame.setLocationRelativeTo(null); // 居中显示
                     frame.setVisible(true);
                 }
