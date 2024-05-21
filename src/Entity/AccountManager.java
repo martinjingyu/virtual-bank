@@ -112,13 +112,18 @@ public class AccountManager {
     public void printSavingAccountDetails() {
         savingAccounts.forEach(account -> System.out.println("Saving Account Balance: " + account.getBalance()));
     }
-    public void earlyWithdrew(int currentIndex, int savingIndex){
+    public void earlyWithdrew(int currentIndex, int savingIndex) {
         CurrentAccount currentAccount = currentAccounts.get(currentIndex);
         SavingAccount savingAccount = savingAccounts.get(savingIndex);
 
         savingAccount.setEndTime(LocalDateTime.now());
         currentAccount.deposit(savingAccount.getBalance());
-        savingAccount.withdraw(savingAccount.getBalance());
+        try {
+            savingAccount.withdraw(savingAccount.getBalance());
+        }
+        catch (Exception e1){
+
+        }
 
     }
     public List<String> getSavingAccountNames(){
@@ -135,13 +140,19 @@ public class AccountManager {
         }
         return names;
     }
-    public void savingWithdrewToCurrent(int currentIndex, int savingIndex){
+    public void savingWithdrewToCurrent(int currentIndex, int savingIndex) {
         CurrentAccount currentAccount = currentAccounts.get(currentIndex);
         SavingAccount savingAccount = savingAccounts.get(savingIndex);
 
         savingAccount.calculateInterest();
         currentAccount.deposit(savingAccount.getBalance());
-        savingAccount.withdraw(savingAccount.getBalance());
+        try{
+            savingAccount.withdraw(savingAccount.getBalance());
+        }
+        catch (Exception e1){
+
+        }
+
 
 
         HistoryTransaction historyTransaction= new HistoryTransaction(currentAccount.getName(),savingAccount.getName(),savingAccount.getBalance());
@@ -176,7 +187,7 @@ public class AccountManager {
         }
         throw new InsufficientFundsException("Account not found.");
     }
-    public void transfer(int from, int to, double value){
+    public void transfer(int from, int to, double value) throws InsufficientFundsException{
         CurrentAccount currentAccountFrom = currentAccounts.get(from);
         CurrentAccount currentAccountTo = currentAccounts.get(to);
 
@@ -188,7 +199,7 @@ public class AccountManager {
 
         System.out.println(historyTransaction);
     }
-    public void depositCurrentToSaving(int currentIndex, int savingIndex, double value, String selectedDuration){
+    public void depositCurrentToSaving(int currentIndex, int savingIndex, double value, String selectedDuration) throws InsufficientFundsException{
         CurrentAccount currentAccount = currentAccounts.get(currentIndex);
         SavingAccount savingAccount = savingAccounts.get(savingIndex);
 
@@ -212,7 +223,6 @@ public class AccountManager {
 
         HistoryTransaction historyTransaction= new HistoryTransaction(currentAccount.getName(),savingAccount.getName(),value);
         historyTransactionList.addTransaction(historyTransaction);
-        System.out.println(historyTransaction);
     }
 
     public void createNewSavingAccount(String name){
