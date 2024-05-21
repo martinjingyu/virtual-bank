@@ -1,5 +1,8 @@
 package utill.validate;
+import Entity.Account;
+
 import javax.swing.*;
+import java.util.List;
 
 /**
  * The Validate class provides methods to validate various inputs.
@@ -12,21 +15,35 @@ public class Validate {
      * @param name the name to be validated
      * @return true if the name is valid, false otherwise
      */
-    public static boolean validateName(String name) {
+    public static String validateName(String name) throws Exception{
+
         if (name == null || name.trim().isEmpty()) {
-            return false;
+            JOptionPane.showMessageDialog(null, "Invalid input. Name cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            throw new Exception("Invalid name: name cannot be empty.");
         }
 
         boolean hasLetter = false;
         for (char c : name.toCharArray()) {
             if (!Character.isLetterOrDigit(c) && !Character.isWhitespace(c)) {
-                return false;
+                JOptionPane.showMessageDialog(null, "Invalid input. Name can only contain letters, digits, and spaces.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                throw new Exception("Invalid name: contains invalid characters.");
             }
             if (Character.isLetter(c)) {
                 hasLetter = true;
             }
         }
-        return hasLetter;
+
+        if (!hasLetter) {
+            JOptionPane.showMessageDialog(null, "Invalid input. Name must contain at least one letter.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            throw new Exception("Invalid name: must contain at least one letter.");
+        }
+
+        if (name.charAt(name.length() - 1) == ' ') {
+            JOptionPane.showMessageDialog(null, "Invalid input. The last character can't be a space. ", "Input Error", JOptionPane.ERROR_MESSAGE);
+            throw new Exception("The last character can't be a space. ");
+        }
+
+        return name;
     }
 
 
@@ -111,5 +128,15 @@ public class Validate {
             JOptionPane.showMessageDialog(null, "Invalid input. Please enter a number with at most two decimal places.", "Input Error", JOptionPane.ERROR_MESSAGE);
             throw new Exception("invalid number");
         }
+    }
+
+    public static boolean validateRepeat(String name, List<String> accountList) throws Exception{
+        for (String account : accountList) {
+            if (account.equals(name)) {
+                JOptionPane.showMessageDialog(null, "Invalid input. This name has been used", "Input Error", JOptionPane.ERROR_MESSAGE);
+                throw new Exception();
+                 }
+        }
+        return true;
     }
 }

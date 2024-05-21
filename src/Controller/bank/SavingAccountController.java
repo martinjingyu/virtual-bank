@@ -216,16 +216,16 @@ public class SavingAccountController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String accountName = nameField.getText().trim();
-                if (!accountName.isEmpty()) {
+                try{
+                    accountName = Validate.validateName(accountName);
+                    Boolean whether_Repeat = Validate.validateRepeat(accountName,kid.getAccountManager().getSavingAccountNames());
                     GUI.afterAddAccount(kid.getAccountManager(),accountName);
                     dialog.dispose();
                     addListener(GUI);
-
-                } else {
-                    JOptionPane.showMessageDialog(dialog, "Account name cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                catch (Exception e1){
                     nameField.setText("");
                 }
-
             }
         });
         inputPanel.add(nameLabel);
