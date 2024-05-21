@@ -18,6 +18,7 @@ public class Bank_kid_control{
     private Kids kid;
     private Bank_kid GUI;
     private HistoryController historyController;
+    private JFrame currentFrame; // 用于存储当前打开的 JFrame 引用
     public Bank_kid_control(Kids kid){
         this.kid = kid;
         this.historyController = new HistoryController(kid);
@@ -58,6 +59,7 @@ public class Bank_kid_control{
             public void actionPerformed(ActionEvent e) {
                 ShowCurrentAccount showCurrentAccount = new ShowCurrentAccount();
                 CurrentAccountController currentAccountController = new CurrentAccountController(kid,showCurrentAccount,false);
+                openNewFrame(showCurrentAccount);
             }
         });
     }
@@ -68,6 +70,7 @@ public class Bank_kid_control{
             public void actionPerformed(ActionEvent e) {
                 ShowSavingAccount showSavingAccount = new ShowSavingAccount();
                 SavingAccountController savingAccountController = new SavingAccountController(kid,showSavingAccount,false);
+                openNewFrame(showSavingAccount);
             }
             public void refreshSaving(){
                 ShowSavingAccount showSavingAccount = new ShowSavingAccount();
@@ -76,6 +79,18 @@ public class Bank_kid_control{
 
         });
     }
+    private void openNewFrame(JFrame newFrame) {
+        // 关闭当前打开的 JFrame
+        if (currentFrame != null) {
+            currentFrame.dispose();
+        }
+
+        // 更新 currentFrame 并显示新的 JFrame
+        currentFrame = newFrame;
+        currentFrame.setLocationRelativeTo(null);
+        currentFrame.setVisible(true);
+    }
+
 
     public void  addReviewListener(JButton button){
         button.addActionListener(new ActionListener() {
@@ -83,6 +98,7 @@ public class Bank_kid_control{
             public void actionPerformed(ActionEvent e) {
                 history_page review = new history_page(historyController);
                 JFrame Review_win = new JFrame();
+                openNewFrame(Review_win);
                 Review_win.setTitle("History");
                 Review_win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 Review_win.setLocationRelativeTo(null);

@@ -23,13 +23,15 @@ public class bank_parents extends JPanel{
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
     private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
     private final Color fontColor = new Color(49, 122, 232); // #317AE8
+    private final Font font = new Font("Arial", Font.PLAIN, 20);
+
     public MainFrame_parent getMainFrame(){return this.mainFrameParent;}
     public bank_parents(Bank_parent_controller bank_parent_controller) {
-//        this.mainFrameParent = mainFrameParent;
-//        Bank_parent_controller bank_parent_controller = new Bank_parent_controller(kid);
+        this.bank_parent_controller = bank_parent_controller;
         bank_parent_controller.setGUI(this);
         setLayout(null); // 使用绝对布局
         setBackground(mainBgColor);
+        initData();
 
         currentDetails = new JButton("Details");
         currentDetails.setBounds(590, 190, 140, 30);
@@ -48,6 +50,33 @@ public class bank_parents extends JPanel{
 
     }
 
+    public void initData(){
+        JLabel income = new JLabel(String.valueOf(bank_parent_controller.getKid().getTransactionList().getIncomeForDate("2024/3/10")));
+        income.setBounds(150,70,100,50);
+        income.setFont(font);
+        add(income);
+
+        JLabel expenses = new JLabel(String.valueOf(bank_parent_controller.getKid().getTransactionList().getExpensesForDate("2024/3/10")));
+        expenses.setBounds(280,70,100,50);
+        expenses.setFont(font);
+        add(expenses);
+
+        JLabel savingGoal = new JLabel(String.valueOf(bank_parent_controller.getKid().getAccountManager().getSavingGoal()));
+        savingGoal.setBounds(590,70,100,50);
+        savingGoal.setFont(font);
+        add(savingGoal);
+
+        JLabel currentTotal = new JLabel(String.valueOf(bank_parent_controller.getKid().getAccountManager().getTotalCurrentBalance()));
+        currentTotal.setBounds(280,190,100,50);
+        currentTotal.setFont(font);
+        add(currentTotal);
+
+        JLabel savingTotal = new JLabel(String.valueOf(bank_parent_controller.getKid().getAccountManager().getTotalSavingBalance()));
+        savingTotal.setFont(font);
+        savingTotal.setBounds(280,310,100,50);
+        add(savingTotal);
+    }
+
     public void paintComponent(Graphics g) {
         setLayout(null); // 使用绝对布局
         setBackground(mainBgColor);
@@ -60,36 +89,27 @@ public class bank_parents extends JPanel{
         g.setFont(titleFont);
         g.drawString("Income", 150, 60); // 在框内写字
         g.drawString("Expenses", 280, 60);
-//        g.drawString("+50.00", 150, 100); // 在下方显示 +50
-//        g.drawString("-20.00", 280, 100);
 
         g.setColor(Color.WHITE);
         g.fillRect(500, 40, 270, 80);
         g.setColor(Color.black);
         g.setFont(titleFont);
-        g.drawString("Saving Goals", 610, 60);
-//        g.drawString(kid.getBank().getSavingTotal(),610,100);
-//        g.drawString("300.00", 610, 100);
+        g.drawString("Saving Goals", 590, 60);
 
         g.setColor(Color.WHITE);
         g.fillRect(70, 150, 700, 90);
         g.setColor(Color.black);
         g.setFont(titleFont);
         g.drawString("Current", 90, 220);
-//        g.drawString("Interest Rate", 150, 170);
         g.drawString("Total", 280, 170);
-//        g.drawString("0.0%", 150, 220);
-//        g.drawString("60.00", 280, 220);
+
 
         g.setColor(Color.WHITE);
         g.fillRect(70, 270, 700, 90);
         g.setColor(Color.black);
         g.setFont(titleFont);
         g.drawString("Saving", 90, 340);
-//        g.drawString("Interest Rate", 150, 290);
         g.drawString("Total", 280, 290);
-//        g.drawString("0.0%", 150, 340);
-//        g.drawString("60.00", 280, 340);
 
 
         g.setColor(Color.WHITE);
@@ -99,16 +119,12 @@ public class bank_parents extends JPanel{
         g.drawString("Transaction History", 90, 440);
     }
 
-    //    initData(){
-//        kid.getBank().getSavingTotal();
-//
-//    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 Kids kid = ReadAll.readall(String.valueOf(222));
                 bank_parents panel = new bank_parents(new Bank_parent_controller(kid));
-//                Bank_parent_controller controller = new Bank_parent_controller(kid,panel);
                 JFrame frame = new JFrame("Bank Parents Panel");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(800, 600);
@@ -118,19 +134,4 @@ public class bank_parents extends JPanel{
         });
     }
 
-
-//    public static void main(String[] args) {
-//        Kids kid = ReadAll.readall(String.valueOf(222));
-//        Bank_parent_controller bankParentController = new Bank_parent_controller(kid,bank_parents);
-//        JFrame frame = new JFrame("Shop Application");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setContentPane(new bank_parents(kid,new Bank_parent_controller(kid,bank_parents)));
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
-
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//
-//    }
 }
