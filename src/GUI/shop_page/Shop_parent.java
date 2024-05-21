@@ -22,7 +22,7 @@ public class Shop_parent extends JPanel implements RefreshListener {
 
     private JTextField nameTextField, priceTextField;
     private JButton submitButton, confirmButton;
-    private JLabel currentAccountLabel, currentBalanceLabel;
+    private JLabel currentAccountLabel;
     private ShopParentController shopController;
     private JPanel todoListPanel;
     private JComboBox<String> accountDropdown;
