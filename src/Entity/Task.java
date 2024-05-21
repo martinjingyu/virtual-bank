@@ -45,8 +45,8 @@ public class Task {
         return description;
     }
 
-    public void setDescription(String destination){
-        this.destination = destination;
+    public void setDescription(String description){
+        this.description = description;
     }
 
     public String getDestination() {
