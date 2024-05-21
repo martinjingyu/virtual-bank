@@ -4,25 +4,53 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class TaskList{
+/**
+ * The TaskList class represents a list of tasks and provides various methods to manage the tasks.
+ */
+public class TaskList {
     private List<Task> taskList;
 
+    /**
+     * Constructs a new TaskList with an empty list of tasks.
+     */
     public TaskList() {
         this.taskList = new ArrayList<>();
     }
 
+    /**
+     * Adds a new task to the task list.
+     *
+     * @param task the task to be added
+     */
     public void addTask(Task task) {
         taskList.add(task);
     }
 
-
+    /**
+     * Removes a task from the task list.
+     *
+     * @param task the task to be removed
+     */
     public void removeTask(Task task) {
         taskList.remove(task);
     }
-    public Task getTask(int index){
+
+    /**
+     * Returns the task at the specified index.
+     *
+     * @param index the index of the task to be returned
+     * @return the task at the specified index
+     */
+    public Task getTask(int index) {
         return taskList.get(index);
     }
 
+    /**
+     * Updates the task with the specified name with new task data.
+     *
+     * @param taskName the name of the task to be updated
+     * @param newTaskData the new task data to update
+     */
     public void updateTask(String taskName, Task newTaskData) {
         for (Task task : taskList) {
             if (task.getName().equals(taskName)) {
@@ -36,7 +64,12 @@ public class TaskList{
         }
     }
 
-    public TaskList getNonConfirmedTask(){
+    /**
+     * Returns a TaskList of tasks that are not confirmed.
+     *
+     * @return a TaskList of tasks that are not confirmed
+     */
+    public TaskList getNonConfirmedTask() {
         TaskList nonTask = new TaskList();
         for (Task task : taskList) {
             if (!Objects.equals(task.getState(), "Confirmed")) {
@@ -45,24 +78,44 @@ public class TaskList{
         }
         return nonTask;
     }
-    public TaskList changeDepository(String destination){
-        TaskList tasks = new TaskList();
+
+    /**
+     * Changes the destination of all tasks in the task list.
+     *
+     * @param destination the new destination to be set for all tasks
+     * @return the TaskList after changing the destination
+     */
+    public TaskList changeDepository(String destination) {
         for (Task task : taskList) {
             task.setDestination(destination);
         }
-        return tasks;
+        return this;
     }
 
-
-
+    /**
+     * Returns a list of all tasks in the task list.
+     *
+     * @return a list of all tasks in the task list
+     */
     public List<Task> getAllTasks() {
         return taskList;
     }
 
-    public int getSize(){
+    /**
+     * Returns the number of tasks in the task list.
+     *
+     * @return the number of tasks in the task list
+     */
+    public int getSize() {
         return taskList.size();
     }
 
+    /**
+     * Returns the task with the specified name.
+     *
+     * @param name the name of the task to be returned
+     * @return the task with the specified name, or null if no task with the name exists
+     */
     public Task getTaskByName(String name) {
         for (Task task : taskList) {
             if (task.getName().equals(name)) {
@@ -72,6 +125,12 @@ public class TaskList{
         return null;
     }
 
+    /**
+     * Checks if there is a duplicate task name in the task list.
+     *
+     * @param name the name of the task to be checked
+     * @return true if there is no duplicate task name, false otherwise
+     */
     public boolean checkDuplicateName(String name) {
         for (Task task : taskList) {
             if (task.getName().equals(name)) {
@@ -81,7 +140,13 @@ public class TaskList{
         return true;
     }
 
-    public int getIndex(String name){
+    /**
+     * Returns the index of the task with the specified name.
+     *
+     * @param name the name of the task
+     * @return the index of the task with the specified name, or -10 if no task with the name exists
+     */
+    public int getIndex(String name) {
         for (Task task : taskList) {
             if (task.getName().equals(name)) {
                 return taskList.indexOf(task);
@@ -90,55 +155,26 @@ public class TaskList{
         return -10;
     }
 
-    public String descriptionSet(String description){
+    /**
+     * Formats a description into an HTML string with line breaks.
+     *
+     * @param description the description to be formatted
+     * @return the formatted HTML string
+     */
+    public String descriptionSet(String description) {
         StringBuilder htmlBuilder = new StringBuilder("<html>");
         int length = 0;
         int maxLineLength = 45;
         for (String word : description.split(" ")) {
-            // Check if adding this word would exceed the max line length
             if (length + word.length() > maxLineLength) {
                 htmlBuilder.append("<br>");
                 length = 0;
             }
             htmlBuilder.append(word).append(" ");
-            length += word.length() + 1; // add 1 for the space
+            length += word.length() + 1;
         }
 
         htmlBuilder.append("</html>");
         return htmlBuilder.toString();
-    }
-
-
-    // You can add more methods as needed
-
-    public static void main(String[] args) {
-        // Example usage
-        TaskList taskList = new TaskList();
-
-        // Add some tasks
-        taskList.addTask(new Task("Clean the room", 5.0,"checking","Please sweep the floor in the living room and kitchen.Please sweep the floor in the living room and kitchen.Please sweep the floor in the living room and kitchen.","saving"));
-        taskList.addTask(new Task("Do homework", 3.0,"done","111","current"));
-        taskList.addTask(new Task("Wash dishes", 2.0,"processing","111","current"));
-        taskList.addTask(new Task("Wash dishes", 2.0,"released","111","current"));
-
-        // Get all tasks
-//        List<Task> allTasks = taskList.getAllTasks();
-//        System.out.println("All tasks:");
-//        for (Task task : allTasks) {
-//            System.out.println(task);
-//        }
-//        taskList.changeDepository("saving");
-//        List<Task> allTasks1 = taskList.getAllTasks();
-//        System.out.println("All tasks1:");
-//        for (Task task : allTasks1) {
-//            System.out.println(task);
-//        }
-
-//        System.out.println(taskList.descriptionSet(taskList.getTask(0)));
-
-
-        // Get a task by name
-        Task cleanRoomTask = taskList.getTaskByName("Clean the room");
-        System.out.println("\nTask found by name: " + cleanRoomTask);
     }
 }
