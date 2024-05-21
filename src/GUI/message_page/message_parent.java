@@ -9,6 +9,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * The {@code message_parent} class represents a graphical user interface (GUI) for displaying messages and contacts for a parent user.
+ * It provides functionality for viewing messages, selecting contacts, and sending new messages.
+ */
 public class message_parent extends JPanel {
     private Message_parent_controller controller;
     private JList<String> contactsList;
@@ -20,13 +24,20 @@ public class message_parent extends JPanel {
     private final Color borderColor = new Color(220, 220, 220); // #696969
     private final Color fontColor = new Color(49, 122, 232); // #317AE8
 
+    /**
+     * Constructs a {@code message_parent} object with the specified controller.
+     *
+     * @param controller the controller for handling message operations
+     */
     public message_parent(Message_parent_controller controller) {
         this.controller = controller;
         initUI();
         this.controller.setGUI(this);
-
     }
 
+    /**
+     * Initializes the graphical user interface elements.
+     */
     private void initUI() {
         setPreferredSize(new Dimension(900, 540));
         setLayout(new BorderLayout(20, 20));
@@ -40,6 +51,11 @@ public class message_parent extends JPanel {
         add(createContactsPanel(), BorderLayout.WEST);
     }
 
+    /**
+     * Creates the header panel containing the title.
+     *
+     * @return the header panel
+     */
     private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel();
         headerPanel.setBackground(mainBgColor);
@@ -50,6 +66,11 @@ public class message_parent extends JPanel {
         return headerPanel;
     }
 
+    /**
+     * Creates the panel for displaying contacts.
+     *
+     * @return the contacts panel
+     */
     private JPanel createContactsPanel() {
         contactsList = new JList<>(new String[]{"Kid", "System Alerts"});
         contactsList.setFont(new Font("SansSerif", Font.PLAIN, 16));
@@ -64,6 +85,11 @@ public class message_parent extends JPanel {
         return panel;
     }
 
+    /**
+     * Creates the panel for displaying messages.
+     *
+     * @return the messages panel
+     */
     private JPanel createMessagesPanel() {
         messageModel = new DefaultListModel<>();
         JList<Message> messagesList = new JList<>(messageModel);
@@ -79,6 +105,11 @@ public class message_parent extends JPanel {
         return panel;
     }
 
+    /**
+     * Creates the panel for message input.
+     *
+     * @return the input panel
+     */
     private JPanel createInputPanel() {
         messageInput = new JTextField("Please select a contact");
         messageInput.setFont(new Font("SansSerif", Font.PLAIN, 16));
@@ -90,23 +121,47 @@ public class message_parent extends JPanel {
     }
 
     // Accessor methods for the controller to use
+
+    /**
+     * Returns the message input field.
+     *
+     * @return the message input field
+     */
     public JTextField getMessageInput() {
         return messageInput;
     }
 
+    /**
+     * Returns the contacts list.
+     *
+     * @return the contacts list
+     */
     public JList<String> getContactList() {
         return contactsList;
     }
 
+    /**
+     * Returns the message model.
+     *
+     * @return the message model
+     */
     public DefaultListModel<Message> getMessageModel() {
         return messageModel;
     }
 
+    /**
+     * Updates the selected contact's information.
+     *
+     * @param contact the selected contact
+     */
     public void updateContactSelection(String contact) {
         contactNameLabel.setText(contact);
         messageModel.clear();  // Optionally delegate to controller to handle updating model
     }
 
+    /**
+     * Custom cell renderer for formatting messages in the message list.
+     */
     static class MessageCellRenderer extends JLabel implements ListCellRenderer<Message> {
         private static final Color kidMessageColor = new Color(239, 239, 239); // Light blue for kid's messages
         private static final Color parentMessageColor = new Color(225, 226, 226); // Light orange for parent's messages
@@ -155,13 +210,15 @@ public class message_parent extends JPanel {
                     message.getContent() + "</div></html>";
         }
     }
+
+    /**
+     * Main method to launch the GUI.
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
         Kids kid = ReadAll.readall(String.valueOf(222));
         Message_parent_controller messageController = new Message_parent_controller(kid);
         message_parent messageKid = new message_parent(messageController);
-        //Kids parent = ReadAll.readall(String.valueOf(222));
-        //Message_parent_controller messageController = new Message_parent_controller(parent);
-       // message_parent messageParent = new message_parent(messageController);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(messageKid);
@@ -169,4 +226,3 @@ public class message_parent extends JPanel {
         frame.setVisible(true);
     }
 }
-
