@@ -21,7 +21,6 @@ import java.util.List;
 public class ShopParentController {
     private Kids kid;
     private List<Product> boughtProduct;
-    private String selectedAccountName;
     private RefreshListener refreshListener;
 
     /**
