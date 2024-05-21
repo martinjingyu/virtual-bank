@@ -16,7 +16,10 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Locale;
 
-
+/**
+ * The TaskSet class represents the GUI for setting a new task.
+ * It extends JPanel and contains fields for task name, salary, and description.
+ */
 public class TaskSet extends JPanel {
     private JPanel Container;
     private JPanel taskSetting;
@@ -37,6 +40,12 @@ public class TaskSet extends JPanel {
     private Task_parent_control task_parent_control;
     private MainFrame_parent mainFrame;//这里等parent登录写好了要改成parent，下面也是
 
+    /**
+     * Constructs a new TaskSet with the specified Task_parent_control and MainFrame_parent.
+     *
+     * @param task_parent_control the controller for managing tasks
+     * @param mainFrame           the main frame of the parent
+     */
     public TaskSet(Task_parent_control task_parent_control, MainFrame_parent mainFrame) {
         $$$setupUI$$$();
         this.task_parent_control = task_parent_control;
@@ -52,12 +61,9 @@ public class TaskSet extends JPanel {
         frame.setVisible(true);
     }
 
-//    public static void main(String[] args) {
-//        new TaskSet(task_parent_control);
-//    }
-
-
-
+    /**
+     * Initializes the UI components.
+     */
     private void $$$setupUI$$$() {
         Container = new JPanel();
         Container.setLayout(new GridBagLayout());
