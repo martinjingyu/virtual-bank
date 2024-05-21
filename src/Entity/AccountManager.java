@@ -99,6 +99,9 @@ public class AccountManager {
     public double getTotalSavingBalance() {
         return savingAccounts.stream().mapToDouble(SavingAccount::getBalance).sum();
     }
+    public double getTotalSavingIncome(){
+        return savingAccounts.stream().mapToDouble(SavingAccount::getIncome).sum();
+    }
 
     // 打印所有活期账户的详情
     public void printCurrentAccountDetails() {

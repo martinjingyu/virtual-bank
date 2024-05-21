@@ -38,7 +38,7 @@ public class ShowSavingAccount extends JFrame {
     public ShowSavingAccount() {
 
         initUI();
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
         pack();
         setVisible(true);
     }
@@ -95,11 +95,11 @@ public class ShowSavingAccount extends JFrame {
         }
     }
 
-    public void initData(List<SavingAccount> accountList,Boolean whetherParent){
+    public void initData(List<SavingAccount> accountList,Boolean whetherParent, AccountManager accountManager){
         createFinishPanelList(accountList,whetherParent);
         accountGrid = createAccountGrid(accountList,whetherParent);
         mainContent.add(accountGrid,BorderLayout.CENTER);
-        infoPanel = createTotalInfoPanel();
+        infoPanel = createTotalInfoPanel(accountManager);
         mainContent.add(infoPanel,BorderLayout.SOUTH);
         timer = new Timer(1000, e -> {updateProgressBar(accountList, savingComponentList.getBarlist());updateRemaining(accountList);});
         timer.start();
@@ -112,7 +112,8 @@ public class ShowSavingAccount extends JFrame {
     }
     private void initUI(){
         setTitle("Saving Account");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.mainContent = new JPanel();
         setContentPane(mainContent);
         mainContent.setPreferredSize(new Dimension(900, 700));
@@ -205,14 +206,16 @@ public class ShowSavingAccount extends JFrame {
 
         JLabel remainLabel = savingComponentList.getRemainingList().get(i);
 
-        JLabel startLabel = new JLabel("Start time: "+account.getStartTime(), SwingConstants.CENTER);
+        LocalDateTime time = account.getStartTime();
+
+
+        JLabel startLabel = new JLabel("Start time: "+account.getFormattedStartTime(), SwingConstants.CENTER);
         startLabel.setFont(new Font("Arial", Font.PLAIN, 10));
         startLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel endLabel = new JLabel(" End time: "+ account.getEndTime(), SwingConstants.CENTER);
+        JLabel endLabel = new JLabel(" End time: "+ account.getFormattedEndTime(), SwingConstants.CENTER);
         endLabel.setFont(new Font("Arial", Font.PLAIN, 10));
         endLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
 
         cancel.setFont(new Font("Arial", Font.PLAIN, 10));
         cancel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -252,18 +255,18 @@ public class ShowSavingAccount extends JFrame {
         return headerPanel;
     }
 
-    private JPanel createTotalInfoPanel(){
+    private JPanel createTotalInfoPanel(AccountManager accountManager){
         JPanel accountInfoPanel = new JPanel();
         accountInfoPanel.setLayout(new GridLayout(4, 1));  // 使用网格布局
         accountInfoPanel.setBackground(panelBgColor);
         accountInfoPanel.setBorder(new LineBorder(borderColor, 1)); // 添加边框
 
         // 总收入
-        JLabel inputLabel = new JLabel("Total Input Money:     $" + "something to be added");
+        JLabel inputLabel = new JLabel("Total Input Money:     $" + accountManager.getTotalSavingBalance());
         inputLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         inputLabel.setForeground(fontColor);
 
-        JLabel incomeLabel = new JLabel("Total Expenses:  $" +  "something to be added");
+        JLabel incomeLabel = new JLabel("Total Expenses:  $" +  accountManager.getTotalSavingIncome());
         incomeLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         incomeLabel.setForeground(fontColor);
 
@@ -311,14 +314,17 @@ public class ShowSavingAccount extends JFrame {
     }
     private JPanel createAddComponents(){
         JPanel addPanel = new JPanel();
-        addPanel.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 1), new EmptyBorder(5, 10, 5, 10)));
+        addPanel.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 1), new EmptyBorder(20, 10, 5, 10)));
         addPanel.setBackground(Color.white);
         addPanel.setPreferredSize(new Dimension(200, 120));
 
         JLabel addLabel = new JLabel("+", SwingConstants.CENTER);
         addLabel.setFont(new Font("Arial", Font.BOLD, 50));
-        addLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        addLabel.setAlignmentX(addPanel.CENTER_ALIGNMENT);
+        addLabel.setAlignmentY(addPanel.CENTER_ALIGNMENT);
+        addPanel.add(Box.createVerticalGlue());
         addPanel.add(addLabel);
+        addPanel.add(Box.createVerticalGlue());
         return addPanel;
     }
     public void afterAddAccount(AccountManager accountManager, String name){
@@ -326,7 +332,7 @@ public class ShowSavingAccount extends JFrame {
         accountManager.createNewSavingAccount(name);
         mainContent.removeAll();
         mainContent.add(createHeaderPanel(), BorderLayout.NORTH);
-        initData(accountManager.getSavingAccounts(),false);
+        initData(accountManager.getSavingAccounts(),false,accountManager);
         pack();
         setVisible(true);
     }

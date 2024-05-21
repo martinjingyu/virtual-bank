@@ -23,9 +23,6 @@ public class MainFrame_parent extends JFrame {
         super("demo");
         this.mainController_parent = mainController;
         InitiateAll();
-        current_panel = this.pg1;
-        frame_panel();
-        navi_button();
 
         mainController.mainFrameController_parent.setGUI(this);
         mainController.mainFrameController_parent.addButtonListener();
@@ -38,6 +35,9 @@ public class MainFrame_parent extends JFrame {
         this.pg2 = new Shop_parent(mainController_parent.shopParentController);
         this.pg3 = new Task_parent(mainController_parent.task_parent_control,this);
         this.pg4 = new message_parent(mainController_parent.messageParentController);
+        current_panel = this.pg1;
+        frame_panel();
+        navi_button();
 
 
 //        this.pg1 = new Bank_kid();
@@ -141,6 +141,7 @@ public class MainFrame_parent extends JFrame {
         // 设置主窗口的标题
 
         this.setSize(960,540);
+        this.setResizable(false);
         menu = new JPanel();
         main_page = new JPanel(new BorderLayout());
 

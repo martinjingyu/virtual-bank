@@ -1,6 +1,7 @@
 package Entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SavingAccount extends Account {
 
@@ -38,6 +39,19 @@ public class SavingAccount extends Account {
     }
 
 
+    public String getFormattedStartTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        String formattedDateTime = startTime.format(formatter);
+        return formattedDateTime;
+    }
+
+    public String getFormattedEndTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        String formattedDateTime = endTime.format(formatter);
+        return formattedDateTime;
+    }
+
+
     @Override
     public void calculateInterest() {
         LocalDateTime now = LocalDateTime.now();
@@ -48,5 +62,12 @@ public class SavingAccount extends Account {
             long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(startTime, endTime);
             balance += balance * (interestRate / 100.0) * (daysBetween / 365.25);
         }
+    }
+
+    public double getIncome(){
+        long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(startTime, endTime);
+        double income = balance;
+        income += income * (interestRate / 100.0) * (daysBetween / 365.25);
+        return income;
     }
 }

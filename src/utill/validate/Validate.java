@@ -1,5 +1,7 @@
 package utill.validate;
 
+import javax.swing.*;
+
 public class Validate {
     public static boolean validateName(String name) {
         if (name == null || name.trim().isEmpty()) {
@@ -60,5 +62,15 @@ public class Validate {
         }
 
         return hasDigitBeforeDecimal;
+    }
+
+    public static double validateNumber(String input){
+        try {
+            return Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            // You can re-prompt the user here or handle the invalid input as needed
+            return Double.NaN; // Return NaN to indicate the input was invalid
+        }
     }
 }
