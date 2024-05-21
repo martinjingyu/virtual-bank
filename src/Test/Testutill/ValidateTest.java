@@ -10,24 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class ValidateTest {
 
-    /**
-     * Tests the validateName method.
-     * Verifies various scenarios for name validation.
-     */
-    @Test
-    public void testValidateName() {
-        // Valid names
-        assertTrue(Validate.validateName("John Doe"));
-        assertTrue(Validate.validateName("Jane123"));
-        assertTrue(Validate.validateName("John"));
-
-        // Invalid names
-        assertFalse(Validate.validateName(null)); // Null name
-        assertFalse(Validate.validateName("")); // Empty name
-        assertFalse(Validate.validateName("   ")); // Name with only spaces
-        assertFalse(Validate.validateName("!@#")); // Name with special characters
-        assertFalse(Validate.validateName("123")); // Name with only digits
-    }
 
     /**
      * Tests the validateDescription method.

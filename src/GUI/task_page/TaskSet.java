@@ -223,7 +223,16 @@ public class TaskSet extends JPanel {
                 TaskName = task_name.getText();
                 TaskSalary = task_salary.getText();
                 TaskDescription = task_description.getText();
-                if(Validate.validateName(TaskName) && Validate.validateDescription(TaskDescription) && Validate.validateSalary(TaskSalary) && task_parent_control.getKid().getTaskList().checkDuplicateName(TaskName)){
+                Boolean nameValid;
+                try{
+                    Validate.validateName(TaskName);
+                    nameValid =true;
+                }
+                catch (Exception e1){
+                    nameValid =false;
+                }
+
+                if(nameValid && Validate.validateDescription(TaskDescription) && Validate.validateSalary(TaskSalary) && task_parent_control.getKid().getTaskList().checkDuplicateName(TaskName)){
                     // 显示确认对话框
                     int response = JOptionPane.showConfirmDialog(null,
                             "Are you sure you want to set this task as new task?",
@@ -248,7 +257,7 @@ public class TaskSet extends JPanel {
 
                     }
                     // 如果用户选择 "No"，不执行保存操作
-                } else if (!(Validate.validateName(TaskName))) {
+                } else if (!(nameValid)) {
                     JOptionPane.showMessageDialog(null,
                             "Task name should not contain special characters or be empty, and it should contain letters.",
                             "Invalid Task Name",

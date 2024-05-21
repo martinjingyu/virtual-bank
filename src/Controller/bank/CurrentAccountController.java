@@ -3,6 +3,7 @@ package Controller.bank;
 import Entity.AccountManager;
 import Entity.Kids;
 import GUI.bank_page.ShowCurrentAccount;
+import utill.validate.Validate;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,8 +55,7 @@ public class CurrentAccountController {
                         public void actionPerformed(ActionEvent e) {
                             try{
                                 int selectedIndex = comboBox.getSelectedIndex();
-                                double value = Double.parseDouble(textField.getText());
-
+                                double value=Validate.validateNumber(textField.getText());
                                 // 执行 earlyWithdrew 方法
                                 kid.getAccountManager().transfer(selectedIndex, finalI,value);
                                 refresh(kid.getAccountManager());
@@ -63,8 +63,7 @@ public class CurrentAccountController {
                                 frame.dispose();
                             }
                             catch (Exception e1){
-                                System.out.println("wrong input");
-                                frame.dispose();
+                                textField.setText("");
                             }
                             // 获取用户选择的 current account
 
@@ -108,16 +107,15 @@ public class CurrentAccountController {
         confirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String accountName = nameField.getText().trim();
-                if (!accountName.isEmpty()) {
+                try{
+                    String accountName = Validate.validateName(nameField.getText());
                     GUI.afterAddAccount(kid.getAccountManager(),accountName);
                     dialog.dispose();
                     addListener(GUI);
-
-                } else {
-                    JOptionPane.showMessageDialog(dialog, "Account name cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-
+                catch (Exception e1){
+                    nameField.setText("");
+                }
             }
         });
         inputPanel.add(nameLabel);
