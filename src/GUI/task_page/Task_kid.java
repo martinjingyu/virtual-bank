@@ -320,7 +320,7 @@ public class Task_kid extends JPanel {
         gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.NORTH;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(50, 0, 0, 0);
+        gbc.insets = new Insets(23, 0, 0, 0);
         Tasks.add(taskList, gbc);
         taskTitle = new JPanel();
         taskTitle.setLayout(new GridBagLayout());
