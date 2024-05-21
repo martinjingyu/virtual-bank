@@ -1,5 +1,5 @@
 package GUI;
-import Controller.MainController;
+import Controller.MainController_Kid;
 
 import GUI.bank_page.Bank_kid;
 import GUI.message_page.message_kid;
@@ -17,31 +17,31 @@ public class MainFrame_kid extends JFrame {
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
     private JPanel pg1, pg2,pg3,pg4;
-    private MainController mainController;
+    private MainController_Kid mainControllerKid;
 
 //    private Message_kid messageKid;
 
-    public MainFrame_kid(MainController mainController) {
+    public MainFrame_kid(MainController_Kid mainControllerKid) {
         super("demo");
-        this.mainController = mainController;
+        this.mainControllerKid = mainControllerKid;
 
         InitiateAll();
         current_panel = pg1;
         frame_panel();
         navi_button();
 
-        mainController.mainFrameController.setGUI(this);
-        mainController.mainFrameController.addButtonListener();
-        mainController.mainFrameController.addFrameListener();
+        mainControllerKid.mainFrameControllerKid.setGUI(this);
+        mainControllerKid.mainFrameControllerKid.addButtonListener();
+        mainControllerKid.mainFrameControllerKid.addFrameListener();
 
         setVisible(true);
     }
 
     private void InitiateAll(){
-        this.pg1 = new Bank_kid(mainController.bank_kid_control, this);
-        this.pg2 = new Shop_kid(mainController.ShopController);
-        this.pg3 = new Task_kid(mainController.task_kid_control, this);
-        this.pg4 = new message_kid(mainController.message_kid_controller);
+        this.pg1 = new Bank_kid(mainControllerKid.bank_kid_control, this);
+        this.pg2 = new Shop_kid(mainControllerKid.ShopController);
+        this.pg3 = new Task_kid(mainControllerKid.task_kid_control, this);
+        this.pg4 = new message_kid(mainControllerKid.message_kid_controller);
     }
 
 
@@ -58,7 +58,7 @@ public class MainFrame_kid extends JFrame {
                 current_panel = pg3;
                 break;
             case 4:
-                this.pg4 = new message_kid(mainController.message_kid_controller);
+                this.pg4 = new message_kid(mainControllerKid.message_kid_controller);
                 current_panel = pg4;
                 break;
             default:
@@ -155,7 +155,7 @@ public class MainFrame_kid extends JFrame {
     }
 
     public static void main(String[] args) {
-        MainFrame_kid main = new MainFrame_kid(new MainController("222"));
+        MainFrame_kid main = new MainFrame_kid(new MainController_Kid("222"));
     }
 
 }

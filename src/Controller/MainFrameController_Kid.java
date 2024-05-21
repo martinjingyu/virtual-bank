@@ -7,13 +7,13 @@ import utill.write.WriteAll;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class MainFrameController extends MouseAdapter {
+public class MainFrameController_Kid extends MouseAdapter {
     private MainFrame_kid mainFrameKid;
     private String ID;
     private Kids kid;
     private JLabel currentSelectedButton;
 
-    public MainFrameController(String id, Kids kid) {
+    public MainFrameController_Kid(String id, Kids kid) {
         this.ID = id;
         this.kid = kid;
 
