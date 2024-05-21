@@ -7,46 +7,90 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShopKidController {
+/**
+ * The shopKidController class manages the interactions between the UI and the data model for the kid's shop.
+ */
+public class shopKidController {
     private Kids kid;
     private MessageList messageList;
     private List<Product> selectedProductList;
     private AccountManager accountManager;
     private String selectedAccountName;
 
-    public ShopKidController(Kids kid) {
+    /**
+     * Constructs a shopKidController for the specified kid.
+     *
+     * @param kid the kid associated with this controller
+     */
+    public shopKidController(Kids kid) {
         this.kid = kid;
         this.messageList = kid.getMessagelist();
         this.selectedProductList = new ArrayList<>();
         this.accountManager = kid.getAccountManager();
+
     }
 
-    public void setSelectedAccountName(String accountName,JLabel currentAccountLabel) {
+    /**
+     * Sets the selected account name and updates the current account display.
+     *
+     * @param accountName the name of the account to select
+     * @param currentAccountLabel the label to update with the current account balance
+     */
+    public void setSelectedAccountName(String accountName, JLabel currentAccountLabel) {
         this.selectedAccountName = accountName;
         updateCurrentAccountDisplay(currentAccountLabel);
     }
 
-    public Kids getKid(){return kid;}
+    /**
+     * Returns the kid associated with this controller.
+     *
+     * @return the kid associated with this controller
+     */
+    public Kids getKid() {
+        return kid;
+    }
 
+    /**
+     * Calculates the total price of the selected products.
+     *
+     * @return the total price of the selected products
+     */
     public double calculateSelectedTotal() {
-        double total = 0;
+        double total  = 0;
         for (Product product : selectedProductList) {
             total += product.getPrice();
         }
         return total;
     }
 
+    /**
+     * Updates the current account display with the current balance.
+     *
+     * @param currentAccountLabel the label to update
+     */
     public void updateCurrentAccountDisplay(JLabel currentAccountLabel) {
         System.out.println(selectedAccountName);
         System.out.println(accountManager.getCurrentAccountBalance(selectedAccountName));
         currentAccountLabel.setText(String.format("Current Account: $%9.2f", accountManager.getCurrentAccountBalance(selectedAccountName)));
     }
 
+    /**
+     * Updates the selected total display with the total price of selected products.
+     *
+     * @param selectedTotalLabel the label to update
+     */
     public void updateSelectedTotalDisplay(JLabel selectedTotalLabel) {
         selectedTotalLabel.setText(String.format("Selected Total: $%9.2f", calculateSelectedTotal()));
     }
 
-    public void updateSelectedProductList(Product product, boolean isSelected,JLabel selectedTotalLabel) {
+    /**
+     * Updates the list of selected products and updates the total display.
+     *
+     * @param product the product to add or remove
+     * @param isSelected whether the product is selected or not
+     * @param selectedTotalLabel the label to update
+     */
+    public void updateSelectedProductList(Product product, boolean isSelected, JLabel selectedTotalLabel) {
         if (isSelected) {
             selectedProductList.add(product);
             updateSelectedTotalDisplay(selectedTotalLabel);
@@ -56,8 +100,14 @@ public class ShopKidController {
         }
     }
 
-
-    public void buyProducts(JLabel selectedTotalLabel, JLabel currentAccountLabel,List<JRadioButton> toggleButtons) {
+    /**
+     * Handles the purchase of selected products.
+     *
+     * @param selectedTotalLabel the label displaying the total price of selected products
+     * @param currentAccountLabel the label displaying the current account balance
+     * @param toggleButtons the list of toggle buttons representing the product selection
+     */
+    public void buyProducts(JLabel selectedTotalLabel, JLabel currentAccountLabel, List<JRadioButton> toggleButtons) {
         if (selectedProductList.isEmpty()) {
             JOptionPane.showMessageDialog(null, "You haven't selected any products.", "No Products Selected!", JOptionPane.WARNING_MESSAGE);
             return;
@@ -66,7 +116,7 @@ public class ShopKidController {
         double totalCost = calculateSelectedTotal();
         double currentBalance = accountManager.getCurrentAccountBalance(selectedAccountName);
         try {
-            accountManager.withdrawFromCurrentAccount(selectedAccountName,totalCost);
+            accountManager.withdrawFromCurrentAccount(selectedAccountName, totalCost);
             if (totalCost > 0.8 * currentBalance) {
                 messageList.addShopMessage(totalCost);
             }
@@ -80,6 +130,5 @@ public class ShopKidController {
         } catch (InsufficientFundsException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 }
