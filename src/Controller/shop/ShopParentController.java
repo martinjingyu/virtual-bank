@@ -1,11 +1,17 @@
 package Controller.shop;
 
+import Entity.CurrentAccount;
 import Entity.Kids;
 import Entity.Product;
 import Entity.ProductList;
 import GUI.RefreshListener;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +21,7 @@ import java.util.List;
 public class ShopParentController {
     private Kids kid;
     private List<Product> boughtProduct;
+    private String selectedAccountName;
     private RefreshListener refreshListener;
 
     /**
@@ -55,6 +62,51 @@ public class ShopParentController {
     }
 
     /**
+     * Initializes the account dropdown with account names and sets the initial selected account.
+     *
+     * @param accountDropdown the JComboBox to populate with account names
+     * @param currentAccountLabel the label to update with the selected account's balance
+     */
+    public void initializeAccountDropdown(JComboBox<String> accountDropdown, JLabel currentAccountLabel) {
+        List<CurrentAccount> accounts = kid.getAccountManager().getCurrentAccounts();
+        for (CurrentAccount account : accounts) {
+            accountDropdown.addItem(account.getName());
+        }
+
+        accountDropdown.setFont(new Font("Arial", Font.PLAIN, 13));
+
+        if (!accounts.isEmpty()) {
+            String firstAccountName = accounts.get(0).getName();
+            accountDropdown.setSelectedItem(firstAccountName);
+            setSelectedAccountName(firstAccountName, currentAccountLabel);
+        }
+
+        accountDropdown.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String selectedAccount = (String) e.getItem();
+                    setSelectedAccountName(selectedAccount, currentAccountLabel);
+                }
+            }
+        });
+    }
+
+    /**
+     * Sets the selected account name and updates the current account display.
+     *
+     * @param accountName the name of the account to select
+     * @param currentAccountLabel the label to update with the current account balance
+     */
+    public void setSelectedAccountName(String accountName, JLabel currentAccountLabel) {
+        // 设置选中的账户名称
+        // 更新当前账户显示标签
+        double currentBalance = kid.getAccountManager().getCurrentAccountBalance(accountName);
+        currentAccountLabel.setText(String.format("$%.2f", currentBalance));
+    }
+
+
+    /**
      * Updates the bought product list based on the selection state.
      *
      * @param product the product to update
@@ -78,7 +130,7 @@ public class ShopParentController {
         try {
             double priceValue = Double.parseDouble(price);
             if (!name.matches("[a-zA-Z]+")) {
-                JOptionPane.showMessageDialog(null, "Invalid price. Please enter a valid name. (hint: only characters).");
+                JOptionPane.showMessageDialog(null, "Invalid name. Please enter a valid name. (hint: only characters).");
                 throw new IllegalArgumentException("Invalid input: Name can only contain letters.");
             }
             kid.getProductList().addProduct(new Product(name, priceValue));
@@ -107,5 +159,34 @@ public class ShopParentController {
         if (refreshListener != null) {
             refreshListener.refreshUI();
         }
+    }
+
+    /**
+     * Sets up focus listeners for text fields to handle placeholder text.
+     *
+     * @param textField the text field to set up the listener for
+     * @param placeholderText the placeholder text to display
+     */
+    public void setupFocusListener(JTextField textField, String placeholderText) {
+
+        textField.setText(placeholderText);
+        textField.setForeground(Color.GRAY);
+        textField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textField.getText().equals(placeholderText)) {
+                    textField.setText("");
+                    textField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setForeground(Color.GRAY);
+                    textField.setText(placeholderText);
+                }
+            }
+        });
     }
 }
