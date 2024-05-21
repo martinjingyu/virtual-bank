@@ -1,7 +1,6 @@
 package GUI.shop_page;
 
 import Controller.shop.ShopParentController;
-import Entity.CurrentAccount;
 import Entity.Kids;
 import Entity.Product;
 import GUI.RefreshListener;
@@ -9,22 +8,22 @@ import utill.read.ReadAll;
 
 import java.awt.*;
 import java.util.ArrayList;
-
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.util.List;
 import java.awt.event.ItemEvent;
 
+/**
+ * The Shop_parent class represents the UI panel for the shop, allowing parents to manage products and accounts.
+ */
 public class Shop_parent extends JPanel implements RefreshListener {
 
-    private JCheckBox bookCheckBox, toy1CheckBox, toy2CheckBox, toy3CheckBox;
     private JTextField nameTextField, priceTextField;
     private JButton submitButton, confirmButton;
     private JLabel currentAccountLabel;
     private ShopParentController shopController;
-    private List<JButton> ButtonList;
     private JPanel todoListPanel;
     private JComboBox<String> accountDropdown;
 
@@ -35,6 +34,11 @@ public class Shop_parent extends JPanel implements RefreshListener {
     private final Color submitButtonColor = new Color(103, 201, 86); // #67C956
     private final Color borderColor = new Color(105, 105, 105); // #696969
 
+    /**
+     * Constructs a Shop_parent panel with the specified controller.
+     *
+     * @param controller the controller for this panel
+     */
     public Shop_parent(ShopParentController controller) {
         this.shopController = controller;
         this.shopController.setRefreshListener(this);
@@ -43,8 +47,10 @@ public class Shop_parent extends JPanel implements RefreshListener {
         initUI();
     }
 
+    /**
+     * Initializes the UI components of the panel.
+     */
     private void initUI() {
-        // Set the layout with padding around the entire layout
         setPreferredSize(new Dimension(900, 540));
         setLayout(new BorderLayout(20, 20)); // Added horizontal and vertical gaps
         setBorder(new EmptyBorder(20, 40, 20, 40)); // Added horizontal and vertical margins
@@ -53,18 +59,26 @@ public class Shop_parent extends JPanel implements RefreshListener {
         add(createToDoListPanel(), BorderLayout.WEST);
         add(createUploadProductsPanel(), BorderLayout.CENTER);
         add(createAccountInfoPanel(), BorderLayout.SOUTH);
+
     }
 
+    /**
+     * Refreshes the UI of the panel.
+     */
     @Override
     public void refreshUI() {
         remove(todoListPanel);
         todoListPanel = createToDoListPanel();
-        add(createToDoListPanel(), BorderLayout.WEST);
+        add(todoListPanel, BorderLayout.WEST);
         validate();
         repaint();
     }
 
-    // Create the header "Family Mall" with margin
+    /**
+     * Creates the header panel.
+     *
+     * @return the header panel
+     */
     private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel();
         headerPanel.setBackground(mainBgColor);
@@ -79,9 +93,11 @@ public class Shop_parent extends JPanel implements RefreshListener {
         return headerPanel;
     }
 
-
-
-
+    /**
+     * Creates the to-do list panel.
+     *
+     * @return the to-do list panel
+     */
     private JPanel createToDoListPanel() {
         todoListPanel = new JPanel();
         todoListPanel.setLayout(new BorderLayout());
@@ -90,14 +106,12 @@ public class Shop_parent extends JPanel implements RefreshListener {
         todoListPanel.setBackground(panelBgColor);
         todoListPanel.setBorder(new EmptyBorder(30, 0, 0, 0));
 
-        // Top Label
         JLabel todoLabel = new JLabel("TO DO LIST");
         todoLabel.setFont(new Font("Arial", Font.BOLD, 26));
         todoLabel.setForeground(fontColor);
         todoLabel.setHorizontalAlignment(SwingConstants.CENTER);
         todoListPanel.add(todoLabel, BorderLayout.NORTH);
 
-        // Scrollable check box panel
         JPanel checkBoxPanel = new JPanel();
         List<JCheckBox> checkBoxes = new ArrayList<>();
         checkBoxPanel.setLayout(new BoxLayout(checkBoxPanel, BoxLayout.Y_AXIS));
@@ -123,23 +137,23 @@ public class Shop_parent extends JPanel implements RefreshListener {
 
         todoListPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // Confirm Button
-        JButton confirmButton = new JButton("Confirm");
+        confirmButton = new JButton("Confirm");
         confirmButton.setFont(new Font("Arial", Font.BOLD, 25));
         confirmButton.setBackground(new Color(192, 192, 192));
         confirmButton.setForeground(Color.BLACK);
         confirmButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        confirmButton.addActionListener(e -> {
-            shopController.updateSelectedProduct(checkBoxes);
-        });
+        confirmButton.addActionListener(e -> shopController.updateSelectedProduct(checkBoxes));
 
         todoListPanel.add(confirmButton, BorderLayout.SOUTH);
 
         return todoListPanel;
     }
 
-
-    // Create the Upload Products Panel
+    /**
+     * Creates the upload products panel.
+     *
+     * @return the upload products panel
+     */
     private JPanel createUploadProductsPanel() {
         JPanel uploadPanel = new JPanel(new GridBagLayout());
         uploadPanel.setPreferredSize(new Dimension(540, 0)); // Width: 60% of overall window width
@@ -161,11 +175,13 @@ public class Shop_parent extends JPanel implements RefreshListener {
 
         nameTextField = new JTextField(15);
         nameTextField.setBorder(BorderFactory.createTitledBorder(new LineBorder(borderColor), "Name")); // Added border
+        nameTextField.setToolTipText("Name should only contain characters (A-Z, a-z)");
         gbc.gridy = 1;
         uploadPanel.add(nameTextField, gbc);
 
         priceTextField = new JTextField(15);
         priceTextField.setBorder(BorderFactory.createTitledBorder(new LineBorder(borderColor), "Price")); // Added border
+        priceTextField.setToolTipText("Price should be a valid number");
         gbc.gridy = 2;
         uploadPanel.add(priceTextField, gbc);
 
@@ -175,37 +191,48 @@ public class Shop_parent extends JPanel implements RefreshListener {
         submitButton.setForeground(Color.WHITE);
         gbc.gridy = 3;
 
-        submitButton.addActionListener(e -> {
-            shopController.updateProducts(nameTextField.getText(),priceTextField.getText());
-        });
+        submitButton.addActionListener(e -> shopController.updateProducts(nameTextField.getText(), priceTextField.getText()));
 
         uploadPanel.add(submitButton, gbc);
 
         return uploadPanel;
     }
 
-    // Create the Account Information Panel
+    /**
+     * Creates the account information panel.
+     *
+     * @return the account information panel
+     */
     private JPanel createAccountInfoPanel() {
         JPanel accountInfoPanel = new JPanel();
         accountInfoPanel.setBackground(panelBgColor);
         accountInfoPanel.setBorder(new LineBorder(borderColor, 1)); // Added border
+        accountInfoPanel.setLayout(new BorderLayout());
 
         JLabel accountLabel = new JLabel("CURRENT ACCOUNT: ");
         accountLabel.setFont(new Font("Arial", Font.BOLD, 26));
         accountLabel.setForeground(fontColor);
 
-        currentAccountLabel = new JLabel(String.format("$%.2f", shopController.getKid().getAccountManager().getTotalCurrentBalance()));
+        currentAccountLabel = new JLabel();
         currentAccountLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        accountInfoPanel.add(accountLabel);
-        accountInfoPanel.add(currentAccountLabel);
+        JPanel accountPanel = new JPanel();
+        accountPanel.setBackground(panelBgColor);
+        accountPanel.add(accountLabel);
+        accountPanel.add(currentAccountLabel);
+
+        accountDropdown = new JComboBox<>();
+        shopController.initializeAccountDropdown(accountDropdown, currentAccountLabel);
+
+        accountInfoPanel.add(accountPanel, BorderLayout.CENTER);
+        accountInfoPanel.add(accountDropdown, BorderLayout.NORTH);
+
+
+        // Setup focus listeners for the text fields
+        shopController.setupFocusListener(nameTextField, "Name should only contain characters (A-Z, a-z)");
+        shopController.setupFocusListener(priceTextField, "Price should be a valid number");
 
         return accountInfoPanel;
-    }
-
-    public List<JButton> getButtonList()
-    {
-        return ButtonList;
     }
 
     public static void main(String[] args) {
@@ -220,4 +247,3 @@ public class Shop_parent extends JPanel implements RefreshListener {
         frame.setVisible(true);
     }
 }
-

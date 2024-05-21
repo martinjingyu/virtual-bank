@@ -1,6 +1,7 @@
 package Entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class HistoryTransaction {
@@ -15,9 +16,8 @@ public class HistoryTransaction {
         this.Destination = destination;
         this.amount = amount;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:M:d HH:mm:ss");
-        String formattedDate = LocalDate.now().format(formatter);
 
-        this.date = formattedDate;
+        this.date = LocalDateTime.now().format(formatter);
     }
     public HistoryTransaction(String source,String destination, double amount, String date) {
         this.Source = source;

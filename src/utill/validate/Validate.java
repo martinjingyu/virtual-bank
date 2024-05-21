@@ -1,4 +1,5 @@
 package utill.validate;
+import javax.swing.*;
 
 /**
  * The Validate class provides methods to validate various inputs.
@@ -28,6 +29,7 @@ public class Validate {
         return hasLetter;
     }
 
+
     /**
      * Validates a description.
      *
@@ -47,6 +49,7 @@ public class Validate {
         return true;
     }
 
+
     /**
      * Validates a salary.
      *
@@ -61,6 +64,7 @@ public class Validate {
         boolean hasDecimalPoint = false;
         boolean hasDigitBeforeDecimal = false;
         int decimalDigits = 0;
+
 
         for (int i = 0; i < salary.length(); i++) {
             char c = salary.charAt(i);
@@ -85,10 +89,23 @@ public class Validate {
             }
         }
 
+
         if (hasDecimalPoint && decimalDigits == 0) {
             return false; // No digits after the decimal point
         }
 
         return hasDigitBeforeDecimal;
     }
+
+
+    public static double validateNumber(String input){
+        try {
+            return Double.parseDouble(input);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            // You can re-prompt the user here or handle the invalid input as needed
+            return Double.NaN; // Return NaN to indicate the input was invalid
+        }
+    }
+
 }

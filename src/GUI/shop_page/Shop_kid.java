@@ -1,6 +1,6 @@
 package GUI.shop_page;
 
-import Controller.shop.ShopController;
+import Controller.shop.shopKidController;
 import Entity.CurrentAccount;
 import Entity.Kids;
 import Entity.Product;
@@ -15,14 +15,18 @@ import javax.swing.JRadioButton;
 import javax.swing.border.Border;
 import java.util.ArrayList;
 
+/**
+ * The Shop_kid class represents the UI panel for the shop, allowing kids to browse and buy products.
+ */
 public class Shop_kid extends JPanel {
     private JButton buyButton;
     private List<JRadioButton> toggleButtons;
     private ProductList productList;
-    private ShopController shopController;
+    private shopKidController shopController;
     private JLabel selectedTotalLabel;
     private JLabel currentAccountLabel;
     private JComboBox<String> accountDropdown;
+
     // Define the custom colors
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
     private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
@@ -30,7 +34,12 @@ public class Shop_kid extends JPanel {
     private final Color submitButtonColor = new Color(103, 201, 86); // #67C956
     private final Color borderColor = new Color(105, 105, 105); // #696969
 
-    public Shop_kid(ShopController shopController) {
+    /**
+     * Constructs a Shop_kid panel with the specified controller.
+     *
+     * @param shopController the controller for this panel
+     */
+    public Shop_kid(shopKidController shopController) {
         this.shopController = shopController;
         this.productList = shopController.getKid().getProductList();
         this.selectedTotalLabel = new JLabel("Selected Total: $      0.00");
@@ -39,16 +48,24 @@ public class Shop_kid extends JPanel {
         this.toggleButtons = new ArrayList<>();
 
         setLayout(new BorderLayout(10, 10));
-        setBackground(new Color(173, 216, 230));
+        setBackground(mainBgColor);
         initUI();
     }
 
+    /**
+     * Initializes the UI components of the panel.
+     */
     private void initUI() {
         add(createHeaderPanel(), BorderLayout.NORTH);
         add(createProductsPanel(), BorderLayout.CENTER);
         add(createFooter(), BorderLayout.SOUTH);
     }
 
+    /**
+     * Creates the header panel.
+     *
+     * @return the header panel
+     */
     private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel(new GridBagLayout());
         headerPanel.setBackground(mainBgColor);
@@ -60,7 +77,6 @@ public class Shop_kid extends JPanel {
         gbc.anchor = GridBagConstraints.WEST; // Align components to the left
         gbc.weightx = 1.0; // Distribute space evenly
 
-        // Title label
         JLabel titleLabel = new JLabel("FAMILY MALL");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
         titleLabel.setForeground(fontColor);
@@ -68,28 +84,27 @@ public class Shop_kid extends JPanel {
         gbc.gridwidth = GridBagConstraints.REMAINDER; // End row after this component
         headerPanel.add(titleLabel, gbc);
 
-        // Reset gridwidth for next components
         gbc.gridwidth = 1; // Allow next component in the same row
         gbc.weightx = 0; // Do not stretch this component horizontally
 
-        // Payment label
         JLabel label = new JLabel("Choose one to pay:");
         label.setFont(new Font("Arial", Font.PLAIN, 18)); // Adjust font to match your design
         headerPanel.add(label, gbc);
 
-        // Adjust insets to reduce space between label and dropdown
         gbc.insets = new Insets(0, 5, 0, 5); // Reduce space by setting small insets, adjust as needed
 
-        // Account dropdown
         accountDropdown = new JComboBox<>();
-        // Assuming BothAccountList is accessible via Kids class
-        for (CurrentAccount account : shopController.getKid().getAccountManager().getCurrentAccounts()) {
+        List<CurrentAccount> accounts = shopController.getKid().getAccountManager().getCurrentAccounts();
+        for (CurrentAccount account : accounts) {
             accountDropdown.addItem(account.getName());
         }
-        accountDropdown.setSelectedItem("CA1"); // Set the default selection to "CA1"
+        if (!accounts.isEmpty()) {
+            accountDropdown.setSelectedItem(accounts.get(0).getName()); // Set the default selection to the first account name
+            shopController.setSelectedAccountName(accounts.get(0).getName(), currentAccountLabel); // Update the controller's selected account
+        }
         accountDropdown.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
-                shopController.setSelectedAccountName((String) e.getItem(),currentAccountLabel);
+                shopController.setSelectedAccountName((String) e.getItem(), currentAccountLabel);
             }
         });
 
@@ -100,10 +115,14 @@ public class Shop_kid extends JPanel {
         return headerPanel;
     }
 
-
+    /**
+     * Creates the products panel.
+     *
+     * @return the products panel
+     */
     private JScrollPane createProductsPanel() {
         JPanel productsPanel = new JPanel(new GridLayout(0, 4, 10, 10)); // 动态行数，固定4列
-        productsPanel.setBackground(new Color(173, 216, 230));
+        productsPanel.setBackground(mainBgColor);
 
         for (Product product : this.productList.getAllProducts()) {
             JPanel productPanel = new JPanel();
@@ -131,7 +150,7 @@ public class Shop_kid extends JPanel {
             productPanel.add(Box.createVerticalStrut(5)); // 与底部边界的间隔
 
             radioButton.addItemListener(e -> {
-                shopController.updateSelectedProductList(product, e.getStateChange() == ItemEvent.SELECTED,selectedTotalLabel);
+                shopController.updateSelectedProductList(product, e.getStateChange() == ItemEvent.SELECTED, selectedTotalLabel);
             });
 
             toggleButtons.add(radioButton);
@@ -146,16 +165,21 @@ public class Shop_kid extends JPanel {
         return scrollPane;
     }
 
+    /**
+     * Creates the footer panel.
+     *
+     * @return the footer panel
+     */
     private JPanel createFooter() {
         JPanel footer = new JPanel(new GridBagLayout());
-        footer.setBackground(new Color(173, 216, 230));
+        footer.setBackground(mainBgColor);
 
         buyButton = new JButton("BUY!");
         buyButton.setFont(new Font("Arial", Font.BOLD, 18));
         buyButton.setBackground(new Color(0, 128, 0)); // 深绿色
         buyButton.setForeground(Color.WHITE);
         JPanel buyPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buyPanel.setBackground(new Color(173, 216, 230));
+        buyPanel.setBackground(mainBgColor);
         buyPanel.add(buyButton);
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -166,7 +190,6 @@ public class Shop_kid extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         footer.add(buyPanel, gbc);
 
-        // Selected Total label
         selectedTotalLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         selectedTotalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         gbc.gridwidth = 1; // 只占一列
@@ -175,22 +198,20 @@ public class Shop_kid extends JPanel {
         gbc.anchor = GridBagConstraints.LINE_END; // 设置右对齐
         footer.add(selectedTotalLabel, gbc);
 
-        // Current Account label
         currentAccountLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         currentAccountLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         gbc.gridx = 1; // 第二列
         gbc.gridy = 2; // 第三行
         footer.add(currentAccountLabel, gbc);
 
-        buyButton.addActionListener(e -> shopController.buyProducts(selectedTotalLabel, currentAccountLabel,toggleButtons));
-
+        buyButton.addActionListener(e -> shopController.buyProducts(selectedTotalLabel, currentAccountLabel, toggleButtons));
 
         return footer;
     }
 
     public static void main(String[] args) {
         Kids kid = ReadAll.readall(String.valueOf(222));
-        ShopController ShopController = new ShopController(kid);
+        shopKidController ShopController = new shopKidController(kid);
         Shop_kid shopKid = new Shop_kid(ShopController);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

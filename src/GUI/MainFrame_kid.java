@@ -93,6 +93,7 @@ public class MainFrame_kid extends JFrame {
         // 设置主窗口的标题
 
         this.setSize(960,540);
+        this.setResizable(false);
         menu = new JPanel();
         main_page = new JPanel(new BorderLayout());
 

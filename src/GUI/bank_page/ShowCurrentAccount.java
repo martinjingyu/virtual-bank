@@ -28,28 +28,29 @@ public class ShowCurrentAccount extends JFrame {
     public ShowCurrentAccount() {
 
         initUI();
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
         pack();
         setVisible(true);
     }
 
-    public void initData(List<CurrentAccount> accountList, Boolean whetherParent){
+    public void initData(List<CurrentAccount> accountList, Boolean whetherParent,AccountManager accountManager){
         accountGrid = createAccountGrid(accountList,whetherParent);
         mainContent.add(accountGrid,BorderLayout.CENTER);
-        infoPanel = createTotalInfoPanel();
+        infoPanel = createTotalInfoPanel(accountManager);
         mainContent.add(infoPanel,BorderLayout.SOUTH);
 
         pack();
         setVisible(true);
     }
-    public void refresh(List<CurrentAccount> accountList){
+    public void refresh(List<CurrentAccount> accountList,AccountManager accountManager){
         mainContent.remove(accountGrid);
         mainContent.remove(infoPanel);
-        initData(accountList,false);
+        initData(accountList,false,accountManager);
     }
     private void initUI(){
         setTitle("Current Account");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.mainContent = new JPanel();
         setContentPane(mainContent);
         mainContent.setPreferredSize(new Dimension(900, 700));
@@ -116,24 +117,20 @@ public class ShowCurrentAccount extends JFrame {
         return headerPanel;
     }
 
-    private JPanel createTotalInfoPanel(){
+    private JPanel createTotalInfoPanel(AccountManager accountManager){
         JPanel accountInfoPanel = new JPanel();
         accountInfoPanel.setLayout(new GridLayout(4, 1));  // 使用网格布局
         accountInfoPanel.setBackground(panelBgColor);
         accountInfoPanel.setBorder(new LineBorder(borderColor, 1)); // 添加边框
 
         // 总收入
-        JLabel inputLabel = new JLabel("Total Input Money:     $" + "something to be added");
+        JLabel inputLabel = new JLabel("Total Money:     $" + accountManager.getTotalCurrentBalance());
         inputLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         inputLabel.setForeground(fontColor);
 
-        JLabel incomeLabel = new JLabel("Total Expenses:  $" +  "something to be added");
-        incomeLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        incomeLabel.setForeground(fontColor);
 
-        accountInfoPanel.add(new JLabel("Saving ACCOUNT"));
+        accountInfoPanel.add(new JLabel("Current ACCOUNT"));
         accountInfoPanel.add(inputLabel);
-        accountInfoPanel.add(incomeLabel);
 
         return accountInfoPanel;
 
@@ -164,7 +161,7 @@ public class ShowCurrentAccount extends JFrame {
     }
     private JPanel createAddComponents(){
         JPanel addPanel = new JPanel();
-        addPanel.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 1), new EmptyBorder(5, 10, 5, 10)));
+        addPanel.setBorder(new CompoundBorder(new LineBorder(Color.GRAY, 1), new EmptyBorder(20, 10, 5, 10)));
         addPanel.setBackground(Color.white);
         addPanel.setPreferredSize(new Dimension(200, 120));
 
@@ -178,7 +175,7 @@ public class ShowCurrentAccount extends JFrame {
         accountManager.createNewCurrentAccount(name);
         mainContent.removeAll();
         mainContent.add(createHeaderPanel(), BorderLayout.NORTH);
-        initData(accountManager.getCurrentAccounts(),false);
+        initData(accountManager.getCurrentAccounts(),false,accountManager);
         pack();
         setVisible(true);
     }

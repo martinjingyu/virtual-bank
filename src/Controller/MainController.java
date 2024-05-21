@@ -2,7 +2,7 @@ package Controller;
 
 import Controller.bank.Bank_kid_control;
 import Controller.message.Message_kid_controller;
-import Controller.shop.ShopController;
+import Controller.shop.shopKidController;
 //import Controller.task.Task_kid_control;
 import Controller.task.Task_kid_control;
 import Entity.Kids;
@@ -14,7 +14,7 @@ public class MainController {
     private String ID;
     private RefreshListener listener;
     public Bank_kid_control bank_kid_control;
-    public ShopController ShopController;
+    public shopKidController ShopController;
     public MainFrameController mainFrameController;
     public Message_kid_controller message_kid_controller;
 
@@ -25,7 +25,7 @@ public class MainController {
         mainFrameController = new MainFrameController(id,kid);
 
         bank_kid_control = new Bank_kid_control(kid);
-        ShopController = new ShopController(kid);
+        ShopController = new shopKidController(kid);
         task_kid_control = new Task_kid_control(kid);
         message_kid_controller = new Message_kid_controller(kid);
 

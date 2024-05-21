@@ -34,10 +34,6 @@ public class Message {
         return sender;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
     public String getTimestamp() {
         return timestamp;
     }
@@ -49,23 +45,8 @@ public class Message {
     public String getContent() {
         return content;
     }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-//    @Override
-//    public String toString() {
-//        return "Message{" +
-//                "sender='" + sender + '\'' +
-//                ", timestamp=" + timestamp +
-//                ", content='" + content + '\'' +
-//                '}';
-//    }
-
     @Override
     public String toString() {
         return "[" + timestamp + "] " + content;
     }
-
 }
