@@ -6,8 +6,6 @@ import Controller.bank.Bank_kid_control;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,13 +14,11 @@ public class Bank_kid extends JPanel {
     private JPanel bank;
     private JButton button_goal;
     private JButton button1;
-    private JButton button2;
     private JButton button3;
-    private JButton button4;
     private JButton button_history;
-    public JTextField savingGoalTextField;
-//    public JLabel savingGoal;
+    //    public JLabel savingGoal;
     private MainFrame_kid mainFrameKid;
+    public JLabel savingGoal;
     private Bank_kid_control bank_kid_control;
     private Kids kid;
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
@@ -30,58 +26,6 @@ public class Bank_kid extends JPanel {
     private final Color fontColor = new Color(49, 122, 232); // #317AE8
     private final Font font = new Font("Arial", Font.PLAIN, 20);
     private LocalDateTime time;
-
-
-
-    public Bank_kid(Kids kid) {
-        this.kid=kid;
-        setLayout(null); // 使用绝对布局
-        button1 = new JButton("INTO");
-        button1.setBounds(590, 190, 140, 30);
-        add(button1);
-
-        button_goal = new JButton("Edit");
-        button_goal.setBounds(680,80,70,30);
-        savingGoalTextField = new JTextField();
-        savingGoalTextField.setBounds(580, 80, 75, 30);
-        savingGoalTextField.setVisible(false);
-        add(savingGoalTextField);
-
-        add(button_goal);
-
-//        button2 = new JButton("OUTO");
-//        button2.setBounds(630, 190, 100, 30);
-//        //button2.addActionListener();
-//        add(button2);
-
-        button3 = new JButton("INTO");
-        button3.setBounds(590, 310, 140, 30);
-        //button3.addActionListener();
-        add(button3);
-
-//        button4 = new JButton("OUTO");
-//        button4.setBounds(630, 310, 100, 30);
-//        //button4.addActionListener();
-//        add(button4);
-
-        button_history = new JButton("Review");
-        button_history.setBounds(590, 420, 140, 30);
-        button_history.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //this.dispose();
-//                history_page review = new history_page(this.kid);
-                JFrame Review_win = new JFrame();
-                Review_win.setTitle("History");
-                Review_win.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                Review_win.setLocationRelativeTo(null);
-//                Review_win.add(review);
-                Review_win.setSize(800, 400);
-                Review_win.setVisible(true);
-            }
-        });
-        add(button_history);
-    }
 
     public Bank_kid(Bank_kid_control bank_kid_control, MainFrame_kid mainFrameKid) {
         this.mainFrameKid = mainFrameKid;
@@ -110,12 +54,15 @@ public class Bank_kid extends JPanel {
         button_history.setBounds(590, 420, 140, 30);
         bank_kid_control.addReviewListener(button_history);
         add(button_history);
+
     }
     private void setController(Bank_kid_control bank_kid_control){
         this.bank_kid_control =bank_kid_control;
     }
     public MainFrame_kid getMainFrame(){return this.mainFrameKid;}
     public void initData(){
+//        super.repaint();
+        removeAll();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:M:d");
         String formattedDate = LocalDate.now().format(formatter);
 
@@ -129,7 +76,7 @@ public class Bank_kid extends JPanel {
         expenses.setFont(font);
         add(expenses);
 
-        JLabel savingGoal = new JLabel(String.valueOf(bank_kid_control.getKid().getAccountManager().getSavingGoal()));
+        savingGoal = new JLabel(String.valueOf(bank_kid_control.getKid().getAccountManager().getSavingGoal()));
         savingGoal.setBounds(590,70,100,50);
         savingGoal.setFont(font);
         add(savingGoal);
@@ -146,7 +93,10 @@ public class Bank_kid extends JPanel {
 
     }
 
+    public JLabel getSavingGoals() {return this.savingGoal;}
+
     protected void paintComponent(Graphics g) {
+//        initData();
         Font titleFont = new Font("Arial", Font.PLAIN, 20);
         super.paintComponent(g);
         g.setColor(Color.WHITE);
@@ -182,6 +132,13 @@ public class Bank_kid extends JPanel {
         g.setColor(Color.black);
         g.setFont(titleFont);
         g.drawString("Transaction History", 90, 440);
+    }
+
+    public void refresh(){
+        repaint();
+        revalidate();
+        System.out.println(kid.getAccountManager().getSavingGoal());
+
     }
 
 

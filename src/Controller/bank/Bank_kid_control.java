@@ -50,6 +50,7 @@ public class Bank_kid_control implements RefreshListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                     JDialog dialog = new JDialog();//构造一个新的JFrame，作为新窗口。
+
                     dialog.setBounds(// 让新窗口与SwingTest窗口示例错开50像素。
                             new Rectangle(
                                     80,
@@ -85,12 +86,16 @@ public class Bank_kid_control implements RefreshListener{
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             String input = savingGoalTextField.getText();
-                            if (validateNumber(input)) {
+                            try{
+                                double value = Validate.validateNumber(input);
                                 dialog.dispose(); // 关闭对话框
-                                kid.getAccountManager().setSavingGoal(Double.parseDouble(input));
+                                kid.getAccountManager().setSavingGoal(value);
                                 GUI.revalidate();
                                 GUI.repaint();
-                                GUI.getSavingGoals().setText(String.valueOf(Double.parseDouble(input)));
+                                GUI.getSavingGoals().setText(String.valueOf(value));
+                            }
+                            catch (Exception e1){
+                                savingGoalTextField.setText("");
                             }
                         }
                     });
