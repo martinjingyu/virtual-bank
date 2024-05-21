@@ -1,8 +1,17 @@
 package utill.validate;
-
 import javax.swing.*;
 
+/**
+ * The Validate class provides methods to validate various inputs.
+ */
 public class Validate {
+
+    /**
+     * Validates a name.
+     *
+     * @param name the name to be validated
+     * @return true if the name is valid, false otherwise
+     */
     public static boolean validateName(String name) {
         if (name == null || name.trim().isEmpty()) {
             return false;
@@ -21,7 +30,12 @@ public class Validate {
     }
 
 
-    // 检查description输入
+    /**
+     * Validates a description.
+     *
+     * @param description the description to be validated
+     * @return true if the description is valid, false otherwise
+     */
     public static boolean validateDescription(String description) {
         if (description == null || description.length() > 150) {
             return false;
@@ -35,7 +49,13 @@ public class Validate {
         return true;
     }
 
-    // 检查salary输入
+
+    /**
+     * Validates a salary.
+     *
+     * @param salary the salary to be validated
+     * @return true if the salary is valid, false otherwise
+     */
     public static boolean validateSalary(String salary) {
         if (salary == null || salary.isEmpty()) {
             return false;
@@ -43,26 +63,40 @@ public class Validate {
 
         boolean hasDecimalPoint = false;
         boolean hasDigitBeforeDecimal = false;
+        int decimalDigits = 0;
+
 
         for (int i = 0; i < salary.length(); i++) {
             char c = salary.charAt(i);
             if (c == '.') {
                 if (hasDecimalPoint) {
-                    return false; // 多个小数点
+                    return false; // Multiple decimal points
                 }
                 hasDecimalPoint = true;
                 if (i == 0 || !Character.isDigit(salary.charAt(i - 1))) {
-                    return false; // 小数点前必须有数字
+                    return false; // Must have a digit before the decimal point
                 }
             } else if (!Character.isDigit(c)) {
-                return false; // 不是数字
+                return false; // Not a digit
             } else {
+                if (hasDecimalPoint) {
+                    decimalDigits++;
+                    if (decimalDigits > 2) {
+                        return false; // More than two decimal places
+                    }
+                }
                 hasDigitBeforeDecimal = true;
             }
         }
 
+
+        if (hasDecimalPoint && decimalDigits == 0) {
+            return false; // No digits after the decimal point
+        }
+
         return hasDigitBeforeDecimal;
     }
+
 
     public static double validateNumber(String input){
         try {
@@ -73,4 +107,5 @@ public class Validate {
             return Double.NaN; // Return NaN to indicate the input was invalid
         }
     }
+
 }
