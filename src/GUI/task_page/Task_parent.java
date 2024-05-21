@@ -1,10 +1,7 @@
 package GUI.task_page;
 
-import Controller.MainController;
-import Controller.task.Task_kid_control;
 import Controller.task.Task_parent_control;
 import Entity.*;
-import GUI.MainFrame_kid;
 import GUI.MainFrame_parent;
 //import utill.read.ReadBank;
 
@@ -18,7 +15,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 
 /**

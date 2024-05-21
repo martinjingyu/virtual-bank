@@ -39,12 +39,6 @@ public class MainFrame_parent extends JFrame {
         frame_panel();
         navi_button();
 
-
-//        this.pg1 = new Bank_kid();
-//        this.pg2 = new Shop_kid(mainController.ShopController);
-//        this.pg3 = new Task_kid(mainController.task_kid_control, this);
-//        this.pg4 = new Shop_kid(mainController.ShopController);
-
     }
 
 

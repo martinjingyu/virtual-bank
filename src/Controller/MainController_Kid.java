@@ -3,26 +3,19 @@ package Controller;
 import Controller.bank.Bank_kid_control;
 import Controller.message.Message_kid_controller;
 import Controller.shop.shopKidController;
-//import Controller.task.Task_kid_control;
 import Controller.task.Task_kid_control;
 import Entity.Kids;
-import GUI.RefreshListener;
 import utill.read.ReadAll;
 
-public class MainController {
-    private Kids kid;
-    private String ID;
-    private RefreshListener listener;
+public class MainController_Kid {
     public Bank_kid_control bank_kid_control;
     public shopKidController ShopController;
-    public MainFrameController mainFrameController;
+    public MainFrameController_Kid mainFrameControllerKid;
     public Message_kid_controller message_kid_controller;
-
     public Task_kid_control task_kid_control;
-    public MainController(String id){
-        this.ID = id;
+    public MainController_Kid(String id){
         Kids kid = ReadAll.readall(id);
-        mainFrameController = new MainFrameController(id,kid);
+        mainFrameControllerKid = new MainFrameController_Kid(id,kid);
 
         bank_kid_control = new Bank_kid_control(kid);
         ShopController = new shopKidController(kid);
@@ -30,10 +23,5 @@ public class MainController {
         message_kid_controller = new Message_kid_controller(kid);
 
     }
-
-    public Kids getKid(){
-        return kid;
-    }
-
 
 }

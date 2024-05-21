@@ -1,7 +1,7 @@
 
 // [pwd]:4/25：作为启动文件，用于启动整个项目
 
-import Controller.MainController;
+import Controller.MainController_Kid;
 import Controller.MainController_Parent;
 import GUI.MainFrame_kid;
 import GUI.MainFrame_parent;
@@ -17,9 +17,9 @@ public class Start implements LoginListener {
     }
     public void onLogin_kid(String id) {
         // 创建并显示新的窗口
-        MainController mainController = new MainController(id);
+        MainController_Kid mainControllerKid = new MainController_Kid(id);
 
-        MainFrame_kid mainFrameKid = new MainFrame_kid(mainController);
+        MainFrame_kid mainFrameKid = new MainFrame_kid(mainControllerKid);
     }
     public void onLogin_parent(String id){
         MainController_Parent mainController = new MainController_Parent(id);

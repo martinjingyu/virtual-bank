@@ -22,13 +22,7 @@ public class MainFrameController_Parent extends MouseAdapter {
         this.mainFrameParent = mainFrameParent;
         addButtonListener();
     }
-//    public MainFrameController_Parent(MainFrame_parent mainFrameParent) {
-//        this.mainFrameParent = mainFrameParent;
-//        mainFrameParent.getButton(1).addMouseListener(this);
-//        mainFrameParent.getButton(2).addMouseListener(this);
-//        mainFrameParent.getButton(3).addMouseListener(this);
-//        mainFrameParent.getButton(4).addMouseListener(this);
-//    }
+
     public void addButtonListener(){
         mainFrameParent.getButton(1).addMouseListener(this);
         mainFrameParent.getButton(2).addMouseListener(this);
