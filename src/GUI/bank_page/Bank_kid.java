@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Bank_kid extends JPanel {
     private JPanel bank;
@@ -17,19 +20,16 @@ public class Bank_kid extends JPanel {
     private JButton button3;
     private JButton button4;
     private JButton button_history;
-    private JButton button_yes;
-    private JButton button_no;
     public JTextField savingGoalTextField;
+//    public JLabel savingGoal;
     private MainFrame_kid mainFrameKid;
-    private int clickCount;
-    private String saving;
-    private String current;
     private Bank_kid_control bank_kid_control;
     private Kids kid;
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
     private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
     private final Color fontColor = new Color(49, 122, 232); // #317AE8
     private final Font font = new Font("Arial", Font.PLAIN, 20);
+    private LocalDateTime time;
 
 
 
@@ -116,12 +116,15 @@ public class Bank_kid extends JPanel {
     }
     public MainFrame_kid getMainFrame(){return this.mainFrameKid;}
     public void initData(){
-        JLabel income = new JLabel(String.valueOf(bank_kid_control.getKid().getTransactionList().getIncomeForDate("2024/3/10")));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:M:d");
+        String formattedDate = LocalDate.now().format(formatter);
+
+        JLabel income = new JLabel(String.valueOf(bank_kid_control.getKid().getTransactionList().getIncomeForDate(formattedDate)));
         income.setBounds(150,70,100,50);
         income.setFont(font);
         add(income);
 
-        JLabel expenses = new JLabel(String.valueOf(bank_kid_control.getKid().getTransactionList().getExpensesForDate("2024/3/10")));
+        JLabel expenses = new JLabel(String.valueOf(bank_kid_control.getKid().getTransactionList().getExpensesForDate(formattedDate)));
         expenses.setBounds(280,70,100,50);
         expenses.setFont(font);
         add(expenses);
@@ -140,7 +143,6 @@ public class Bank_kid extends JPanel {
         savingTotal.setFont(font);
         savingTotal.setBounds(280,310,100,50);
         add(savingTotal);
-
 
     }
 
