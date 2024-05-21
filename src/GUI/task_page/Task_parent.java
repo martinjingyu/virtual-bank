@@ -20,6 +20,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+
+/**
+ * The Task_parent class represents the GUI for the parent's task management page.
+ * It extends JPanel and provides functionality to view, add, and manage tasks.
+ */
 public class Task_parent extends JPanel {
     private JPanel Container;
     private JPanel taskLiast;
@@ -44,15 +49,23 @@ public class Task_parent extends JPanel {
     private int i;
     private MouseAdapter myMouseListener;
 
+    /**
+     * Constructs a new Task_parent panel.
+     * Initializes the GUI components.
+     */
     public Task_parent() {
         $$$setupUI$$$(); // Ensures all GUI components are initialized first
         Dimension preferredSize = new Dimension(900, 540);
         Container.setPreferredSize(preferredSize);
         add(Container);
-
-
     }
 
+    /**
+     * Constructs a new Task_parent panel with the specified controller and main frame.
+     *
+     * @param controller the controller for managing tasks
+     * @param mainFrame  the main frame of the parent
+     */
     public Task_parent(Task_parent_control controller, MainFrame_parent mainFrame) {
         this.mainFrame = mainFrame;
         this.task_parent_control = controller;
@@ -63,10 +76,11 @@ public class Task_parent extends JPanel {
         controller.setGUI(this);
         Container.setPreferredSize(preferredSize);
         add(Container);
-
-
-
     }
+
+    /**
+     * Updates the task details displayed in the GUI.
+     */
     private void updateTaskDetails() {
         Salary.setText("$" + task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getReward());
         Status.setText(task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState());
@@ -81,6 +95,12 @@ public class Task_parent extends JPanel {
         ShownPanel.repaint();
 //        buttonlabel.removeMouseListener(myMouseListener);
     }
+
+    /**
+     * Shows a dialog for confirming or rejecting a task.
+     *
+     * @param index the index of the task to be confirmed or rejected
+     */
     public void showDialog1(int index){
         String state = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState();
         switch (state){
@@ -186,6 +206,13 @@ public class Task_parent extends JPanel {
 
         }
     }
+
+    /**
+     * Refreshes the task list and returns the index of the specified task.
+     *
+     * @param task_name the name of the task to find the index of
+     * @return the index of the task in the list
+     */
     public int ListRefresh(String task_name) {
         return task_parent_control.getKid().getTaskList().getNonConfirmedTask().getIndex(task_name);
     }
@@ -195,8 +222,9 @@ public class Task_parent extends JPanel {
 //    }
 
 
-
-
+    /**
+     * Initializes the UI components.
+     */
     private void $$$setupUI$$$() {
         myMouseListener=new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {

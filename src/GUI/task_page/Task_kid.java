@@ -17,6 +17,10 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * The Task_kid class represents the GUI for the kid's task management page.
+ * It extends JPanel and provides functionality to view, manage tasks, and set saving goals.
+ */
 public class Task_kid extends JPanel {
 
 
@@ -57,7 +61,10 @@ public class Task_kid extends JPanel {
 
 
 
-
+    /**
+     * Constructs a new Task_kid panel.
+     * Initializes the GUI components.
+     */
     public Task_kid() {
         $$$setupUI$$$(); // Ensures all GUI components are initialized first
         Dimension preferredSize = new Dimension(900, 540);
@@ -66,6 +73,12 @@ public class Task_kid extends JPanel {
         // Debug to ensure components are initialized
     }
 
+    /**
+     * Constructs a new Task_kid panel with the specified controller and main frame.
+     *
+     * @param controller the controller for managing tasks
+     * @param mainFrame  the main frame of the kid's application
+     */
     public Task_kid(Task_kid_control controller, MainFrame_kid mainFrame) {
         this.mainFrame = mainFrame;
         this.task_kid_control = controller;
@@ -80,6 +93,9 @@ public class Task_kid extends JPanel {
         // Debug to ensure components are initialized
     }
 
+    /**
+     * Updates the task details displayed in the GUI.
+     */
     private void updateTaskDetails() {
         Salary.setText("$" + task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getReward());
         Status.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState()));
@@ -87,55 +103,21 @@ public class Task_kid extends JPanel {
         Description.setText(task_kid_control.getKid().getTaskList().descriptionSet(des1));
         name.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getName());
         buttonlabel.setText(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(i).getState()));
-//        buttonlabel.removeMouseListener(myMouseListener);
-//        buttonlabel.addMouseListener(myMouseListener);
 
         Tasks.revalidate();
         Tasks.repaint();
-//        buttonlabel.removeMouseListener(myMouseListener);
     }
 
 
 
-//    public JLabel getButton(int index) {
-//        switch (index) {
-//            case 1:
-//                return button1;
-//            case 2:
-//                return button2;
-//            case 3:
-//                return button3;
-//            case 4:
-//                return button4;
-//            case 5:
-//                return button1;
-//            case 6:
-//                return button7;
-//            case 7:
-//                return button8;
-//            case 8:
-//                return button9;
-//            default:
-//                return button10;
-//        }
-//    }
 
-    // 弹出对话框方法
+
+    /**
+     * Shows a dialog for task actions based on the task state.
+     *
+     * @param index the index of the task to be acted upon
+     */
     public void showDialog(int index) {
-//        if (Objects.equals(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Submitted")) {
-//            JOptionPane.showMessageDialog(this, "You have submitted this task, please wait for parent's confirmation", "Message", JOptionPane.WARNING_MESSAGE);
-//        } else if (Objects.equals(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Action") {
-//
-//       } else {
-//            // 使用 JOptionPane 来显示消息
-//            int response = JOptionPane.showConfirmDialog(this, task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCon1(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Confirmation", JOptionPane.YES_NO_OPTION);
-//
-//            if (response == JOptionPane.YES_OPTION) {
-//                JOptionPane.showMessageDialog(this, task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCon2(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState()), "Message", JOptionPane.INFORMATION_MESSAGE);
-//                task_kid_control.getKid().getTaskList().updateTask(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName(), task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).taskOperation(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index)));
-//                updateTaskDetails();
-//            }
-//        }
         String state = task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getCondition(task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState());
         switch (state) {
             case "Submitted":
@@ -202,32 +184,28 @@ public class Task_kid extends JPanel {
         }
     }
 
+    /**
+     * Shows a warning dialog for account selection.
+     */
     public void showWarning() {
         JOptionPane.showMessageDialog(this, "Please select your account first.", "Message", JOptionPane.WARNING_MESSAGE);
     }
 
-//    public String taskInfo(int index){
-//        if(Objects.equals(mainController.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState(), "Confirmed")){
-//            return mainController.getKid().getTaskList().getNonConfirmedTask().getTask(index).getM("Confirmed") +" " + mainController.getKid().getTaskList().getNonConfirmedTask().getTask(index).getReward();
-//
-//        }else {
-//            return mainController.getKid().getTaskList().getNonConfirmedTask().getTask(index).getM(mainController.getKid().getTaskList().getNonConfirmedTask().getTask(index).getState())
-//                    + mainController.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
-//        }
-//    }
 
-//    public void Info_show() {
-//        // this.taskInfo(index);
-//        //this.showDialog(index);
-//    }
-
-
+    /**
+     * Refreshes the task list and returns the index of the specified task.
+     *
+     * @param task_name the name of the task to find the index of
+     * @return the index of the task in the list
+     */
     public int ListRefresh(String task_name) {
         return task_kid_control.getKid().getTaskList().getNonConfirmedTask().getIndex(task_name);
     }
 
 
-
+    /**
+     * Initializes the UI components.
+     */
     private void $$$setupUI$$$() {
 
         myMouseListener=new MouseAdapter() {
