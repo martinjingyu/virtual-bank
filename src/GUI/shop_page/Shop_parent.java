@@ -15,6 +15,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.event.ItemEvent;
 
+/**
+ * The Shop_parent class represents the UI panel for the shop, allowing parents to manage products and accounts.
+ */
 public class Shop_parent extends JPanel implements RefreshListener {
 
     private JTextField nameTextField, priceTextField;
@@ -31,6 +34,11 @@ public class Shop_parent extends JPanel implements RefreshListener {
     private final Color submitButtonColor = new Color(103, 201, 86); // #67C956
     private final Color borderColor = new Color(105, 105, 105); // #696969
 
+    /**
+     * Constructs a Shop_parent panel with the specified controller.
+     *
+     * @param controller the controller for this panel
+     */
     public Shop_parent(ShopParentController controller) {
         this.shopController = controller;
         this.shopController.setRefreshListener(this);
@@ -39,8 +47,10 @@ public class Shop_parent extends JPanel implements RefreshListener {
         initUI();
     }
 
+    /**
+     * Initializes the UI components of the panel.
+     */
     private void initUI() {
-        // Set the layout with padding around the entire layout
         setPreferredSize(new Dimension(900, 540));
         setLayout(new BorderLayout(20, 20)); // Added horizontal and vertical gaps
         setBorder(new EmptyBorder(20, 40, 20, 40)); // Added horizontal and vertical margins
@@ -51,6 +61,9 @@ public class Shop_parent extends JPanel implements RefreshListener {
         add(createAccountInfoPanel(), BorderLayout.SOUTH);
     }
 
+    /**
+     * Refreshes the UI of the panel.
+     */
     @Override
     public void refreshUI() {
         remove(todoListPanel);
@@ -60,7 +73,11 @@ public class Shop_parent extends JPanel implements RefreshListener {
         repaint();
     }
 
-    // Create the header "Transaction History" with margin
+    /**
+     * Creates the header panel.
+     *
+     * @return the header panel
+     */
     private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel();
         headerPanel.setBackground(mainBgColor);
@@ -75,6 +92,11 @@ public class Shop_parent extends JPanel implements RefreshListener {
         return headerPanel;
     }
 
+    /**
+     * Creates the to-do list panel.
+     *
+     * @return the to-do list panel
+     */
     private JPanel createToDoListPanel() {
         todoListPanel = new JPanel();
         todoListPanel.setLayout(new BorderLayout());
@@ -83,14 +105,12 @@ public class Shop_parent extends JPanel implements RefreshListener {
         todoListPanel.setBackground(panelBgColor);
         todoListPanel.setBorder(new EmptyBorder(30, 0, 0, 0));
 
-        // Top Label
         JLabel todoLabel = new JLabel("TO DO LIST");
         todoLabel.setFont(new Font("Arial", Font.BOLD, 26));
         todoLabel.setForeground(fontColor);
         todoLabel.setHorizontalAlignment(SwingConstants.CENTER);
         todoListPanel.add(todoLabel, BorderLayout.NORTH);
 
-        // Scrollable check box panel
         JPanel checkBoxPanel = new JPanel();
         List<JCheckBox> checkBoxes = new ArrayList<>();
         checkBoxPanel.setLayout(new BoxLayout(checkBoxPanel, BoxLayout.Y_AXIS));
@@ -116,22 +136,23 @@ public class Shop_parent extends JPanel implements RefreshListener {
 
         todoListPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // Confirm Button
         confirmButton = new JButton("Confirm");
         confirmButton.setFont(new Font("Arial", Font.BOLD, 25));
         confirmButton.setBackground(new Color(192, 192, 192));
         confirmButton.setForeground(Color.BLACK);
         confirmButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        confirmButton.addActionListener(e -> {
-            shopController.updateSelectedProduct(checkBoxes);
-        });
+        confirmButton.addActionListener(e -> shopController.updateSelectedProduct(checkBoxes));
 
         todoListPanel.add(confirmButton, BorderLayout.SOUTH);
 
         return todoListPanel;
     }
 
-    // Create the Upload Products Panel
+    /**
+     * Creates the upload products panel.
+     *
+     * @return the upload products panel
+     */
     private JPanel createUploadProductsPanel() {
         JPanel uploadPanel = new JPanel(new GridBagLayout());
         uploadPanel.setPreferredSize(new Dimension(540, 0)); // Width: 60% of overall window width
@@ -167,16 +188,18 @@ public class Shop_parent extends JPanel implements RefreshListener {
         submitButton.setForeground(Color.WHITE);
         gbc.gridy = 3;
 
-        submitButton.addActionListener(e -> {
-            shopController.updateProducts(nameTextField.getText(), priceTextField.getText());
-        });
+        submitButton.addActionListener(e -> shopController.updateProducts(nameTextField.getText(), priceTextField.getText()));
 
         uploadPanel.add(submitButton, gbc);
 
         return uploadPanel;
     }
 
-    // Create the Account Information Panel
+    /**
+     * Creates the account information panel.
+     *
+     * @return the account information panel
+     */
     private JPanel createAccountInfoPanel() {
         JPanel accountInfoPanel = new JPanel();
         accountInfoPanel.setBackground(panelBgColor);
