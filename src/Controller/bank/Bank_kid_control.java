@@ -6,18 +6,28 @@ import GUI.bank_page.ShowCurrentAccount;
 import GUI.bank_page.ShowSavingAccount;
 import GUI.bank_page.history_page;
 import GUI.bank_page.Bank_kid;
+import GUI.RefreshListener;
+import utill.validate.Validate;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static utill.validate.Validate.validateNumber;
 
-public class Bank_kid_control{
+
+public class Bank_kid_control implements RefreshListener{
     private static JTextField savingGoalTextField;
     private static int clickCount=0;
+    private String inputText;
     private Kids kid;
     private Bank_kid GUI;
     private HistoryController historyController;
+    private JButton button_save;
+    private final Color fontColor = new Color(49, 122, 232); // #317AE8
+    private final Font font = new Font("Arial", Font.PLAIN, 20);
+//    private JDialog dialog;
     private JFrame currentFrame; // 用于存储当前打开的 JFrame 引用
     public Bank_kid_control(Kids kid){
         this.kid = kid;
@@ -39,16 +49,56 @@ public class Bank_kid_control{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                clickCount++; // 每次点击增加点击次数
-                // 根据点击次数的奇偶性设置文本框的可见性
-                if (clickCount % 2 == 1) {
-                    savingGoalTextField.setVisible(true);
+                    JDialog dialog = new JDialog();//构造一个新的JFrame，作为新窗口。
+                    dialog.setBounds(// 让新窗口与SwingTest窗口示例错开50像素。
+                            new Rectangle(
+                                    80,
+                                    80,
+                                    300, 300
+                            )
+                    );
+                    dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL); // 设置模式类型。
+                    dialog.setLayout(new GridBagLayout()); // 使用GridBagLayout布局
+                    GridBagConstraints gbc = new GridBagConstraints();
+                    gbc.insets = new Insets(10, 10, 10, 10); // 设置组件之间的间距
 
-                    GUI.getMainFrame().revalidate();
-                    GUI.getMainFrame().repaint();
-                } else {
-                    savingGoalTextField.setVisible(false);
-                }
+                    JLabel jl1 = new JLabel("How much you want to save?");
+                    gbc.gridx = 0;
+                    gbc.gridy = 0;
+                    gbc.gridwidth = 2;
+                    dialog.add(jl1, gbc);
+
+                    JTextField savingGoalTextField = new JTextField(10);
+                    gbc.gridx = 0;
+                    gbc.gridy = 1;
+                    gbc.gridwidth = 2;
+                    dialog.add(savingGoalTextField, gbc);
+
+                    JButton button_save = new JButton("Save");
+                    gbc.gridx = 0;
+                    gbc.gridy = 2;
+                    gbc.gridwidth = 2;
+                    gbc.anchor = GridBagConstraints.CENTER;
+                    dialog.add(button_save, gbc);
+
+                    button_save.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            String input = savingGoalTextField.getText();
+                            if (validateNumber(input)) {
+                                dialog.dispose(); // 关闭对话框
+                                kid.getAccountManager().setSavingGoal(Double.parseDouble(input));
+                                GUI.revalidate();
+                                GUI.repaint();
+                                GUI.getSavingGoals().setText(String.valueOf(Double.parseDouble(input)));
+                            }
+                        }
+                    });
+
+                    dialog.pack(); // 调整窗口大小以适应所有组件
+                    dialog.setLocationRelativeTo(null); // 将窗口居中
+                    dialog.setVisible(true);
+
             }
         });
     }
@@ -110,4 +160,8 @@ public class Bank_kid_control{
     }
 
 
+    @Override
+    public void refreshUI() {
+//        GUI.refresh();
+    }
 }
