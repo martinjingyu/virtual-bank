@@ -1,5 +1,8 @@
 package Entity;
 
+/**
+ * The Task class represents a task with various properties such as name, reward, state, description, and destination.
+ */
 public class Task {
     private String name;
     private double reward;
@@ -7,6 +10,15 @@ public class Task {
     private String description;
     private String destination;
 
+    /**
+     * Constructs a new Task with the specified name, reward, state, description, and destination.
+     *
+     * @param name the name of the task
+     * @param reward the reward for completing the task
+     * @param state the current state of the task
+     * @param description a brief description of the task
+     * @param destination the destination associated with the task
+     */
     public Task(String name, double reward, String state, String description, String destination) {
         this.name = name;
         this.reward = reward;
@@ -15,49 +27,103 @@ public class Task {
         this.destination = destination;
     }
 
-    // Getter and setter methods for name
+    /**
+     * Returns the name of the task.
+     *
+     * @return the name of the task
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the name of the task.
+     *
+     * @param name the new name of the task
+     */
     public void setName(String name) {
         this.name = name;
     }
 
-    // Getter and setter methods for reward
+    /**
+     * Returns the reward for completing the task.
+     *
+     * @return the reward for completing the task
+     */
     public double getReward() {
         return reward;
     }
 
+    /**
+     * Sets the reward for completing the task.
+     *
+     * @param reward the new reward for completing the task
+     */
     public void setReward(double reward) {
         this.reward = reward;
     }
 
-    public String getState(){
+    /**
+     * Returns the current state of the task.
+     *
+     * @return the current state of the task
+     */
+    public String getState() {
         return state;
     }
 
-    public void setState(String state){
+    /**
+     * Sets the current state of the task.
+     *
+     * @param state the new state of the task
+     */
+    public void setState(String state) {
         this.state = state;
     }
 
-    public String getDescription(){
+    /**
+     * Returns the description of the task.
+     *
+     * @return the description of the task
+     */
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description){
+    /**
+     * Sets the description of the task.
+     *
+     * @param description the new description of the task
+     */
+    public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Returns the deposit destination associated with the task.
+     *
+     * @return the destination associated with the task
+     */
     public String getDestination() {
         return destination;
     }
 
+    /**
+     * Sets the deposit destination associated with the task.
+     *
+     * @param destination the new destination associated with the task
+     */
     public void setDestination(String destination) {
         this.destination = destination;
     }
 
-    public String getCondition(String state){
+    /**
+     * Returns a condition message based on the state of the task.
+     *
+     * @param state the state of the task
+     * @return a condition message based on the state
+     */
+    public String getCondition(String state) {
         return switch (state) {
             case "ToBeConfirmed" -> "Submitted";
             case "ToBeTaken" -> "Pick it";
@@ -66,7 +132,13 @@ public class Task {
         };
     }
 
-    public String getCondition1(String state){
+    /**
+     * Returns the condition based on the state, that should be seen by the parent.
+     *
+     * @param state the state of the task
+     * @return an alternative condition message based on the state
+     */
+    public String getCondition1(String state) {
         return switch (state) {
             case "ToBeConfirmed" -> "Review";
             case "ToBeTaken" -> "Delete";
@@ -75,8 +147,13 @@ public class Task {
         };
     }
 
-
-    public String getM(String state){
+    /**
+     * Returns a message based on the state of the task.
+     *
+     * @param state the state of the task
+     * @return a message based on the state
+     */
+    public String getM(String state) {
         return switch (state) {
             case "ToBeConfirmed" -> "Please wait patiently for parent's confirmation, you have submitted the task";
             case "ToBeTaken" -> "You have picked the task";
@@ -86,7 +163,13 @@ public class Task {
         };
     }
 
-    public String getCon1(String state){
+    /**
+     * Returns a confirmation message based on the state of the task.
+     *
+     * @param state the state of the task
+     * @return a confirmation message based on the state
+     */
+    public String getCon1(String state) {
         return switch (state) {
             case "ToBeConfirmed" -> "Submitted";
             case "ToBeTaken" -> "Do you want to pick this task?";
@@ -95,7 +178,13 @@ public class Task {
         };
     }
 
-    public String getCon2(String state){
+    /**
+     * Returns an information message based on the state of the task.
+     *
+     * @param state the state of the task
+     * @return an alternative confirmation message based on the state
+     */
+    public String getCon2(String state) {
         return switch (state) {
             case "ToBeConfirmed" -> "Submitted";
             case "ToBeTaken" -> "You have taken this task!";
@@ -104,7 +193,13 @@ public class Task {
         };
     }
 
-    public String getText(String state){
+    /**
+     * Returns a task condition description text message based on the state of the task, which should be seen by child.
+     *
+     * @param state the state of the task
+     * @return a text message based on the state
+     */
+    public String getText(String state) {
         return switch (state) {
             case "ToBeConfirmed" -> "Please wait for parent's confirmation";
             case "ToBeTaken" -> "You can take this task";
@@ -113,32 +208,26 @@ public class Task {
         };
     }
 
-    public Task taskOperation(Task task){
+    /**
+     * Performs an operation on the task based on its current state.
+     *
+     * @param task the task to perform the operation on
+     * @return the task after performing the operation
+     */
+    public Task taskOperation(Task task) {
         switch (task.getState()) {
-            case "ToBeConfirmed":{
-                task.setState("Confirmed");
-                break;
-            }
-            case "ToBeTaken":{
-                task.setState("Taken");
-                break;
-            }
-            case "Taken":{
-                task.setState("ToBeConfirmed");
-                break;
-            }
-
+            case "ToBeConfirmed" -> task.setState("Confirmed");
+            case "ToBeTaken" -> task.setState("Taken");
+            case "Taken" -> task.setState("ToBeConfirmed");
         }
         return task;
     }
 
-//    public void addSalary(Task task, String destination){
-//        double current = task.getReward();
-//
-//    }
-
-
-
+    /**
+     * Returns a string representation of the task.
+     *
+     * @return a string representation of the task
+     */
     @Override
     public String toString() {
         return "Task{" +
