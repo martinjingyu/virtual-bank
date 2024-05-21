@@ -22,7 +22,7 @@ public class Shop_parent extends JPanel implements RefreshListener {
 
     private JTextField nameTextField, priceTextField;
     private JButton submitButton, confirmButton;
-    private JLabel currentAccountLabel;
+    private JLabel currentAccountLabel, currentBalanceLabel;
     private ShopParentController shopController;
     private JPanel todoListPanel;
     private JComboBox<String> accountDropdown;
@@ -59,6 +59,7 @@ public class Shop_parent extends JPanel implements RefreshListener {
         add(createToDoListPanel(), BorderLayout.WEST);
         add(createUploadProductsPanel(), BorderLayout.CENTER);
         add(createAccountInfoPanel(), BorderLayout.SOUTH);
+
     }
 
     /**
@@ -174,11 +175,13 @@ public class Shop_parent extends JPanel implements RefreshListener {
 
         nameTextField = new JTextField(15);
         nameTextField.setBorder(BorderFactory.createTitledBorder(new LineBorder(borderColor), "Name")); // Added border
+        nameTextField.setToolTipText("Name should only contain characters (A-Z, a-z)");
         gbc.gridy = 1;
         uploadPanel.add(nameTextField, gbc);
 
         priceTextField = new JTextField(15);
         priceTextField.setBorder(BorderFactory.createTitledBorder(new LineBorder(borderColor), "Price")); // Added border
+        priceTextField.setToolTipText("Price should be a valid number");
         gbc.gridy = 2;
         uploadPanel.add(priceTextField, gbc);
 
@@ -204,16 +207,30 @@ public class Shop_parent extends JPanel implements RefreshListener {
         JPanel accountInfoPanel = new JPanel();
         accountInfoPanel.setBackground(panelBgColor);
         accountInfoPanel.setBorder(new LineBorder(borderColor, 1)); // Added border
+        accountInfoPanel.setLayout(new BorderLayout());
 
         JLabel accountLabel = new JLabel("CURRENT ACCOUNT: ");
         accountLabel.setFont(new Font("Arial", Font.BOLD, 26));
         accountLabel.setForeground(fontColor);
 
-        currentAccountLabel = new JLabel(String.format("$%.2f", shopController.getKid().getAccountManager().getTotalCurrentBalance()));
+        currentAccountLabel = new JLabel();
         currentAccountLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        accountInfoPanel.add(accountLabel);
-        accountInfoPanel.add(currentAccountLabel);
+        JPanel accountPanel = new JPanel();
+        accountPanel.setBackground(panelBgColor);
+        accountPanel.add(accountLabel);
+        accountPanel.add(currentAccountLabel);
+
+        accountDropdown = new JComboBox<>();
+        shopController.initializeAccountDropdown(accountDropdown, currentAccountLabel);
+
+        accountInfoPanel.add(accountPanel, BorderLayout.CENTER);
+        accountInfoPanel.add(accountDropdown, BorderLayout.NORTH);
+
+
+        // Setup focus listeners for the text fields
+        shopController.setupFocusListener(nameTextField, "Name should only contain characters (A-Z, a-z)");
+        shopController.setupFocusListener(priceTextField, "Price should be a valid number");
 
         return accountInfoPanel;
     }
