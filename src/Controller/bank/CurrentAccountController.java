@@ -1,5 +1,6 @@
 package Controller.bank;
 
+import Entity.AccountManager;
 import Entity.Kids;
 import GUI.bank_page.ShowCurrentAccount;
 
@@ -19,7 +20,7 @@ public class CurrentAccountController {
     CurrentAccountController(Kids kid,ShowCurrentAccount GUI,Boolean whetherParent){
         this.kid = kid;
         this.GUI = GUI;
-        GUI.initData(kid.getAccountManager().getCurrentAccounts(),whetherParent);
+        GUI.initData(kid.getAccountManager().getCurrentAccounts(),whetherParent,kid.getAccountManager());
         addListener(GUI);
     }
 
@@ -53,7 +54,7 @@ public class CurrentAccountController {
 
                                 // 执行 earlyWithdrew 方法
                                 kid.getAccountManager().transfer(selectedIndex, finalI,value);
-                                refresh();
+                                refresh(kid.getAccountManager());
                                 // 关闭对话框
                                 frame.dispose();
                             }
@@ -127,8 +128,8 @@ public class CurrentAccountController {
         dialog.setVisible(true);
 
     }
-    public void refresh(){
-        GUI.refresh(kid.getAccountManager().getCurrentAccounts());
+    public void refresh(AccountManager accountManager){
+        GUI.refresh(kid.getAccountManager().getCurrentAccounts(),accountManager);
         addListener(GUI);
     }
     public ShowCurrentAccount getGUI(){

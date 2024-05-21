@@ -20,7 +20,7 @@ public class SavingAccountController {
         this.kid = kid;
         this.GUI = GUI;
 
-        GUI.initData(kid.getAccountManager().getSavingAccounts(),whetherParent);
+        GUI.initData(kid.getAccountManager().getSavingAccounts(),whetherParent,kid.getAccountManager());
         addListener(GUI);
     }
 
