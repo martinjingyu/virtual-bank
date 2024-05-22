@@ -135,10 +135,7 @@ public class Bank_kid extends JPanel {
     }
 
     public void refresh(){
-        repaint();
-        revalidate();
-        System.out.println(kid.getAccountManager().getSavingGoal());
-
+        mainFrameKid.InitiateAll();
     }
 
 
