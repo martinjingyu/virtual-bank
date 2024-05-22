@@ -142,7 +142,7 @@ public class ShowSavingAccount extends JFrame {
             finishButton.setFont(new Font("Arial", Font.PLAIN, 12));
             finishButton.setAlignmentX(finish.CENTER_ALIGNMENT);
 
-            JLabel totalIncome = new JLabel("Total income: something", SwingConstants.CENTER);
+            JLabel totalIncome = new JLabel("Total income: "+accountList.get(i).getIncome(), SwingConstants.CENTER);
             totalIncome.setFont(new Font("Arial", Font.PLAIN, 12));
             totalIncome.setAlignmentX(finish.CENTER_ALIGNMENT);
 
@@ -300,8 +300,13 @@ public class ShowSavingAccount extends JFrame {
 
         }
         if(accountList.size()<12){
-            addButton = createAddComponents();
-            accountGrid.add(addButton);
+            if(whetherParent){
+                accountGrid.add(new JPanel());
+            }
+            if(!whetherParent){
+                addButton = createAddComponents();
+                accountGrid.add(addButton);
+            }
         }
 
 
