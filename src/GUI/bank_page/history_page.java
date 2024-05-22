@@ -6,6 +6,8 @@ import utill.read.ReadAll;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class history_page extends JPanel {
     private HistoryController historyController;
     private JPanel DetailPanel;
     private List<JLabel> dateList;
+
 
 
     // Define the custom colors
@@ -154,23 +157,27 @@ public class history_page extends JPanel {
 
     // Create the Account Information Panel
     private JPanel createAccountInfoPanel() {
+        refreshUI();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
+        String formattedDate = LocalDate.now().format(formatter);
+
         JPanel accountInfoPanel = new JPanel();
         accountInfoPanel.setLayout(new GridLayout(4, 1));  // 使用网格布局
         accountInfoPanel.setBackground(panelBgColor);
         accountInfoPanel.setBorder(new LineBorder(borderColor, 1)); // 添加边框
 
         // 总收入
-        JLabel incomeLabel = new JLabel("Total Income:     $" + HistoryTransactionList.formatAmount(transactionList.getIncomeForDate("2024/1/10")));
+        JLabel incomeLabel = new JLabel("Total Income:     $" + HistoryTransactionList.formatAmount(transactionList.getIncomeForDate(historyController.getSelectedDate())));
         incomeLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         incomeLabel.setForeground(fontColor);
 
         // 总支出
-        JLabel expensesLabel = new JLabel("Total Expenses:  $" +  HistoryTransactionList.formatAmount(transactionList.getExpensesForDate("2024/1/10")));
+        JLabel expensesLabel = new JLabel("Total Expenses:  $" +  HistoryTransactionList.formatAmount(transactionList.getExpensesForDate(historyController.getSelectedDate())));
         expensesLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         expensesLabel.setForeground(fontColor);
 
         // 总余额
-        JLabel balanceLabel = new JLabel("Total Balance:    $" +  HistoryTransactionList.formatAmount(transactionList.getBalanceForDate("2024/1/10")));
+        JLabel balanceLabel = new JLabel("Total Balance:    $" +  HistoryTransactionList.formatAmount(transactionList.getBalanceForDate(historyController.getSelectedDate())));
         balanceLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         balanceLabel.setForeground(fontColor);
 
@@ -185,15 +192,11 @@ public class history_page extends JPanel {
 
 
     public static void main(String[] args) {
-        try {
-            Kids kid = ReadAll.readall(String.valueOf(222));
-            JFrame frame = new JFrame("Shop Application");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setContentPane(new history_page(new HistoryController(kid)));
-            frame.pack();
-            frame.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Kids kid = ReadAll.readall(String.valueOf(222));
+        JFrame frame = new JFrame("Shop Application");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(new history_page(new HistoryController(kid)));
+        frame.pack();
+        frame.setVisible(true);
     }
 }
