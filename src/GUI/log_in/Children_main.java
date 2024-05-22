@@ -12,7 +12,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * 
+ * The CircularImageButton class represents a custom JButton with a circular
+ * shape.
+ * 
+ * It provides methods for setting the appearance of the button and checking
+ * whether a click is within the circle of the button.
+ */
+
 class CircularImageButton extends JButton {
+
+        /**
+         * 
+         * Constructs a CircularImageButton with the specified ImageIcon.
+         * 
+         * @param icon the ImageIcon to be displayed on the button
+         */
+
         public CircularImageButton(ImageIcon icon) {
                 super(icon);
 
@@ -21,6 +38,13 @@ class CircularImageButton extends JButton {
                 setFocusPainted(false);
         }
 
+        /**
+         * 
+         * Paints the component with the circular shape and different effects when
+         * pressed.
+         * 
+         * @param g the Graphics object used for painting
+         */
         @Override
         protected void paintComponent(Graphics g) {
                 if (getModel().isArmed()) {
@@ -33,11 +57,25 @@ class CircularImageButton extends JButton {
                 super.paintComponent(g);
         }
 
+        /**
+         * 
+         * Paints the component's border.
+         * 
+         * @param g the Graphics object used for painting
+         */
         @Override
         protected void paintBorder(Graphics g) {
         }
 
-        // Check whether the click is within the circle of the button
+        /**
+         * 
+         * Checks whether the specified coordinates are within the circle of the button.
+         * 
+         * @param x the x-coordinate of the point to be checked
+         * @param y the y-coordinate of the point to be checked
+         * @return true if the coordinates are within the circle of the button, false
+         *         otherwise
+         */
         @Override
         public boolean contains(int x, int y) {
                 int radius = Math.min(getWidth(), getHeight()) / 2;
@@ -48,7 +86,17 @@ class CircularImageButton extends JButton {
 }
 
 public class Children_main {
-
+        /**
+         * 
+         * The addChildren_mainPanel method is used to add components to the
+         * children_mainPanel and attach it to the cardPanel.
+         * 
+         * @param cardPanel  the JPanel where the card layout is used
+         * 
+         * @param cardLayout the CardLayout used to switch between different panels
+         * 
+         * @param g          the GUIMain object used to call the showCard method
+         */
         public static void addChildren_mainPanel(JPanel cardPanel, CardLayout cardLayout, GUIMain g) {
 
                 BackPanel children_mainPanel = new BackPanel("image/background2.jpg");
@@ -86,6 +134,14 @@ public class Children_main {
 
         }
 
+        /**
+         * 
+         * The showCard method is used to switch to a specified card in the GUIMain
+         * object.
+         * 
+         * @param g        the GUIMain object where the card is shown
+         * @param cardName the name of the card to be shown
+         */
         public static void showCard(GUIMain g, String cardName) {
                 g.showCard(cardName);
         }
