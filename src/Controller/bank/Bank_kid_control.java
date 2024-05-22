@@ -14,7 +14,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static utill.validate.Validate.validateNumber;
 
 
 public class Bank_kid_control implements RefreshListener{

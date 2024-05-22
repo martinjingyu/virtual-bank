@@ -148,8 +148,13 @@ public class ShowCurrentAccount extends JFrame {
             accountGrid.add(createComponents(i, currentComponentList,whetherParent));
         }
         if(accountList.size()<12){
-            addButton = createAddComponents();
-            accountGrid.add(addButton);
+            if(whetherParent){
+                accountGrid.add(new JPanel());
+            }
+            if(!whetherParent){
+                addButton = createAddComponents();
+                accountGrid.add(addButton);
+            }
         }
 
         for (int i = 0; i < 11-accountList.size(); i++) {
