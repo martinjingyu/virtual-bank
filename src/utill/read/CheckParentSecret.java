@@ -11,67 +11,31 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+import utill.validation.Validate;
+
 /**
- * 
- * The CheckParentSecret class provides a utility method to check the validity
- * of parent's secret.
+ * This class provides a method to check if a given ID and secret belong to a
+ * parent account,
+ * by reading the IDs and secrets from a file using a Scanner object.
  */
 public class CheckParentSecret {
     /**
-     * 
-     * Checks if the provided ID and password match the parent's secret stored in a
-     * file.
-     * 
-     * @param text1    the ID to be checked
-     * 
-     * @param text2    the password to be checked
-     * 
-     * @param filePath the path to the file containing the parent's secret
-     * 
-     * @return true if the ID and password match the parent's secret, false
-     *         otherwise
+     * Checks if the given ID and secret belong to a parent account by reading the
+     * IDs and secrets from a file.
+     *
+     * @param text1    The ID to be checked.
+     * @param text2    The secret to be checked.
+     * @param filePath The path to the file containing the list of IDs and secrets
+     *                 for parent accounts.
+     * @return True if the given ID and secret belong to a parent account, false
+     *         otherwise.
      */
     public static boolean checkParentSecret(String text1, String text2, String filePath) {
         try {
-            String contents = "";
+
             File file = new File(filePath);
             Scanner scanner = new Scanner(file);
-            contents = scanner.next();
-            System.out.println("content:" + contents);
-            while (contents != null) {
-                System.out.println("id: " + contents);
-                if (text1.equals(contents)) {
-                    System.out.println("id_right");
-                    scanner.next();
-                    contents = scanner.next();
-
-                    if (text2.equals(contents)) {
-                        System.out.println("sec_right");
-                        scanner.close();
-                        return true;
-                    } else {
-                        System.out.println("error_secret");
-                        if (scanner.hasNext()) {
-                            contents = scanner.next();
-                        } else {
-                            scanner.close();
-                            return false;
-                        }
-                    }
-                } else {
-                    scanner.next();
-                    scanner.next();
-                    if (scanner.hasNext()) {
-                        contents = scanner.next();
-                    } else {
-                        scanner.close();
-                        return false;
-                    }
-                }
-            }
-            System.out.println("final_error_secret");
-            scanner.close();
-            return false;
+            return Validate.checkParent(scanner, text1, text2);
 
         } catch (IOException error) {
             System.out.println("error_parent");

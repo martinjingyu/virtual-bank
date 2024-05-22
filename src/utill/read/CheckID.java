@@ -11,50 +11,28 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+import utill.validation.Validate;
+
 /**
- * 
- * The CheckID class provides a utility method to check if a given ID already
- * exists in a file.
+ * This class provides a method to check if a given ID already exists in a file
+ * containing a list of IDs,
+ * by reading the file using a Scanner object.
  */
 public class CheckID {
     /**
-     * 
-     * Checks if the provided ID already exists in the file.
-     * 
-     * @param text1    the ID to be checked
-     * 
-     * @param filePath the path to the file containing the IDs
-     * 
-     * @return true if the ID doesn't exist in the file, false otherwise
+     * Checks if the given ID already exists in a file by reading the file using a
+     * Scanner object.
+     *
+     * @param text1    The ID to be checked.
+     * @param filePath The path to the file containing the list of IDs.
+     * @return True if the given ID does not exist in the file, false otherwise.
      */
     public static boolean checkID(String text1, String filePath) {
         try {
-            String contents = "";
+
             File file = new File(filePath);
             Scanner scanner = new Scanner(file);
-            contents = scanner.next();
-            System.out.println("content:" + contents);
-            while (contents != null) {
-                System.out.println("id: " + contents);
-                if (text1.equals(contents)) {
-                    System.out.println("ID_ALREADY_EXIST");
-                    scanner.close();
-                    return false;
-                } else {
-                    scanner.next();
-                    scanner.next();
-                    if (scanner.hasNext()) {
-                        contents = scanner.next();
-                    } else {
-                        System.out.println("ID_DONT_HAVE");
-                        scanner.close();
-                        return true;
-                    }
-                }
-            }
-            System.out.println("ID_DONT_HAVE");
-            scanner.close();
-            return true;
+            return Validate.checkid(scanner, text1);
 
         } catch (IOException error) {
             System.out.println("error_id");
