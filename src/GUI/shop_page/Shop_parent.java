@@ -236,14 +236,18 @@ public class Shop_parent extends JPanel implements RefreshListener {
     }
 
     public static void main(String[] args) {
-        Kids kid = ReadAll.readall(String.valueOf(222));
-        ShopParentController ShopController = new ShopParentController(kid);
-        JFrame frame = new JFrame("Shop Application");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Shop_parent shopParent = new Shop_parent(ShopController);
-        frame.setContentPane(shopParent);
-        ShopController.addListener(shopParent);
-        frame.pack();
-        frame.setVisible(true);
+        try {
+            Kids kid = ReadAll.readall(String.valueOf(222));
+            ShopParentController ShopController = new ShopParentController(kid);
+            JFrame frame = new JFrame("Shop Application");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Shop_parent shopParent = new Shop_parent(ShopController);
+            frame.setContentPane(shopParent);
+            ShopController.addListener(shopParent);
+            frame.pack();
+            frame.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

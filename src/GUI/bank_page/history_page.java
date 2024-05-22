@@ -185,11 +185,15 @@ public class history_page extends JPanel {
 
 
     public static void main(String[] args) {
-        Kids kid = ReadAll.readall(String.valueOf(222));
-        JFrame frame = new JFrame("Shop Application");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(new history_page(new HistoryController(kid)));
-        frame.pack();
-        frame.setVisible(true);
+        try {
+            Kids kid = ReadAll.readall(String.valueOf(222));
+            JFrame frame = new JFrame("Shop Application");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setContentPane(new history_page(new HistoryController(kid)));
+            frame.pack();
+            frame.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -120,18 +120,18 @@ public class bank_parents extends JPanel{
     }
 
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                Kids kid = ReadAll.readall(String.valueOf(222));
-                bank_parents panel = new bank_parents(new Bank_parent_controller(kid));
-                JFrame frame = new JFrame("Bank Parents Panel");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(800, 600);
-                frame.getContentPane().add(panel);
-                frame.setVisible(true);
-            }
-        });
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                Kids kid = ReadAll.readall(String.valueOf(222));
+//                bank_parents panel = new bank_parents(new Bank_parent_controller(kid));
+//                JFrame frame = new JFrame("Bank Parents Panel");
+//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                frame.setSize(800, 600);
+//                frame.getContentPane().add(panel);
+//                frame.setVisible(true);
+//            }
+//        });
+//    }
 
 }
