@@ -1,4 +1,1 @@
-shopExpence, 50, 2024:1:10 12:12:11
-taskEarn, 100, 2024:2:10 12:12:11
-CA1, shop, 20, 2024:3:10 12:12:11
-Task, CA2, 5, 2024:3:11 12:12:11
+yvLfNXp1WQ4IjXcS3Tx8BezFAbQZ3mj70ABBfDGNB1q0qkhjfylO5SdAeyumrfDFbzaVS6IWrzuuf60n6lmGrEnfRJiFaEVW5GDcUgxkMXk=

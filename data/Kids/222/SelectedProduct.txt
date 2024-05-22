@@ -3,7 +3,5 @@ bee,1.0
 T-shirt,5.0
 Apple,3.0
 bee,5.0
-Apple,3.0
-bee,1.0
 T-shirt,5.0
 Apple,3.0

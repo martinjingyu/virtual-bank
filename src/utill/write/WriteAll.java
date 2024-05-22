@@ -17,8 +17,8 @@ public class WriteAll {
 
     }
     public static void main (String[] args){
-        Kids kid = ReadAll.readall("222");
-
-        writeAll("test",kid);
+//        Kids kid = ReadAll.readall("222");
+//
+//        writeAll("test",kid);
     }
 }

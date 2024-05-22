@@ -209,14 +209,14 @@ public class Shop_kid extends JPanel {
         return footer;
     }
 
-    public static void main(String[] args) {
-        Kids kid = ReadAll.readall(String.valueOf(222));
-        shopKidController ShopController = new shopKidController(kid);
-        Shop_kid shopKid = new Shop_kid(ShopController);
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(shopKid);
-        frame.setSize(800, 600);
-        frame.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        Kids kid = ReadAll.readall(String.valueOf(222));
+//        shopKidController ShopController = new shopKidController(kid);
+//        Shop_kid shopKid = new Shop_kid(ShopController);
+//        JFrame frame = new JFrame();
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.getContentPane().add(shopKid);
+//        frame.setSize(800, 600);
+//        frame.setVisible(true);
+//    }
 }

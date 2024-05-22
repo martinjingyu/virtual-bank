@@ -17,12 +17,16 @@ public class MainController_Parent {
 
 
     public MainController_Parent(String id){
-        Kids kid = ReadAll.readall(id);
-        mainFrameController_parent = new MainFrameController_Parent(id,kid);
-        bank_parent_controller = new Bank_parent_controller(kid);
-        task_parent_control = new Task_parent_control(kid);
-        shopParentController = new ShopParentController(kid);
-        messageParentController = new Message_parent_controller(kid);
+        try {
+            Kids kid = ReadAll.readall(id);
+            mainFrameController_parent = new MainFrameController_Parent(id,kid);
+            bank_parent_controller = new Bank_parent_controller(kid);
+            task_parent_control = new Task_parent_control(kid);
+            shopParentController = new ShopParentController(kid);
+            messageParentController = new Message_parent_controller(kid);
+        }  catch (Exception e) {
+            e.printStackTrace();  // 或者其他更具体的错误处理
+        }
 
     }
 }

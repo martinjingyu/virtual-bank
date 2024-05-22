@@ -216,13 +216,18 @@ public class message_parent extends JPanel {
      * @param args command line arguments (not used)
      */
     public static void main(String[] args) {
-        Kids kid = ReadAll.readall(String.valueOf(222));
-        Message_parent_controller messageController = new Message_parent_controller(kid);
-        message_parent messageKid = new message_parent(messageController);
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(messageKid);
-        frame.setSize(800, 600);
-        frame.setVisible(true);
+        try {
+            Kids kid = ReadAll.readall(String.valueOf(222));
+            Message_parent_controller messageController = new Message_parent_controller(kid);
+            message_parent messageKid = new message_parent(messageController);
+            JFrame frame = new JFrame();
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.getContentPane().add(messageKid);
+            frame.setSize(800, 600);
+            frame.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();  // 或者其他更具体的错误处理
+        }
     }
+
 }
