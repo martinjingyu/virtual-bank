@@ -30,6 +30,11 @@ public class HistoryController {
     }
     public String getSelectedDate(){return SelectedDate;}
 
+    public boolean hasSelectedDate() {
+        return SelectedDate != null && !SelectedDate.isEmpty();
+    }
+
+
     public void addButtonListener(){
         for(JLabel label: GUI.getDateList()){
             label.addMouseListener(new MouseAdapter() {
