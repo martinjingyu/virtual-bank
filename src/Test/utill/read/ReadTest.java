@@ -1,4 +1,4 @@
-package utill.read;
+package Test.utill.read;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,6 +11,7 @@ import utill.cryption.EncryptionUtil;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import utill.read.ReadAll;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,7 +47,7 @@ class ReadTest {
             throw new IllegalArgumentException("Encryption key not set in environment variables.");
         }
 
-        Kids kid = Read.readall("222");
+        Kids kid = ReadAll.readall("222");
 
         ProductList productList = kid.getProductList();
 
