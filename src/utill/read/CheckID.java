@@ -11,8 +11,22 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * 
+ * The CheckID class provides a utility method to check if a given ID already
+ * exists in a file.
+ */
 public class CheckID {
-
+    /**
+     * 
+     * Checks if the provided ID already exists in the file.
+     * 
+     * @param text1    the ID to be checked
+     * 
+     * @param filePath the path to the file containing the IDs
+     * 
+     * @return true if the ID doesn't exist in the file, false otherwise
+     */
     public static boolean checkID(String text1, String filePath) {
         try {
             String contents = "";
@@ -41,28 +55,6 @@ public class CheckID {
             System.out.println("ID_DONT_HAVE");
             scanner.close();
             return true;
-            //
-            // contents = scanner.next();
-
-            //
-            // System.out.println("Content until first space: " + contents);
-            // if (text1.equals(contents)) {
-            // System.out.println("text1_right");
-            // contents = scanner.next();
-            // if (text2.equals(contents)) {
-            // System.out.println("text2_right");
-            // g.frame.dispose();
-            // g.loginListener.onLogin("222");
-            // // showCard(g, "children_main");
-            // } else {
-            // System.out.println("error_secret");
-            // showCard(g, "error");
-            // }
-
-            // } else {
-            // System.out.println("error");
-            // showCard(g, "error");
-            // }
 
         } catch (IOException error) {
             System.out.println("error_id");
