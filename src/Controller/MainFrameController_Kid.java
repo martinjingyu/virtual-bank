@@ -92,6 +92,7 @@ public class MainFrameController_Kid extends MouseAdapter {
     public void mouseClicked(MouseEvent e) {
         JLabel clickedButton = (JLabel) e.getSource();
         updateIcons(clickedButton);
+        mainFrameKid.InitiateAll();
         mainFrameKid.changePanel(getPanelIndex(clickedButton));
     }
 
