@@ -55,6 +55,28 @@ public class HistoryTransactionList {
                 .filter(t -> t.getDate().startsWith(specificDate))
                 .collect(Collectors.toList());
     }
+    // 计算总收入
+    public double getTotalIncome() {
+        return transactions.stream()
+                .filter(t -> t.getAmount() > 0)  // 假设正数表示收入
+                .mapToDouble(HistoryTransaction::getAmount)
+                .sum();
+    }
+
+    // 计算总支出
+    public double getTotalExpenses() {
+        return transactions.stream()
+                .filter(t -> t.getAmount() < 0)  // 假设负数表示支出
+                .mapToDouble(t -> -t.getAmount())  // 将支出转换为正数来求和
+                .sum();
+    }
+
+    // 计算总余额
+    public double getTotalBalance() {
+        return getTotalIncome() - getTotalExpenses();  // 总余额 = 总收入 - 总支出
+    }
+
+
 
     public double getIncomeForDate(String date) {
         return getTransactionsForDate(date).stream()

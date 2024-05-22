@@ -174,7 +174,7 @@ public class AccountManager {
                 if (account.getBalance() >= amount) {
                     account.withdraw(amount);
 
-                    HistoryTransaction historyTransaction= new HistoryTransaction(account.getName(),"shop",amount);
+                    HistoryTransaction historyTransaction= new HistoryTransaction(account.getName(),"shop",-amount);
                     historyTransactionList.addTransaction(historyTransaction);
 
                     System.out.println(historyTransaction);
