@@ -12,13 +12,17 @@ import Entity.TaskList;
 public class WriteTask {
     public static void writeTaskList(List<Task> taskList, String fileName) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
+            StringBuilder buffer = new StringBuilder();
             for (Task task : taskList) {
                 // 将任务信息以星号分隔的格式写入文件
-                bw.write(task.getName() + "*" + task.getReward() + "*" + task.getState() + "*" + task.getDescription() + "*" + task.getDestination());
-                bw.newLine(); // 写入新行
+                buffer.append(task.getName() + "*" + task.getReward() + "*" + task.getState() + "*" + task.getDescription() + "*" + task.getDestination()).append(System.lineSeparator());
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.out.println("Error writing file: " + e.getMessage());
+        }
+        catch (Exception ex) {
+            System.out.println("Error encrypting data: " + ex.getMessage());
         }
     }
 }
