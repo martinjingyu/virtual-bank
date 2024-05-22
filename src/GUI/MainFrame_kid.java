@@ -37,7 +37,7 @@ public class MainFrame_kid extends JFrame {
         setVisible(true);
     }
 
-    private void InitiateAll(){
+    public void InitiateAll(){
         this.pg1 = new Bank_kid(mainControllerKid.bank_kid_control, this);
         this.pg2 = new Shop_kid(mainControllerKid.ShopController);
         this.pg3 = new Task_kid(mainControllerKid.task_kid_control, this);

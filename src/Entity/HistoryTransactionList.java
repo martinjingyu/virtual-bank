@@ -65,7 +65,10 @@ public class HistoryTransactionList {
 
     public double getExpensesForDate(String date) {
         return getTransactionsForDate(date).stream()
-                .filter(t -> t.getAmount() < 0)
+                .filter(t -> {
+                    System.out.println("Destination: " + t.getDestination().trim());
+                    return "shop".equals(t.getDestination().trim());
+                })
                 .mapToDouble(HistoryTransaction::getAmount)
                 .sum();
     }

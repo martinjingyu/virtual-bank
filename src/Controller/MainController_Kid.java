@@ -13,15 +13,17 @@ public class MainController_Kid {
     public MainFrameController_Kid mainFrameControllerKid;
     public Message_kid_controller message_kid_controller;
     public Task_kid_control task_kid_control;
-    public MainController_Kid(String id){
-        Kids kid = ReadAll.readall(id);
-        mainFrameControllerKid = new MainFrameController_Kid(id,kid);
+    public MainController_Kid(String id) {
+        try {
+            Kids kid = ReadAll.readall(id);
+            mainFrameControllerKid = new MainFrameController_Kid(id, kid);
 
-        bank_kid_control = new Bank_kid_control(kid);
-        ShopController = new shopKidController(kid);
-        task_kid_control = new Task_kid_control(kid);
-        message_kid_controller = new Message_kid_controller(kid);
-
+            bank_kid_control = new Bank_kid_control(kid);
+            ShopController = new shopKidController(kid);
+            task_kid_control = new Task_kid_control(kid);
+            message_kid_controller = new Message_kid_controller(kid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
 }

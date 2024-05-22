@@ -48,7 +48,7 @@ public class HistoryController {
     }
 
     public static void main(String[] args){
-        Kids kid = ReadAll.readall("222");
+//        Kids kid = ReadAll.readall("222");
     }
 
 }
