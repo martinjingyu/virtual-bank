@@ -12,12 +12,21 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.Date;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class Remain {
     public static String fileName = "./data/remain.txt";
 
+    /**
+     * 
+     * The addRemainPanel method is used to add the remain panel to the card panel
+     * in the GUI of the bank application.
+     * 
+     * @param cardPanel  the JPanel where the remain panel will be added
+     * 
+     * @param cardLayout the CardLayout used to switch between panels
+     * 
+     * @param g          the GUIMain object that handles the GUI operations
+     */
     public static void addRemainPanel(JPanel cardPanel, CardLayout cardLayout, GUIMain g) {
         JPanel remainPanel = new JPanel();
 
@@ -65,6 +74,14 @@ public class Remain {
 
     }
 
+    /**
+     * 
+     * The showCard method is used to switch the current card panel in the GUI to
+     * the specified card panel.
+     * 
+     * @param g        the GUIMain object that handles the GUI operations
+     * @param cardName the name of the card panel to be displayed
+     */
     public static void showCard(GUIMain g, String cardName) {
         g.showCard(cardName);
     }

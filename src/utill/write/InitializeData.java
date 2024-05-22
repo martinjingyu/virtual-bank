@@ -1,5 +1,5 @@
 /**
- * Title      : WriteToFile.java
+ * Title      : InitializeData.java
  * Description: This class is used to create files and write messages into files.
  * Copyright  : Copyright (c) 2024/5/9
  * @author      Weida Peng

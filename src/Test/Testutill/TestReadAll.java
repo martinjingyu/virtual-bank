@@ -1,4 +1,7 @@
-package Testutill;
+/**
+ * Tests the initialization of the utility classes by checking various conditions.
+ */
+package Test.Testutill;
 
 import Entity.*;
 import org.junit.jupiter.api.Test;

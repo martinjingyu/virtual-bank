@@ -11,75 +11,33 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class CheckChildrenSecret {
+import utill.validation.Validate;
 
+/**
+ * This class provides a method to check if a given ID and secret belong to a
+ * child account,
+ * by reading the IDs and secrets from a file using a Scanner object.
+ */
+public class CheckChildrenSecret {
+    /**
+     * Checks if the given ID and secret belong to a child account by reading the
+     * IDs and secrets from a file.
+     *
+     * @param text1    The ID to be checked.
+     * @param text2    The secret to be checked.
+     * @param filePath The path to the file containing the list of IDs and secrets
+     *                 for parent and child accounts.
+     * @return True if the given ID and secret belong to a child account, false
+     *         otherwise.
+     */
     public static boolean checkChildrenSecret(String text1, String text2, String filePath) {
         try {
-            String contents = "";
+
             File file = new File(filePath);
 
             // Create Scanner objects to read file contents
             Scanner scanner = new Scanner(file);
-            contents = scanner.next();
-            System.out.println("content:" + contents);
-            while (contents != null) {
-                System.out.println("id: " + contents);
-                if (text1.equals(contents)) {
-                    System.out.println("id_right");
-                    contents = scanner.next();
-
-                    if (text2.equals(contents)) {
-                        System.out.println("sec_right");
-                        scanner.close();
-                        return true;
-                    } else {
-                        System.out.println("error_secret");
-                        scanner.next();
-                        if (scanner.hasNext()) {
-                            contents = scanner.next();
-                        } else {
-                            scanner.close();
-                            return false;
-                        }
-                    }
-                } else {
-                    scanner.next();
-                    scanner.next();
-                    if (scanner.hasNext()) {
-                        contents = scanner.next();
-                    } else {
-                        scanner.close();
-                        return false;
-                    }
-                }
-            }
-            System.out.println("final_error_secret");
-            scanner.close();
-            return false;
-            //
-            // contents = scanner.next();
-
-            //
-            // System.out.println("Content until first space: " + contents);
-            // if (text1.equals(contents)) {
-            // System.out.println("text1_right");
-            // contents = scanner.next();
-            // if (text2.equals(contents)) {
-            // System.out.println("text2_right");
-            // g.frame.dispose();
-            // g.loginListener.onLogin("222");
-            // // showCard(g, "children_main");
-            // } else {
-            // System.out.println("error_secret");
-            // showCard(g, "error");
-            // }
-
-            // } else {
-            // System.out.println("error");
-            // showCard(g, "error");
-            // }
-
-            //
+            return Validate.checkChildren(scanner, text1, text2);
 
         } catch (IOException error) {
             System.out.println("error_parent");

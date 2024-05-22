@@ -33,8 +33,8 @@ public class HistoryTransaction {
         return Destination;
     }
 
-    public void setDestination(String type) {
-        this.Destination = Destination;
+    public void setDestination(String destination) {
+        this.Destination = destination;
     }
 
     public double getAmount() {

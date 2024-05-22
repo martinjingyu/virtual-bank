@@ -14,7 +14,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static utill.validate.Validate.validateNumber;
 
 
 public class Bank_kid_control implements RefreshListener{
@@ -49,60 +48,61 @@ public class Bank_kid_control implements RefreshListener{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    JDialog dialog = new JDialog();//构造一个新的JFrame，作为新窗口。
+                JDialog dialog = new JDialog();//构造一个新的JFrame，作为新窗口。
 
-                    dialog.setBounds(// 让新窗口与SwingTest窗口示例错开50像素。
-                            new Rectangle(
-                                    80,
-                                    80,
-                                    300, 300
-                            )
-                    );
-                    dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL); // 设置模式类型。
-                    dialog.setLayout(new GridBagLayout()); // 使用GridBagLayout布局
-                    GridBagConstraints gbc = new GridBagConstraints();
-                    gbc.insets = new Insets(10, 10, 10, 10); // 设置组件之间的间距
+                dialog.setBounds(
+                        new Rectangle(
+                                400,
+                                300,
+                                300, 300
+                        )
+                );
+                dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL); // 设置模式类型。
+                dialog.setLayout(new GridBagLayout()); // 使用GridBagLayout布局
+                GridBagConstraints gbc = new GridBagConstraints();
+                gbc.insets = new Insets(10, 10, 10, 10); // 设置组件之间的间距
 
-                    JLabel jl1 = new JLabel("How much you want to save?");
-                    gbc.gridx = 0;
-                    gbc.gridy = 0;
-                    gbc.gridwidth = 2;
-                    dialog.add(jl1, gbc);
+                JLabel jl1 = new JLabel("How much you want to save?");
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.gridwidth = 2;
+                dialog.add(jl1, gbc);
 
-                    JTextField savingGoalTextField = new JTextField(10);
-                    gbc.gridx = 0;
-                    gbc.gridy = 1;
-                    gbc.gridwidth = 2;
-                    dialog.add(savingGoalTextField, gbc);
+                JTextField savingGoalTextField = new JTextField(10);
+                gbc.gridx = 0;
+                gbc.gridy = 1;
+                gbc.gridwidth = 2;
+                dialog.add(savingGoalTextField, gbc);
 
-                    JButton button_save = new JButton("Save");
-                    gbc.gridx = 0;
-                    gbc.gridy = 2;
-                    gbc.gridwidth = 2;
-                    gbc.anchor = GridBagConstraints.CENTER;
-                    dialog.add(button_save, gbc);
+                JButton button_save = new JButton("Save");
+                gbc.gridx = 0;
+                gbc.gridy = 2;
+                gbc.gridwidth = 2;
+                gbc.anchor = GridBagConstraints.CENTER;
+                dialog.add(button_save, gbc);
 
-                    button_save.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            String input = savingGoalTextField.getText();
-                            try{
-                                double value = Validate.validateNumber(input);
-                                dialog.dispose(); // 关闭对话框
-                                kid.getAccountManager().setSavingGoal(value);
-                                GUI.revalidate();
-                                GUI.repaint();
-                                GUI.getSavingGoals().setText(String.valueOf(value));
-                            }
-                            catch (Exception e1){
-                                savingGoalTextField.setText("");
-                            }
+                button_save.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String input = savingGoalTextField.getText();
+                        try{
+                            double value = Validate.validateNumber(input);
+                            dialog.dispose(); // 关闭对话框
+                            kid.getAccountManager().setSavingGoal(value);
+                            GUI.revalidate();
+                            GUI.repaint();
+                            GUI.getSavingGoals().setText(String.valueOf(value));
+                            refreshUI();
                         }
-                    });
+                        catch (Exception e1){
+                            savingGoalTextField.setText("");
+                        }
+                    }
+                });
 
-                    dialog.pack(); // 调整窗口大小以适应所有组件
-                    dialog.setLocationRelativeTo(null); // 将窗口居中
-                    dialog.setVisible(true);
+                dialog.pack(); // 调整窗口大小以适应所有组件
+//                    dialog.setLocationRelativeTo(null); // 将窗口居中
+                dialog.setVisible(true);
 
             }
         });
