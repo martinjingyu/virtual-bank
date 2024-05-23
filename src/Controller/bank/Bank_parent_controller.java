@@ -75,6 +75,17 @@ public class Bank_parent_controller {
             }
         });
     }
+
+    public void addSetInterestListener(JButton button){
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JDialog dialog = new JDialog();
+
+
+            }
+        });
+    }
     private void openNewFrame(JFrame newFrame) {
         // 关闭当前打开的 JFrame
         if (currentFrame != null) {
