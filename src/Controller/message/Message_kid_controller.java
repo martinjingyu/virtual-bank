@@ -65,7 +65,9 @@ public class Message_kid_controller {
             String text = gui.getMessageInput().getText();
             if (selectedContact != null && !text.equals("Please click enter to send") && !text.isEmpty()) {
                 sendMessage(text);
-                agent.receiveUserInput(text);
+                String agentOut = agent.receiveUserInput(text);
+                gui.getMessageModel().addElement(new Message("system_kid",agentOut));  // Assuming constructor exists
+
                 gui.getMessageInput().setText("");  // Clear input field after sending
                 gui.getMessageInput().setForeground(Color.BLACK);
             }

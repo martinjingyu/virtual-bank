@@ -2,6 +2,7 @@ package utill.cryption;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.*;
 import java.security.Key;
 import java.util.Base64;
 
@@ -39,5 +40,46 @@ public class EncryptionUtil {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hash = digest.digest(data.getBytes());
         return Base64.getEncoder().encodeToString(hash);
+    }
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Usage: java utill.cryption.EncryptionUtil <file_path>");
+            return;
+        }
+
+        String filePath = args[0];
+        try {
+            // 读取文件内容
+            String content = readFile(filePath);
+
+            // 加密文件内容
+            String encryptedContent = encrypt(content);
+
+            // 将加密后的内容写回文件或另存为新文件
+            String encryptedFilePath = filePath + ".encrypted";
+            writeFile(encryptedFilePath, encryptedContent);
+
+            System.out.println("File encrypted successfully. Encrypted file path: " + encryptedFilePath);
+        } catch (Exception e) {
+            System.out.println("Error occurred: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private static String readFile(String filePath) throws IOException {
+        StringBuilder contentBuilder = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                contentBuilder.append(line).append("\n");
+            }
+        }
+        return contentBuilder.toString();
+    }
+
+    private static void writeFile(String filePath, String content) throws IOException {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            bw.write(content);
+        }
     }
 }

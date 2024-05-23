@@ -1,63 +1,145 @@
 package Entity;
 
-import javax.swing.*;
-import java.util.Optional;
+import utill.validate.Validate;
 
+import java.util.List;
+import java.util.ArrayList;
 public class Agent {
     private String state;
-    private String accountToDelete;
     private Kids kid;
+    private String accountType; // "saving" or "current"
+    private int selectedIndex; // to store the selected account index for deletion or modification
 
-    public Agent(Kids kid) {
+    public Agent(Kids kid){
         this.kid = kid;
         state = "wait";
-        accountToDelete = "";
+        accountType = "";
+        selectedIndex = -1;
     }
 
-    public String receiveUserInput(String text) {
+    public String receiveUserInput(String text){
         String output = "";
+
+        if (text.equalsIgnoreCase("cancel")) {
+            state = "wait";
+            output = "Operation cancelled. Please enter a new command.";
+            return output;
+        }
 
         switch (state) {
             case "wait":
-                if (text.toLowerCase().contains("delete")&&text.toLowerCase().contains("account")) {
-                    state = "promptAccountName";
-                    output = "If you want to delete account, please enter the account name you want to delete:";
+                if (text.equalsIgnoreCase("delete account")) {
+                    state = "select account type";
+                    output = "Please specify the type of account to delete: 'saving' or 'current'.";
+                } else if (text.equalsIgnoreCase("modify account name")) {
+                    state = "select account type for modification";
+                    output = "Please specify the type of account to modify: 'saving' or 'current'.";
                 } else {
-                    output = "I'm here to help. You can ask me to delete an account.";
+                    output = "Invalid command. Please say 'delete account' or 'modify account name'.";
                 }
                 break;
 
-//            case "promptAccountName":
-//                accountToDelete = text.trim();
-//                Optional<SavingAccount> account = kid.getAccountManager().getSavingAccountByName(accountToDelete);
-//
-//                if (account.isPresent()) {
-//                    double balance = account.get().getBalance();
-//                    if (balance > 0) {
-//                        state = "wait";
-//                        output = "The account \"" + accountToDelete + "\" has a balance of " + balance + ". Please clear the balance before deleting the account.";
-//                    } else {
-//                        int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the account \"" + accountToDelete + "\"?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
-//                        if (confirmation == JOptionPane.YES_OPTION) {
-//                            kid.getAccountManager().deleteSavingAccount(accountToDelete);
-//                            output = "The account \"" + accountToDelete + "\" has been successfully deleted.";
-//                        } else {
-//                            output = "Account deletion cancelled.";
-//                        }
-//                        state = "wait";
-//                    }
-//                } else {
-//                    output = "The account \"" + accountToDelete + "\" does not exist. Please enter a valid account name or create a new account.";
-//                    state = "wait";
-//                }
-//                break;
+            case "select account type":
+                if (text.equalsIgnoreCase("saving") || text.equalsIgnoreCase("current")) {
+                    accountType = text.toLowerCase();
+                    state = "select account for deletion";
+                    output = "Please enter the name of the " + accountType + " account to delete.";
+                } else {
+                    output = "Invalid account type. Please specify 'saving' or 'current'.";
+                }
+                break;
 
-            default:
+            case "select account type for modification":
+                if (text.equalsIgnoreCase("saving") || text.equalsIgnoreCase("current")) {
+                    accountType = text.toLowerCase();
+                    state = "select account for modification";
+                    output = "Please enter the name of the " + accountType + " account to modify.";
+                } else {
+                    output = "Invalid account type. Please specify 'saving' or 'current'.";
+                }
+                break;
+
+            case "select account for deletion":
+                if (accountType.equals("saving")) {
+                    selectedIndex = getSavingAccountIndexByName(text);
+                    if (selectedIndex != -1) {
+                        if (kid.getAccountManager().getSavingAccounts().get(selectedIndex).getBalance() == 0) {
+                            kid.getAccountManager().removeSavingAccount(selectedIndex);
+                            output = accountType + " account deleted successfully.";
+                        } else {
+                            output = "Account has a balance. Please clear the balance before deleting.";
+                        }
+                    } else {
+                        output = "Account not found. Please try again.";
+                    }
+                } else {
+                    selectedIndex = getCurrentAccountIndexByName(text);
+                    if (selectedIndex != -1) {
+                        if (kid.getAccountManager().getCurrentAccounts().get(selectedIndex).getBalance() == 0) {
+                            kid.getAccountManager().removeCurrentAccount(selectedIndex);
+                            output = accountType + " account deleted successfully.";
+                        } else {
+                            output = "Account has a balance. Please clear the balance before deleting.";
+                        }
+                    } else {
+                        output = "Account not found. Please try again.";
+                    }
+                }
                 state = "wait";
-                output = "I'm here to help. You can ask me to delete an account.";
+                break;
+
+            case "select account for modification":
+                if (accountType.equals("saving")) {
+                    selectedIndex = getSavingAccountIndexByName(text);
+                } else {
+                    selectedIndex = getCurrentAccountIndexByName(text);
+                }
+
+                if (selectedIndex != -1) {
+                    state = "enter new name";
+                    output = "Please enter the new name for the " + accountType + " account.";
+                } else {
+                    output = "Account not found. Please try again.";
+                }
+                break;
+
+            case "enter new name":
+                try{
+                    text=Validate.validateName(text);
+                    if (accountType.equals("saving")) {
+                        kid.getAccountManager().getSavingAccounts().get(selectedIndex).setName(text);
+                    } else {
+                        kid.getAccountManager().getCurrentAccounts().get(selectedIndex).setName(text);
+                    }
+                    output = accountType + " account name modified successfully.";
+                    state = "wait";
+                }
+                catch (Exception e1){
+                    output = "Invalid name. Please enter a valid name.";
+                }
                 break;
         }
 
         return output;
+    }
+
+    private int getSavingAccountIndexByName(String name) {
+        List<SavingAccount> accounts = kid.getAccountManager().getSavingAccounts();
+        for (int i = 0; i < accounts.size(); i++) {
+            if (accounts.get(i).getName().equalsIgnoreCase(name)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private int getCurrentAccountIndexByName(String name) {
+        List<CurrentAccount> accounts = kid.getAccountManager().getCurrentAccounts();
+        for (int i = 0; i < accounts.size(); i++) {
+            if (accounts.get(i).getName().equalsIgnoreCase(name)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

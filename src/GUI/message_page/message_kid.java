@@ -180,7 +180,7 @@ public class message_kid extends JPanel {
                     case "parent":
                         setBackground(parentMessageColor);
                         break;
-                    case "system":
+                    case "system_kid":
                         setBackground(systemMessageColor);
                         break;
                     default:

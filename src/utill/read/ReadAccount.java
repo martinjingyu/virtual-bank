@@ -56,6 +56,7 @@ public class ReadAccount {
             } else if (parts.length == 5) {
                 // SavingAccount
                 String name = parts[0].trim();
+                formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
                 double balance = Double.parseDouble(parts[1].trim());
                 double interest = Double.parseDouble(parts[2].trim());
                 LocalDateTime startTime = LocalDateTime.parse(parts[3].trim(), formatter);
