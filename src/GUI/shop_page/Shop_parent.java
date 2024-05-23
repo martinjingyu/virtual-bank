@@ -142,7 +142,7 @@ public class Shop_parent extends JPanel implements RefreshListener {
         confirmButton.setBackground(new Color(192, 192, 192));
         confirmButton.setForeground(Color.BLACK);
         confirmButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        confirmButton.addActionListener(e -> shopController.updateSelectedProduct(checkBoxes));
+        confirmButton.addActionListener(e -> shopController.confirmAndSubmitProducts(checkBoxes));
 
         todoListPanel.add(confirmButton, BorderLayout.SOUTH);
 
@@ -191,7 +191,7 @@ public class Shop_parent extends JPanel implements RefreshListener {
         submitButton.setForeground(Color.WHITE);
         gbc.gridy = 3;
 
-        submitButton.addActionListener(e -> shopController.updateProducts(nameTextField.getText(), priceTextField.getText()));
+        submitButton.addActionListener(e -> shopController.updateProducts(nameTextField.getText(), priceTextField.getText(), nameTextField, priceTextField));
 
         uploadPanel.add(submitButton, gbc);
 

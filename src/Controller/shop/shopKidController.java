@@ -115,6 +115,16 @@ public class shopKidController {
 
         double totalCost = calculateSelectedTotal();
         double currentBalance = accountManager.getCurrentAccountBalance(selectedAccountName);
+
+        if (currentBalance < totalCost) {
+            JOptionPane.showMessageDialog(null, "Insufficient balance for this purchase.", "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int response = JOptionPane.showConfirmDialog(null, String.format("Total cost is $%.2f. Do you want to proceed with the purchase?", totalCost), "Confirm Purchase", JOptionPane.YES_NO_OPTION);
+        if (response != JOptionPane.YES_OPTION) {
+            return;
+        }
         try {
             accountManager.withdrawFromCurrentAccount(selectedAccountName, totalCost);
             if (totalCost > 0.8 * currentBalance) {

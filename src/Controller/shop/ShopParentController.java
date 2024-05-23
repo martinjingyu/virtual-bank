@@ -98,8 +98,6 @@ public class ShopParentController {
      * @param currentAccountLabel the label to update with the current account balance
      */
     public void setSelectedAccountName(String accountName, JLabel currentAccountLabel) {
-        // 设置选中的账户名称
-        // 更新当前账户显示标签
         double currentBalance = kid.getAccountManager().getCurrentAccountBalance(accountName);
         currentAccountLabel.setText(String.format("$%.2f", currentBalance));
     }
@@ -120,43 +118,63 @@ public class ShopParentController {
     }
 
     /**
+     * Confirms and submits the products after user confirmation.
+     *
+     * @param checkBoxes the list of check boxes representing the product selection
+     */
+    public void confirmAndSubmitProducts(List<JCheckBox> checkBoxes) {
+        StringBuilder message = new StringBuilder("You have selected the following products:\n");
+        for (Product product : boughtProduct) {
+            message.append(product.getName()).append("\n");
+        }
+        message.append("Are you sure you want to submit these products?");
+
+        int response = JOptionPane.showConfirmDialog(null, message.toString(), "Confirm Submission", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            for (Product product : boughtProduct) {
+                kid.getSelectedList().removeProduct(product);
+            }
+            for (JCheckBox checkBox : checkBoxes) {
+                checkBox.setSelected(false);
+            }
+            boughtProduct.clear(); // Clear the boughtProduct list after submission
+
+            if (refreshListener != null) {
+                refreshListener.refreshUI();
+            }
+
+        }
+    }
+
+    /**
      * Updates the products based on the provided name and price.
      *
      * @param name the name of the product
      * @param price the price of the product
      */
-    public void updateProducts(String name, String price) {
+    public void updateProducts(String name, String price ,JTextField nameTextField, JTextField priceTextField) {
         try {
             double priceValue = Double.parseDouble(price);
             if (!name.matches("[a-zA-Z]+")) {
                 JOptionPane.showMessageDialog(null, "Invalid name. Please enter a valid name. (hint: only characters).");
                 throw new IllegalArgumentException("Invalid input: Name can only contain letters.");
             }
+            String message = String.format("Are you sure you want to submit %s - $%.2f?", name, priceValue);
+            int response = JOptionPane.showConfirmDialog(null, message, "Confirm Submission", JOptionPane.YES_NO_OPTION);
+            if (response != JOptionPane.YES_OPTION) {
+                return;
+            }
             kid.getProductList().addProduct(new Product(name, priceValue));
             System.out.println("Product Name: " + name + ", Price: " + price);
             for (Product products : kid.getProductList().getAllProducts()) {
                 System.out.println(products);
             }
+
+            nameTextField.setText("");
+            priceTextField.setText("");
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Invalid price. Please enter a valid number.");
             throw new  IllegalArgumentException("Invalid input: Price must be a number.");
-        }
-    }
-
-    /**
-     * Updates the selected products and refreshes the UI.
-     *
-     * @param checkBoxes the list of check boxes representing the product selection
-     */
-    public void updateSelectedProduct(List<JCheckBox> checkBoxes) {
-        for (Product product : boughtProduct) {
-            kid.getSelectedList().removeProduct(product);
-        }
-        for (JCheckBox checkBox : checkBoxes) {
-            checkBox.setSelected(false);
-        }
-        if (refreshListener != null) {
-            refreshListener.refreshUI();
         }
     }
 
