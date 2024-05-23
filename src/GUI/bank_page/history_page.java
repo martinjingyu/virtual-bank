@@ -6,6 +6,7 @@ import utill.read.ReadAll;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class history_page extends JPanel {
     private JTextField nameTextField, priceTextField;
     private HistoryController historyController;
     private JPanel DetailPanel;
+    private JPanel accountInfoPanel;
     private List<JLabel> dateList;
 
 
@@ -57,13 +59,17 @@ public class history_page extends JPanel {
         add(createDatePanel(), BorderLayout.WEST);
         DetailPanel = createDetailPanel();
         add(DetailPanel, BorderLayout.CENTER);
-        add(createAccountInfoPanel(), BorderLayout.SOUTH);
+        accountInfoPanel = createAccountInfoPanel();
+        add(accountInfoPanel, BorderLayout.SOUTH);
     }
 
     public void refreshUI() {
         remove(DetailPanel);
+        remove(accountInfoPanel);
         DetailPanel = createDetailPanel();
+        accountInfoPanel = createAccountInfoPanel();
         add(DetailPanel, BorderLayout.CENTER);
+        add(accountInfoPanel, BorderLayout.SOUTH);
         validate();
         repaint();
     }
@@ -157,27 +163,40 @@ public class history_page extends JPanel {
 
     // Create the Account Information Panel
     private JPanel createAccountInfoPanel() {
-        refreshUI();
+        JPanel accountInfoPanel = new JPanel();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
         String formattedDate = LocalDate.now().format(formatter);
 
-        JPanel accountInfoPanel = new JPanel();
         accountInfoPanel.setLayout(new GridLayout(4, 1));  // 使用网格布局
         accountInfoPanel.setBackground(panelBgColor);
         accountInfoPanel.setBorder(new LineBorder(borderColor, 1)); // 添加边框
 
         // 总收入
-        JLabel incomeLabel = new JLabel("Total Income:     $" + HistoryTransactionList.formatAmount(transactionList.getIncomeForDate(historyController.getSelectedDate())));
+        double totalIncome;
+        double totalExpenses;
+        double totalBalance;
+
+        if (historyController.hasSelectedDate()) {
+            totalIncome = transactionList.getIncomeForDate(historyController.getSelectedDate());
+            totalExpenses = transactionList.getExpensesForDate(historyController.getSelectedDate());
+            totalBalance = transactionList.getBalanceForDate(historyController.getSelectedDate());
+        } else {
+            totalIncome = transactionList.getTotalIncome();
+            totalExpenses = transactionList.getTotalExpenses();
+            totalBalance = transactionList.getTotalBalance();
+        }
+
+        JLabel incomeLabel = new JLabel("Total Income:     $" + HistoryTransactionList.formatAmount(totalIncome));
         incomeLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         incomeLabel.setForeground(fontColor);
 
         // 总支出
-        JLabel expensesLabel = new JLabel("Total Expenses:  $" +  HistoryTransactionList.formatAmount(transactionList.getExpensesForDate(historyController.getSelectedDate())));
+        JLabel expensesLabel = new JLabel("Total Expenses:  $" + HistoryTransactionList.formatAmount(totalExpenses));
         expensesLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         expensesLabel.setForeground(fontColor);
 
         // 总余额
-        JLabel balanceLabel = new JLabel("Total Balance:    $" +  HistoryTransactionList.formatAmount(transactionList.getBalanceForDate(historyController.getSelectedDate())));
+        JLabel balanceLabel = new JLabel("Total Balance:    $" + HistoryTransactionList.formatAmount(totalBalance));
         balanceLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         balanceLabel.setForeground(fontColor);
 
@@ -192,11 +211,15 @@ public class history_page extends JPanel {
 
 
     public static void main(String[] args) {
-//        Kids kid = ReadAll.readall(String.valueOf(222));
-//        JFrame frame = new JFrame("Shop Application");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setContentPane(new history_page(new HistoryController(kid)));
-//        frame.pack();
-//        frame.setVisible(true);
+        try {
+            Kids kid = ReadAll.readall(String.valueOf(222));
+            JFrame frame = new JFrame("Shop Application");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setContentPane(new history_page(new HistoryController(kid)));
+            frame.pack();
+            frame.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
