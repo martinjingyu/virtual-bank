@@ -119,7 +119,7 @@ public class Task_parent extends JPanel {
                         String destination = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getDestination();
                         task_parent_control.getKid().getMessagelist().addTaskMessage("Parent_Opt","You have confirmed the task "+ name);
                         task_parent_control.getKid().getMessagelist().addTaskMessage("Child_Opt","Your submission for task "+ name +
-                                "has been confirmed. You have received reward $" + salary +
+                                " has been confirmed. You have received reward $" + salary +
                                 " to your current account "+ destination);
 
 
@@ -154,7 +154,7 @@ public class Task_parent extends JPanel {
                         // 发信息
                         String name = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
                         task_parent_control.getKid().getMessagelist().addTaskMessage("Parent_Opt","You have rejected the task "+ name);
-                        task_parent_control.getKid().getMessagelist().addTaskMessage("Child_Opt","Your submission for task "+ name + "has been rejected." +
+                        task_parent_control.getKid().getMessagelist().addTaskMessage("Child_Opt","Your submission for task "+ name + " has been rejected." +
                                 " Please redo and resubmit it.");
                     }
                 }
