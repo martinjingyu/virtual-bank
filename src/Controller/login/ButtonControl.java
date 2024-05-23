@@ -190,7 +190,8 @@ public class ButtonControl {
                 String text1 = textField_1.getText();
                 textField_1.setText("");
                 textField_2.setText("");
-                if (utill.read.CheckChildrenSecret.checkChildrenSecret(text1, text2, "data/secret.txt") == true) {
+                if (utill.read.CheckChildrenSecret.checkChildrenSecret(text1, text2,
+                        "data\\secret.txt.encrypted") == true) {
                     g.frame.dispose();
                     g.loginListener.onLogin_kid(text1);
                 } else {
@@ -221,7 +222,8 @@ public class ButtonControl {
                 String text1 = textField_1.getText();
                 textField_1.setText("");
                 textField_2.setText("");
-                if (utill.read.CheckParentSecret.checkParentSecret(text1, text2, "data/secret.txt") == true) {
+                if (utill.read.CheckParentSecret.checkParentSecret(text1, text2,
+                        "data\\secret.txt.encrypted") == true) {
                     g.frame.dispose();
                     g.loginListener.onLogin_parent(text1);
                 } else {
@@ -285,11 +287,11 @@ public class ButtonControl {
                     int indexOfSpace = text_1.indexOf(" ");
 
                     String contentBeforeSpace = text_1.substring(0, indexOfSpace);
-                    if (utill.read.CheckID.checkID(contentBeforeSpace, "data/secret.txt") == false) {
+                    if (utill.read.CheckID.checkID(contentBeforeSpace, "data\\secret.txt.encrypted") == false) {
                         secret_label_3.setText("Account is already signed.");
                         secret_label_3.setBounds(400, 100, 1000, 50);
                     } else {
-                        InitializeData.writeTextToFile(text_1, "data/secret.txt");
+                        InitializeData.writeTextToFile(text_1, "data\\secret.txt.encrypted");
                         InitializeData.createFolderAndFiles(text_2);
                         secret_label_3.setText("Your account is ready.");
                         secret_label_3.setBounds(400, 100, 1000, 50);
