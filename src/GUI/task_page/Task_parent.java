@@ -188,7 +188,7 @@ public class Task_parent extends JPanel {
 //                    }
                     // 执行删除任务的逻辑
                     // 删除任务
-                    task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getTask(i-1));
+                    task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getTask(i));
 
 
 
