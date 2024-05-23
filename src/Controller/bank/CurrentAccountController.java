@@ -43,7 +43,7 @@ public class CurrentAccountController {
                     JPanel panel = new JPanel(new BorderLayout());
 
                     // 添加组件到对话框中
-                    List<String> accountNames= kid.getAccountManager().getSavingAccountNames();
+                    List<String> accountNames= kid.getAccountManager().getCurrentAccountNames();
                     String[] namesArray = accountNames.toArray(new String[0]);
                     JComboBox<String> comboBox = new JComboBox<>(namesArray);
                     JTextField textField = new JTextField();
