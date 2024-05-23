@@ -124,12 +124,12 @@ public class Bank_kid_control implements RefreshListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 ShowSavingAccount showSavingAccount = new ShowSavingAccount();
-                SavingAccountController savingAccountController = new SavingAccountController(kid,showSavingAccount,false);
+                SavingAccountController savingAccountController = new SavingAccountController(kid,showSavingAccount,false,GUI);
                 openNewFrame(showSavingAccount);
             }
             public void refreshSaving(){
                 ShowSavingAccount showSavingAccount = new ShowSavingAccount();
-                SavingAccountController savingAccountController = new SavingAccountController(kid,showSavingAccount,false);
+                SavingAccountController savingAccountController = new SavingAccountController(kid,showSavingAccount,false,GUI);
             }
 
         });

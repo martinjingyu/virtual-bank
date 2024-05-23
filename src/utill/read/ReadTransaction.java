@@ -36,7 +36,7 @@ public class ReadTransaction {
                 String destination = parts[1].trim();
                 String amountStr = parts[2].trim();
                 double amount = Double.parseDouble(amountStr);  // 直接将金额解析为double
-                String date = parts[3].trim().replace(":", "/"); // 替换冒号为斜杠，正确处理日期和时间
+                String date = parts[3].trim(); // 替换冒号为斜杠，正确处理日期和时间
                 HistoryTransaction transaction = new HistoryTransaction(source, destination, amount, date);
                 historyTransactionList.addTransaction(transaction);
             } else {

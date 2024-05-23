@@ -2,6 +2,7 @@ package Controller.bank;
 
 import Entity.Kids;
 import Exceptions.InsufficientFundsException;
+import GUI.bank_page.Bank_kid;
 import GUI.bank_page.ShowSavingAccount;
 import utill.validate.Validate;
 
@@ -17,11 +18,19 @@ import java.util.List;
 public class SavingAccountController {
     private Kids kid;
     private ShowSavingAccount GUI;
+    private Bank_kid bank_kid;
 
+    SavingAccountController(Kids kid,ShowSavingAccount GUI,Boolean whetherParent, Bank_kid bank_kid){
+        this.kid = kid;
+        this.GUI = GUI;
+        this.bank_kid = bank_kid;
+
+        GUI.initData(kid.getAccountManager().getSavingAccounts(),whetherParent,kid.getAccountManager());
+        addListener(GUI);
+    }
     SavingAccountController(Kids kid,ShowSavingAccount GUI,Boolean whetherParent){
         this.kid = kid;
         this.GUI = GUI;
-
         GUI.initData(kid.getAccountManager().getSavingAccounts(),whetherParent,kid.getAccountManager());
         addListener(GUI);
     }
@@ -59,6 +68,7 @@ public class SavingAccountController {
 
                             // 执行 earlyWithdrew 方法
                             kid.getAccountManager().earlyWithdrew(selectedIndex, finalI);
+                            bank_kid.updateAccounts();
                             refresh(true);
                             // 关闭对话框
                             frame.dispose();
@@ -115,6 +125,7 @@ public class SavingAccountController {
                                     double value = Validate.validateNumber(textField.getText());
                                     kid.getAccountManager().depositCurrentToSaving(selectedIndex, finalI,value,selectedTime);
                                     refresh(true);
+                                    bank_kid.updateAccounts();
                                     // 关闭对话框
                                     frame.dispose();
                                 }
@@ -169,6 +180,7 @@ public class SavingAccountController {
                                 // 执行 earlyWithdrew 方法
                                 kid.getAccountManager().savingWithdrewToCurrent(selectedIndex, finalI);
                                 refresh(true);
+                                bank_kid.updateAccounts();
                                 // 关闭对话框
                                 frame.dispose();
                             }

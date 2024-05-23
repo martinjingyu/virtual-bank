@@ -16,12 +16,11 @@ public class Start implements LoginListener {
     public void onLogin_kid(String id) {
         // 创建并显示新的窗口
         MainController_Kid mainControllerKid = new MainController_Kid(id);
-
+        System.out.println(mainControllerKid.bank_kid_control.getKid().getTransactionList().getAllTransactions());
         MainFrame_kid mainFrameKid = new MainFrame_kid(mainControllerKid);
     }
     public void onLogin_parent(String id){
         MainController_Parent mainController = new MainController_Parent(id);
-
         MainFrame_parent mainFrameParent = new MainFrame_parent(mainController);
     }
 }
