@@ -1,5 +1,7 @@
 package Entity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -38,7 +40,6 @@ public class SavingAccount extends Account {
         return endTime;
     }
 
-
     public String getFormattedStartTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         String formattedDateTime = startTime.format(formatter);
@@ -65,9 +66,14 @@ public class SavingAccount extends Account {
     }
 
     public double getIncome(){
+
         long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(startTime, endTime);
         double income = balance;
         income += income * (interestRate / 100.0) * (daysBetween / 365.25);
-        return income;
+
+        BigDecimal bd = new BigDecimal(income);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+
+        return bd.doubleValue();
     }
 }

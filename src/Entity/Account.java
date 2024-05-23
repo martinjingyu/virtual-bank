@@ -2,6 +2,8 @@ package Entity;
 
 import Exceptions.InsufficientFundsException;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 
 public abstract class Account {
@@ -52,10 +54,14 @@ public abstract class Account {
     }
 
     public double getBalance() {
-        return balance;
+        BigDecimal bd = new BigDecimal(balance);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
     public double getInterestRate() {
-        return balance;
+        BigDecimal bd = new BigDecimal(interestRate);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
     public String getName(){
         return  name;

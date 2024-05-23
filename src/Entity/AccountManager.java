@@ -2,6 +2,9 @@ package Entity;
 
 import Exceptions.InsufficientFundsException;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -104,10 +107,14 @@ public class AccountManager {
 
     // 获取所有储蓄账户的总余额
     public double getTotalSavingBalance() {
-        return savingAccounts.stream().mapToDouble(SavingAccount::getBalance).sum();
+        BigDecimal bd = new BigDecimal(savingAccounts.stream().mapToDouble(SavingAccount::getBalance).sum());
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
     public double getTotalSavingIncome(){
-        return savingAccounts.stream().mapToDouble(SavingAccount::getIncome).sum();
+        BigDecimal bd = new BigDecimal(savingAccounts.stream().mapToDouble(SavingAccount::getIncome).sum());
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     // 打印所有活期账户的详情
