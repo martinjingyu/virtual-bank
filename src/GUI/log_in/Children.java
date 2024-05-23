@@ -12,7 +12,6 @@ import Controller.login.ButtonControl;
 import java.awt.*;
 
 public class Children {
-    public static String fileName = "data/children_secret.txt";
 
     /**
      * 
