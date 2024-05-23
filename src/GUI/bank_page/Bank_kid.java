@@ -135,7 +135,7 @@ public class Bank_kid extends JPanel {
     }
 
     public void refresh(){
-        mainFrameKid.InitiateAll();
+        mainFrameKid.refresh();
     }
 
 

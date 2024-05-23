@@ -9,17 +9,17 @@ import java.nio.file.Files;
 public class Read {
     public static Kids readall(String id) throws Exception {
         Paths paths = new Paths(id);
-
-        ProductList productList = new ProductList();
-        ProductList selectedProductList = new ProductList();
-        TaskList taskList = new TaskList();
-        MessageList messageList = new MessageList();
-        HistoryTransactionList historyTransactionList = new HistoryTransactionList();
-        AccountManager accountManager = new AccountManager(historyTransactionList);
-
-        // 解密并读取产品列表
-        String decryptedProducts = decryptFileContents(paths.product_path);
-        ReadProduct.readProductsFromString(decryptedProducts, productList);
+//
+//        ProductList productList = new ProductList();
+//        ProductList selectedProductList = new ProductList();
+//        TaskList taskList = new TaskList();
+//        MessageList messageList = new MessageList();
+//        HistoryTransactionList historyTransactionList = new HistoryTransactionList();
+//        AccountManager accountManager = new AccountManager(historyTransactionList);
+//
+//        // 解密并读取产品列表
+//        String decryptedProducts = decryptFileContents(paths.product_path);
+//        ReadProduct.readProductsFromString(decryptedProducts, productList);
 
 //        String decryptedSelectedProducts = decryptFileContents(paths.selectedProduct_path);
 //        ReadProduct.readProductsFromString(decryptedSelectedProducts, selectedProductList);
@@ -36,7 +36,7 @@ public class Read {
 //        String decryptedAccounts = decryptFileContents(paths.account_path);
 //        ReadAccount.readAccountsFromString(decryptedAccounts, accountManager);
 
-        return new Kids(historyTransactionList, productList, selectedProductList, taskList, messageList, accountManager);
+        return new Kids();
     }
 
     private static String decryptFileContents(String filePath) throws Exception {

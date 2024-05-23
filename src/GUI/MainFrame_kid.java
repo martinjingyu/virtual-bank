@@ -43,6 +43,11 @@ public class MainFrame_kid extends JFrame {
         this.pg3 = new Task_kid(mainControllerKid.task_kid_control, this);
         this.pg4 = new message_kid(mainControllerKid.message_kid_controller);
     }
+    public void refresh(){
+        this.pg1 = new Bank_kid(mainControllerKid.bank_kid_control, this);
+        this.pg2 = new Shop_kid(mainControllerKid.ShopController);
+        this.pg3 = new Task_kid(mainControllerKid.task_kid_control, this);
+    }
 
 
     public void changePanel(int pgIndex){

@@ -58,8 +58,8 @@ public class AccountManager {
     }
 
     // 删除活期账户
-    public void removeCurrentAccount(CurrentAccount account) {
-        currentAccounts.remove(account);
+    public void removeCurrentAccount(int index) {
+        currentAccounts.remove(index);
     }
     public void addSavingAccount(SavingAccount account) {
         savingAccounts.add(account);
@@ -74,8 +74,15 @@ public class AccountManager {
     }
 
     // 删除储蓄账户
-    public void removeSavingAccount(SavingAccount account) {
+    public void removeSavingAccount(int index) {
+        savingAccounts.remove(index);
+    }
+    public void deleteSavingAccount(SavingAccount account) {
         savingAccounts.remove(account);
+    }
+
+    public void deleteCurrentAccount(CurrentAccount account) {
+        currentAccounts.remove(account);
     }
 
     // 获取所有活期账户的总余额

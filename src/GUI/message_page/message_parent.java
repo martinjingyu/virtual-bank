@@ -194,7 +194,7 @@ public class message_parent extends JPanel {
                     case "parent":
                         setBackground(parentMessageColor);
                         break;
-                    case "system":
+                    case "system_parent":
                         setBackground(systemMessageColor);
                         break;
                     default:

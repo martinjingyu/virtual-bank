@@ -7,6 +7,7 @@ import java.util.List;
 
 import Entity.Task;
 import Entity.TaskList;
+import utill.cryption.EncryptionUtil;
 
 
 public class WriteTask {
@@ -16,7 +17,10 @@ public class WriteTask {
             for (Task task : taskList) {
                 // 将任务信息以星号分隔的格式写入文件
                 buffer.append(task.getName() + "*" + task.getReward() + "*" + task.getState() + "*" + task.getDescription() + "*" + task.getDestination()).append(System.lineSeparator());
+
             }
+            String encryptedData = EncryptionUtil.encrypt(buffer.toString());
+            bw.write(encryptedData);
         }
         catch (IOException e) {
             System.out.println("Error writing file: " + e.getMessage());
