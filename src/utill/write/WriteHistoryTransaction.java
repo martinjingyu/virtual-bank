@@ -16,7 +16,7 @@ public class WriteHistoryTransaction {
             StringBuilder buffer = new StringBuilder();
             for (HistoryTransaction historyTransaction : historyTransactionList) {
                 // 将产品对象的信息以逗号分隔的格式写入缓冲区
-                buffer.append(historyTransaction.getSource()).append(",").append(historyTransaction.getDestination()).append(",").append(historyTransaction.getAmount()).append(",").append(historyTransaction.getAmount()).append(System.lineSeparator());
+                buffer.append(historyTransaction.getSource()).append(",").append(historyTransaction.getDestination()).append(",").append(historyTransaction.getAmount()).append(",").append(historyTransaction.getDate()).append(System.lineSeparator());
             }
             // 加密整个缓冲区的内容并写入文件
             String encryptedData = EncryptionUtil.encrypt(buffer.toString());
@@ -26,7 +26,5 @@ public class WriteHistoryTransaction {
         } catch (Exception ex) {
             System.out.println("Error encrypting data: " + ex.getMessage());
         }
-
     }
-
 }

@@ -2,10 +2,7 @@ package Controller.bank;
 
 import Entity.Kids;
 import GUI.MainFrame_parent;
-import GUI.bank_page.ShowCurrentAccount;
-import GUI.bank_page.ShowSavingAccount;
-import GUI.bank_page.bank_parents;
-import GUI.bank_page.history_page;
+import GUI.bank_page.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

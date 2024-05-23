@@ -15,7 +15,7 @@ public class HistoryTransaction {
         this.Source = source;
         this.Destination = destination;
         this.amount = amount;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:M:d HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d HH:mm:ss");
 
         this.date = LocalDateTime.now().format(formatter);
     }

@@ -26,6 +26,8 @@ public class Bank_kid extends JPanel {
     private final Color fontColor = new Color(49, 122, 232); // #317AE8
     private final Font font = new Font("Arial", Font.PLAIN, 20);
     private LocalDateTime time;
+    private JLabel currentTotal;
+    private JLabel savingTotal;
 
     public Bank_kid(Bank_kid_control bank_kid_control, MainFrame_kid mainFrameKid) {
         this.mainFrameKid = mainFrameKid;
@@ -81,12 +83,12 @@ public class Bank_kid extends JPanel {
         savingGoal.setFont(font);
         add(savingGoal);
 
-        JLabel currentTotal = new JLabel(String.valueOf(bank_kid_control.getKid().getAccountManager().getTotalCurrentBalance()));
+        currentTotal = new JLabel(String.valueOf(bank_kid_control.getKid().getAccountManager().getTotalCurrentBalance()));
         currentTotal.setBounds(280,190,100,50);
         currentTotal.setFont(font);
         add(currentTotal);
 
-        JLabel savingTotal = new JLabel(String.valueOf(bank_kid_control.getKid().getAccountManager().getTotalSavingBalance()));
+        savingTotal = new JLabel(String.valueOf(bank_kid_control.getKid().getAccountManager().getTotalSavingBalance()));
         savingTotal.setFont(font);
         savingTotal.setBounds(280,310,100,50);
         add(savingTotal);
@@ -132,6 +134,14 @@ public class Bank_kid extends JPanel {
         g.setColor(Color.black);
         g.setFont(titleFont);
         g.drawString("Transaction History", 90, 440);
+    }
+
+    public void updateAccounts(){
+        currentTotal.setText(String.valueOf(bank_kid_control.getKid().getAccountManager().getTotalCurrentBalance()));
+        savingTotal.setText(String.valueOf(bank_kid_control.getKid().getAccountManager().getTotalSavingBalance()));
+        revalidate();
+        repaint();
+
     }
 
     public void refresh(){

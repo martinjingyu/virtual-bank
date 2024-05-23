@@ -90,7 +90,12 @@ public class AccountManager {
 
     // 获取所有活期账户的总余额
     public double getTotalCurrentBalance() {
-        return currentAccounts.stream().mapToDouble(CurrentAccount::getBalance).sum();
+        BigDecimal bd = new BigDecimal(currentAccounts.stream().mapToDouble(CurrentAccount::getBalance).sum());
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+
+        // 将 BigDecimal 转换为 double 类型
+        return bd.doubleValue();
+
     }
 
     public double getCurrentAccountBalance(String accountName) {
