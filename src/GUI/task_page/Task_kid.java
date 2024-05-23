@@ -143,7 +143,7 @@ public class Task_kid extends JPanel {
                         // 确认提交任务的逻辑
                         // 发信息
                         String name = task_kid_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
-                        task_kid_control.getKid().getMessagelist().addTaskMessage("Child_Opt","You have taken the task "+ name);
+                        task_kid_control.getKid().getMessagelist().addTaskMessage("Child_Opt","You have submitted the task "+ name);
                         JOptionPane.showMessageDialog(this,
                                 "Task has been submitted.",
                                 "Task Submitted",
