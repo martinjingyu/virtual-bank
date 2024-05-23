@@ -37,7 +37,6 @@ class BackPanel extends JPanel {
 }
 
 public class Parent {
-    public static String fileName = "data/parent_secret.txt";
 
     /**
      * 

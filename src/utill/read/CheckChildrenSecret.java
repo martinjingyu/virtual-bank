@@ -7,11 +7,10 @@
  */
 package utill.read;
 
-import java.io.File;
-import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Scanner;
-
 import utill.validation.Validate;
+import utill.cryption.*;
 
 /**
  * This class provides a method to check if a given ID and secret belong to a
@@ -32,19 +31,31 @@ public class CheckChildrenSecret {
      */
     public static boolean checkChildrenSecret(String text1, String text2, String filePath) {
         try {
-
-            File file = new File(filePath);
-
+            String content = decryptFileContents(filePath);
             // Create Scanner objects to read file contents
-            Scanner scanner = new Scanner(file);
+            Scanner scanner = new Scanner(content);
             return Validate.checkChildren(scanner, text1, text2);
 
-        } catch (IOException error) {
+        } catch (Exception error) {
             System.out.println("error_parent");
             System.exit(1);
             return false;
         }
 
+    }
+
+    /**
+     * Reads the contents of a file, decrypts the content using an EncryptionUtil
+     * class, and returns it as a string.
+     *
+     * @param filePath The path of the file to be decrypted.
+     * @return The decrypted file contents as a string.
+     * @throws Exception If there is an error while reading or decrypting the file.
+     */
+    public static String decryptFileContents(String filePath) throws Exception {
+        byte[] fileContent = Files.readAllBytes(java.nio.file.Paths.get(filePath));
+        return EncryptionUtil.decrypt(new String(fileContent, java.nio.charset.StandardCharsets.UTF_8)); // re //
+                                                                                                         // string.
     }
 
 }
