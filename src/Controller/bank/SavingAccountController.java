@@ -45,7 +45,7 @@ public class SavingAccountController {
                     frame.setSize(300,100);
 
                     // 添加组件到对话框中
-                    List<String> accountNames= kid.getAccountManager().getSavingAccountNames();
+                    List<String> accountNames= kid.getAccountManager().getCurrentAccountNames();
                     String[] namesArray = accountNames.toArray(new String[0]);
                     JComboBox<String> comboBox = new JComboBox<>(namesArray);
                     panel.add(comboBox, BorderLayout.CENTER);
@@ -91,7 +91,7 @@ public class SavingAccountController {
                         frame.setSize(300,150);
 
                         // 添加组件到对话框中
-                        List<String> accountNames= kid.getAccountManager().getSavingAccountNames();
+                        List<String> accountNames= kid.getAccountManager().getCurrentAccountNames();
                         String[] namesArray = accountNames.toArray(new String[0]);
                         JPanel middle = new JPanel(new BorderLayout());
                         JComboBox<String> comboBox = new JComboBox<>(namesArray);
@@ -141,7 +141,6 @@ public class SavingAccountController {
 
                     }
                     else if (button.getText().equals("Take my Money!")) {
-                        System.out.println(kid.getAccountManager().getSavingAccounts().get(finalI).getEndTime());
                         JDialog frame = new JDialog();
                         frame.setModal(true);
                         frame.setResizable(false);
@@ -153,7 +152,7 @@ public class SavingAccountController {
 
 
                         // 添加组件到对话框中
-                        List<String> accountNames= kid.getAccountManager().getSavingAccountNames();
+                        List<String> accountNames= kid.getAccountManager().getCurrentAccountNames();
                         String[] namesArray = accountNames.toArray(new String[0]);
                         JComboBox<String> comboBox = new JComboBox<>(namesArray);
 
