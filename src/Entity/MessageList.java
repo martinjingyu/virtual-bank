@@ -65,7 +65,7 @@ public class MessageList {
     }
     public void addShopMessage(double price) {
         String formattedString = String.format("Double value: %.2f", price);
-        Message shopMessage = new Message("system","bigTransaction");
+        Message shopMessage = new Message("system_kid","bigTransaction");
         messages.add(shopMessage);
     }
 
