@@ -1,8 +1,6 @@
-
+package Controller;
 // [pwd]:4/25：作为启动文件，用于启动整个项目
 
-import Controller.MainController_Kid;
-import Controller.MainController_Parent;
 import GUI.MainFrame_kid;
 import GUI.MainFrame_parent;
 import GUI.log_in.LoginListener;
