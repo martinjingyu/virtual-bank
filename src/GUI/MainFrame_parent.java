@@ -23,6 +23,9 @@ public class MainFrame_parent extends JFrame {
         super("demo");
         this.mainController_parent = mainController;
         InitiateAll();
+        current_panel = this.pg1;
+        frame_panel();
+        navi_button();
 
         mainController.mainFrameController_parent.setGUI(this);
         mainController.mainFrameController_parent.addButtonListener();
@@ -35,10 +38,6 @@ public class MainFrame_parent extends JFrame {
         this.pg2 = new Shop_parent(mainController_parent.shopParentController);
         this.pg3 = new Task_parent(mainController_parent.task_parent_control,this);
         this.pg4 = new message_parent(mainController_parent.messageParentController);
-        current_panel = this.pg1;
-        frame_panel();
-        navi_button();
-
     }
 
 
@@ -68,7 +67,6 @@ public class MainFrame_parent extends JFrame {
     }
 
 
-    //    @Override
     public void refresh() {
         int tempIndex = 0;
         main_page.remove(current_panel);
