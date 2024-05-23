@@ -2,6 +2,9 @@ package GUI.bank_page;
 
 import Entity.AccountManager;
 import Entity.CurrentAccount;
+import Entity.Kids;
+import Entity.Message;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -176,8 +179,9 @@ public class ShowCurrentAccount extends JFrame {
         addPanel.add(addLabel);
         return addPanel;
     }
-    public void afterAddAccount(AccountManager accountManager, String name){
+    public void afterAddAccount(AccountManager accountManager, String name, Kids kid){
         accountManager.createNewCurrentAccount(name);
+        kid.getMessagelist().addMessage(new Message("system_kid","You have created a new current account "+"\""+name+"\""));
         mainContent.removeAll();
         mainContent.add(createHeaderPanel(), BorderLayout.NORTH);
         initData(accountManager.getCurrentAccounts(),false,accountManager);

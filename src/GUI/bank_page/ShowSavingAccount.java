@@ -2,6 +2,8 @@ package GUI.bank_page;
 
 import Controller.bank.Bank_kid_control;
 import Entity.AccountManager;
+import Entity.Kids;
+import Entity.Message;
 import Entity.SavingAccount;
 
 import javax.swing.*;
@@ -332,9 +334,10 @@ public class ShowSavingAccount extends JFrame {
         addPanel.add(Box.createVerticalGlue());
         return addPanel;
     }
-    public void afterAddAccount(AccountManager accountManager, String name){
+    public void afterAddAccount(AccountManager accountManager, String name, Kids kid){
         timer.stop();
         accountManager.createNewSavingAccount(name);
+        kid.getMessagelist().addMessage(new Message("system_kid","You have created a new saving account "+"\""+name+"\""));
         mainContent.removeAll();
         mainContent.add(createHeaderPanel(), BorderLayout.NORTH);
         initData(accountManager.getSavingAccounts(),false,accountManager);
