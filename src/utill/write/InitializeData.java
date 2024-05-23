@@ -10,23 +10,31 @@ package utill.write;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.io.File;
+import utill.cryption.*;
 
 public class InitializeData {
 
     public static void writeTextToFile(String text, String filePath) {
 
         try {
-
-            FileWriter fw = new FileWriter(filePath, true);
+            System.out.println(text);
+            text += "\n";
+            System.out.println(text);
+            String content = decryptFileContents(filePath);
+            content += text;
+            System.out.println(content);
+            String encryptedContent = EncryptionUtil.encrypt(content);
+            System.out.println(encryptedContent);
+            FileWriter fw = new FileWriter(filePath, false);
             BufferedWriter bw = new BufferedWriter(fw);
 
-            bw.write(text);
-            bw.newLine();
+            bw.write(encryptedContent);
             bw.close();
 
             System.out.println("The contents have been successfully written to the file." + text);
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.err.println("Error writing to file:" + e.getMessage());
         }
     }
@@ -42,7 +50,10 @@ public class InitializeData {
             }
         }
 
-        String[] fileNames = { "Bank.txt", "Message.txt", "Product.txt", "Task.txt", "TransactionHistory.txt" };
+        String[] fileNames = { "Account.txt.encrypted", "Bank.txt.encrypted", "CurrentAccount.txt.encrypted",
+                "Message.txt.encrypted", "Product.txt.encrypted", "SavingAccount.txt.encrypted",
+                "SelectedProduct.txt.encrypted", "Task.txt.encrypted", "TransactionHistory.txt.encrypted",
+                "User.txt.encrypted" };
         for (String fileName : fileNames) {
             File file = new File(folder, fileName);
             try {
@@ -57,12 +68,30 @@ public class InitializeData {
             }
         }
 
-        File aFile = new File(folder, "Bank.txt");
+        // 这是例子！！！！
+
+        File aFile = new File(folder, "Bank.txt.encrypted");
         try (FileWriter writer = new FileWriter(aFile)) {
-            writer.write("User, 0.00, 0.00, 0.00, 0.00, 0.00");
-        } catch (IOException e) {
+            writer.write(EncryptionUtil.encrypt(folderPath + ", 0.00, 0.00, 0.00, 0.00, 0.00")); // folderPath是id
+        } catch (Exception e) {
             System.out.println("Error writing to file：" + e.getMessage());
         }
+
+        // 结束例子！！！！
+    }
+
+    /**
+     * Reads the contents of a file, decrypts the content using an EncryptionUtil
+     * class, and returns it as a string.
+     *
+     * @param filePath The path of the file to be decrypted.
+     * @return The decrypted file contents as a string.
+     * @throws Exception If there is an error while reading or decrypting the file.
+     */
+    public static String decryptFileContents(String filePath) throws Exception {
+        byte[] fileContent = Files.readAllBytes(java.nio.file.Paths.get(filePath));
+        return EncryptionUtil.decrypt(new String(fileContent, java.nio.charset.StandardCharsets.UTF_8)); // re //
+                                                                                                         // string.
     }
 
 }
