@@ -24,6 +24,7 @@ public class bank_parents extends JPanel{
     private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
     private final Color fontColor = new Color(49, 122, 232); // #317AE8
     private final Font font = new Font("Arial", Font.PLAIN, 20);
+    private JButton setInterest;
 
     public MainFrame_parent getMainFrame(){return this.mainFrameParent;}
     public bank_parents(Bank_parent_controller bank_parent_controller) {
@@ -42,6 +43,11 @@ public class bank_parents extends JPanel{
         savingDetails.setBounds(590, 310, 140, 30);
         bank_parent_controller.addSavingAccountListener(savingDetails);
         add(savingDetails);
+
+        setInterest = new JButton("set interest rate");
+        setInterest.setBounds(360, 310, 140, 30);
+        bank_parent_controller.addSetInterestListener(savingDetails);
+        add(setInterest);
 
         button_history = new JButton("Review");
         button_history.setBounds(590, 420, 140, 30);
