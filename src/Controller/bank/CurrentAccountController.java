@@ -109,7 +109,7 @@ public class CurrentAccountController {
             public void actionPerformed(ActionEvent e) {
                 try{
                     String accountName = Validate.validateName(nameField.getText());
-                    GUI.afterAddAccount(kid.getAccountManager(),accountName);
+                    GUI.afterAddAccount(kid.getAccountManager(),accountName,kid);
                     dialog.dispose();
                     addListener(GUI);
                 }

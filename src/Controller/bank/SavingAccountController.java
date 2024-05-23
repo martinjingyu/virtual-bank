@@ -230,7 +230,7 @@ public class SavingAccountController {
                 try{
                     accountName = Validate.validateName(accountName);
                     Boolean whether_Repeat = Validate.validateRepeat(accountName,kid.getAccountManager().getSavingAccountNames());
-                    GUI.afterAddAccount(kid.getAccountManager(),accountName);
+                    GUI.afterAddAccount(kid.getAccountManager(),accountName,kid);
                     dialog.dispose();
                     addListener(GUI);
                 }
