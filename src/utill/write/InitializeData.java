@@ -68,16 +68,26 @@ public class InitializeData {
             }
         }
 
-//        // 这是例子！！！！
-//
-//        File aFile = new File(folder, "User.txt.encrypted");
-//        try (FileWriter writer = new FileWriter(aFile)) {
-//            writer.write(EncryptionUtil.encrypt(folderPath + ", Martin,200.0,1.5,3.0,4.25")); // folderPath是id
-//        } catch (Exception e) {
-//            System.out.println("Error writing to file：" + e.getMessage());
-//        }
-//
-//        // 结束例子！！！！
+        // // 这是例子！！！！
+
+        // File aFile = new File(folder, "User.txt");
+        // try (FileWriter writer = new FileWriter(aFile)) {
+        // writer.write(EncryptionUtil.encrypt(folderPath + ",200.0,1.5,3.0,4.25")); //
+        // folderPath是id
+        // } catch (Exception e) {
+        // System.out.println("Error writing to file：" + e.getMessage());
+        // }
+
+        // // 结束例子！！！！
+
+        File aFile = new File(folder, "Task.txt");
+        try (FileWriter writer = new FileWriter(aFile)) {
+            writer.write(EncryptionUtil.encrypt(
+                    "novice task*10.0*ToBeTaken*Read the user manual and familiarize yourself with the software.*NULL")); // folderPath是id
+        } catch (Exception e) {
+            System.out.println("Error writing to file：" + e.getMessage());
+        }
+
     }
 
     /**
