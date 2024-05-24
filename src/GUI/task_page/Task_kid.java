@@ -289,12 +289,7 @@ public class Task_kid extends JPanel {
         progress.setForeground(new Color(-12763843));
 
 
-        //progress.setText(task_kid_control.getKid().getAccountManager().getTotalCurrentBalance()/task_kid_control.getKid().getAccountManager().getSavingGoal()*100+"%");
-        double totalCurrentBalance = task_kid_control.getKid().getAccountManager().getTotalCurrentBalance();
-        double savingGoal = task_kid_control.getKid().getAccountManager().getSavingGoal();
-        double percentage = (totalCurrentBalance / savingGoal) * 100;
-        String formattedPercentage = String.format("%.2f%%", percentage);
-        progress.setText(formattedPercentage); 
+        progress.setText(task_kid_control.getKid().getAccountManager().getTotalCurrentBalance()/task_kid_control.getKid().getAccountManager().getSavingGoal()*100+"%");
 
 
         gbc = new GridBagConstraints();
