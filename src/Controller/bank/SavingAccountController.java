@@ -249,11 +249,12 @@ public class SavingAccountController {
         confirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 String accountName = nameField.getText().trim();
                 try {
                     accountName = Validate.validateName(accountName);
                     Boolean whetherRepeat = Validate.validateRepeat(accountName, kid.getAccountManager().getSavingAccountNames());
-                    if (whetherRepeat) {
+                    if (!whetherRepeat) {
                         throw new Exception("Account name already exists");
                     }
                     GUI.afterAddAccount(kid.getAccountManager(), accountName, kid);
