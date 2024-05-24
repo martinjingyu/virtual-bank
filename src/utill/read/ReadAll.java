@@ -5,6 +5,7 @@ import utill.Paths;
 import utill.cryption.EncryptionUtil;
 
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReadAll {
@@ -39,7 +40,7 @@ public class ReadAll {
         ReadTransaction.readTransactionsFromString(decryptedTransactions, historyTransactionList);
 
         // 解密并读取 accountManager
-        String decryptedAccounts = decryptMultipleFileContents(paths.account_path);
+        List<String> decryptedAccounts = decryptMultipleFileContents(paths.account_path);
         ReadAccount.readAccountsFromString(decryptedAccounts, accountManager);
 
         return new Kids(historyTransactionList, productList, selectedProductList, taskList, messageList, accountManager);
@@ -50,12 +51,11 @@ public class ReadAll {
         return EncryptionUtil.decrypt(new String(fileContent, java.nio.charset.StandardCharsets.UTF_8));  // Assuming EncryptionUtil.decrypt() takes a string and returns a string.
     }
 
-    private static String decryptMultipleFileContents(List<String> filePaths) throws Exception {
-        StringBuilder decryptedContent = new StringBuilder();
+    private static List<String> decryptMultipleFileContents(List<String> filePaths) throws Exception {
+        List<String> output = new ArrayList<>();
         for (String filePath : filePaths) {
-            decryptedContent.append(decryptFileContents(filePath));
-            decryptedContent.append("\n"); // 添加换行符，以分隔不同文件的内容
+            output.add(decryptFileContents(filePath));
         }
-        return decryptedContent.toString();
+        return output;
     }
 }

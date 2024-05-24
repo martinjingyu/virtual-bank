@@ -139,4 +139,22 @@ public class Validate {
         }
         return true;
     }
+
+    public static double validateInterest(String number) throws Exception{
+
+        int dotIndex = number.indexOf(".");
+        System.out.println(dotIndex);
+        if(dotIndex!=-1 && number.substring(dotIndex+1).length()>2){
+
+            JOptionPane.showMessageDialog(null, "Please inter a number with at most two decimal", "Input Error",JOptionPane.ERROR_MESSAGE);
+            throw new Exception();
+        }
+        Double output = Validate.validateNumber(number);
+        if(output>20||output<0){
+            JOptionPane.showMessageDialog(null, "The interest rate is supposed to be a number between 0 and 20", "Input Error",JOptionPane.ERROR_MESSAGE);
+            throw new Exception();
+        }
+
+        return output;
+    }
 }
