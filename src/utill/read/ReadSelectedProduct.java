@@ -7,8 +7,17 @@ import java.io.IOException;
 import Entity.Product;
 import Entity.ProductList;
 
+/**
+ * Utility class to read selected products from files or strings into a ProductList.
+ */
 public class ReadSelectedProduct {
-    // 从文件读取
+
+    /**
+     * Reads selected products from a file and adds them to the provided ProductList.
+     *
+     * @param fileName the name of the file to read selected products from
+     * @param productList the ProductList to add the read selected products to
+     */
     public static void readProducts(String fileName, ProductList productList) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             readFromBufferedReader(br, productList);
@@ -17,7 +26,12 @@ public class ReadSelectedProduct {
         }
     }
 
-    // 从字符串读取
+    /**
+     * Reads selected products from a string and adds them to the provided ProductList.
+     *
+     * @param data the string data containing the selected products
+     * @param productList the ProductList to add the read selected products to
+     */
     public static void readProductsFromString(String data, ProductList productList) {
         try (BufferedReader br = new BufferedReader(new StringReader(data))) {
             readFromBufferedReader(br, productList);
@@ -26,7 +40,13 @@ public class ReadSelectedProduct {
         }
     }
 
-    // 从BufferedReader读取产品数据
+    /**
+     * Reads selected products from a BufferedReader and adds them to the provided ProductList.
+     *
+     * @param br the BufferedReader to read selected products from
+     * @param productList the ProductList to add the read selected products to
+     * @throws IOException if an I/O error occurs
+     */
     private static void readFromBufferedReader(BufferedReader br, ProductList productList) throws IOException {
         String line;
         while ((line = br.readLine()) != null) {
@@ -42,6 +62,11 @@ public class ReadSelectedProduct {
         }
     }
 
+    /**
+     * Main method for testing purposes. Reads selected products from a file and prints them.
+     *
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         ProductList selectedProductList = new ProductList();
         readProducts("data/Kids/222/SelectedProduct.txt", selectedProductList);

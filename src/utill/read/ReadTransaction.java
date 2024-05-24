@@ -7,8 +7,17 @@ import java.io.IOException;
 import Entity.HistoryTransaction;
 import Entity.HistoryTransactionList;
 
+/**
+ * Utility class to read transactions from files or strings into a HistoryTransactionList.
+ */
 public class ReadTransaction {
-    // 从文件读取
+
+    /**
+     * Reads transactions from a file and adds them to the provided HistoryTransactionList.
+     *
+     * @param fileName the name of the file to read transactions from
+     * @param historyTransactionList the HistoryTransactionList to add the read transactions to
+     */
     public static void readTransactions(String fileName, HistoryTransactionList historyTransactionList) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             readFromBufferedReader(br, historyTransactionList);
@@ -17,7 +26,12 @@ public class ReadTransaction {
         }
     }
 
-    // 从字符串读取
+    /**
+     * Reads transactions from a string and adds them to the provided HistoryTransactionList.
+     *
+     * @param data the string data containing the transactions
+     * @param historyTransactionList the HistoryTransactionList to add the read transactions to
+     */
     public static void readTransactionsFromString(String data, HistoryTransactionList historyTransactionList) {
         try (BufferedReader br = new BufferedReader(new StringReader(data))) {
             readFromBufferedReader(br, historyTransactionList);
@@ -26,17 +40,23 @@ public class ReadTransaction {
         }
     }
 
-    // 从BufferedReader读取交易数据
+    /**
+     * Reads transactions from a BufferedReader and adds them to the provided HistoryTransactionList.
+     *
+     * @param br the BufferedReader to read transactions from
+     * @param historyTransactionList the HistoryTransactionList to add the read transactions to
+     * @throws IOException if an I/O error occurs
+     */
     private static void readFromBufferedReader(BufferedReader br, HistoryTransactionList historyTransactionList) throws IOException {
         String line;
         while ((line = br.readLine()) != null) {
-            String[] parts = line.split(",", 4);  // 使用限制，确保只分割前两个逗号
+            String[] parts = line.split(",", 4);  // Use a limit to ensure only the first three commas are split
             if (parts.length == 4) {
                 String source = parts[0].trim();
                 String destination = parts[1].trim();
                 String amountStr = parts[2].trim();
-                double amount = Double.parseDouble(amountStr);  // 直接将金额解析为double
-                String date = parts[3].trim(); // 替换冒号为斜杠，正确处理日期和时间
+                double amount = Double.parseDouble(amountStr);  // Directly parse the amount as double
+                String date = parts[3].trim();
                 HistoryTransaction transaction = new HistoryTransaction(source, destination, amount, date);
                 historyTransactionList.addTransaction(transaction);
             } else {
@@ -45,6 +65,11 @@ public class ReadTransaction {
         }
     }
 
+    /**
+     * Main method for testing purposes. Reads transactions from a file and prints them.
+     *
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         HistoryTransactionList transactionList = new HistoryTransactionList();
         readTransactions("data/Kids/222/TransactionHistory.txt", transactionList);
