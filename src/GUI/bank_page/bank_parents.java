@@ -7,24 +7,22 @@ import utill.read.ReadAll;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class bank_parents extends JPanel{
     private JPanel bank;
     private JButton currentDetails;
     private JButton savingDetails;
     private JButton button_history;
-    private JButton button_transfer;
-    private JButton button_yes;
-    private JButton button_no;
+    private JButton changeInterestRate;
     private Kids kid;
     private bank_parents GUI;
     private MainFrame_parent mainFrameParent;
     private Bank_parent_controller bank_parent_controller;
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
     private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
-    private final Color fontColor = new Color(49, 122, 232); // #317AE8
-    private final Font font = new Font("Arial", Font.PLAIN, 20);
-    private JButton setInterest;
+    private final Font font = new Font("Arial Black", Font.BOLD, 18);
 
     public MainFrame_parent getMainFrame(){return this.mainFrameParent;}
     public bank_parents(Bank_parent_controller bank_parent_controller) {
@@ -39,15 +37,15 @@ public class bank_parents extends JPanel{
         bank_parent_controller.addCurrentDetails(currentDetails);
         add(currentDetails);
 
+        changeInterestRate = new JButton("Change interest rates");
+        changeInterestRate.setBounds(360,315,170,30);
+        bank_parent_controller.addChangeInterestRate(changeInterestRate);
+        add(changeInterestRate);
+
         savingDetails = new JButton("Details");
-        savingDetails.setBounds(590, 310, 140, 30);
+        savingDetails.setBounds(590, 315, 140, 30);
         bank_parent_controller.addSavingAccountListener(savingDetails);
         add(savingDetails);
-
-        setInterest = new JButton("set interest rate");
-        setInterest.setBounds(360, 310, 140, 30);
-        bank_parent_controller.addSetInterestListener(savingDetails);
-        add(setInterest);
 
         button_history = new JButton("Review");
         button_history.setBounds(590, 420, 140, 30);
@@ -57,27 +55,36 @@ public class bank_parents extends JPanel{
     }
 
     public void initData(){
-        JLabel income = new JLabel(String.valueOf(bank_parent_controller.getKid().getTransactionList().getIncomeForDate("2024/3/10")));
+        removeAll();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:M:d");
+        String formattedDate = LocalDate.now().format(formatter);
+
+        JLabel income = new JLabel(String.valueOf(bank_parent_controller.getKid().getTransactionList().getIncomeForDate(formattedDate)));
         income.setBounds(150,70,100,50);
+        income.setForeground(new Color(-9975466));
         income.setFont(font);
         add(income);
 
-        JLabel expenses = new JLabel(String.valueOf(bank_parent_controller.getKid().getTransactionList().getExpensesForDate("2024/3/10")));
+        JLabel expenses = new JLabel(String.valueOf(bank_parent_controller.getKid().getTransactionList().getExpensesForDate(formattedDate)));
         expenses.setBounds(280,70,100,50);
         expenses.setFont(font);
+        expenses.setForeground(Color.RED);
         add(expenses);
 
         JLabel savingGoal = new JLabel(String.valueOf(bank_parent_controller.getKid().getAccountManager().getSavingGoal()));
         savingGoal.setBounds(590,70,100,50);
+        savingGoal.setForeground(new Color(-9975466));
         savingGoal.setFont(font);
         add(savingGoal);
 
         JLabel currentTotal = new JLabel(String.valueOf(bank_parent_controller.getKid().getAccountManager().getTotalCurrentBalance()));
         currentTotal.setBounds(280,190,100,50);
+        currentTotal.setForeground(new Color(-9975466));
         currentTotal.setFont(font);
         add(currentTotal);
 
         JLabel savingTotal = new JLabel(String.valueOf(bank_parent_controller.getKid().getAccountManager().getTotalSavingBalance()));
+        savingTotal.setForeground(new Color(-9975466));
         savingTotal.setFont(font);
         savingTotal.setBounds(280,310,100,50);
         add(savingTotal);
@@ -87,7 +94,7 @@ public class bank_parents extends JPanel{
         setLayout(null); // 使用绝对布局
         setBackground(mainBgColor);
 
-        Font titleFont = new Font("Arial", Font.PLAIN, 20);
+        Font titleFont = new Font("Arial", Font.BOLD, 22);
         super.paintComponent(g);
         g.setColor(Color.WHITE);
         g.fillRect(70, 40, 350, 80); // 绘制顶部白色矩形框
@@ -125,19 +132,5 @@ public class bank_parents extends JPanel{
         g.drawString("Transaction History", 90, 440);
     }
 
-
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                Kids kid = ReadAll.readall(String.valueOf(222));
-//                bank_parents panel = new bank_parents(new Bank_parent_controller(kid));
-//                JFrame frame = new JFrame("Bank Parents Panel");
-//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                frame.setSize(800, 600);
-//                frame.getContentPane().add(panel);
-//                frame.setVisible(true);
-//            }
-//        });
-//    }
 
 }
