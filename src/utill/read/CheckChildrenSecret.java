@@ -9,7 +9,7 @@ package utill.read;
 
 import java.nio.file.Files;
 import java.util.Scanner;
-import utill.validation.Validate;
+import utill.validate.ValidateAccount;
 import utill.cryption.*;
 
 /**
@@ -34,7 +34,7 @@ public class CheckChildrenSecret {
             String content = decryptFileContents(filePath);
             // Create Scanner objects to read file contents
             Scanner scanner = new Scanner(content);
-            return Validate.checkChildren(scanner, text1, text2);
+            return ValidateAccount.checkChildren(scanner, text1, text2);
 
         } catch (Exception error) {
             System.out.println("error_parent");
