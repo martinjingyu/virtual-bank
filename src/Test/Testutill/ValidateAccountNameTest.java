@@ -5,7 +5,7 @@ import utill.validate.Validate;
 
 import static org.junit.Assert.*;
 
-public class ValidateNameTest {
+public class ValidateAccountNameTest {
 
     @Test
     public void testValidName() {
