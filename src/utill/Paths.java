@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Paths {
-    public String bank_path;
     public String product_path;
     public String task_path;
     public String message_path;
@@ -13,7 +12,6 @@ public class Paths {
     public List<String> account_path;
     public Paths(String id){
         account_path = new ArrayList<>();
-        bank_path = "data/Kids/"+id+"/Bank.txt";
         product_path = "data/Kids/"+id+"/Product.txt";
         task_path = "data/Kids/"+id+"/Task.txt";
         message_path = "data/Kids/"+id+"/Message.txt";

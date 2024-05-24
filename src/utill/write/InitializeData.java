@@ -50,7 +50,7 @@ public class InitializeData {
             }
         }
 
-        String[] fileNames = { "Account.txt.encrypted", "Bank.txt.encrypted", "CurrentAccount.txt.encrypted",
+        String[] fileNames = { "Account.txt.encrypted", "CurrentAccount.txt.encrypted",
                 "Message.txt.encrypted", "Product.txt.encrypted", "SavingAccount.txt.encrypted",
                 "SelectedProduct.txt.encrypted", "Task.txt.encrypted", "TransactionHistory.txt.encrypted",
                 "User.txt.encrypted" };
@@ -70,9 +70,9 @@ public class InitializeData {
 
         // 这是例子！！！！
 
-        File aFile = new File(folder, "Bank.txt.encrypted");
+        File aFile = new File(folder, "User.txt.encrypted");
         try (FileWriter writer = new FileWriter(aFile)) {
-            writer.write(EncryptionUtil.encrypt(folderPath + ", 0.00, 0.00, 0.00, 0.00, 0.00")); // folderPath是id
+            writer.write(EncryptionUtil.encrypt(folderPath + ", Martin,200.0,1.5,3.0,4.25")); // folderPath是id
         } catch (Exception e) {
             System.out.println("Error writing to file：" + e.getMessage());
         }

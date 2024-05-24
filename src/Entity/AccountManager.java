@@ -17,6 +17,9 @@ public class AccountManager {
     private List<CurrentAccount> currentAccounts;
     private List<SavingAccount> savingAccounts;
     private HistoryTransactionList historyTransactionList;
+    private double interest1;
+    private double interest2;
+    private double interest3;
 
 
     public AccountManager(HistoryTransactionList historyTransactionList) {
@@ -230,12 +233,15 @@ public class AccountManager {
         switch (selectedDuration) {
             case "15 days":
                 result = now.plusDays(15);
+                savingAccount.setInterestRate(interest1);
                 break;
             case "1 month":
                 result = now.plusMonths(1);
+                savingAccount.setInterestRate(interest1);
                 break;
             case "3 months":
                 result = now.plusMonths(3);
+                savingAccount.setInterestRate(interest1);
                 break;
         }
         savingAccount.setEndTime(result);
@@ -249,5 +255,19 @@ public class AccountManager {
     }
     public void createNewCurrentAccount(String name){
         currentAccounts.add(new CurrentAccount(name));
+    }
+
+    public void setInterestRate(Double interestRate, String date){
+        switch (date){
+            case "15 days":
+                interest1 = interestRate;
+            case "1 month":
+                interest2 = interestRate;
+            case "3 months":
+                interest3 = interestRate;
+        }
+    }
+    public String getAllInterst(){
+        return interest1+","+interest2+","+interest3;
     }
 }

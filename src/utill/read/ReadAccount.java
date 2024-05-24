@@ -6,6 +6,7 @@ import java.io.StringReader;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import Entity.AccountManager;
 import Entity.CurrentAccount;
@@ -23,13 +24,70 @@ public class ReadAccount {
     }
 
     // 从字符串读取
-    public static void readAccountsFromString(String data, AccountManager accountManager) {
-        try (BufferedReader br = new BufferedReader(new StringReader(data))) {
-            readFromBufferedReader(br, accountManager);
-        } catch (IOException e) {
+    public static void readAccountsFromString(List<String> data, AccountManager accountManager) {
+        String line;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss");
+        try {
+            BufferedReader br = new BufferedReader(new StringReader(data.get(0)));
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 2) {
+                    // 第一个length == 2的是currentAccount
+                    String name = parts[0].trim();
+                    double balance = Double.parseDouble(parts[1].trim());
+                    CurrentAccount currentAccount = new CurrentAccount(name, balance);
+                    accountManager.addCurrentAccount(currentAccount);
+                }
+            }
+        }
+        catch (IOException e) {
             System.out.println("Error reading data: " + e.getMessage());
         }
+        try {
+            BufferedReader br = new BufferedReader(new StringReader(data.get(1)));
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 5) {
+                    // 第一个length == 2的是currentAccount
+                    String name = parts[0].trim();
+                    formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+                    double balance = Double.parseDouble(parts[1].trim());
+                    double interest = Double.parseDouble(parts[2].trim());
+                    LocalDateTime startTime = LocalDateTime.parse(parts[3].trim(), formatter);
+                    LocalDateTime endTime = LocalDateTime.parse(parts[4].trim(), formatter);
+                    SavingAccount savingAccount = new SavingAccount(name, balance, interest, startTime, endTime);
+                    accountManager.addSavingAccount(savingAccount);
+                }
+            }
+        }
+        catch (IOException e) {
+            System.out.println("Error reading data: " + e.getMessage());
+        }
+        try {
+            BufferedReader br = new BufferedReader(new StringReader(data.get(2)));
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 5) {
+                    String userID = parts[0].trim();
+                    double savingGoal = Double.parseDouble(parts[1].trim());
+                    double interest1 = Double.parseDouble(parts[2].trim());
+                    double interest2 = Double.parseDouble(parts[3].trim());
+                    double interest3 = Double.parseDouble(parts[4].trim());
+                    accountManager.setUserID(userID);
+                    accountManager.setSavingGoal(savingGoal);
+                    accountManager.setInterestRate(interest1,"15 days");
+                    accountManager.setInterestRate(interest2,"1 month");
+                    accountManager.setInterestRate(interest3,"3 months");
+                }
+            }
+        }
+        catch (IOException e) {
+            System.out.println("Error reading data: " + e.getMessage());
+        }
+
+
     }
+
 
     // 从BufferedReader读取账户数据
     private static void readFromBufferedReader(BufferedReader br, AccountManager accountManager) throws IOException {
@@ -71,14 +129,6 @@ public class ReadAccount {
     }
 
     public static void main(String[] args) {
-        AccountManager accountManager = new AccountManager(new HistoryTransactionList());
-        String data = "CA1,10.0\nCA2,20.0\nCA3,15.0\nSA1,10.0,3.0,2024:01:10 12:12:40,2024:10:10 12:12:40\nSA2,10.0,3.0,2024:01:10 12:12:40,2024:10:10 12:12:40\nSA3,10.0,3.0,2024:01:10 12:12:40,2024:10:10 12:12:40\nSA4,10.0,3.0,2024:01:10 12:12:40,2024:02:10 12:14:40\nMartin,200.0";
-        readAccountsFromString(data, accountManager);
 
-        // 打印结果以验证读取是否正确
-        System.out.println("Current Accounts: " + accountManager.getCurrentAccounts());
-        System.out.println("Saving Accounts: " + accountManager.getSavingAccounts());
-        System.out.println("User ID: " + accountManager.getUserID());
-        System.out.println("Saving Goal: " + accountManager.getSavingGoal());
     }
 }

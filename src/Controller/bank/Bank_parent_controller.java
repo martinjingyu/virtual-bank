@@ -1,6 +1,7 @@
 package Controller.bank;
 
 import Entity.Kids;
+import Entity.Message;
 import GUI.MainFrame_parent;
 import GUI.bank_page.ShowCurrentAccount;
 import GUI.bank_page.ShowSavingAccount;
@@ -69,17 +70,14 @@ public class Bank_parent_controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JDialog dialog = new JDialog(currentFrame, "Change Interest Rate", true);
-                dialog.setBounds(
-                        new Rectangle(
-                                400,
-                                300,
-                                500, 500
-                        )
-                );
+                dialog.setTitle("Change Interest rate");
+                dialog.setResizable(false);
+                dialog.setLocationRelativeTo(GUI);
                 dialog.setLayout(new GridLayout(4, 1));
 
                 // 第一行：文字
                 JLabel label = new JLabel("Change interest rate", SwingConstants.CENTER);
+                label.setSize(200,50);
                 label.setFont(new Font(label.getFont().getName(), Font.BOLD, 18)); // 设置加粗和大小
                 dialog.add(label);
 
@@ -104,24 +102,33 @@ public class Bank_parent_controller {
                         System.out.println("User input: " + userInput);
                         if (selectedOption.equals("15 days")){
                             try {
-                                double newInterestRate = Validate.validateNumber(userInput);
+                                double newInterestRate = Validate.validateInterest(userInput);
+                                kid.getAccountManager().setInterestRate(newInterestRate,"15 days");
+                                kid.getMessagelist().addMessage(new Message("system_kid","The interest rate for 15 days has been changed to "+ userInput+"%"));
+                                dialog.dispose();
                             } catch (Exception ex) {
-                                throw new RuntimeException(ex);
+
                             }
                         } else if (selectedOption.equals("1 month")) {
                             try {
-                                double newInterestRate = Validate.validateNumber(userInput);
+                                double newInterestRate = Validate.validateInterest(userInput);
+                                kid.getAccountManager().setInterestRate(newInterestRate,"1 month");
+                                kid.getMessagelist().addMessage(new Message("system_kid","The interest rate for 1 month has been changed to "+ userInput+"%"));
+                                dialog.dispose();
                             } catch (Exception ex) {
-                                throw new RuntimeException(ex);
+
                             }
-                        }else {
+                        }else if(selectedOption.equals("3 month")){
                             try {
-                                double newInterestRate = Validate.validateNumber(userInput);
+                                double newInterestRate = Validate.validateInterest(userInput);
+                                kid.getAccountManager().setInterestRate(newInterestRate,"3 month");
+                                kid.getMessagelist().addMessage(new Message("system_kid","The interest rate for 3 months has been changed to "+ userInput+"%"));
+                                dialog.dispose();
                             } catch (Exception ex) {
-                                throw new RuntimeException(ex);
+
                             }
                         }
-                        dialog.dispose(); // 关闭对话框
+                        textField.setText("");
                     }
                 });
                 dialog.add(confirmButton);

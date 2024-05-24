@@ -42,7 +42,7 @@ public class WriteAccount {
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName.get(2)))) {
             StringBuilder buffer = new StringBuilder();
-            buffer.append(accountManager.getUserID() + "," + accountManager.getSavingGoal()).append(System.lineSeparator());
+            buffer.append(accountManager.getUserID() + "," + accountManager.getSavingGoal()+","+accountManager.getAllInterst()).append(System.lineSeparator());
             String encryptedData = EncryptionUtil.encrypt(buffer.toString());
             bw.write(encryptedData);
         } catch (IOException e) {
