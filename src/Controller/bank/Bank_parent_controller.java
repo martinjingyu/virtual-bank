@@ -104,7 +104,7 @@ public class Bank_parent_controller {
                             try {
                                 double newInterestRate = Validate.validateInterest(userInput);
                                 kid.getAccountManager().setInterestRate(newInterestRate,"15 days");
-                                kid.getMessagelist().addMessage(new Message("system_kid","The interest rate for 15 days has been changed to "+ userInput+"%"));
+                                kid.getMessagelist().addMessage(new Message("parent","The interest rate for 15 days has been changed to "+ userInput+"%"));
                                 dialog.dispose();
                             } catch (Exception ex) {
 
@@ -113,7 +113,7 @@ public class Bank_parent_controller {
                             try {
                                 double newInterestRate = Validate.validateInterest(userInput);
                                 kid.getAccountManager().setInterestRate(newInterestRate,"1 month");
-                                kid.getMessagelist().addMessage(new Message("system_kid","The interest rate for 1 month has been changed to "+ userInput+"%"));
+                                kid.getMessagelist().addMessage(new Message("parent","The interest rate for 1 month has been changed to "+ userInput+"%"));
                                 dialog.dispose();
                             } catch (Exception ex) {
 
@@ -122,7 +122,7 @@ public class Bank_parent_controller {
                             try {
                                 double newInterestRate = Validate.validateInterest(userInput);
                                 kid.getAccountManager().setInterestRate(newInterestRate,"3 month");
-                                kid.getMessagelist().addMessage(new Message("system_kid","The interest rate for 3 months has been changed to "+ userInput+"%"));
+                                kid.getMessagelist().addMessage(new Message("parent","The interest rate for 3 months has been changed to "+ userInput+"%"));
                                 dialog.dispose();
                             } catch (Exception ex) {
 

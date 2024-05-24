@@ -268,13 +268,19 @@ public class ShowSavingAccount extends JFrame {
         inputLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         inputLabel.setForeground(fontColor);
 
-        JLabel incomeLabel = new JLabel("Total Expenses:  $" +  accountManager.getTotalSavingIncome());
+        JLabel incomeLabel = new JLabel("Total Income:  $" +  accountManager.getTotalSavingIncome());
         incomeLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         incomeLabel.setForeground(fontColor);
+
+        JLabel interest = new JLabel("Current Interest rate :   " +"15 days: "+accountManager.getAllInterst(0)+
+                "%            1 month: "+accountManager.getAllInterst(1)+"%                3 month: "+ accountManager.getAllInterst(2)+"%");
+        interest.setFont(new Font("Arial", Font.PLAIN, 16));
+        interest.setForeground(fontColor);
 
         accountInfoPanel.add(new JLabel("Saving ACCOUNT"));
         accountInfoPanel.add(inputLabel);
         accountInfoPanel.add(incomeLabel);
+        accountInfoPanel.add(interest);
 
         return accountInfoPanel;
 

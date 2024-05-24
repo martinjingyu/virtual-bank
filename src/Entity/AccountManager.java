@@ -270,4 +270,16 @@ public class AccountManager {
     public String getAllInterst(){
         return interest1+","+interest2+","+interest3;
     }
+    public double getAllInterst(int index) {
+        switch (index) {
+            case 0:
+                return interest1;
+            case 1:
+                return interest2;
+            case 2:
+                return interest3;
+            default:
+                return interest1;
+        }
+    }
 }
