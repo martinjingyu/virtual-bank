@@ -13,8 +13,17 @@ import Entity.CurrentAccount;
 import Entity.HistoryTransactionList;
 import Entity.SavingAccount;
 
+/**
+ * Utility class to read account data from files or strings into an AccountManager.
+ */
 public class ReadAccount {
-    // 从文件读取
+
+    /**
+     * Reads accounts from a file and adds them to the provided AccountManager.
+     *
+     * @param fileName the name of the file to read accounts from
+     * @param accountManager the AccountManager to add the read accounts to
+     */
     public static void readAccount(String fileName, AccountManager accountManager) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             readFromBufferedReader(br, accountManager);
@@ -23,7 +32,12 @@ public class ReadAccount {
         }
     }
 
-    // 从字符串读取
+    /**
+     * Reads accounts from a list of strings and adds them to the provided AccountManager.
+     *
+     * @param data the list of string data containing the accounts
+     * @param accountManager the AccountManager to add the read accounts to
+     */
     public static void readAccountsFromString(List<String> data, AccountManager accountManager) {
         String line;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss");
@@ -32,15 +46,14 @@ public class ReadAccount {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 2) {
-                    // 第一个length == 2的是currentAccount
+                    // First length == 2 is for CurrentAccount
                     String name = parts[0].trim();
                     double balance = Double.parseDouble(parts[1].trim());
                     CurrentAccount currentAccount = new CurrentAccount(name, balance);
                     accountManager.addCurrentAccount(currentAccount);
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("Error reading data: " + e.getMessage());
         }
         try {
@@ -48,7 +61,7 @@ public class ReadAccount {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 5) {
-                    // 第一个length == 2的是currentAccount
+                    // First length == 5 is for SavingAccount
                     String name = parts[0].trim();
                     formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
                     double balance = Double.parseDouble(parts[1].trim());
@@ -59,8 +72,7 @@ public class ReadAccount {
                     accountManager.addSavingAccount(savingAccount);
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("Error reading data: " + e.getMessage());
         }
         try {
@@ -75,21 +87,23 @@ public class ReadAccount {
                     double interest3 = Double.parseDouble(parts[4].trim());
                     accountManager.setUserID(userID);
                     accountManager.setSavingGoal(savingGoal);
-                    accountManager.setInterestRate(interest1,"15 days");
-                    accountManager.setInterestRate(interest2,"1 month");
-                    accountManager.setInterestRate(interest3,"3 months");
+                    accountManager.setInterestRate(interest1, "15 days");
+                    accountManager.setInterestRate(interest2, "1 month");
+                    accountManager.setInterestRate(interest3, "3 months");
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("Error reading data: " + e.getMessage());
         }
-
-
     }
 
-
-    // 从BufferedReader读取账户数据
+    /**
+     * Reads account data from a BufferedReader and adds them to the provided AccountManager.
+     *
+     * @param br the BufferedReader to read accounts from
+     * @param accountManager the AccountManager to add the read accounts to
+     * @throws IOException if an I/O error occurs
+     */
     private static void readFromBufferedReader(BufferedReader br, AccountManager accountManager) throws IOException {
         String line;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss");
@@ -99,13 +113,13 @@ public class ReadAccount {
             String[] parts = line.split(",");
             if (parts.length == 2) {
                 if (!isFirstCurrentAccountFound) {
-                    // 第一个length == 2的是currentAccount
+                    // First length == 2 is for CurrentAccount
                     String name = parts[0].trim();
                     double balance = Double.parseDouble(parts[1].trim());
                     CurrentAccount currentAccount = new CurrentAccount(name, balance);
                     accountManager.addCurrentAccount(currentAccount);
                 } else {
-                    // 第二个length == 2的是user
+                    // Second length == 2 is for user
                     String userID = parts[0].trim();
                     double savingGoal = Double.parseDouble(parts[1].trim());
                     accountManager.setUserID(userID);
@@ -128,7 +142,4 @@ public class ReadAccount {
         }
     }
 
-    public static void main(String[] args) {
-
-    }
 }

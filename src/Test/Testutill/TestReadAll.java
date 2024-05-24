@@ -11,15 +11,21 @@ import utill.read.ReadAll;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for ReadAll utility.
+ */
 public class TestReadAll {
 
+    /**
+     * Tests if the ReadAll class correctly processes files and initializes the Kids object.
+     */
     @Test
     public void testReadAllCorrectlyProcessesFiles() {
         String testId = "222";
         Paths paths = new Paths(testId);
 
         try {
-            // 尝试解密每个文件，并捕获任何异常，以便检查是哪个文件的内容导致问题
+            // Attempt to decrypt each file and catch any exceptions to check which file's content causes issues
             testDecryptFile(paths.product_path);
             testDecryptFile(paths.selectedProduct_path);
             testDecryptFile(paths.task_path);
@@ -27,10 +33,10 @@ public class TestReadAll {
             testDecryptFile(paths.transactionHistory_path);
             paths.account_path.forEach(this::testDecryptFile);
 
-            // 调用readall方法
+            // Call the readall method
             Kids result = ReadAll.readall(testId);
 
-            // 断言结果不为空
+            // Assert that the result is not null
             assertNotNull(result, "Kids object should not be null");
             assertNotNull(result.getProductList(), "Product list should not be null");
             assertNotNull(result.getTaskList(), "Task list should not be null");
@@ -41,6 +47,11 @@ public class TestReadAll {
         }
     }
 
+    /**
+     * Tests the decryption of a file to ensure it can be successfully decrypted.
+     *
+     * @param filePath the path of the file to decrypt
+     */
     private void testDecryptFile(String filePath) {
         try {
             byte[] encryptedBytes = Files.readAllBytes(java.nio.file.Paths.get(filePath));
@@ -54,7 +65,7 @@ public class TestReadAll {
             System.out.println("Decrypted data: " + decryptedData);
         } catch (Exception e) {
             System.err.println("Error decrypting file: " + filePath + ", " + e.getMessage());
-            e.printStackTrace(); // 打印堆栈跟踪以便更详细的错误信息
+            e.printStackTrace(); // Print stack trace for more detailed error information
             throw new RuntimeException("Decryption failed for file: " + filePath, e);
         }
     }

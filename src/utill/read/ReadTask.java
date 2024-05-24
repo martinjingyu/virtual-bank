@@ -7,8 +7,17 @@ import java.io.IOException;
 import Entity.Task;
 import Entity.TaskList;
 
+/**
+ * Utility class to read tasks from files or strings into a TaskList.
+ */
 public class ReadTask {
-    // 从文件读取
+
+    /**
+     * Reads tasks from a file and adds them to the provided TaskList.
+     *
+     * @param fileName the name of the file to read tasks from
+     * @param taskList the TaskList to add the read tasks to
+     */
     public static void readTaskList(String fileName, TaskList taskList) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             readFromBufferedReader(br, taskList);
@@ -17,7 +26,12 @@ public class ReadTask {
         }
     }
 
-    // 从字符串读取
+    /**
+     * Reads tasks from a string and adds them to the provided TaskList.
+     *
+     * @param data the string data containing the tasks
+     * @param taskList the TaskList to add the read tasks to
+     */
     public static void readTasksFromString(String data, TaskList taskList) {
         try (BufferedReader br = new BufferedReader(new StringReader(data))) {
             readFromBufferedReader(br, taskList);
@@ -26,7 +40,13 @@ public class ReadTask {
         }
     }
 
-    // 从BufferedReader读取任务数据
+    /**
+     * Reads tasks from a BufferedReader and adds them to the provided TaskList.
+     *
+     * @param br the BufferedReader to read tasks from
+     * @param taskList the TaskList to add the read tasks to
+     * @throws IOException if an I/O error occurs
+     */
     private static void readFromBufferedReader(BufferedReader br, TaskList taskList) throws IOException {
         String line;
         while ((line = br.readLine()) != null) {
@@ -45,12 +65,17 @@ public class ReadTask {
         }
     }
 
+    /**
+     * Main method for testing purposes. Reads tasks from a file and prints them.
+     *
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         TaskList taskList = new TaskList();
         readTaskList("data/Kids/222/Task.txt", taskList);
 
-        // Print all products in the list
-        System.out.println("All task:");
+        // Print all tasks in the list
+        System.out.println("All tasks:");
         for (Task task : taskList.getAllTasks()) {
             System.out.println(task);
         }
