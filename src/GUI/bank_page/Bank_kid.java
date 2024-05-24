@@ -24,7 +24,7 @@ public class Bank_kid extends JPanel {
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
     private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
     private final Color fontColor = new Color(49, 122, 232); // #317AE8
-    private final Font font = new Font("Arial", Font.PLAIN, 20);
+    private final Font font = new Font("Arial Black", Font.BOLD, 18);
     private LocalDateTime time;
     private JLabel currentTotal;
     private JLabel savingTotal;
@@ -70,26 +70,31 @@ public class Bank_kid extends JPanel {
 
         JLabel income = new JLabel(String.valueOf(bank_kid_control.getKid().getTransactionList().getIncomeForDate(formattedDate)));
         income.setBounds(150,70,100,50);
+        income.setForeground(new Color(-9975466));
         income.setFont(font);
         add(income);
 
         JLabel expenses = new JLabel(String.valueOf(bank_kid_control.getKid().getTransactionList().getExpensesForDate(formattedDate)));
         expenses.setBounds(280,70,100,50);
         expenses.setFont(font);
+        expenses.setForeground(Color.RED);
         add(expenses);
 
         savingGoal = new JLabel(String.valueOf(bank_kid_control.getKid().getAccountManager().getSavingGoal()));
         savingGoal.setBounds(590,70,100,50);
+        savingGoal.setForeground(new Color(-9975466));
         savingGoal.setFont(font);
         add(savingGoal);
 
         currentTotal = new JLabel(String.valueOf(bank_kid_control.getKid().getAccountManager().getTotalCurrentBalance()));
         currentTotal.setBounds(280,190,100,50);
+        currentTotal.setForeground(new Color(-9975466));
         currentTotal.setFont(font);
         add(currentTotal);
 
         savingTotal = new JLabel(String.valueOf(bank_kid_control.getKid().getAccountManager().getTotalSavingBalance()));
         savingTotal.setFont(font);
+        savingTotal.setForeground(new Color(-9975466));
         savingTotal.setBounds(280,310,100,50);
         add(savingTotal);
 
@@ -99,7 +104,7 @@ public class Bank_kid extends JPanel {
 
     protected void paintComponent(Graphics g) {
 //        initData();
-        Font titleFont = new Font("Arial", Font.PLAIN, 20);
+        Font titleFont = new Font("Arial", Font.BOLD, 22);
         super.paintComponent(g);
         g.setColor(Color.WHITE);
         g.fillRect(70, 40, 350, 80); // 绘制顶部白色矩形框
