@@ -110,7 +110,7 @@ public class AccountManager {
                 return account.getBalance();
             }
         }
-        return -1;  // Or you could throw an exception
+        return 0;  // Or you could throw an exception
     }
 
     // 获取所有储蓄账户的总余额
