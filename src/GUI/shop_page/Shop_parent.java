@@ -175,15 +175,17 @@ public class Shop_parent extends JPanel implements RefreshListener {
 
         nameTextField = new JTextField(15);
         nameTextField.setBorder(BorderFactory.createTitledBorder(new LineBorder(borderColor), "Name")); // Added border
-        nameTextField.setToolTipText("Name should only contain characters (A-Z, a-z)");
         gbc.gridy = 1;
         uploadPanel.add(nameTextField, gbc);
 
         priceTextField = new JTextField(15);
         priceTextField.setBorder(BorderFactory.createTitledBorder(new LineBorder(borderColor), "Price")); // Added border
-        priceTextField.setToolTipText("Price should be a valid number");
         gbc.gridy = 2;
         uploadPanel.add(priceTextField, gbc);
+
+        // Setup focus listeners for the text fields
+        shopController.setupFocusListener(nameTextField, "Name should only contain characters (A-Z, a-z)");
+        shopController.setupFocusListener(priceTextField, "Price should be a valid number");
 
         submitButton = new JButton("SUBMIT");
         submitButton.setFont(new Font("Arial", Font.BOLD, 14));
@@ -222,15 +224,11 @@ public class Shop_parent extends JPanel implements RefreshListener {
         accountPanel.add(currentAccountLabel);
 
         accountDropdown = new JComboBox<>();
+        accountDropdown.setBackground(Color.WHITE);
         shopController.initializeAccountDropdown(accountDropdown, currentAccountLabel);
 
         accountInfoPanel.add(accountPanel, BorderLayout.CENTER);
         accountInfoPanel.add(accountDropdown, BorderLayout.NORTH);
-
-
-        // Setup focus listeners for the text fields
-        shopController.setupFocusListener(nameTextField, "Name should only contain characters (A-Z, a-z)");
-        shopController.setupFocusListener(priceTextField, "Price should be a valid number");
 
         return accountInfoPanel;
     }

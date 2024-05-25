@@ -128,26 +128,27 @@ public class Shop_kid extends JPanel {
             JPanel productPanel = new JPanel();
             productPanel.setLayout(new BoxLayout(productPanel, BoxLayout.Y_AXIS));
             productPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-            productPanel.setBackground(Color.WHITE); // 设置白色背景
-            productPanel.setPreferredSize(new Dimension(200, 85)); // 每个面板固定大小
+            productPanel.setBackground(Color.WHITE);
 
             JLabel nameLabel = new JLabel(product.getName(), SwingConstants.CENTER);
-            nameLabel.setFont(new Font("Arial", Font.BOLD, 16)); // 商品名称字体更大
+            nameLabel.setFont(new Font("Arial", Font.BOLD, 16));
             nameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             JLabel priceLabel = new JLabel(String.format("$%.2f", product.getPrice()), SwingConstants.CENTER);
-            priceLabel.setFont(new Font("Arial", Font.PLAIN, 14)); // 价格字体
+            priceLabel.setFont(new Font("Arial", Font.PLAIN, 14));
             priceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
             JRadioButton radioButton = new JRadioButton();
             radioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            radioButton.setBackground(Color.WHITE);
 
+            productPanel.add(Box.createVerticalGlue());
             productPanel.add(nameLabel);
-            productPanel.add(Box.createVerticalStrut(10)); // 添加间隔
+            productPanel.add(Box.createVerticalGlue());
             productPanel.add(priceLabel);
-            productPanel.add(Box.createVerticalStrut(10)); // 添加间隔
+            productPanel.add(Box.createVerticalStrut(10));
             productPanel.add(radioButton);
-            productPanel.add(Box.createVerticalStrut(5)); // 与底部边界的间隔
+            productPanel.add(Box.createVerticalGlue());
 
             radioButton.addItemListener(e -> {
                 shopController.updateSelectedProductList(product, e.getStateChange() == ItemEvent.SELECTED, selectedTotalLabel);
@@ -160,7 +161,7 @@ public class Shop_kid extends JPanel {
         JScrollPane scrollPane = new JScrollPane(productsPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setPreferredSize(new Dimension(800, 480)); // 设定JScrollPane的大小，可调整以适合您的界面需求
+        scrollPane.setPreferredSize(new Dimension(800, 480));
 
         return scrollPane;
     }
@@ -184,7 +185,7 @@ public class Shop_kid extends JPanel {
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
-        gbc.gridwidth = 2; // 设置跨两列
+        gbc.gridwidth = 2;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -192,16 +193,16 @@ public class Shop_kid extends JPanel {
 
         selectedTotalLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         selectedTotalLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        gbc.gridwidth = 1; // 只占一列
-        gbc.gridx = 1; // 放在第二列
-        gbc.gridy = 1; // 第二行
-        gbc.anchor = GridBagConstraints.LINE_END; // 设置右对齐
+        gbc.gridwidth = 1;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.LINE_END;
         footer.add(selectedTotalLabel, gbc);
 
         currentAccountLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         currentAccountLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        gbc.gridx = 1; // 第二列
-        gbc.gridy = 2; // 第三行
+        gbc.gridx = 1;
+        gbc.gridy = 2;
         footer.add(currentAccountLabel, gbc);
 
         buyButton.addActionListener(e -> shopController.buyProducts(selectedTotalLabel, currentAccountLabel, toggleButtons));

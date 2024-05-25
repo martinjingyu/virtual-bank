@@ -15,6 +15,8 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.sql.Types.NULL;
+
 /**
  * The ShopParentController class manages the interactions between the UI and the data model for the parent's shop.
  */
@@ -123,6 +125,11 @@ public class ShopParentController {
      * @param checkBoxes the list of check boxes representing the product selection
      */
     public void confirmAndSubmitProducts(List<JCheckBox> checkBoxes) {
+        if (boughtProduct.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "You haven't selected any products.", "No Products Selected", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         StringBuilder message = new StringBuilder("You have selected the following products:\n");
         for (Product product : boughtProduct) {
             message.append(product.getName()).append("\n");
@@ -153,6 +160,10 @@ public class ShopParentController {
      * @param price the price of the product
      */
     public void updateProducts(String name, String price ,JTextField nameTextField, JTextField priceTextField) {
+        if (name.trim().equals("Name should only contain characters (A-Z, a-z)") || price.trim().equals("Price should be a valid number")) {
+            JOptionPane.showMessageDialog(null, "Both name and price must be filled out.", "Input Required", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         try {
             double priceValue = Double.parseDouble(price);
             if (!name.matches("[a-zA-Z]+")) {
