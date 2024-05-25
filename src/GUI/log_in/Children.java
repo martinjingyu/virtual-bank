@@ -62,7 +62,7 @@ public class Children {
         childrenPanel.add(textField_1);
 
         JLabel secret_label = new JLabel("PASSWORD : ");
-        secret_label.setBounds(550, 380, 260, 50);
+        secret_label.setBounds(550, 380, 270, 50);
         secret_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
         childrenPanel.add(secret_label);
 

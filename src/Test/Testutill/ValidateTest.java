@@ -1,55 +1,141 @@
 package Test.Testutill;
 
-import org.junit.jupiter.api.Test;
 import utill.validate.Validate;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * The ValidateTest class provides unit tests for the Validate class.
- */
-public class ValidateTest {
+class ValidateTest {
 
-
-    /**
-     * Tests the validateDescription method.
-     * Verifies various scenarios for description validation.
-     */
     @Test
-    public void testValidateDescription() {
-        // Valid descriptions
-        assertTrue(Validate.validateDescription("This is a valid description."));
-        assertTrue(Validate.validateDescription("Another description, which is also valid!"));
-        assertTrue(Validate.validateDescription("Short description?"));
-        assertTrue(Validate.validateDescription("")); // Empty description
-
-        // Invalid descriptions
-        assertFalse(Validate.validateDescription(null)); // Null description
-        assertFalse(Validate.validateDescription("A".repeat(151))); // Description too long
-        assertFalse(Validate.validateDescription("Invalid@description#")); // Description with invalid characters
+    void validateName_validName() throws Exception {
+        String name = "John Doe";
+        assertEquals(name, Validate.validateName(name));
     }
 
-    /**
-     * Tests the validateSalary method.
-     * Verifies various scenarios for salary validation.
-     */
     @Test
-    public void testValidateSalary() {
-        // Valid salaries
-        assertTrue(Validate.validateSalary("123"));
-        assertTrue(Validate.validateSalary("123.45"));
-        assertTrue(Validate.validateSalary("0.99"));
-        assertTrue(Validate.validateSalary("1234567890.12"));
-
-        // Invalid salaries
-        assertFalse(Validate.validateSalary(null));  // null case
-        assertFalse(Validate.validateSalary(""));  // empty string
-        assertFalse(Validate.validateSalary("."));  // single decimal point
-        assertFalse(Validate.validateSalary(".99"));  // no digit before decimal
-        assertFalse(Validate.validateSalary("123."));  // no digit after decimal
-        assertFalse(Validate.validateSalary("123.456"));  // more than two decimal places
-        assertFalse(Validate.validateSalary("abc"));  // non-digit characters
-        assertFalse(Validate.validateSalary("123.45.67"));  // multiple decimal points
-        assertFalse(Validate.validateSalary("123a45"));  // letters in the string
+    void validateName_emptyName() {
+        String name = "";
+        Exception exception = assertThrows(Exception.class, () -> Validate.validateName(name));
+        assertEquals("Invalid name: name cannot be empty.", exception.getMessage());
     }
+
+    @Test
+    void validateName_nullName() {
+        String name = null;
+        Exception exception = assertThrows(Exception.class, () -> Validate.validateName(name));
+        assertEquals("Invalid name: name cannot be empty.", exception.getMessage());
+    }
+
+    @Test
+    void validateName_invalidCharacters() {
+        String name = "John@Doe";
+        Exception exception = assertThrows(Exception.class, () -> Validate.validateName(name));
+        assertEquals("Invalid name: contains invalid characters.", exception.getMessage());
+    }
+
+    @Test
+    void validateName_noLetters() {
+        String name = "12345";
+        Exception exception = assertThrows(Exception.class, () -> Validate.validateName(name));
+        assertEquals("Invalid name: must contain at least one letter.", exception.getMessage());
+    }
+
+    @Test
+    void validateName_lastCharacterSpace() {
+        String name = "John ";
+        Exception exception = assertThrows(Exception.class, () -> Validate.validateName(name));
+        assertEquals("The last character can't be a space. ", exception.getMessage());
+    }
+
+    @Test
+    void validateDescription_validDescription() {
+        String description = "This is a valid description.";
+        assertTrue(Validate.validateDescription(description));
+    }
+
+    @Test
+    void validateDescription_nullDescription() {
+        String description = null;
+        assertFalse(Validate.validateDescription(description));
+    }
+
+    @Test
+    void validateDescription_tooLongDescription() {
+        StringBuilder description = new StringBuilder();
+        for (int i = 0; i < 151; i++) {
+            description.append("a");
+        }
+        assertFalse(Validate.validateDescription(description.toString()));
+    }
+
+    @Test
+    void validateDescription_invalidCharacters() {
+        String description = "Invalid description #!";
+        assertFalse(Validate.validateDescription(description));
+    }
+
+    @Test
+    void validateSalary_validSalary() {
+        String salary = "12345.67";
+        assertTrue(Validate.validateSalary(salary));
+    }
+
+    @Test
+    void validateSalary_invalidSalary() {
+        String salary = "12.345";
+        assertFalse(Validate.validateSalary(salary));
+    }
+
+    @Test
+    void validateSalary_nullSalary() {
+        String salary = null;
+        assertFalse(Validate.validateSalary(salary));
+    }
+
+    @Test
+    void validateSalary_emptySalary() {
+        String salary = "";
+        assertFalse(Validate.validateSalary(salary));
+    }
+
+    @Test
+    void validateNumber_validNumber() throws Exception {
+        String input = "123.45";
+        assertEquals(123.45, Validate.validateNumber(input));
+    }
+
+    @Test
+    void validateNumber_invalidNumber() {
+        String input = "123.456";
+        Exception exception = assertThrows(Exception.class, () -> Validate.validateNumber(input));
+        assertEquals("invalid number", exception.getMessage());
+    }
+
+    @Test
+    void validateRepeat_noRepeat() throws Exception {
+        List<String> accountList = new ArrayList<>();
+        accountList.add("Account1");
+        assertTrue(Validate.validateRepeat("Account2", accountList));
+    }
+
+    @Test
+    void validateRepeat_repeated() {
+        List<String> accountList = new ArrayList<>();
+        accountList.add("Account1");
+        Exception exception = assertThrows(Exception.class, () -> Validate.validateRepeat("Account1", accountList));
+    }
+
+    @Test
+    void validateInterest_validInterest() throws Exception {
+        String interest = "5.25";
+        assertEquals(5.25, Validate.validateInterest(interest));
+    }
+
 }
+

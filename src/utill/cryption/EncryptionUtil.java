@@ -36,11 +36,11 @@ public class EncryptionUtil {
     }
 
     /**
-     * Decrypts the given encrypted data using AES algorithm.
+     * Decrypts the given encrypted data using AES decryption algorithm.
      *
-     * @param encryptedData the data to be decrypted
-     * @return the decrypted data as a string
-     * @throws Exception if any decryption error occurs
+     * @param encryptedData The encrypted data to be decrypted.
+     * @return The decrypted data.
+     * @throws Exception If an error occurs during decryption.
      */
     public static String decrypt(String encryptedData) throws Exception {
         if (ENCRYPTION_KEY == null || ENCRYPTION_KEY.isEmpty()) {
@@ -55,11 +55,11 @@ public class EncryptionUtil {
     }
 
     /**
-     * Generates a SHA-256 hash of the given data.
+     * Generates a hash value for the given data using SHA-256 hashing algorithm.
      *
-     * @param data the data to be hashed
-     * @return the hashed data as a Base64 encoded string
-     * @throws NoSuchAlgorithmException if SHA-256 algorithm is not available
+     * @param data The data for which the hash value is to be generated.
+     * @return The hash value of the data.
+     * @throws NoSuchAlgorithmException If the specified hashing algorithm is not available.
      */
     public static String generateHash(String data) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -68,9 +68,9 @@ public class EncryptionUtil {
     }
 
     /**
-     * Main method to encrypt the contents of a file specified by the command line argument.
+     * Main method to encrypt a file.
      *
-     * @param args the command line arguments
+     * @param args Command-line arguments. The file path to be encrypted.
      */
     public static void main(String[] args) {
         if (args.length != 1) {

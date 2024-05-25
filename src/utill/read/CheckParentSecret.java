@@ -10,7 +10,7 @@ package utill.read;
 import java.nio.file.Files;
 import java.util.Scanner;
 import utill.cryption.*;
-import utill.validation.Validate;
+import utill.validate.ValidateAccount;
 
 /**
  * This class provides a method to check if a given ID and secret belong to a
@@ -35,7 +35,7 @@ public class CheckParentSecret {
             String content = decryptFileContents(filePath);
             // Create Scanner objects to read file contents
             Scanner scanner = new Scanner(content);
-            return Validate.checkParent(scanner, text1, text2);
+            return ValidateAccount.checkParent(scanner, text1, text2);
 
         } catch (Exception error) {
             System.out.println("error_parent");

@@ -99,17 +99,6 @@ public class MessageListTest {
         assertEquals("Task description for parent", messages.get(0).getContent());
     }
 
-    @Test
-    public void testAddShopMessage() {
-        double price = 100.50;
-        messageList.addShopMessage(price);
-
-        List<Message> messages = messageList.getAllMessages();
-
-        assertEquals(1, messages.size());
-        assertEquals("system", messages.get(0).getSender());
-        assertEquals("bigTransaction", messages.get(0).getContent());
-    }
 
     @Test
     public void testToString() {

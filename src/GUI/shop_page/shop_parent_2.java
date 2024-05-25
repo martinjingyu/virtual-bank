@@ -223,9 +223,6 @@ public class shop_parent_2 extends JPanel {
         shop.add(label2, gbc);
     }
 
-    /**
-     * @noinspection ALL
-     */
     public JComponent $$$getRootComponent$$$() {
         return shop;
     }

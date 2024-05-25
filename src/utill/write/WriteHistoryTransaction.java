@@ -1,8 +1,6 @@
 package utill.write;
 
 import Entity.HistoryTransaction;
-import Entity.HistoryTransactionList;
-import Entity.Product;
 import utill.cryption.EncryptionUtil;
 
 import java.io.BufferedWriter;
@@ -10,15 +8,32 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The WriteHistoryTransaction class provides a method to write a list of history transactions to a file.
+ */
 public class WriteHistoryTransaction {
+
+    /**
+     * Writes a list of history transactions to a file.
+     *
+     * @param historyTransactionList the list of history transactions to be written
+     * @param fileName               the name of the file to write the transactions to
+     */
     public static void writeHistoryTransaction(List<HistoryTransaction> historyTransactionList, String fileName) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
             StringBuilder buffer = new StringBuilder();
             for (HistoryTransaction historyTransaction : historyTransactionList) {
-                // 将产品对象的信息以逗号分隔的格式写入缓冲区
-                buffer.append(historyTransaction.getSource()).append(",").append(historyTransaction.getDestination()).append(",").append(historyTransaction.getAmount()).append(",").append(historyTransaction.getDate()).append(System.lineSeparator());
+                // Append history transaction details to the buffer in a comma-separated format
+                buffer.append(historyTransaction.getSource())
+                        .append(",")
+                        .append(historyTransaction.getDestination())
+                        .append(",")
+                        .append(historyTransaction.getAmount())
+                        .append(",")
+                        .append(historyTransaction.getDate())
+                        .append(System.lineSeparator());
             }
-            // 加密整个缓冲区的内容并写入文件
+            // Encrypt the entire buffer content and write to the file
             String encryptedData = EncryptionUtil.encrypt(buffer.toString());
             bw.write(encryptedData);
         } catch (IOException e) {
@@ -28,3 +43,4 @@ public class WriteHistoryTransaction {
         }
     }
 }
+
