@@ -9,20 +9,20 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * The EncryptionUtil class provides utility methods for encryption, decryption, and hash generation.
+ * Utility class for encryption and decryption using AES algorithm.
  */
 public class EncryptionUtil {
 
     private static final String ALGORITHM = "AES";
     private static final String TRANSFORMATION = "AES";
-    private static final String ENCRYPTION_KEY = "1234567890123456";
+    private static final String ENCRYPTION_KEY = "1234567890123456"; // Example key, should be securely managed
 
     /**
-     * Encrypts the given data using AES encryption algorithm.
+     * Encrypts the given data using AES algorithm.
      *
-     * @param data The data to be encrypted.
-     * @return The encrypted data.
-     * @throws Exception If an error occurs during encryption.
+     * @param data the data to be encrypted
+     * @return the encrypted data as a Base64 encoded string
+     * @throws Exception if any encryption error occurs
      */
     public static String encrypt(String data) throws Exception {
         if (ENCRYPTION_KEY == null || ENCRYPTION_KEY.isEmpty()) {
@@ -80,13 +80,13 @@ public class EncryptionUtil {
 
         String filePath = args[0];
         try {
-            // Read file content
+            // Read the file content
             String content = readFile(filePath);
 
-            // Encrypt file content
+            // Encrypt the file content
             String encryptedContent = encrypt(content);
 
-            // Write encrypted content back to the file or save as a new file
+            // Save the encrypted content to a new file
             String encryptedFilePath = filePath + ".encrypted";
             writeFile(encryptedFilePath, encryptedContent);
 
@@ -97,6 +97,13 @@ public class EncryptionUtil {
         }
     }
 
+    /**
+     * Reads the content of a file.
+     *
+     * @param filePath the path of the file to read
+     * @return the content of the file as a string
+     * @throws IOException if any I/O error occurs
+     */
     private static String readFile(String filePath) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -108,6 +115,13 @@ public class EncryptionUtil {
         return contentBuilder.toString();
     }
 
+    /**
+     * Writes content to a file.
+     *
+     * @param filePath the path of the file to write to
+     * @param content the content to write to the file
+     * @throws IOException if any I/O error occurs
+     */
     private static void writeFile(String filePath, String content) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
             bw.write(content);
