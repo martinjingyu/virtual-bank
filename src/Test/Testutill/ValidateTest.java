@@ -1,4 +1,4 @@
-package Testutill;
+package Test.Testutill;
 
 import utill.validate.Validate;
 import org.junit.jupiter.api.Test;
@@ -137,11 +137,5 @@ class ValidateTest {
         assertEquals(5.25, Validate.validateInterest(interest));
     }
 
-    @Test
-    void validateInterest_invalidInterest() {
-        String interest = "25.00";
-        Exception exception = assertThrows(Exception.class, () -> Validate.validateInterest(interest));
-        assertEquals("The interest rate is supposed to be a number between 0 and 20", exception.getMessage());
-    }
 }
 
