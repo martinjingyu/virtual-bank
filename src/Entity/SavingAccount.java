@@ -5,6 +5,10 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The SavingAccount class represents a type of bank account that earns interest over a specified period.
+ * It extends the Account class.
+ */
 public class SavingAccount extends Account {
 
     // Additional attributes
@@ -12,13 +16,28 @@ public class SavingAccount extends Account {
     private LocalDateTime endTime;
 
     // Constructor
-    public SavingAccount(String name){
-        super(name,0, 0);
+    /**
+     * Constructs a SavingAccount with the specified name and initializes the start and end time to the current time.
+     *
+     * @param name the name of the account holder
+     */
+    public SavingAccount(String name) {
+        super(name, 0, 0);
         this.startTime = LocalDateTime.now();
         this.endTime = LocalDateTime.now();
     }
-    public SavingAccount(String name,double initialBalance, double interestRate,LocalDateTime startTime, LocalDateTime endTime) {
-        super(name,initialBalance, interestRate);
+
+    /**
+     * Constructs a SavingAccount with the specified name, initial balance, interest rate, start time, and end time.
+     *
+     * @param name           the name of the account holder
+     * @param initialBalance the initial balance of the account
+     * @param interestRate   the interest rate of the account
+     * @param startTime      the start time of the saving period
+     * @param endTime        the end time of the saving period
+     */
+    public SavingAccount(String name, double initialBalance, double interestRate, LocalDateTime startTime, LocalDateTime endTime) {
+        super(name, initialBalance, interestRate);
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -40,18 +59,25 @@ public class SavingAccount extends Account {
         return endTime;
     }
 
+    /**
+     * Gets the formatted start time of the saving period.
+     *
+     * @return the formatted start time as a string
+     */
     public String getFormattedStartTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        String formattedDateTime = startTime.format(formatter);
-        return formattedDateTime;
+        return startTime.format(formatter);
     }
 
+    /**
+     * Gets the formatted end time of the saving period.
+     *
+     * @return the formatted end time as a string
+     */
     public String getFormattedEndTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        String formattedDateTime = endTime.format(formatter);
-        return formattedDateTime;
+        return endTime.format(formatter);
     }
-
 
     @Override
     public void calculateInterest() {
@@ -65,19 +91,16 @@ public class SavingAccount extends Account {
         }
     }
 
-    public double getIncome(){
-
+    /**
+     * Calculates the total income earned from the saving account.
+     *
+     * @return the total income earned
+     */
+    public double getIncome() {
         long daysBetween = java.time.temporal.ChronoUnit.DAYS.between(startTime, endTime);
-        double income = balance;
-        income += income * (interestRate / 100.0) * (daysBetween / 365.25);
-
+        double income = balance + balance * (interestRate / 100.0) * (daysBetween / 365.25);
         BigDecimal bd = new BigDecimal(income);
         bd = bd.setScale(2, RoundingMode.HALF_UP);
-
         return bd.doubleValue();
     }
-
-
-
 }
-
