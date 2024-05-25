@@ -191,9 +191,6 @@ public class shop_kid_2 extends JPanel {
         shop_kid.add(label8, gbc);
     }
 
-    /**
-     * @noinspection ALL
-     */
     public JComponent $$$getRootComponent$$$() {
         return shop_kid;
     }
