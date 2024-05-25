@@ -12,10 +12,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.io.File;
+
+import Entity.Message;
+import Entity.MessageList;
 import utill.cryption.*;
 
+/**
+ * The InitializeData class provides methods for writing text to files, creating folders and files,
+ * and decrypting file contents.
+ */
 public class InitializeData {
 
+    /**
+     * Writes the given text to the specified file path.
+     *
+     * @param text     The text to be written to the file.
+     * @param filePath The path of the file to write the text to.
+     */
     public static void writeTextToFile(String text, String filePath) {
 
         try {
@@ -39,6 +52,11 @@ public class InitializeData {
         }
     }
 
+    /**
+     * Creates folders and files at the specified folder path.
+     *
+     * @param folderPath The path of the folder where files will be created.
+     */
     public static void createFolderAndFiles(String folderPath) {
         folderPath = "data/Kids/" + folderPath;
         File folder = new File(folderPath);
@@ -68,22 +86,25 @@ public class InitializeData {
             }
         }
 
-        // // 这是例子！！！！
-
-        // File aFile = new File(folder, "User.txt");
-        // try (FileWriter writer = new FileWriter(aFile)) {
-        // writer.write(EncryptionUtil.encrypt(folderPath + ",200.0,1.5,3.0,4.25")); //
-        // folderPath是id
-        // } catch (Exception e) {
-        // System.out.println("Error writing to file：" + e.getMessage());
-        // }
-
-        // // 结束例子！！！！
-
         File aFile = new File(folder, "Task.txt");
         try (FileWriter writer = new FileWriter(aFile)) {
             writer.write(EncryptionUtil.encrypt(
-                    "novice task*10.0*ToBeTaken*Read the user manual and familiarize yourself with the software.*NULL")); // folderPath是id
+                    "novice task*10.0*ToBeTaken*Read the user manual and familiarize yourself with the software.*NULL"));
+        } catch (Exception e) {
+            System.out.println("Error writing to file：" + e.getMessage());
+        }
+
+        try  {
+            Message message1 = new Message("system_kid","Welcome to our virtual bank application.");
+            Message message2 = new Message("system_parent","Welcome to our virtual bank application.");
+            Message message3 = new Message("system_kid","Before using our software, please read the user manual carefully");
+            Message message4 = new Message("system_parent","Before using our software, please read the user manual carefully");
+            MessageList messageList = new MessageList();
+            messageList.addMessage(message1);
+            messageList.addMessage(message2);
+            messageList.addMessage(message3);
+            messageList.addMessage(message4);
+            WriteMessage.writeMessage(messageList,folderPath+"/"+"Message.txt");
         } catch (Exception e) {
             System.out.println("Error writing to file：" + e.getMessage());
         }
@@ -91,17 +112,15 @@ public class InitializeData {
     }
 
     /**
-     * Reads the contents of a file, decrypts the content using an EncryptionUtil
-     * class, and returns it as a string.
+     * Decrypts the contents of the specified file.
      *
-     * @param filePath The path of the file to be decrypted.
+     * @param filePath The path of the file to decrypt.
      * @return The decrypted file contents as a string.
-     * @throws Exception If there is an error while reading or decrypting the file.
+     * @throws Exception If an error occurs during decryption.
      */
     public static String decryptFileContents(String filePath) throws Exception {
         byte[] fileContent = Files.readAllBytes(java.nio.file.Paths.get(filePath));
-        return EncryptionUtil.decrypt(new String(fileContent, java.nio.charset.StandardCharsets.UTF_8)); // re //
-                                                                                                         // string.
+        return EncryptionUtil.decrypt(new String(fileContent, java.nio.charset.StandardCharsets.UTF_8));
     }
 
 }
