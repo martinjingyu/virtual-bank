@@ -1,6 +1,6 @@
 package GUI;
-import Controller.MainController_Kid;
 
+import Controller.MainController_Kid;
 import GUI.bank_page.Bank_kid;
 import GUI.message_page.message_kid;
 import GUI.shop_page.Shop_kid;
@@ -9,18 +9,22 @@ import GUI.task_page.Task_kid;
 import javax.swing.*;
 import java.awt.*;
 
-
-//public class MainFrame extends JFrame implements RefreshListener{
+/**
+ * The MainFrame_kid class represents the main frame of the application for kids.
+ * It contains navigation buttons and panels for different functionalities like banking, shopping, tasks, and messages.
+ */
 public class MainFrame_kid extends JFrame {
     private JPanel main_page;
     private JPanel menu;
     private JLabel button1, button2, button3, button4;
     private JPanel current_panel;
-    private JPanel pg1, pg2,pg3,pg4;
+    private JPanel pg1, pg2, pg3, pg4;
     private MainController_Kid mainControllerKid;
 
-//    private Message_kid messageKid;
-
+    /**
+     * Constructs a MainFrame_kid object with the specified MainController_Kid.
+     * @param mainControllerKid the MainController_Kid object to control the main frame
+     */
     public MainFrame_kid(MainController_Kid mainControllerKid) {
         super("demo");
         this.mainControllerKid = mainControllerKid;
@@ -37,19 +41,29 @@ public class MainFrame_kid extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Initializes all panels for different functionalities.
+     */
     public void InitiateAll(){
         this.pg1 = new Bank_kid(mainControllerKid.bank_kid_control, this);
         this.pg2 = new Shop_kid(mainControllerKid.ShopController);
         this.pg3 = new Task_kid(mainControllerKid.task_kid_control, this);
         this.pg4 = new message_kid(mainControllerKid.message_kid_controller);
     }
+
+    /**
+     * Refreshes the panels.
+     */
     public void refresh(){
         this.pg1 = new Bank_kid(mainControllerKid.bank_kid_control, this);
         this.pg2 = new Shop_kid(mainControllerKid.ShopController);
         this.pg3 = new Task_kid(mainControllerKid.task_kid_control, this);
     }
 
-
+    /**
+     * Changes the current panel based on the index.
+     * @param pgIndex the index of the panel to be displayed
+     */
     public void changePanel(int pgIndex){
         main_page.remove(current_panel);
         switch (pgIndex){
@@ -74,10 +88,11 @@ public class MainFrame_kid extends JFrame {
         repaint();
     }
 
-
-
-
-
+    /**
+     * Returns the button based on the index.
+     * @param index the index of the button
+     * @return the JLabel representing the button
+     */
     public JLabel getButton(int index){
         switch (index) {
             case 1:
@@ -93,9 +108,10 @@ public class MainFrame_kid extends JFrame {
         }
     }
 
+    /**
+     * Creates the main frame panel.
+     */
     public void frame_panel(){
-        // 设置主窗口的标题
-
         this.setSize(960,540);
         this.setResizable(false);
         menu = new JPanel();
@@ -106,48 +122,48 @@ public class MainFrame_kid extends JFrame {
 
         menu.setPreferredSize(new Dimension(51, 540));
 
-
-
         this.add(main_page,BorderLayout.CENTER);
-
         this.add(menu, BorderLayout.WEST);
         main_page.add(current_panel,BorderLayout.CENTER);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
     }
+
+    /**
+     * Creates navigation buttons.
+     */
     public void navi_button() {
-        // Initialize buttons with their default icons
-        // Initialize buttons with their specific icon sizes
-        button1 = createButtonWithSize("bank_white");  // Larger size for button1
-        button2 = createButtonWithSize("shop");  // Smaller size for button2
-        button3 = createButtonWithSize("task");  // Standard size for button3
-        button4 = createButtonWithSize("message");  // Standard size for button4
+        button1 = createButtonWithSize("bank_white");
+        button2 = createButtonWithSize("shop");
+        button3 = createButtonWithSize("task");
+        button4 = createButtonWithSize("message");
 
-        // Set layout for the menu panel
-        menu.setLayout(new GridLayout(15, 1, 0, 5)); // Adjust grid layout for spacing if needed
+        menu.setLayout(new GridLayout(15, 1, 0, 5));
 
-        // Add buttons to the menu panel
-        menu.add(new JLabel()); // Add spacing if needed
+        menu.add(new JLabel());
         menu.add(button1);
-        menu.add(new JLabel()); // Add spacing between buttons
+        menu.add(new JLabel());
         menu.add(button2);
-        menu.add(new JLabel()); // Add spacing between buttons
+        menu.add(new JLabel());
         menu.add(button3);
-        menu.add(new JLabel()); // Add spacing between buttons
+        menu.add(new JLabel());
         menu.add(button4);
     }
 
+    /**
+     * Creates a button with a specific icon size.
+     * @param iconName the name of the icon
+     * @return the JLabel representing the button with the specified icon size
+     */
     public JLabel createButtonWithSize(String iconName) {
-        int width = 25; // 默认宽度和高度
+        int width = 25;
         int height = 25;
 
-        if (iconName.equals("bank")||iconName.equals("bank_white")) {
-            width = height = 32; // bank图标的特定尺寸
-        } else if (iconName.equals("shop")||iconName.equals("shop_white")) {
-            width = height = 20; // shop图标的特定尺寸
+        if (iconName.equals("bank") || iconName.equals("bank_white")) {
+            width = height = 32;
+        } else if (iconName.equals("shop") || iconName.equals("shop_white")) {
+            width = height = 20;
         }
 
-        // 路径可能包括选中状态的特定图标
         String iconPath = "image/" + iconName +  ".png";
         ImageIcon icon = new ImageIcon(iconPath);
         Image img = icon.getImage();
@@ -158,8 +174,11 @@ public class MainFrame_kid extends JFrame {
         return button;
     }
 
+    /**
+     * The main method to run the MainFrame_kid GUI.
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
         MainFrame_kid main = new MainFrame_kid(new MainController_Kid("222"));
     }
-
 }

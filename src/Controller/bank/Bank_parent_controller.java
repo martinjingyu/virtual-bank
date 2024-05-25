@@ -14,33 +14,63 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The Bank_parent_controller class manages the interaction between the bank GUI for parents and the underlying data model for a child user.
+ * It handles user actions, such as viewing account details, changing interest rates, and reviewing transaction history.
+ */
 public class Bank_parent_controller {
-    //    private Parent parent;
     private Kids kid;
     private bank_parents GUI;
     private HistoryController historyController;
-    private JFrame currentFrame; // 用于存储当前打开的 JFrame 引用
+    private JFrame currentFrame; // Used to store the reference to the currently opened JFrame
 
+    /**
+     * Constructor to initialize the controller with the kid entity.
+     *
+     * @param kid The Kids entity representing the child user.
+     */
     public Bank_parent_controller(Kids kid) {
         this.kid = kid;
         this.historyController = new HistoryController(kid);
     }
 
+    /**
+     * Sets the GUI reference for this controller.
+     *
+     * @param GUI The bank_parents GUI instance.
+     */
     public void setGUI(bank_parents GUI) {
         this.GUI = GUI;
     }
-    public bank_parents getGUI(bank_parents GUI) { return GUI; }
+
+    /**
+     * Gets the bank_parents GUI associated with this controller.
+     *
+     * @param GUI The bank_parents GUI instance.
+     * @return The bank_parents GUI instance.
+     */
+    public bank_parents getGUI(bank_parents GUI) {
+        return GUI;
+    }
+
+    /**
+     * Gets the Kids entity associated with this controller.
+     *
+     * @return The Kids entity.
+     */
     public Kids getKid() {
         return kid;
     }
-    //    public void addListener(bank_parents GUI){
-//        addHistory(GUI.getMainFrame().getButton(3));
-//    }
-    public void  addHistory(JButton button){
+
+    /**
+     * Adds an ActionListener to the button to review the transaction history.
+     *
+     * @param button The JButton to which the listener is added.
+     */
+    public void addHistory(JButton button) {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                HistoryController historyController1 = new HistoryController(kid);
                 history_page review = new history_page(historyController);
                 JFrame Review_win = new JFrame();
                 openNewFrame(Review_win);
@@ -53,19 +83,29 @@ public class Bank_parent_controller {
             }
         });
     }
-    public void addCurrentDetails(JButton button){
+
+    /**
+     * Adds an ActionListener to the button to show the current account details.
+     *
+     * @param button The JButton to which the listener is added.
+     */
+    public void addCurrentDetails(JButton button) {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ShowCurrentAccount showCurrentAccount = new ShowCurrentAccount();
-                CurrentAccountController currentAccountController = new CurrentAccountController(kid,showCurrentAccount,true);
+                CurrentAccountController currentAccountController = new CurrentAccountController(kid, showCurrentAccount, true);
                 openNewFrame(showCurrentAccount);
             }
         });
-
     }
 
-    public void addChangeInterestRate(JButton button){
+    /**
+     * Adds an ActionListener to the button to change the interest rate of the accounts.
+     *
+     * @param button The JButton to which the listener is added.
+     */
+    public void addChangeInterestRate(JButton button) {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -75,72 +115,53 @@ public class Bank_parent_controller {
                 dialog.setLocationRelativeTo(GUI);
                 dialog.setLayout(new GridLayout(4, 1));
 
-                // 第一行：文字
+                // First row: Label
                 JLabel label = new JLabel("Change interest rate", SwingConstants.CENTER);
-                label.setSize(200,50);
-                label.setFont(new Font(label.getFont().getName(), Font.BOLD, 18)); // 设置加粗和大小
+                label.setSize(200, 50);
+                label.setFont(new Font(label.getFont().getName(), Font.BOLD, 18));
                 dialog.add(label);
 
-                // 第二行：下拉表单
+                // Second row: ComboBox
                 String[] options = {"15 days", "1 month", "3 months"};
                 JComboBox<String> comboBox = new JComboBox<>(options);
                 dialog.add(comboBox);
 
-                // 第三行：文本输入框
+                // Third row: TextField
                 JTextField textField = new JTextField();
                 dialog.add(textField);
 
-                // 第四行：按钮
+                // Fourth row: Button
                 JButton confirmButton = new JButton("Confirm");
                 confirmButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // 在这里可以处理确认按钮的点击事件
                         String selectedOption = (String) comboBox.getSelectedItem();
                         String userInput = textField.getText();
-                        System.out.println("Selected option: " + selectedOption);
-                        System.out.println("User input: " + userInput);
-                        if (selectedOption.equals("15 days")){
-                            try {
-                                double newInterestRate = Validate.validateInterest(userInput);
-                                kid.getAccountManager().setInterestRate(newInterestRate,"15 days");
-                                kid.getMessagelist().addMessage(new Message("parent","The interest rate for 15 days has been changed to "+ userInput+"%"));
-                                dialog.dispose();
-                            } catch (Exception ex) {
-
-                            }
-                        } else if (selectedOption.equals("1 month")) {
-                            try {
-                                double newInterestRate = Validate.validateInterest(userInput);
-                                kid.getAccountManager().setInterestRate(newInterestRate,"1 month");
-                                kid.getMessagelist().addMessage(new Message("parent","The interest rate for 1 month has been changed to "+ userInput+"%"));
-                                dialog.dispose();
-                            } catch (Exception ex) {
-
-                            }
-                        }else if(selectedOption.equals("3 month")){
-                            try {
-                                double newInterestRate = Validate.validateInterest(userInput);
-                                kid.getAccountManager().setInterestRate(newInterestRate,"3 month");
-                                kid.getMessagelist().addMessage(new Message("parent","The interest rate for 3 months has been changed to "+ userInput+"%"));
-                                dialog.dispose();
-                            } catch (Exception ex) {
-
-                            }
+                        try {
+                            double newInterestRate = Validate.validateInterest(userInput);
+                            kid.getAccountManager().setInterestRate(newInterestRate, selectedOption);
+                            kid.getMessagelist().addMessage(new Message("parent", "The interest rate for " + selectedOption + " has been changed to " + userInput + "%"));
+                            dialog.dispose();
+                        } catch (Exception ex) {
+                            textField.setText("");
                         }
-                        textField.setText("");
                     }
                 });
                 dialog.add(confirmButton);
 
-                // 设置对话框大小并显示
+                // Set dialog size and visibility
                 dialog.pack();
                 dialog.setVisible(true);
-
             }
         });
     }
-    public void addSavingAccountListener(JButton button){
+
+    /**
+     * Adds an ActionListener to the button to show the saving account details.
+     *
+     * @param button The JButton to which the listener is added.
+     */
+    public void addSavingAccountListener(JButton button) {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -150,16 +171,19 @@ public class Bank_parent_controller {
             }
         });
     }
+
+    /**
+     * Opens a new JFrame and closes the currently opened JFrame.
+     *
+     * @param newFrame The new JFrame to be opened.
+     */
     private void openNewFrame(JFrame newFrame) {
-        // 关闭当前打开的 JFrame
         if (currentFrame != null) {
             currentFrame.dispose();
         }
 
-        // 更新 currentFrame 并显示新的 JFrame
         currentFrame = newFrame;
         currentFrame.setLocationRelativeTo(null);
         currentFrame.setVisible(true);
     }
 }
-

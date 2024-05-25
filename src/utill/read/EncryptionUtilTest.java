@@ -25,7 +25,9 @@ public class EncryptionUtilTest {
 
             // 解密数据
             String encryptedTest = "fM/1I5UjyrzbRmfEwmQNyhjB/pU4eqThR8OQg7Yfrfe6jUq35HYdvuJ2IbPO7C9zVFBDNKZ72Dp/iult4J54zy/VOczHAXRSvfYFV9jKirKrhbYe3DgnNFuivIXOGkdvC3lYI1rSWI6mVG0tTECMmNBaoj2ACIeqvkvMANP/+Yu07XwmT4VG4wW9UuWaXKei0ntMM5nTfYZKzZxkZ//1FfqVaijQ5W9iq39j/hrV2zXL7vhGaDRcVURGY8krW/NvZ+GyIcltpxogHa1qooyTMYUUgUUtYRCRTVdtHzIlTfg=";
-            String decryptedData = EncryptionUtil.decrypt(encryptedTest);
+            String asd ="bWvisLYHtAYhjehmOcEjrjNLo9xILbwwbJ/3wijYqF9J5Whn8vtokeFElmxHHJuofNptbgv/HbSdruRA2FEs4A==";
+
+            String decryptedData = EncryptionUtil.decrypt(asd);
             System.out.println("Decrypted data: " + decryptedData);
 
 //            // 验证解密数据是否与原始数据一致

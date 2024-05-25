@@ -250,6 +250,9 @@ public class TaskSet extends JPanel {
                         // 用户确认保存
                         JOptionPane.showMessageDialog(null,"New task has set.","Save",
                                 JOptionPane.INFORMATION_MESSAGE);
+                        // 发信息
+                        task_parent_control.getKid().getMessagelist().addTaskMessage("Child_Opt","Parents have set new task "+ TaskName +". Go check it out!");
+                        task_parent_control.getKid().getMessagelist().addTaskMessage("Parent_Opt","You have set new task "+ TaskName + ".");
                         // 关闭当前窗口
                         mainFrame.refresh();
                         frame.setVisible(false);

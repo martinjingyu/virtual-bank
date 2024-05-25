@@ -4,20 +4,36 @@ import utill.validate.Validate;
 
 import java.util.List;
 import java.util.ArrayList;
+
+/**
+ * The Agent class represents an assistant that helps users manage their bank accounts.
+ * It handles commands for deleting and modifying account names, as well as input validation.
+ */
 public class Agent {
     private String state;
     private Kids kid;
     private String accountType; // "saving" or "current"
     private int selectedIndex; // to store the selected account index for deletion or modification
 
-    public Agent(Kids kid){
+    /**
+     * Constructs an Agent with the specified kid.
+     *
+     * @param kid the Kids object associated with this Agent
+     */
+    public Agent(Kids kid) {
         this.kid = kid;
         state = "wait";
         accountType = "";
         selectedIndex = -1;
     }
 
-    public String receiveUserInput(String text){
+    /**
+     * Processes user input and returns the appropriate response based on the current state.
+     *
+     * @param text the user input text
+     * @return the response based on the processed input
+     */
+    public String receiveUserInput(String text) {
         String output = "";
 
         if (text.equalsIgnoreCase("cancel")) {
@@ -104,8 +120,8 @@ public class Agent {
                 break;
 
             case "enter new name":
-                try{
-                    text=Validate.validateName(text);
+                try {
+                    text = Validate.validateName(text);
                     if (accountType.equals("saving")) {
                         kid.getAccountManager().getSavingAccounts().get(selectedIndex).setName(text);
                     } else {
@@ -113,8 +129,7 @@ public class Agent {
                     }
                     output = accountType + " account name modified successfully.";
                     state = "wait";
-                }
-                catch (Exception e1){
+                } catch (Exception e1) {
                     output = "Invalid name. Please enter a valid name.";
                 }
                 break;
@@ -123,6 +138,12 @@ public class Agent {
         return output;
     }
 
+    /**
+     * Gets the index of a saving account by its name.
+     *
+     * @param name the name of the saving account
+     * @return the index of the saving account, or -1 if not found
+     */
     private int getSavingAccountIndexByName(String name) {
         List<SavingAccount> accounts = kid.getAccountManager().getSavingAccounts();
         for (int i = 0; i < accounts.size(); i++) {
@@ -133,6 +154,12 @@ public class Agent {
         return -1;
     }
 
+    /**
+     * Gets the index of a current account by its name.
+     *
+     * @param name the name of the current account
+     * @return the index of the current account, or -1 if not found
+     */
     private int getCurrentAccountIndexByName(String name) {
         List<CurrentAccount> accounts = kid.getAccountManager().getCurrentAccounts();
         for (int i = 0; i < accounts.size(); i++) {

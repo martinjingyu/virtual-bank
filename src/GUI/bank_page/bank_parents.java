@@ -10,6 +10,10 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * This class represents the GUI for the bank page for parents. It provides options to view details of current and saving accounts,
+ * review transaction history, and change interest rates.
+ */
 public class bank_parents extends JPanel{
     private JPanel bank;
     private JButton currentDetails;
@@ -24,7 +28,12 @@ public class bank_parents extends JPanel{
     private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
     private final Font font = new Font("Arial Black", Font.BOLD, 18);
 
-    public MainFrame_parent getMainFrame(){return this.mainFrameParent;}
+
+    /**
+     * Constructs a new {@code bank_parents} object with the specified {@code Bank_parent_controller}.
+     *
+     * @param bank_parent_controller the controller for handling parent bank operations
+     */
     public bank_parents(Bank_parent_controller bank_parent_controller) {
         this.bank_parent_controller = bank_parent_controller;
         bank_parent_controller.setGUI(this);
@@ -54,6 +63,9 @@ public class bank_parents extends JPanel{
 
     }
 
+    /**
+     * Initializes the data displayed in the bank page for parents.
+     */
     public void initData(){
         removeAll();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:M:d");
@@ -90,6 +102,13 @@ public class bank_parents extends JPanel{
         add(savingTotal);
     }
 
+    /**
+     * This method overrides the {@code paintComponent} method to customize the appearance of the {@code Bank_kid} panel.
+     * It draws various rectangles and text to display income, expenses, saving goals, current and saving account totals,
+     * and transaction history.
+     *
+     * @param g the {@code Graphics} context in which to paint
+     */
     public void paintComponent(Graphics g) {
         setLayout(null); // 使用绝对布局
         setBackground(mainBgColor);

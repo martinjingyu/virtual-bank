@@ -111,9 +111,19 @@ public class Sign {
         signPanel.add(textField_4);
 
         JLabel secret_label_3 = new JLabel("Enter your id and passwords, then click Sign");
-        secret_label_3.setBounds(250, 100, 1000, 50);
+        secret_label_3.setBounds(250, 40, 1000, 50);
         secret_label_3.setFont(new Font("Times New Roman", Font.BOLD, 30));
         signPanel.add(secret_label_3);
+
+        JLabel secret_label_4 = new JLabel("Your id need to be ALL NUMBER");
+        secret_label_4.setBounds(400, 100, 1000, 50);
+        secret_label_4.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        signPanel.add(secret_label_4);
+
+        JLabel secret_label_5 = new JLabel("Your password need to contain NUMBER and WORD");
+        secret_label_5.setBounds(320, 140, 1000, 50);
+        secret_label_5.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        signPanel.add(secret_label_5);
 
         JButton button_1 = new JButton("sign");
         button_1.setBounds(250, 500, 200, 50);

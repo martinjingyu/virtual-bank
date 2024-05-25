@@ -113,7 +113,13 @@ public class Validate {
 
         return hasDigitBeforeDecimal;
     }
-
+    /**
+     * Validates a number input.
+     *
+     * @param input the input to be validated
+     * @return the validated number
+     * @throws Exception if the input is invalid
+     */
     public static double validateNumber(String input) throws Exception{
         if (input.matches("^\\d+(\\.\\d{1,2})?$")) {
             try {
@@ -130,6 +136,15 @@ public class Validate {
         }
     }
 
+
+    /**
+     * Validates if a name is repeated in the list of accounts.
+     *
+     * @param name        the name to be validated
+     * @param accountList the list of existing account names
+     * @return true if the name is not repeated, false otherwise
+     * @throws Exception if the name is repeated
+     */
     public static boolean validateRepeat(String name, List<String> accountList) throws Exception{
         for (String account : accountList) {
             if (account.equals(name)) {
@@ -140,6 +155,14 @@ public class Validate {
         return true;
     }
 
+
+    /**
+     * Validates an interest rate.
+     *
+     * @param number the interest rate to be validated
+     * @return the validated interest rate
+     * @throws Exception if the interest rate is invalid
+     */
     public static double validateInterest(String number) throws Exception{
 
         int dotIndex = number.indexOf(".");

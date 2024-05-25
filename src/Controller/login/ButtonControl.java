@@ -141,7 +141,6 @@ public class ButtonControl {
      * 
      * @param button the button to add the listener to
      * @param a      an integer parameter to determine the action to be performed
-     * @param e      the button click event
      */
     public static void addMouseListener(JButton button, int a) {
         button.addActionListener(new ActionListener() {
@@ -149,7 +148,7 @@ public class ButtonControl {
 
             public void actionPerformed(ActionEvent e) {
                 if (a == 1) {
-                    String filePath = "User_menual\\User manual.pdf";
+                    String filePath = "User_manual\\User manual.pdf";
                     File file = new File(filePath);
                     if (file.exists() && file.isFile() && filePath.toLowerCase().endsWith(".pdf")) {
                         try {
@@ -269,10 +268,10 @@ public class ButtonControl {
                 if (text1.isEmpty() || text2.isEmpty()
                         || text3.isEmpty()) {
                     secret_label_3.setText("Your id or passwords is empty!");
-                    secret_label_3.setBounds(350, 100, 1000, 50);
+                    secret_label_3.setBounds(330, 40, 1000, 50);
                 } else if ((!vali_id(text1)) || (!vali_secret(text2)) || (!vali_secret(text3))) {
                     secret_label_3.setText("Your id or secret is illegal!");
-                    secret_label_3.setBounds(450, 100, 1000, 50);
+                    secret_label_3.setBounds(450, 40, 1000, 50);
                     textField_1.setText(null);
                     textField_2.setText(null);
                     textField_4.setText(null);
@@ -289,12 +288,12 @@ public class ButtonControl {
                     String contentBeforeSpace = text_1.substring(0, indexOfSpace);
                     if (utill.read.CheckID.checkID(contentBeforeSpace, "data\\secret.txt.encrypted") == false) {
                         secret_label_3.setText("Account is already signed.");
-                        secret_label_3.setBounds(400, 100, 1000, 50);
+                        secret_label_3.setBounds(400, 40, 1000, 50);
                     } else {
                         InitializeData.writeTextToFile(text_1, "data\\secret.txt.encrypted");
                         InitializeData.createFolderAndFiles(text_2);
                         secret_label_3.setText("Your account is ready.");
-                        secret_label_3.setBounds(400, 100, 1000, 50);
+                        secret_label_3.setBounds(400, 40, 1000, 50);
                     }
                     textField_1.setText(null);
                     textField_2.setText(null);

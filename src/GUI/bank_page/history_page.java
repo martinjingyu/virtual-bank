@@ -5,8 +5,6 @@ import Entity.*;
 import utill.read.ReadAll;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,8 +15,10 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import static java.lang.System.out;
 
+/**
+ * This class represents the GUI for the history page, displaying transaction history and related information.
+ */
 public class history_page extends JPanel {
 
     private HistoryTransactionList transactionList;
@@ -28,8 +28,6 @@ public class history_page extends JPanel {
     private JPanel accountInfoPanel;
     private List<JLabel> dateList;
 
-
-
     // Define the custom colors
     private final Color mainBgColor = new Color(191, 221, 239); // #bfddef
     private final Color panelBgColor = new Color(239, 239, 239); // #EFEFEF
@@ -37,6 +35,11 @@ public class history_page extends JPanel {
     private final Color submitButtonColor = new Color(103, 201, 86); // #67C956
     private final Color borderColor = new Color(105, 105, 105); // #696969
 
+    /**
+     * Constructs a new {@code history_page} object with the specified {@code HistoryController}.
+     *
+     * @param controller the controller for handling history operations
+     */
     public history_page(HistoryController controller) {
         this.historyController = controller;
         this.transactionList = controller.getKid().getTransactionList();
@@ -46,9 +49,19 @@ public class history_page extends JPanel {
         initUI();
         controller.addButtonListener();
     }
-    public List<JLabel> getDateList(){return this.dateList;}
 
+    /**
+     * Retrieves the list of date labels.
+     *
+     * @return the list of date labels
+     */
+    public List<JLabel> getDateList() {
+        return this.dateList;
+    }
 
+    /**
+     * Initializes the user interface components.
+     */
     private void initUI() {
         // Set the layout with padding around the entire layout
         setPreferredSize(new Dimension(900, 540));
@@ -63,6 +76,9 @@ public class history_page extends JPanel {
         add(accountInfoPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Refreshes the user interface.
+     */
     public void refreshUI() {
         remove(DetailPanel);
         remove(accountInfoPanel);
@@ -90,7 +106,6 @@ public class history_page extends JPanel {
     }
 
     // Create the To-Do List Panel
-// Create the Date Panel
     private JPanel createDatePanel() {
         JPanel datePanel = new JPanel();
         datePanel.setLayout(new BoxLayout(datePanel, BoxLayout.Y_AXIS));
@@ -105,7 +120,6 @@ public class history_page extends JPanel {
         List<String> dates = transactionList.getDateList(); // Assuming you have this method to get dates
         dateList = new ArrayList<>();
         for (String date : dates) {
-            System.out.println(date);
             JLabel dateLabel = new JLabel(date);
             dateList.add(dateLabel);
 
@@ -115,32 +129,24 @@ public class history_page extends JPanel {
             dateLabel.setBorder(new LineBorder(borderColor)); // Set border for each label
             dateLabel.setHorizontalAlignment(JLabel.CENTER);
             dateLabel.setMaximumSize(new Dimension(Integer.MAX_VALUE, dateLabel.getPreferredSize().height));
-//            dateLabel.addMouseListener(new MouseAdapter() {
-//                @Override
-//                public void mouseClicked(MouseEvent e) {
-//                    dateLabel.setBackground(Color.BLUE);
-//                }
-//            });
             datePanel.add(dateLabel);
         }
 
         return datePanel;
     }
 
-
     // Create the Upload Products Panel
     private JPanel createDetailPanel() {
-        JPanel uploadPanel = new JPanel(); // 使用默认的FlowLayout，改进自动布局
-        uploadPanel.setLayout(new BoxLayout(uploadPanel, BoxLayout.Y_AXIS)); // 纵向排列
+        JPanel uploadPanel = new JPanel(); // Use default FlowLayout, improved automatic layout
+        uploadPanel.setLayout(new BoxLayout(uploadPanel, BoxLayout.Y_AXIS)); // Arrange vertically
         uploadPanel.setBackground(panelBgColor);
         uploadPanel.setPreferredSize(new Dimension(540, 0));
-        uploadPanel.setBorder(new LineBorder(borderColor, 1)); // 设置边框
+        uploadPanel.setBorder(new LineBorder(borderColor, 1)); // Set border
 
-        JScrollPane scrollPane = new JScrollPane(uploadPanel); // 创建滚动面板包含uploadPanel
+        JScrollPane scrollPane = new JScrollPane(uploadPanel); // Create a scroll panel containing uploadPanel
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-//        scrollPane.setPreferredSize(new Dimension(540, 400)); // 设置滚动面板的首选大小
-        scrollPane.setBorder(new LineBorder(borderColor, 1));  // 设置滚动面板的边框
+        scrollPane.setBorder(new LineBorder(borderColor, 1));  // Set border for the scroll pane
 
         List<String> details = transactionList.getTransactionDetails(historyController.getSelectedDate());
 
@@ -157,9 +163,8 @@ public class history_page extends JPanel {
             uploadPanel.add(detailLabel);
         }
 
-        return uploadPanel; // 返回包含uploadPanel的滚动面板
+        return uploadPanel; // Return the scroll pane containing uploadPanel
     }
-
 
     // Create the Account Information Panel
     private JPanel createAccountInfoPanel() {
@@ -167,11 +172,11 @@ public class history_page extends JPanel {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
         String formattedDate = LocalDate.now().format(formatter);
 
-        accountInfoPanel.setLayout(new GridLayout(4, 1));  // 使用网格布局
+        accountInfoPanel.setLayout(new GridLayout(4, 1));  // Use grid layout
         accountInfoPanel.setBackground(panelBgColor);
-        accountInfoPanel.setBorder(new LineBorder(borderColor, 1)); // 添加边框
+        accountInfoPanel.setBorder(new LineBorder(borderColor, 1)); // Add border
 
-        // 总收入
+        // Total income
         double totalIncome;
         double totalExpenses;
         double totalBalance;
@@ -185,22 +190,21 @@ public class history_page extends JPanel {
             totalExpenses = transactionList.getTotalExpenses();
             totalBalance = transactionList.getTotalBalance();
         }
-
         JLabel incomeLabel = new JLabel("Total Income:     $" + HistoryTransactionList.formatAmount(totalIncome));
         incomeLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         incomeLabel.setForeground(fontColor);
 
-        // 总支出
+        // Total expenses
         JLabel expensesLabel = new JLabel("Total Expenses:  $" + HistoryTransactionList.formatAmount(totalExpenses));
         expensesLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         expensesLabel.setForeground(fontColor);
 
-        // 总余额
+        // Total balance
         JLabel balanceLabel = new JLabel("Total Balance:    $" + HistoryTransactionList.formatAmount(totalBalance));
         balanceLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         balanceLabel.setForeground(fontColor);
 
-        // 添加标签到面板
+        // Add labels to the panel
         accountInfoPanel.add(new JLabel("CURRENT ACCOUNT"));
         accountInfoPanel.add(incomeLabel);
         accountInfoPanel.add(expensesLabel);
@@ -209,7 +213,11 @@ public class history_page extends JPanel {
         return accountInfoPanel;
     }
 
-
+    /**
+     * The main method to run the history page GUI.
+     *
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
         try {
             Kids kid = ReadAll.readall(String.valueOf(222));
