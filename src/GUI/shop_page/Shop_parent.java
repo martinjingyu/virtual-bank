@@ -85,7 +85,7 @@ public class Shop_parent extends JPanel implements RefreshListener {
         Border headerBorder = BorderFactory.createMatteBorder(0, 0, 3, 0, borderColor); // Added bottom border
         headerPanel.setBorder(headerBorder);
 
-        JLabel titleLabel = new JLabel("Transaction History");
+        JLabel titleLabel = new JLabel("FAMILY MALL");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
         titleLabel.setForeground(fontColor);
 
