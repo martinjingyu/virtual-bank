@@ -141,7 +141,6 @@ public class ButtonControl {
      * 
      * @param button the button to add the listener to
      * @param a      an integer parameter to determine the action to be performed
-     * @param e      the button click event
      */
     public static void addMouseListener(JButton button, int a) {
         button.addActionListener(new ActionListener() {
@@ -149,7 +148,7 @@ public class ButtonControl {
 
             public void actionPerformed(ActionEvent e) {
                 if (a == 1) {
-                    String filePath = "User_menual\\User manual.pdf";
+                    String filePath = "User_manual\\User manual.pdf";
                     File file = new File(filePath);
                     if (file.exists() && file.isFile() && filePath.toLowerCase().endsWith(".pdf")) {
                         try {
