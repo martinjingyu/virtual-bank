@@ -68,7 +68,7 @@ public class bank_parents extends JPanel{
      */
     public void initData(){
         removeAll();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:M:d");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
         String formattedDate = LocalDate.now().format(formatter);
 
         JLabel income = new JLabel(String.valueOf(bank_parent_controller.getKid().getTransactionList().getIncomeForDate(formattedDate)));

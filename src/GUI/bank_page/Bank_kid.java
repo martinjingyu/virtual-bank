@@ -88,7 +88,7 @@ public class Bank_kid extends JPanel {
      */
     public void initData() {
         removeAll();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:M:d");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
         String formattedDate = LocalDate.now().format(formatter);
 
         // Display income

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * retrieve transactions, and calculate financial summaries such as total income, expenses, and balance.
  */
 public class HistoryTransactionList {
-    private static List<HistoryTransaction> transactions;
+    private List<HistoryTransaction> transactions;
 
     /**
      * Constructs a HistoryTransactionList with an empty list of transactions.
