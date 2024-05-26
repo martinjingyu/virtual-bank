@@ -2,102 +2,88 @@ package Controller.shop;
 
 import Entity.*;
 import Exceptions.InsufficientFundsException;
+import GUI.shop_page.Shop_kid;
+import GUI.task_page.Task_parent;
 
 import javax.swing.*;
+import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The shopKidController class manages the interactions between the UI and the data model for the kid's shop.
- */
 public class shopKidController {
     private Kids kid;
+    private Shop_kid shop_kid;
     private MessageList messageList;
     private List<Product> selectedProductList;
     private AccountManager accountManager;
     private String selectedAccountName;
 
-    /**
-     * Constructs a shopKidController for the specified kid.
-     *
-     * @param kid the kid associated with this controller
-     */
     public shopKidController(Kids kid) {
         this.kid = kid;
         this.messageList = kid.getMessagelist();
         this.selectedProductList = new ArrayList<>();
         this.accountManager = kid.getAccountManager();
+    }
 
+    /**
+     * Initializes the view components with data from the model.
+     * @param GUI The Shop_kid view that needs to be initialized.
+     */
+    public void initializeGUI(Shop_kid GUI) {
+        populateAccounts(GUI.getAccountDropdown(), GUI.getCurrentAccountLabel());
+        ProductList productList = kid.getProductList();
+        GUI.createProductPanels(GUI.getProductsPanel(), productList);
+        this.shop_kid = GUI;
+    }
+
+    /**
+     * Populates the account dropdown and sets the initial display of the current account balance.
+     * @param accountDropdown The JComboBox to populate.
+     * @param currentAccountLabel The JLabel to display the current account balance.
+     */
+    public void populateAccounts(JComboBox<String> accountDropdown, JLabel currentAccountLabel) {
+        List<CurrentAccount> accounts = kid.getAccountManager().getCurrentAccounts();
+        for (CurrentAccount account : accounts) {
+            accountDropdown.addItem(account.getName());
+        }
+        if (!accounts.isEmpty()) {
+            accountDropdown.setSelectedItem(accounts.get(0).getName());
+            setSelectedAccountName(accounts.get(0).getName(), currentAccountLabel);
+        }
+        accountDropdown.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                setSelectedAccountName((String) e.getItem(), currentAccountLabel);
+            }
+        });
     }
 
     /**
      * Sets the selected account name and updates the current account display.
-     *
-     * @param accountName the name of the account to select
-     * @param currentAccountLabel the label to update with the current account balance
+     * @param accountName The name of the account to select.
+     * @param currentAccountLabel The label to update with the current account balance.
      */
     public void setSelectedAccountName(String accountName, JLabel currentAccountLabel) {
-        this.selectedAccountName = accountName;
-        updateCurrentAccountDisplay(currentAccountLabel);
+        selectedAccountName = accountName;
+        double balance = kid.getAccountManager().getCurrentAccountBalance(selectedAccountName);
+        currentAccountLabel.setText(String.format("Current Account: $%9.2f", balance));
     }
 
     /**
-     * Returns the kid associated with this controller.
-     *
-     * @return the kid associated with this controller
-     */
-    public Kids getKid() {
-        return kid;
-    }
-
-    /**
-     * Calculates the total price of the selected products.
-     *
-     * @return the total price of the selected products
-     */
-    public double calculateSelectedTotal() {
-        double total  = 0;
-        for (Product product : selectedProductList) {
-            total += product.getPrice();
-        }
-        return total;
-    }
-
-    /**
-     * Updates the current account display with the current balance.
-     *
-     * @param currentAccountLabel the label to update
-     */
-    public void updateCurrentAccountDisplay(JLabel currentAccountLabel) {
-        System.out.println(selectedAccountName);
-        System.out.println(accountManager.getCurrentAccountBalance(selectedAccountName));
-        currentAccountLabel.setText(String.format("Current Account: $%9.2f", accountManager.getCurrentAccountBalance(selectedAccountName)));
-    }
-
-    /**
-     * Updates the selected total display with the total price of selected products.
-     *
-     * @param selectedTotalLabel the label to update
-     */
-    public void updateSelectedTotalDisplay(JLabel selectedTotalLabel) {
-        selectedTotalLabel.setText(String.format("Selected Total: $%9.2f", calculateSelectedTotal()));
-    }
-
-    /**
-     * Updates the list of selected products and updates the total display.
-     *
-     * @param product the product to add or remove
-     * @param isSelected whether the product is selected or not
-     * @param selectedTotalLabel the label to update
+     * Updates the selected product list and the total display when a product is selected or deselected.
+     * @param product The product related to the selection event.
+     * @param isSelected Indicates whether the product is selected.
+     * @param selectedTotalLabel The label to update the selected total price on.
      */
     public void updateSelectedProductList(Product product, boolean isSelected, JLabel selectedTotalLabel) {
-        if (isSelected) {
+        double total = Double.parseDouble(selectedTotalLabel.getText().substring(17)); // Extracting the numeric part
+        if(isSelected) {
+            total += product.getPrice();
             selectedProductList.add(product);
-            updateSelectedTotalDisplay(selectedTotalLabel);
         } else {
+            total -= product.getPrice();
             selectedProductList.remove(product);
-            updateSelectedTotalDisplay(selectedTotalLabel);
         }
+        selectedTotalLabel.setText(String.format("Selected Total: $%9.2f", total));
     }
 
     /**
@@ -113,8 +99,8 @@ public class shopKidController {
             return;
         }
 
-        double totalCost = calculateSelectedTotal();
-        double currentBalance = accountManager.getCurrentAccountBalance(selectedAccountName);
+        double totalCost = Double.parseDouble(selectedTotalLabel.getText().substring(17));
+        double currentBalance = Double.parseDouble(currentAccountLabel.getText().substring(18));
 
         if (currentBalance < totalCost) {
             JOptionPane.showMessageDialog(null, "Insufficient balance for this purchase.", "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
@@ -132,8 +118,10 @@ public class shopKidController {
             }
             JOptionPane.showMessageDialog(null, "Purchase Successful!");
             selectedProductList.clear();
-            updateSelectedTotalDisplay(selectedTotalLabel);
-            updateCurrentAccountDisplay(currentAccountLabel);
+            SwingUtilities.invokeLater(() -> {
+                currentAccountLabel.setText(String.format("Current Account: $%8.2f", currentBalance - totalCost));
+                selectedTotalLabel.setText("Selected Total: $     0.00");
+            });
             for (JToggleButton button : toggleButtons) {
                 button.setSelected(false);
             }
