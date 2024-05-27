@@ -268,13 +268,19 @@ public class ButtonControl {
                 if (text1.isEmpty() || text2.isEmpty()
                         || text3.isEmpty()) {
                     secret_label_3.setText("Your id or passwords is empty!");
-                    secret_label_3.setBounds(330, 40, 1000, 50);
+                    JOptionPane.showMessageDialog(null,
+                            "Your id or passwords is empty!",
+                            "ERROR",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    secret_label_3.setBounds(370, 40, 1000, 50);
                 } else if ((!vali_id(text1)) || (!vali_secret(text2)) || (!vali_secret(text3))) {
                     secret_label_3.setText("Your id or secret is illegal!");
-                    secret_label_3.setBounds(450, 40, 1000, 50);
-                    textField_1.setText(null);
-                    textField_2.setText(null);
-                    textField_4.setText(null);
+                    secret_label_3.setBounds(380, 40, 1000, 50);
+                    JOptionPane.showMessageDialog(null,
+                            "Your id  or secret is illegal.\nYour id need to be ALL NUMBER.\nYour password need to contain NUMBER and WORD.\nThe length of your secret need to be 6 to 16.",
+                            "ERROR",
+                            JOptionPane.INFORMATION_MESSAGE);
+
                 } else {
                     String text_1 = textField_1.getText();
                     String text_2 = text_1;
@@ -289,11 +295,19 @@ public class ButtonControl {
                     if (utill.read.CheckID.checkID(contentBeforeSpace, "data\\secret.txt.encrypted") == false) {
                         secret_label_3.setText("Account is already signed.");
                         secret_label_3.setBounds(400, 40, 1000, 50);
+                        JOptionPane.showMessageDialog(null,
+                                "Account is already signed.",
+                                "ERROR",
+                                JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         InitializeData.writeTextToFile(text_1, "data\\secret.txt.encrypted");
                         InitializeData.createFolderAndFiles(text_2);
                         secret_label_3.setText("Your account is ready.");
                         secret_label_3.setBounds(400, 40, 1000, 50);
+                        JOptionPane.showMessageDialog(null,
+                                "Your account is ready.",
+                                "ERROR",
+                                JOptionPane.INFORMATION_MESSAGE);
                     }
                     textField_1.setText(null);
                     textField_2.setText(null);
@@ -325,7 +339,9 @@ public class ButtonControl {
                     }
                 }
                 if (containsLetter && containsNumber) {
-                    return true;
+                    if (input.length() > 5 && input.length() < 17) {
+                        return true;
+                    }
                 }
                 return false;
             }
