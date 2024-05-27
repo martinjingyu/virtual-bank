@@ -9,12 +9,18 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test class for the ProductList entity.
+ */
 public class ProductListTest {
     private ProductList productList;
     private Product product1;
     private Product product2;
     private Product product3;
 
+    /**
+     * Sets up the test environment.
+     */
     @Before
     public void setUp() {
         productList = new ProductList();
@@ -23,12 +29,18 @@ public class ProductListTest {
         product3 = new Product("Orange", 0.8);
     }
 
+    /**
+     * Tests the addProduct method.
+     */
     @Test
     public void testAddProduct() {
         productList.addProduct(product1);
         assertTrue(productList.getAllProducts().contains(product1));
     }
 
+    /**
+     * Tests the removeProduct method.
+     */
     @Test
     public void testRemoveProduct() {
         productList.addProduct(product1);
@@ -36,6 +48,9 @@ public class ProductListTest {
         assertFalse(productList.getAllProducts().contains(product1));
     }
 
+    /**
+     * Tests the getAllProducts method.
+     */
     @Test
     public void testGetAllProducts() {
         productList.addProduct(product1);
@@ -48,6 +63,9 @@ public class ProductListTest {
         assertTrue(allProducts.contains(product3));
     }
 
+    /**
+     * Tests the getProductByName method.
+     */
     @Test
     public void testGetProductByName() {
         productList.addProduct(product1);
@@ -57,6 +75,9 @@ public class ProductListTest {
         assertEquals(product2, foundProduct);
     }
 
+    /**
+     * Tests the getProductByName method when the product is not found.
+     */
     @Test
     public void testGetProductByNameNotFound() {
         productList.addProduct(product1);

@@ -37,8 +37,21 @@ class BackPanel extends JPanel {
 }
 
 public class Parent {
-    public static String fileName = "data/parent_secret.txt";
 
+    /**
+     * 
+     * The addParentPanel method is used to add the parent panel to the card panel
+     * in the GUI of the bank application.
+     * 
+     * @param cardPanel  the JPanel where the parent panel will be added
+     * 
+     * @param cardLayout the CardLayout used to switch between panels
+     * 
+     * @param g          the GUIMain object that handles the GUI operations
+     * 
+     * @param frame      the JFrame object representing the main frame of the
+     *                   application
+     */
     public static void addParentPanel(JPanel cardPanel, CardLayout cardLayout, GUIMain g, JFrame frame) {
         BackPanel parentPanel = new BackPanel("image/background.jpg");
 
@@ -57,36 +70,10 @@ public class Parent {
         parent_img_label.setBounds(100, 150, 300, 300);
         parentPanel.add(parent_img_label);
 
-        JButton mainButton1 = new JButton("parent");
-        mainButton1.setBounds(80, 500, 150, 50);
-        mainButton1.setFont(new Font("Times New Roman", Font.BOLD, 30));
-        ButtonControl.addButtonListener(mainButton1, g);
-        // mainButton1.addActionListener(new ActionListener() {
-        // public void actionPerformed(ActionEvent e) {
-        // showCard(g, "parent");
-
-        // }
-        // });
-        parentPanel.add(mainButton1);
-
-        JButton mainButton2 = new JButton("children");
-        mainButton2.setBounds(260, 500, 150, 50);
-        mainButton2.setFont(new Font("Times New Roman", Font.BOLD, 30));
-        ButtonControl.addButtonListener(mainButton2, g);
-        // mainButton2.addActionListener(new ActionListener() {
-        // public void actionPerformed(ActionEvent e) {
-        // showCard(g, "children");
-
-        // }
-        // });
-        parentPanel.add(mainButton2);
-
         JLabel parent_label = new JLabel("You are parent");
         parent_label.setBounds(620, 250, 1000, 50);
         parent_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
-
         parentPanel.add(parent_label);
-        // parent_label.setText("New Text");
 
         JLabel id_label = new JLabel("ID : ");
         id_label.setBounds(550, 320, 260, 50);
@@ -98,11 +85,11 @@ public class Parent {
         parentPanel.add(textField_1);
 
         JLabel secret_label = new JLabel("PASSWORD : ");
-        secret_label.setBounds(550, 380, 260, 50);
+        secret_label.setBounds(550, 380, 270, 50);
         secret_label.setFont(new Font("Times New Roman", Font.BOLD, 40));
         parentPanel.add(secret_label);
 
-        JTextField textField_2 = new JTextField(4);
+        JPasswordField textField_2 = new JPasswordField(4);
         textField_2.setBounds(800, 380, 200, 50);
         parentPanel.add(textField_2);
 
@@ -111,28 +98,32 @@ public class Parent {
         logButton.setFont(new Font("Times New Roman", Font.BOLD, 30));
         parentPanel.add(logButton);
         ButtonControl.addButtonListener3(logButton, g, textField_1, textField_2);
-        // logButton.addActionListener(new ActionListener() {
-        // // 在登录按钮的 ActionListener 中调用此方法
-        // public void actionPerformed(ActionEvent e) {
 
-        // String text2 = textField_2.getText();
-        // String text1 = textField_1.getText();
-        // if (utill.read.CheckParentSecret.checkParentSecret(text1, text2,
-        // "data/secret.txt") == true) {
-        // g.frame.dispose();
-        // g.loginListener.onLogin(text1);
-        // } else {
-        // showCard(g, "error");
-        // }
+        JButton mainButton1 = new JButton("parent");
+        mainButton1.setBounds(80, 500, 150, 50);
+        mainButton1.setFont(new Font("Times New Roman", Font.BOLD, 30));
+        ButtonControl.addButtonListener(mainButton1, g, textField_1, textField_2);
+        parentPanel.add(mainButton1);
 
-        // }
-        // });
+        JButton mainButton2 = new JButton("children");
+        mainButton2.setBounds(260, 500, 150, 50);
+        mainButton2.setFont(new Font("Times New Roman", Font.BOLD, 30));
+        ButtonControl.addButtonListener(mainButton2, g, textField_1, textField_2);
+        parentPanel.add(mainButton2);
 
         parentPanel.setLayout(null);
 
         cardPanel.add(parentPanel, "parent");
     }
 
+    /**
+     * 
+     * The showCard method is used to switch the current card panel in the GUI to
+     * the specified card panel.
+     * 
+     * @param g        the GUIMain object that handles the GUI operations
+     * @param cardName the name of the card panel to be displayed
+     */
     public static void showCard(GUIMain g, String cardName) {
         g.showCard(cardName);
     }

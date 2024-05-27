@@ -4,30 +4,36 @@ import Entity.SavingAccount;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents a list of components for managing finished saving accounts.
+ */
 public class FinishList {
     private List<SavingAccount> savingAccountList;
     private List<JButton> Buttonlist;
 
-    FinishList(List<SavingAccount> savingAccountList){
+    /**
+     * Constructs a FinishList object with a list of saving accounts.
+     *
+     * @param savingAccountList The list of saving accounts.
+     */
+    public FinishList(List<SavingAccount> savingAccountList) {
         Buttonlist = new ArrayList<>();
-        int i;
         this.savingAccountList = savingAccountList;
-        for(i=0;i<savingAccountList.size();i++){
+
+        for (SavingAccount savingAccount : savingAccountList) {
             JButton finishButton = new JButton("Take my Money!");
             Buttonlist.add(finishButton);
         }
-
     }
 
-    public List<SavingAccount> getSavingAccountList() {
-        return savingAccountList;
-    }
-
+    /**
+     * Retrieves the list of buttons.
+     *
+     * @return The list of buttons.
+     */
     public List<JButton> getButtonlist() {
         return Buttonlist;
     }

@@ -14,9 +14,21 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * 
+ * The ImagePanel class is a custom JPanel that displays an image as its
+ * background.
+ */
 class ImagePanel extends JPanel {
     private Image backgroundImage;
 
+    /**
+     * 
+     * Constructor for the ImagePanel class that sets the background image to the
+     * specified image path.
+     * 
+     * @param imagePath the path to the image file to be used as the background
+     */
     public ImagePanel(String imagePath) {
         try {
             backgroundImage = ImageIO.read(new File(imagePath));
@@ -25,6 +37,13 @@ class ImagePanel extends JPanel {
         }
     }
 
+    /**
+     * 
+     * Overrides the paintComponent method in JPanel to draw the background image on
+     * the panel.
+     * 
+     * @param g the Graphics object used to paint the component
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -34,8 +53,23 @@ class ImagePanel extends JPanel {
     }
 }
 
+/**
+ * 
+ * The Sign class contains methods for adding and displaying the sign panel in a
+ * GUI application.
+ */
 public class Sign {
-
+    /**
+     * 
+     * Adds the sign panel to the card panel with the specified image background and
+     * sets up the sign components.
+     * 
+     * @param cardPanel  the JPanel where the sign panel will be added
+     * 
+     * @param cardLayout the CardLayout used to switch between panels
+     * 
+     * @param g          the main GUI class instance
+     */
     public static void addSignPanel(JPanel cardPanel, CardLayout cardLayout, GUIMain g) {
         JPanel signPanel = new ImagePanel("image/background3.jpg");
         signPanel.setLayout(null);
@@ -77,65 +111,42 @@ public class Sign {
         signPanel.add(textField_4);
 
         JLabel secret_label_3 = new JLabel("Enter your id and passwords, then click Sign");
-        secret_label_3.setBounds(250, 100, 1000, 50);
+        secret_label_3.setBounds(250, 40, 1000, 50);
         secret_label_3.setFont(new Font("Times New Roman", Font.BOLD, 30));
         signPanel.add(secret_label_3);
+
+        JLabel secret_label_4 = new JLabel("Your id need to be ALL NUMBER");
+        secret_label_4.setBounds(400, 100, 1000, 50);
+        secret_label_4.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        signPanel.add(secret_label_4);
+
+        JLabel secret_label_5 = new JLabel("Your password need to contain NUMBER and WORD");
+        secret_label_5.setBounds(320, 140, 1000, 50);
+        secret_label_5.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        signPanel.add(secret_label_5);
 
         JButton button_1 = new JButton("sign");
         button_1.setBounds(250, 500, 200, 50);
         button_1.setFont(new Font("Times New Roman", Font.BOLD, 40));
         ButtonControl.addButtonListener4(button_1, g, textField_1, textField_2, textField_4, secret_label_3);
 
-        // button_1.addActionListener(new ActionListener() {
-        // public void actionPerformed(ActionEvent e) {
-        // if (textField_1.getText().isEmpty() || textField_2.getText().isEmpty()
-        // || textField_4.getText().isEmpty()) {
-        // secret_label_3.setText("Your id or passwords is empty!");
-        // secret_label_3.setBounds(350, 100, 1000, 50);
-        // } else {
-        // String text_1 = textField_1.getText();
-        // String text_2 = text_1;
-        // text_1 += ' ';
-        // text_1 += textField_2.getText();
-        // text_1 += ' ';
-        // text_1 += textField_4.getText();
-        // int indexOfSpace = text_1.indexOf(" ");
-
-        // String contentBeforeSpace = text_1.substring(0, indexOfSpace);
-        // if (utill.read.CheckID.checkID(contentBeforeSpace, "data/secret.txt") ==
-        // false) {
-        // secret_label_3.setText("Account is already signed.");
-        // secret_label_3.setBounds(400, 100, 1000, 50);
-        // } else {
-        // utill.write.WriteToFile.writeTextToFile(text_1, "data/secret.txt");
-        // utill.write.WriteToFile.createFolderAndFiles(text_2);
-        // secret_label_3.setText("Your account is ready.");
-        // secret_label_3.setBounds(400, 100, 1000, 50);
-        // }
-        // textField_1.setText(null);
-        // textField_2.setText(null);
-        // textField_4.setText(null);
-        // // showCard(g, "basic");
-        // }
-        // }
-        // });
         JButton button_2 = new JButton("back");
         button_2.setBounds(650, 500, 200, 50);
         button_2.setFont(new Font("Times New Roman", Font.BOLD, 40));
-        ButtonControl.addButtonListener(button_2, g);
-
-        // button_2.addActionListener(new ActionListener() {
-        // public void actionPerformed(ActionEvent e) {
-        // showCard(g, "basic");
-
-        // }
-        // });
+        ButtonControl.addButtonListener(button_2, g, textField_1, textField_2, textField_4);
 
         signPanel.add(button_1);
         signPanel.add(button_2);
         cardPanel.add(signPanel, "sign");
     }
 
+    /**
+     * 
+     * Shows the specified card in the main GUI.
+     * 
+     * @param g        the main GUI class instance
+     * @param cardName the name of the card to be shown
+     */
     public static void showCard(GUIMain g, String cardName) {
         g.showCard(cardName);
     }

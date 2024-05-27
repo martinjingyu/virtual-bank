@@ -81,7 +81,7 @@ public class message_kid extends JPanel {
         contactsList.setSelectionBackground(borderColor);
         contactsList.setSelectionForeground(Color.WHITE);
         JScrollPane scrollPane = new JScrollPane(contactsList);
-        scrollPane.setPreferredSize(new Dimension(350, 250));
+        scrollPane.setPreferredSize(new Dimension(180, 250));
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(scrollPane, BorderLayout.CENTER);
         return panel;
@@ -99,7 +99,7 @@ public class message_kid extends JPanel {
         messagesList.setFont(new Font("SansSerif", Font.PLAIN, 16));
         messagesList.setBackground(panelBgColor);
         JScrollPane scrollPane = new JScrollPane(messagesList);
-        scrollPane.setPreferredSize(new Dimension(400, 350));
+        scrollPane.setPreferredSize(new Dimension(570, 350));
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(contactNameLabel, BorderLayout.NORTH);
         panel.add(scrollPane, BorderLayout.CENTER);
@@ -180,7 +180,7 @@ public class message_kid extends JPanel {
                     case "parent":
                         setBackground(parentMessageColor);
                         break;
-                    case "system":
+                    case "system_kid":
                         setBackground(systemMessageColor);
                         break;
                     default:
@@ -202,14 +202,18 @@ public class message_kid extends JPanel {
      * @param args command line arguments (not used)
      */
     public static void main(String[] args) {
-        Kids kid = ReadAll.readall(String.valueOf(222));
-        Message_kid_controller messageController = new Message_kid_controller(kid);
-        message_kid messageKid = new message_kid(messageController);
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(messageKid);
-        frame.setSize(800, 600);
-        frame.setVisible(true);
+        try {
+            Kids kid = ReadAll.readall(String.valueOf(222));
+            Message_kid_controller messageController = new Message_kid_controller(kid);
+            message_kid messageKid = new message_kid(messageController);
+            JFrame frame = new JFrame();
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.getContentPane().add(messageKid);
+            frame.setSize(800, 600);
+            frame.setVisible(true);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

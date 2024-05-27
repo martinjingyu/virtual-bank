@@ -1,5 +1,8 @@
 package utill.validate;
+import Entity.Account;
+
 import javax.swing.*;
+import java.util.List;
 
 /**
  * The Validate class provides methods to validate various inputs.
@@ -12,21 +15,35 @@ public class Validate {
      * @param name the name to be validated
      * @return true if the name is valid, false otherwise
      */
-    public static boolean validateName(String name) {
+    public static String validateName(String name) throws Exception{
+
         if (name == null || name.trim().isEmpty()) {
-            return false;
+            JOptionPane.showMessageDialog(null, "Invalid input. Name cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            throw new Exception("Invalid name: name cannot be empty.");
         }
 
         boolean hasLetter = false;
         for (char c : name.toCharArray()) {
             if (!Character.isLetterOrDigit(c) && !Character.isWhitespace(c)) {
-                return false;
+                JOptionPane.showMessageDialog(null, "Invalid input. Name can only contain letters, digits, and spaces.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                throw new Exception("Invalid name: contains invalid characters.");
             }
             if (Character.isLetter(c)) {
                 hasLetter = true;
             }
         }
-        return hasLetter;
+
+        if (!hasLetter) {
+            JOptionPane.showMessageDialog(null, "Invalid input. Name must contain at least one letter.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            throw new Exception("Invalid name: must contain at least one letter.");
+        }
+
+        if (name.charAt(name.length() - 1) == ' ') {
+            JOptionPane.showMessageDialog(null, "Invalid input. The last character can't be a space. ", "Input Error", JOptionPane.ERROR_MESSAGE);
+            throw new Exception("The last character can't be a space. ");
+        }
+
+        return name;
     }
 
 
@@ -96,16 +113,71 @@ public class Validate {
 
         return hasDigitBeforeDecimal;
     }
-
-
-    public static double validateNumber(String input){
-        try {
-            return Double.parseDouble(input);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            // You can re-prompt the user here or handle the invalid input as needed
-            return Double.NaN; // Return NaN to indicate the input was invalid
+    /**
+     * Validates a number input.
+     *
+     * @param input the input to be validated
+     * @return the validated number
+     * @throws Exception if the input is invalid
+     */
+    public static double validateNumber(String input) throws Exception{
+        if (input.matches("^\\d+(\\.\\d{1,2})?$")) {
+            try {
+                return Double.parseDouble(input);
+            } catch (NumberFormatException e) {
+                // 处理数字格式异常
+                JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                throw e;
+            }
+        } else {
+            // 处理不匹配正则表达式的输入
+            JOptionPane.showMessageDialog(null, "Invalid input. Please enter a number with at most two decimal places.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            throw new Exception("invalid number");
         }
     }
 
+
+    /**
+     * Validates if a name is repeated in the list of accounts.
+     *
+     * @param name        the name to be validated
+     * @param accountList the list of existing account names
+     * @return true if the name is not repeated, false otherwise
+     * @throws Exception if the name is repeated
+     */
+    public static boolean validateRepeat(String name, List<String> accountList) throws Exception{
+        for (String account : accountList) {
+            if (account.equals(name)) {
+                JOptionPane.showMessageDialog(null, "Invalid input. This name has been used", "Input Error", JOptionPane.ERROR_MESSAGE);
+                throw new Exception();
+                 }
+        }
+        return true;
+    }
+
+
+    /**
+     * Validates an interest rate.
+     *
+     * @param number the interest rate to be validated
+     * @return the validated interest rate
+     * @throws Exception if the interest rate is invalid
+     */
+    public static double validateInterest(String number) throws Exception{
+
+        int dotIndex = number.indexOf(".");
+        System.out.println(dotIndex);
+        if(dotIndex!=-1 && number.substring(dotIndex+1).length()>2){
+
+            JOptionPane.showMessageDialog(null, "Please inter a number with at most two decimal", "Input Error",JOptionPane.ERROR_MESSAGE);
+            throw new Exception();
+        }
+        Double output = Validate.validateNumber(number);
+        if(output>20||output<0){
+            JOptionPane.showMessageDialog(null, "The interest rate is supposed to be a number between 0 and 20", "Input Error",JOptionPane.ERROR_MESSAGE);
+            throw new Exception();
+        }
+
+        return output;
+    }
 }

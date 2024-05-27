@@ -3,10 +3,12 @@ package Controller.message;
 import Entity.Kids;
 import Entity.Message;
 import GUI.message_page.message_kid;
+import Entity.Agent;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
 
 /**
  * The {@code Message_kid_controller} class handles the interaction between the kid's message GUI and the underlying message data.
@@ -16,6 +18,7 @@ public class Message_kid_controller {
     private Kids kid;
     private message_kid gui;
     private String selectedContact = null;  // Maintain the state of the selected contact
+    private Agent agent;
 
     /**
      * Constructs a {@code Message_kid_controller} object with the specified kid entity.
@@ -24,6 +27,7 @@ public class Message_kid_controller {
      */
     public Message_kid_controller(Kids kid) {
         this.kid = kid;
+        agent = new Agent(kid);
     }
 
     /**
@@ -61,6 +65,9 @@ public class Message_kid_controller {
             String text = gui.getMessageInput().getText();
             if (selectedContact != null && !text.equals("Please click enter to send") && !text.isEmpty()) {
                 sendMessage(text);
+                String agentOut = agent.receiveUserInput(text);
+                gui.getMessageModel().addElement(new Message("system_kid",agentOut));  // Assuming constructor exists
+
                 gui.getMessageInput().setText("");  // Clear input field after sending
                 gui.getMessageInput().setForeground(Color.BLACK);
             }

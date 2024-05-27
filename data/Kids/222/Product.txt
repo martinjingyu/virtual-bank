@@ -1,15 +1,1 @@
-Apple,3.0
-bee,1.0
-T-shirt,5.0
-Apple,3.0
-bee,5.0
-T-shirt,5.0
-Apple,3.0
-bee,5.0
-T-shirt,5.0
-Apple,3.0
-bee,5.0
-bee,5.0
-T-shirt,5.0
-Apple,3.0
-bee,5.0
+Y/Zophv4Fib36f9diyanx0U54O1YIpAZGhcefCihSxg2xVjo62Oo3jSMCW7elBrEc6RX7IEGAx/DE4++kOPHD5tO9R79mwAm7YrfQg6e2z1mAXnfwGASA2UlfmYhbsVshxIBZcI4oUtRbpMJzEy+mybHJBGYblsKBHQ/VWyIXXuDlJwv849fnxmwBpb4bva4ze5OMZXi8rr6Y8Hput3SYcI7vXzK+kaX2mZYbBxAFJAnQlouXhOgCmUjPos7GGJmetsEhd6kDtHeyVf8tBqqRIp0IdvzUcnBz0sGqS7/VgAwYQKFfu9HiS2eGn6hZjS83aa26u5Kbas1n+eMEd9JRsQbuOcj7MI6/jFQou7v1NZuZew7aHMjYmOflw6CiXuJR7GT22sWejY639lSEkQTGMm8PFP9FdUZsEclGCasm3I=

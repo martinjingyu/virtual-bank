@@ -181,6 +181,7 @@ public class Task_parent extends JPanel {
                     } else {
                         // 发信息
 
+
                         String name = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
                         task_parent_control.getKid().getMessagelist().addTaskMessage("Parent_Opt", "You have delete the task " + name);
 

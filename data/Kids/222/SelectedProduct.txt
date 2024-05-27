@@ -1,9 +1,1 @@
-Apple,3.0
-bee,1.0
-T-shirt,5.0
-Apple,3.0
-bee,5.0
-Apple,3.0
-bee,1.0
-T-shirt,5.0
-Apple,3.0
+Y/Zophv4Fib36f9diyanx0U54O1YIpAZGhcefCihSxg2xVjo62Oo3jSMCW7elBrEc6RX7IEGAx/DE4++kOPHD/agZ67ULgJalfoTLznVh/M=
