@@ -175,7 +175,7 @@ public class message_kid extends JPanel {
             setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10)); // Consistent padding to prevent shifting
 
             // Determine alignment based on the sender
-            if ("kid".equals(value.getSender())) {
+            if ("kid".equals(value.getSender())|| "system_parent".equals(value.getSender())) {
                 setHorizontalAlignment(SwingConstants.RIGHT);
             } else {
                 setHorizontalAlignment(SwingConstants.LEFT);

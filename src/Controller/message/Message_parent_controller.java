@@ -7,6 +7,8 @@ import GUI.message_page.message_parent;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The {@code Message_parent_controller} class handles the interaction between the parent's message GUI and the underlying message data.
@@ -47,7 +49,6 @@ public class Message_parent_controller {
                     if (currentSelected != null) {
                         selectedContact = currentSelected;  // Update the selected contact
                         gui.updateContactSelection(selectedContact);
-                        loadMessagesForContact(selectedContact);
                         gui.getMessageInput().setEnabled(true);  // Enable the input field
                         gui.getMessageInput().setText("Please click enter to send");  // Set placeholder text
                         gui.getMessageInput().setForeground(new Color(225, 226, 226));
@@ -99,20 +100,22 @@ public class Message_parent_controller {
             JOptionPane.showMessageDialog(gui, "Please enter a message.");
             return;
         }
-        gui.getMessageModel().addElement(new Message("parent", message));  // Assuming constructor exists
+        if (gui.getContactList().getSelectedValue().equals("System Alerts")) {
+            Message message1 = new Message("parent", message, "system_parent");
+            kid.getMessagelist().addMessage(message1);
+            gui.getMessageModel().addElement(message1);  // Assuming constructor exists
+        } else if (gui.getContactList().getSelectedValue().equals("Kid")) {
+            Message message1 = new Message("parent", message, "kid");
+            kid.getMessagelist().addMessage(message1);
+            gui.getMessageModel().addElement(message1);  // Assuming constructor exists
+        }
     }
 
-    /**
-     * Loads messages for the selected contact and updates the message model.
-     *
-     * @param contact the selected contact to load messages for
-     */
-    private void loadMessagesForContact(String contact) {
-        gui.getMessageModel().clear();
-        Message[] messages = contact.equals("Kid") ? kid.getMessagelist().getParentKidMessages().toArray(new Message[0]) :
-                kid.getMessagelist().getSystemMessages("parent").toArray(new Message[0]);
-        for (Message msg : messages) {
-            gui.getMessageModel().addElement(msg);
-        }
+
+    public List<Message> getMessagesForContact(String contact) {
+
+        return kid.getMessagelist().getAllMessages().stream()
+                .filter(message -> (("parent".equals(message.getSender()) && contact.equals(message.getReceiver()) )||(contact.equals(message.getSender()) && "parent".equals(message.getReceiver()))))
+                .collect(Collectors.toList());
     }
 }

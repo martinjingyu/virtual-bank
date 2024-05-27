@@ -51,11 +51,9 @@ public class Message_kid_controller {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 1) {
                     String currentSelected = gui.getContactList().getSelectedValue();
-
                     if (currentSelected != null) {
                         selectedContact = currentSelected;  // Update the selected contact
                         gui.updateContactSelection(selectedContact);
-                        loadMessagesForContact(selectedContact);
                         gui.getMessageInput().setEnabled(true);  // Enable the input field
                         gui.getMessageInput().setText("Please click enter to send");  // Set placeholder text
                         gui.getMessageInput().setForeground(new Color(225, 226, 226));
@@ -129,19 +127,6 @@ public class Message_kid_controller {
     }
 
     /**
-     * Loads messages for the selected contact and updates the message model.
-     *
-     * @param contact the selected contact to load messages for
-     */
-    private void loadMessagesForContact(String contact) {
-        gui.getMessageModel().clear();
-        Message[] messages = contact.equals("Parents") ? kid.getMessagelist().getParentKidMessages().toArray(new Message[0]) :
-                kid.getMessagelist().getSystemMessages("kid").toArray(new Message[0]);
-        for (Message msg : messages) {
-            gui.getMessageModel().addElement(msg);
-        }
-    }
-    /**
      * Retrieves the messages for the selected contact.
      *
      * @param contact the selected contact
@@ -150,7 +135,7 @@ public class Message_kid_controller {
     public List<Message> getMessagesForContact(String contact) {
 
         return kid.getMessagelist().getAllMessages().stream()
-                .filter(message -> ("kid".equals(message.getSender()) && contact.equals(message.getReceiver())||contact.equals(message.getSender()) && "kid".equals(message.getReceiver())))
+                .filter(message -> (("kid".equals(message.getSender()) && contact.equals(message.getReceiver()))||(contact.equals(message.getSender()) && "kid".equals(message.getReceiver()))))
                 .collect(Collectors.toList());
     }
 }
