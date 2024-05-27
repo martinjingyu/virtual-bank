@@ -12,7 +12,16 @@ public class EncryptionUtilTest {
             System.setProperty("ENCRYPTION_KEY", ENCRYPTION_KEY);
 
             // 原始数据
-            String data = "CA1, shop, -20, 2024:3:10 12:12:11\nTask, CA2, 5, 2024:3:11 12:12:11";
+            String data = "CA1,shop,-20.0,2024/3/10 12:12:11\n" +
+                    "Task,CA2,5.0,2024/3/11 12:12:11\n" +
+                    "CA2,CA1,3.0,2024/5/28 03:04:33\n" +
+                    "SA1,CA1,10.0,2024/5/28 03:04:39\n" +
+                    "SA4,CA2,10.08,2024/5/28 03:04:45\n" +
+                    "CA1,Sa44,-12.0,2024/5/28 03:04:55\n" +
+                    "CA2,shop,-4.0,2024/5/28 03:05:18\n" +
+                    "CA2,shop,-3.0,2024/5/28 03:05:24\n" +
+                    "CA2,shop,-4.0,2024/5/28 03:05:27\n" +
+                    "parent,CA2,11.0,2024/5/28 03:08:09\n";
             String data1 ="Martin,200.0,1.5,3.0,4.25";
             String data2 ="SA1,10.0,10.0,2024-01-10T12:12:40,2024-10-10T12:12:40,15 days\n" +
                     "SA2,10.0,10.0,2024-01-10T12:12:40,2024-10-10T12:12:40, 1 month\n" +
@@ -20,7 +29,7 @@ public class EncryptionUtilTest {
                     "SA4,10.0,10.0,2024-01-10T12:12:40,2024-02-10T12:14:40,15 days";
 
             // 加密数据
-            String encryptedData = EncryptionUtil.encrypt(data1);
+            String encryptedData = EncryptionUtil.encrypt(data);
             System.out.println("Encrypted data: " + encryptedData);
 
             // 解密数据
