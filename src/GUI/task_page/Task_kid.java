@@ -252,9 +252,7 @@ public class Task_kid extends JPanel {
         if (moneyFont != null) money.setFont(moneyFont);
         money.setForeground(new Color(-9975466));
 
-
         money.setText("$"+task_kid_control.getKid().getAccountManager().getTotalCurrentBalance()+"/$"+task_kid_control.getKid().getAccountManager().getSavingGoal());
-
 
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
@@ -273,7 +271,12 @@ public class Task_kid extends JPanel {
         progressBar1.setMinimum(0);
         progressBar1.setStringPainted(false);
 
-        progressBar1.setValue((int)((task_kid_control.getKid().getAccountManager().getTotalCurrentBalance()/task_kid_control.getKid().getAccountManager().getSavingGoal())*100));
+        if(task_kid_control.getKid().getAccountManager().getSavingGoal()==0){
+            progressBar1.setValue(100);
+        }
+        else{
+            progressBar1.setValue((int)((task_kid_control.getKid().getAccountManager().getTotalCurrentBalance()/task_kid_control.getKid().getAccountManager().getSavingGoal())*100));
+        }
 
 
         gbc = new GridBagConstraints();
@@ -288,11 +291,16 @@ public class Task_kid extends JPanel {
         if (progressFont != null) progress.setFont(progressFont);
         progress.setForeground(new Color(-12763843));
 
-        double totalCurrentBalance = task_kid_control.getKid().getAccountManager().getTotalCurrentBalance();
-        double savingGoal = task_kid_control.getKid().getAccountManager().getSavingGoal();
-        double percentage = (totalCurrentBalance / savingGoal) * 100;
-        String formattedPercentage = String.format("%.2f%%", percentage);
-        progress.setText(formattedPercentage);
+        if(task_kid_control.getKid().getAccountManager().getSavingGoal()==0) {
+            progress.setText("100%");
+        }
+        else {
+            double totalCurrentBalance = task_kid_control.getKid().getAccountManager().getTotalCurrentBalance();
+            double savingGoal = task_kid_control.getKid().getAccountManager().getSavingGoal();
+            double percentage = (totalCurrentBalance / savingGoal) * 100;
+            String formattedPercentage = String.format("%.2f%%", percentage);
+            progress.setText(formattedPercentage);
+        }
         //progress.setText(task_kid_control.getKid().getAccountManager().getTotalCurrentBalance()/task_kid_control.getKid().getAccountManager().getSavingGoal()*100+"%");
 
 
