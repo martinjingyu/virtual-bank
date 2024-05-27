@@ -129,7 +129,7 @@ public class Task_parent extends JPanel {
                         System.out.println("salary： ");
                         System.out.println(salary);
                         task_parent_control.getKid().getAccountManager().getCurrentAccountByName(destination).deposit(salary);
-                        HistoryTransaction historyTransaction = new HistoryTransaction("parent",task_parent_control.getKid().getAccountManager().getCurrentAccountByName(destination).getName(),salary);
+                        HistoryTransaction historyTransaction = new HistoryTransaction("Task",task_parent_control.getKid().getAccountManager().getCurrentAccountByName(destination).getName(),salary);
                         task_parent_control.getKid().getTransactionList().addTransaction(historyTransaction);
 
                         // 删除任务
