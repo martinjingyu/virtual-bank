@@ -20,7 +20,7 @@ public class MessageListTest {
 
     @Test
     public void testAddMessage() {
-        Message message = new Message("Alice", "Hello, Bob!");
+        Message message = new Message("Alice", "Hello, Bob!","Bob");
         messageList.addMessage(message);
         List<Message> messages = messageList.getAllMessages();
 
@@ -30,9 +30,9 @@ public class MessageListTest {
 
     @Test
     public void testGetParentKidMessages() {
-        Message parentMessage = new Message("parent", "Hello, kid!");
-        Message kidMessage = new Message("kid", "Hello, parent!");
-        Message otherMessage = new Message("other", "Hello, world!");
+        Message parentMessage = new Message("parent", "Hello, kid!","kid");
+        Message kidMessage = new Message("kid", "Hello, parent!","parent");
+        Message otherMessage = new Message("other", "Hello, world!","other");
 
         messageList.addMessage(parentMessage);
         messageList.addMessage(kidMessage);
@@ -47,9 +47,9 @@ public class MessageListTest {
 
     @Test
     public void testGetSystemMessagesForKid() {
-        Message kidSystemMessage = new Message("system_kid", "System message for kid");
-        Message parentSystemMessage = new Message("system_parent", "System message for parent");
-        Message otherMessage = new Message("other", "Hello, world!");
+        Message kidSystemMessage = new Message("system_kid", "System message for kid","kid");
+        Message parentSystemMessage = new Message("system_parent", "System message for parent","parent");
+        Message otherMessage = new Message("other", "Hello, world!","other");
 
         messageList.addMessage(kidSystemMessage);
         messageList.addMessage(parentSystemMessage);
@@ -63,9 +63,9 @@ public class MessageListTest {
 
     @Test
     public void testGetSystemMessagesForParent() {
-        Message kidSystemMessage = new Message("system_kid", "System message for kid");
-        Message parentSystemMessage = new Message("system_parent", "System message for parent");
-        Message otherMessage = new Message("other", "Hello, world!");
+        Message kidSystemMessage = new Message("system_kid", "System message for kid","kid");
+        Message parentSystemMessage = new Message("system_parent", "System message for parent","parent");
+        Message otherMessage = new Message("other", "Hello, world!","other");
 
         messageList.addMessage(kidSystemMessage);
         messageList.addMessage(parentSystemMessage);
@@ -102,8 +102,8 @@ public class MessageListTest {
 
     @Test
     public void testToString() {
-        Message message1 = new Message("Alice", "Hello, Bob!");
-        Message message2 = new Message("Bob", "Hello, Alice!");
+        Message message1 = new Message("Alice", "Hello, Bob!","Bob");
+        Message message2 = new Message("Bob", "Hello, Alice!","Alice");
 
         messageList.addMessage(message1);
         messageList.addMessage(message2);
