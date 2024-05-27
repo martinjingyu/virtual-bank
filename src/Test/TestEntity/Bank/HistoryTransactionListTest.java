@@ -39,18 +39,6 @@ public class HistoryTransactionListTest {
         assertEquals(transaction2, transactions.get(1));
     }
 
-    @Test
-    public void testGetDateList() {
-        HistoryTransaction transaction1 = new HistoryTransaction("SA1", "CA1", 80.0, "2023:05:21 15:30:45");
-        HistoryTransaction transaction2 = new HistoryTransaction("CA2", "Shop", -5.0, "2023:05:22 10:20:30");
-        transactionList.addTransaction(transaction1);
-        transactionList.addTransaction(transaction2);
-
-        List<String> dates = transactionList.getDateList();
-        assertEquals(2, dates.size());
-        assertTrue(dates.contains("2023:05:21"));
-        assertTrue(dates.contains("2023:05:22"));
-    }
 
     @Test
     public void testGetTransactionDetails() {

@@ -40,16 +40,16 @@ Our project is organized into five main folders:
 To run the virtual-bank software, follow these steps:
 
 1. **Using JAR Package:**
-    - If you have a Java environment with JDK 17 or later installed, you can run the program from the command line.
-    - Open a terminal in the folder `virtual-bank-main`.
-    - Enter the following command:
-        ```bash
-        java --enable-preview -cp virtual-bank-main.jar Controller.Start
-        ```
-    - The software will start without any further configuration.
+   - If you have a Java environment with JDK 17 or later installed, you can run the program from the command line.
+   - Open a terminal in the folder `virtual-bank-main`.
+   - Enter the following command:
+       ```bash
+       java --enable-preview -cp virtual-bank-main.jar Controller.Start
+       ```
+   - The software will start without any further configuration.
 
 2. **Using Clickable Executable (Virtual.exe):**
-    - If you don't have the Java JDK, you need to download JDK17. Then, name the JDK flie as "jdk-17.0.11" and put it in the virtual-bank-main library. Simply click on the `Virtual_Bank.exe` file to run the software directly.
+   - If you don't have the Java JDK, you need to download JDK17. Then, name the JDK flie as "jdk-17.0.11" and put it in the virtual-bank-main library. Simply click on the `Virtual_Bank.exe` file to run the software directly.
 
 ## Acknowledgement
 As the team leader, I would like to express my gratitude to all my team members who 
