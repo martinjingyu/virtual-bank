@@ -24,7 +24,7 @@ public class history_page extends JPanel {
     private HistoryTransactionList transactionList;
     private JTextField nameTextField, priceTextField;
     private HistoryController historyController;
-    private JPanel DetailPanel;
+    private JScrollPane DetailPanel;
     private JPanel accountInfoPanel;
     private List<JLabel> dateList;
 
@@ -106,7 +106,7 @@ public class history_page extends JPanel {
     }
 
     // Create the To-Do List Panel
-    private JPanel createDatePanel() {
+    private JScrollPane createDatePanel() {
         JPanel datePanel = new JPanel();
         datePanel.setLayout(new BoxLayout(datePanel, BoxLayout.Y_AXIS));
         datePanel.setPreferredSize(new Dimension(270, 400));
@@ -132,21 +132,16 @@ public class history_page extends JPanel {
             datePanel.add(dateLabel);
         }
 
-        return datePanel;
+        return scrollPane;
     }
 
     // Create the Upload Products Panel
-    private JPanel createDetailPanel() {
+    private JScrollPane createDetailPanel() {
         JPanel uploadPanel = new JPanel(); // Use default FlowLayout, improved automatic layout
         uploadPanel.setLayout(new BoxLayout(uploadPanel, BoxLayout.Y_AXIS)); // Arrange vertically
         uploadPanel.setBackground(panelBgColor);
-        uploadPanel.setPreferredSize(new Dimension(540, 0));
+        uploadPanel.setPreferredSize(new Dimension(540, 400));
         uploadPanel.setBorder(new LineBorder(borderColor, 1)); // Set border
-
-        JScrollPane scrollPane = new JScrollPane(uploadPanel); // Create a scroll panel containing uploadPanel
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBorder(new LineBorder(borderColor, 1));  // Set border for the scroll pane
 
         List<String> details = transactionList.getTransactionDetails(historyController.getSelectedDate());
 
@@ -163,7 +158,12 @@ public class history_page extends JPanel {
             uploadPanel.add(detailLabel);
         }
 
-        return uploadPanel; // Return the scroll pane containing uploadPanel
+        JScrollPane scrollPane = new JScrollPane(uploadPanel); // Create a scroll panel containing uploadPanel
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBorder(new LineBorder(borderColor, 1));  // Set border for the scroll pane
+
+        return scrollPane; // Return the scroll pane containing uploadPanel
     }
 
     // Create the Account Information Panel

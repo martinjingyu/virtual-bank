@@ -180,6 +180,12 @@ public class Shop_kid extends JPanel {
         return accountDropdown;
     }
 
+    /**
+     * Retrieves the label that displays the current balance of the selected account.
+     * This is crucial for users to see how much money is available in their account before making a purchase.
+     *
+     * @return the JLabel containing the current account balance
+     */
     public JPanel getProductsPanel() {
         return productsPanel;
     }
