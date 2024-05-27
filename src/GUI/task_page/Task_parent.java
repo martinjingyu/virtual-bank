@@ -1,10 +1,7 @@
 package GUI.task_page;
 
-import Controller.MainController;
-import Controller.task.Task_kid_control;
 import Controller.task.Task_parent_control;
 import Entity.*;
-import GUI.MainFrame_kid;
 import GUI.MainFrame_parent;
 //import utill.read.ReadBank;
 
@@ -18,7 +15,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 
 /**
@@ -123,7 +119,7 @@ public class Task_parent extends JPanel {
                         String destination = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getDestination();
                         task_parent_control.getKid().getMessagelist().addTaskMessage("Parent_Opt","You have confirmed the task "+ name);
                         task_parent_control.getKid().getMessagelist().addTaskMessage("Child_Opt","Your submission for task "+ name +
-                                "has been confirmed. You have received reward $" + salary +
+                                " has been confirmed. You have received reward $" + salary +
                                 " to your current account "+ destination);
 
 
@@ -158,7 +154,7 @@ public class Task_parent extends JPanel {
                         // 发信息
                         String name = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
                         task_parent_control.getKid().getMessagelist().addTaskMessage("Parent_Opt","You have rejected the task "+ name);
-                        task_parent_control.getKid().getMessagelist().addTaskMessage("Child_Opt","Your submission for task "+ name + "has been rejected." +
+                        task_parent_control.getKid().getMessagelist().addTaskMessage("Child_Opt","Your submission for task "+ name + " has been rejected." +
                                 " Please redo and resubmit it.");
                     }
                 }
@@ -178,30 +174,26 @@ public class Task_parent extends JPanel {
                         JOptionPane.WARNING_MESSAGE);
 
                 if (response1 == JOptionPane.YES_OPTION) {
-                    // 发信息
 
+                    if(task_parent_control.getKid().getTaskList().getSize()==1)
+                    {
+                        JOptionPane.showMessageDialog(this, "Deletion is not allowed as there is only one task remaining.", "Deletion Warning", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        // 发信息
 
-                    String name = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
-                    task_parent_control.getKid().getMessagelist().addTaskMessage("Parent_Opt","You have delete the task "+ name);
+                        String name = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
+                        task_parent_control.getKid().getMessagelist().addTaskMessage("Parent_Opt", "You have delete the task " + name);
 
+                        // 删除任务
+                        task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getTask(i));
 
-//                    List<Task> allTasks =  task_parent_control.getKid().getTaskList().getAllTasks();
-//                    System.out.println("task: ");
-//                    for (Task task : allTasks) {
-//                        System.out.println(task);
-//                    }
-                    // 执行删除任务的逻辑
-                    // 删除任务
-                    task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getTask(i-1));
-
-
-
-                    // 显示状态
-                    JOptionPane.showMessageDialog(this,
-                            "Task has been deleted.",
-                            "Task Deleted",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    mainFrame.refresh();
+                        // 显示状态
+                        JOptionPane.showMessageDialog(this,
+                                "Task has been deleted.",
+                                "Task Deleted",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        mainFrame.refresh();
+                    }
                 }
 
         }
