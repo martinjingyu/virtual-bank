@@ -45,6 +45,7 @@ public class Shop_parent extends JPanel implements RefreshListener {
 
         setBackground(mainBgColor); // Set overall background
         initUI();
+        this.shopController.initializeGUI(this);
     }
 
     /**

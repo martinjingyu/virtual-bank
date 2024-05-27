@@ -95,7 +95,7 @@ public class shopKidController {
      */
     public void buyProducts(JLabel selectedTotalLabel, JLabel currentAccountLabel, List<JRadioButton> toggleButtons) {
         if (selectedProductList.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "You haven't selected any products.", "No Products Selected!", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this.shop_kid, "You haven't selected any products.", "No Products Selected!", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -103,11 +103,11 @@ public class shopKidController {
         double currentBalance = Double.parseDouble(currentAccountLabel.getText().substring(18));
 
         if (currentBalance < totalCost) {
-            JOptionPane.showMessageDialog(null, "Insufficient balance for this purchase.", "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this.shop_kid, "Insufficient balance for this purchase.", "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        int response = JOptionPane.showConfirmDialog(null, String.format("Total cost is $%.2f. Do you want to proceed with the purchase?", totalCost), "Confirm Purchase", JOptionPane.YES_NO_OPTION);
+        int response = JOptionPane.showConfirmDialog(this.shop_kid, String.format("Total cost is $%.2f. Do you want to proceed with the purchase?", totalCost), "Confirm Purchase", JOptionPane.YES_NO_OPTION);
         if (response != JOptionPane.YES_OPTION) {
             return;
         }
@@ -116,7 +116,7 @@ public class shopKidController {
             if (totalCost > 0.8 * currentBalance) {
                 messageList.addShopMessage(totalCost);
             }
-            JOptionPane.showMessageDialog(null, "Purchase Successful!");
+            JOptionPane.showMessageDialog(this.shop_kid, "Purchase Successful!");
             selectedProductList.clear();
             SwingUtilities.invokeLater(() -> {
                 currentAccountLabel.setText(String.format("Current Account: $%8.2f", currentBalance - totalCost));
@@ -126,7 +126,7 @@ public class shopKidController {
                 button.setSelected(false);
             }
         } catch (InsufficientFundsException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this.shop_kid, e.getMessage(), "Insufficient Balance!", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
