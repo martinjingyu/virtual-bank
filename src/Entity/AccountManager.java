@@ -248,6 +248,9 @@ public class AccountManager {
         savingAccount.setEndTime(LocalDateTime.now());
         currentAccount.deposit(savingAccount.getBalance());
         try {
+            HistoryTransaction historyTransaction = new HistoryTransaction(savingAccount.getName(), currentAccount.getName(), savingAccount.getBalance());
+            historyTransactionList.addTransaction(historyTransaction);
+            System.out.println(historyTransaction);
             savingAccount.withdraw(savingAccount.getBalance());
         } catch (Exception e1) {
             e1.printStackTrace();
