@@ -5,6 +5,8 @@ import Entity.Kids;
 import Entity.Product;
 import Entity.ProductList;
 import GUI.RefreshListener;
+import GUI.shop_page.Shop_kid;
+import GUI.shop_page.Shop_parent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +24,7 @@ import static java.sql.Types.NULL;
  */
 public class ShopParentController {
     private Kids kid;
+    private Shop_parent shop_parent;
     private List<Product> boughtProduct;
     private RefreshListener refreshListener;
 
@@ -42,6 +45,14 @@ public class ShopParentController {
      */
     public void setRefreshListener(RefreshListener listener) {
         this.refreshListener = listener;
+    }
+
+    /**
+     * Initializes the view components with data from the model.
+     * @param GUI The Shop_kid view that needs to be initialized.
+     */
+    public void initializeGUI(Shop_parent GUI) {
+        this.shop_parent = GUI;
     }
 
     /**
@@ -126,7 +137,7 @@ public class ShopParentController {
      */
     public void confirmAndSubmitProducts(List<JCheckBox> checkBoxes) {
         if (boughtProduct.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "You haven't selected any products.", "No Products Selected", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this.shop_parent, "You haven't selected any products.", "No Products Selected", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -136,7 +147,7 @@ public class ShopParentController {
         }
         message.append("Are you sure you want to submit these products?");
 
-        int response = JOptionPane.showConfirmDialog(null, message.toString(), "Confirm Submission", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        int response = JOptionPane.showConfirmDialog(this.shop_parent, message.toString(), "Confirm Submission", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
             for (Product product : boughtProduct) {
                 kid.getSelectedList().removeProduct(product);
@@ -161,14 +172,18 @@ public class ShopParentController {
      */
     public void updateProducts(String name, String price ,JTextField nameTextField, JTextField priceTextField) {
         if (name.trim().equals("Name should only contain characters (A-Z, a-z)") || price.trim().equals("Price should be a valid number")) {
-            JOptionPane.showMessageDialog(null, "Both name and price must be filled out.", "Input Required", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this.shop_parent, "Both name and price must be filled out.", "Input Required", JOptionPane.WARNING_MESSAGE);
             return;
         }
         try {
             double priceValue = Double.parseDouble(price);
             if (!name.matches("[a-zA-Z]+")) {
-                JOptionPane.showMessageDialog(null, "Invalid name. Please enter a valid name. (hint: only characters).");
+                JOptionPane.showMessageDialog(this.shop_parent, "Invalid name. Please enter a valid name. (hint: only characters).");
                 throw new IllegalArgumentException("Invalid input: Name can only contain letters.");
+            }
+            if (name.length() > 10) {
+                JOptionPane.showMessageDialog(this.shop_parent, "The product name cannot be longer than 10 characters.");
+                return;
             }
             boolean productExists = false;
             for (Product product : kid.getProductList().getAllProducts()) {
@@ -178,11 +193,11 @@ public class ShopParentController {
                 }
             }
             if (productExists) {
-                JOptionPane.showMessageDialog(null, "This product already exists. Please enter a different name.");
+                JOptionPane.showMessageDialog(this.shop_parent, "This product already exists. Please enter a different name.");
                 return;
             }
             String message = String.format("Are you sure you want to submit %s - $%.2f?", name, priceValue);
-            int response = JOptionPane.showConfirmDialog(null, message, "Confirm Submission", JOptionPane.YES_NO_OPTION);
+            int response = JOptionPane.showConfirmDialog(this.shop_parent, message, "Confirm Submission", JOptionPane.YES_NO_OPTION);
             if (response != JOptionPane.YES_OPTION) {
                 return;
             }
@@ -195,7 +210,7 @@ public class ShopParentController {
             setupFocusListener(nameTextField, "Name should only contain characters (A-Z, a-z)");
             setupFocusListener(priceTextField, "Price should be a valid number");
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Invalid price. Please enter a valid number.");
+            JOptionPane.showMessageDialog(this.shop_parent, "Invalid price. Please enter a valid number.");
             throw new  IllegalArgumentException("Invalid input: Price must be a number.");
         }
     }
