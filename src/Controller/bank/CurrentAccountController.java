@@ -120,7 +120,7 @@ public class CurrentAccountController {
             public void actionPerformed(ActionEvent e) {
                 try {
                     String accountName = Validate.validateName(nameField.getText());
-                    Boolean whetherRepeat = Validate.validateRepeat(accountName, kid.getAccountManager().getSavingAccountNames());
+                    Boolean whetherRepeat = Validate.validateRepeat(accountName, kid.getAccountManager().getCurrentAccountNames());
                     if (!whetherRepeat) {
                         throw new Exception("Account name already exists");
                     }
