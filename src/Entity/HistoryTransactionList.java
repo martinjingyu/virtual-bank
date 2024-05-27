@@ -1,8 +1,11 @@
 package Entity;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import Entity.AccountManager;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -11,6 +14,8 @@ import java.util.stream.Collectors;
  */
 public class HistoryTransactionList {
     private List<HistoryTransaction> transactions;
+    private List<CurrentAccount>currentAccountList;
+    private List<SavingAccount> savingAccountList;
 
     /**
      * Constructs a HistoryTransactionList with an empty list of transactions.
@@ -37,28 +42,18 @@ public class HistoryTransactionList {
         return transactions;
     }
 
+
     /**
      * Gets a list of unique transaction dates.
      *
      * @return a list of unique transaction dates
      */
-
     public List<String> getDateList() {
-        Set<String> dateSet = new TreeSet<>(new Comparator<String>() {
-            @Override
-            public int compare(String date1, String date2) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
-                LocalDate d1 = LocalDate.parse(date1, formatter);
-                LocalDate d2 = LocalDate.parse(date2, formatter);
-                return d2.compareTo(d1);
-            }
-        });
-
+        Set<String> dateSet = new HashSet<>(); // Use a set to store unique dates
         for (HistoryTransaction transaction : getAllTransactions()) {
-            dateSet.add(transaction.getDay());
+            dateSet.add(transaction.getDay()); // Add only the date part to the set
         }
-        return new ArrayList<>(dateSet);
-
+        return new ArrayList<>(dateSet); // Convert the set to a list and return
     }
 
     /**
@@ -143,9 +138,11 @@ public class HistoryTransactionList {
      * @param date the date for which to calculate income
      * @return the total income for the specific date
      */
-    public double getIncomeForDate(String date) {
+    public double getIncomeForDate(String date, AccountManager accountManager) {
+        List<String> savingAccountNames = accountManager.getSavingAccountNames();
+
         return getTransactionsForDate(date).stream()
-                .filter(t -> t.getAmount() >= 0)
+                .filter(t -> t.getSource().equals("Task") || savingAccountNames.contains(t.getSource()))
                 .mapToDouble(HistoryTransaction::getAmount)
                 .sum();
     }
@@ -156,9 +153,12 @@ public class HistoryTransactionList {
      * @param date the date for which to calculate expenses
      * @return the total expenses for the specific date
      */
-    public double getExpensesForDate(String date) {
+    public double getExpensesForDate(String date, AccountManager accountManager) {
+
+        List<String> savingAccountNames = accountManager.getSavingAccountNames();
+
         return getTransactionsForDate(date).stream()
-                .filter(t -> "shop".equals(t.getDestination().trim())) // Filter transactions with destination "shop"
+                .filter(t -> "shop".equals(t.getDestination())|| savingAccountNames.contains(t.getDestination())) // Filter transactions with destination "shop"
                 .mapToDouble(HistoryTransaction::getAmount)
                 .sum();
     }
@@ -169,8 +169,9 @@ public class HistoryTransactionList {
      * @param date the date for which to calculate the balance
      * @return the total balance for the specific date
      */
-    public double getBalanceForDate(String date) {
-        return getIncomeForDate(date) + getExpensesForDate(date);
+    public double getBalanceForDate(String date, AccountManager accountManager) {
+
+        return getIncomeForDate(date,accountManager) + getExpensesForDate(date,accountManager);
     }
 
     /**

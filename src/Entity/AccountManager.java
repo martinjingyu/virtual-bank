@@ -293,15 +293,16 @@ public class AccountManager {
         savingAccount.calculateInterest();
         currentAccount.deposit(savingAccount.getBalance());
         try {
+            HistoryTransaction historyTransaction = new HistoryTransaction(savingAccount.getName(), currentAccount.getName(), savingAccount.getBalance());
+            historyTransactionList.addTransaction(historyTransaction);
+            System.out.println(historyTransaction);
             savingAccount.withdraw(savingAccount.getBalance());
+
         } catch (Exception e1) {
+
             e1.printStackTrace();
         }
 
-        HistoryTransaction historyTransaction = new HistoryTransaction(currentAccount.getName(), savingAccount.getName(), savingAccount.getBalance());
-        historyTransactionList.addTransaction(historyTransaction);
-
-        System.out.println(historyTransaction);
     }
 
     /**
@@ -387,7 +388,7 @@ public class AccountManager {
         }
         savingAccount.setEndTime(result);
 
-        HistoryTransaction historyTransaction = new HistoryTransaction(currentAccount.getName(), savingAccount.getName(), value);
+        HistoryTransaction historyTransaction = new HistoryTransaction(currentAccount.getName(), savingAccount.getName(), -value);
         historyTransactionList.addTransaction(historyTransaction);
     }
 
