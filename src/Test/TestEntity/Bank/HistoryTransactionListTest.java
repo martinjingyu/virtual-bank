@@ -18,7 +18,6 @@ public class HistoryTransactionListTest {
     @BeforeEach
     public void setUp() {
         historyTransactionList = new HistoryTransactionList();
-        accountManager = new AccountManager();
     }
 
     @Test
@@ -138,3 +137,4 @@ public class HistoryTransactionListTest {
         assertEquals("-50.00", HistoryTransactionList.formatAmount(-50.0));
     }
 }
+
