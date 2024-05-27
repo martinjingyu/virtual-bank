@@ -49,7 +49,7 @@ To run the virtual-bank software, follow these steps:
     - The software will start without any further configuration.
 
 2. **Using Clickable Executable (Virtual.exe):**
-    - Simply click on the `Virtual.exe` file to run the software directly.
+    - If you don't have the Java JDK, you need to download JDK17. Then, name the JDK flie as "jdk-17.0.11" and put it in the virtual-bank-main library. Simply click on the `Virtual_Bank.exe` file to run the software directly.
 
 ## Acknowledgement
 As the team leader, I would like to express my gratitude to all my team members who 

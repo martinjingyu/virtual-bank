@@ -120,8 +120,8 @@ public class Sign {
         secret_label_4.setFont(new Font("Times New Roman", Font.BOLD, 20));
         signPanel.add(secret_label_4);
 
-        JLabel secret_label_5 = new JLabel("Your password need to contain NUMBER and WORD");
-        secret_label_5.setBounds(320, 140, 1000, 50);
+        JLabel secret_label_5 = new JLabel("Your password need to contain NUMBER and WORD, length 6 to 16");
+        secret_label_5.setBounds(250, 140, 1000, 50);
         secret_label_5.setFont(new Font("Times New Roman", Font.BOLD, 20));
         signPanel.add(secret_label_5);
 
