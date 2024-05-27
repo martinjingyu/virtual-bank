@@ -117,7 +117,7 @@ public class history_page extends JPanel {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(new LineBorder(borderColor, 1));  // Set a border to the scroll pane
 
-        List<String> dates = transactionList.getDateList(); // Assuming you have this method to get dates
+        List<String>  dates = transactionList.getDateList(); // Assuming you have this method to get dates
         dateList = new ArrayList<>();
         for (String date : dates) {
             JLabel dateLabel = new JLabel(date);
