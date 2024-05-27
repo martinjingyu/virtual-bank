@@ -50,16 +50,18 @@ public class ReadMessage {
     private static void readFromBufferedReader(BufferedReader br, MessageList messageList) throws IOException {
         String line;
         while ((line = br.readLine()) != null) {
-            String[] parts = line.split(",", 3);
-            if (parts.length == 3) {
+            String[] parts = line.split(",", 4);
+            if (parts.length == 4) {
                 String sender = parts[0].trim();
                 String timestamp = parts[1].trim();
-                String content = parts[2].trim();
+                String receiver = parts[2].trim();
+                String content = parts[3].trim();
+
                 // Handle potential quotes in content
                 if (content.startsWith("\"") && content.endsWith("\"")) {
                     content = content.substring(1, content.length() - 1); // Remove quotes
                 }
-                Message message = new Message(sender, timestamp, content);
+                Message message = new Message(sender, timestamp, content, receiver);
                 messageList.addMessage(message);
             } else {
                 System.out.println("Invalid message data: " + line);

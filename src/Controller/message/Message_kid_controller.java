@@ -2,12 +2,15 @@ package Controller.message;
 
 import Entity.Kids;
 import Entity.Message;
+import Entity.MessageList;
 import GUI.message_page.message_kid;
 import Entity.Agent;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -65,8 +68,14 @@ public class Message_kid_controller {
             String text = gui.getMessageInput().getText();
             if (selectedContact != null && !text.equals("Please click enter to send") && !text.isEmpty()) {
                 sendMessage(text);
-                String agentOut = agent.receiveUserInput(text);
-                gui.getMessageModel().addElement(new Message("system_kid",agentOut));  // Assuming constructor exists
+
+                if(gui.getContactList().getSelectedValue().equals("System Alerts"))
+                {
+                    String agentOut = agent.receiveUserInput(text);
+                    kid.getMessagelist().addMessage(new Message("system_kid",agentOut,"kid"));
+                    gui.getMessageModel().addElement(new Message("system_kid",agentOut,"kid"));  // Assuming constructor exists
+                }
+
 
                 gui.getMessageInput().setText("");  // Clear input field after sending
                 gui.getMessageInput().setForeground(Color.BLACK);
@@ -106,7 +115,17 @@ public class Message_kid_controller {
             JOptionPane.showMessageDialog(gui, "Please enter a message.");
             return;
         }
-        gui.getMessageModel().addElement(new Message("kid", message));  // Assuming constructor exists
+        if(gui.getContactList().getSelectedValue().equals("System Alerts")){
+            Message message1 = new Message("kid", message,"system_kid");
+            kid.getMessagelist().addMessage(message1);
+            gui.getMessageModel().addElement(message1);  // Assuming constructor exists
+        } else if (gui.getContactList().getSelectedValue().equals("Parents")) {
+            Message message1 = new Message("kid", message,"parent");
+            kid.getMessagelist().addMessage(message1);
+            gui.getMessageModel().addElement(message1);  // Assuming constructor exists
+        }
+
+
     }
 
     /**
@@ -121,5 +140,17 @@ public class Message_kid_controller {
         for (Message msg : messages) {
             gui.getMessageModel().addElement(msg);
         }
+    }
+    /**
+     * Retrieves the messages for the selected contact.
+     *
+     * @param contact the selected contact
+     * @return the list of messages for the selected contact
+     */
+    public List<Message> getMessagesForContact(String contact) {
+
+        return kid.getMessagelist().getAllMessages().stream()
+                .filter(message -> ("kid".equals(message.getSender()) && contact.equals(message.getReceiver())||contact.equals(message.getSender()) && "kid".equals(message.getReceiver())))
+                .collect(Collectors.toList());
     }
 }
