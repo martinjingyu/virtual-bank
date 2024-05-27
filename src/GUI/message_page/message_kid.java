@@ -8,6 +8,7 @@ import utill.read.ReadAll;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.List;
 
 /**
  * The {@code message_kid} class represents a graphical user interface (GUI) for displaying messages and contacts for a kid user.
@@ -34,7 +35,6 @@ public class message_kid extends JPanel {
         initUI();
         this.controller.setGUI(this);
         this.controller.setupListeners();
-
     }
 
     /**
@@ -142,7 +142,20 @@ public class message_kid extends JPanel {
      */
     public void updateContactSelection(String contact) {
         contactNameLabel.setText(contact);
-        messageModel.clear();  // Optionally delegate to controller to handle updating model
+        messageModel.clear();
+        if(contact.equals("Parents")){
+            List<Message> filteredMessages = controller.getMessagesForContact("parent");
+            for (Message message : filteredMessages) {
+                messageModel.addElement(message);
+            }
+        }
+        if(contact.equals("System Alerts")){
+            List<Message> filteredMessages = controller.getMessagesForContact("system_kid");
+            for (Message message : filteredMessages) {
+                messageModel.addElement(message);
+            }
+        }
+
     }
 
     /**
@@ -211,9 +224,8 @@ public class message_kid extends JPanel {
             frame.getContentPane().add(messageKid);
             frame.setSize(800, 600);
             frame.setVisible(true);
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
-

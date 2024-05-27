@@ -170,6 +170,17 @@ public class ShopParentController {
                 JOptionPane.showMessageDialog(null, "Invalid name. Please enter a valid name. (hint: only characters).");
                 throw new IllegalArgumentException("Invalid input: Name can only contain letters.");
             }
+            boolean productExists = false;
+            for (Product product : kid.getProductList().getAllProducts()) {
+                if (product.getName().equalsIgnoreCase(name)) {
+                    productExists = true;
+                    break;
+                }
+            }
+            if (productExists) {
+                JOptionPane.showMessageDialog(null, "This product already exists. Please enter a different name.");
+                return;
+            }
             String message = String.format("Are you sure you want to submit %s - $%.2f?", name, priceValue);
             int response = JOptionPane.showConfirmDialog(null, message, "Confirm Submission", JOptionPane.YES_NO_OPTION);
             if (response != JOptionPane.YES_OPTION) {
@@ -181,8 +192,8 @@ public class ShopParentController {
                 System.out.println(products);
             }
 
-            nameTextField.setText("");
-            priceTextField.setText("");
+            setupFocusListener(nameTextField, "Name should only contain characters (A-Z, a-z)");
+            setupFocusListener(priceTextField, "Price should be a valid number");
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Invalid price. Please enter a valid number.");
             throw new  IllegalArgumentException("Invalid input: Price must be a number.");

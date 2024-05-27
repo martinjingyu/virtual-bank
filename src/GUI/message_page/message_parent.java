@@ -79,7 +79,7 @@ public class message_parent extends JPanel {
         contactsList.setSelectionBackground(borderColor);
         contactsList.setSelectionForeground(Color.WHITE);
         JScrollPane scrollPane = new JScrollPane(contactsList);
-        scrollPane.setPreferredSize(new Dimension(350, 250));
+        scrollPane.setPreferredSize(new Dimension(180, 250));
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(scrollPane, BorderLayout.CENTER);
         return panel;
@@ -97,7 +97,7 @@ public class message_parent extends JPanel {
         messagesList.setFont(new Font("SansSerif", Font.PLAIN, 16));
         messagesList.setBackground(panelBgColor);
         JScrollPane scrollPane = new JScrollPane(messagesList);
-        scrollPane.setPreferredSize(new Dimension(400, 350));
+        scrollPane.setPreferredSize(new Dimension(570, 350));
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(contactNameLabel, BorderLayout.NORTH);
         panel.add(scrollPane, BorderLayout.CENTER);

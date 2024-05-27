@@ -1,7 +1,7 @@
 /**
  * Tests the initialization of the utility classes by checking various conditions.
  */
-package Testutill;
+package Test.Testutill;
 
 import Entity.*;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestReadAll {
 
     /**
-     * Tests if the ReadAll class correctly processes files and initializes the Kids object.
+     * Tests if the ReadAll class correctly processes files and initializes the Kids
+     * object.
      */
     @Test
     public void testReadAllCorrectlyProcessesFiles() {
@@ -25,7 +26,8 @@ public class TestReadAll {
         Paths paths = new Paths(testId);
 
         try {
-            // Attempt to decrypt each file and catch any exceptions to check which file's content causes issues
+            // Attempt to decrypt each file and catch any exceptions to check which file's
+            // content causes issues
             testDecryptFile(paths.product_path);
             testDecryptFile(paths.selectedProduct_path);
             testDecryptFile(paths.task_path);
