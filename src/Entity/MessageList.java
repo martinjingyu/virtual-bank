@@ -99,11 +99,11 @@ public class MessageList {
      */
     public void addTaskMessage(String type, String description) {
         if (type.equals("Child_Opt")) {
-            Message taskMessage = new Message("system_kid", description);
+            Message taskMessage = new Message("system_kid", description,"kid");
             messages.add(taskMessage);
         }
         if (type.equals("Parent_Opt")) {
-            Message taskMessage = new Message("system_parent", description);
+            Message taskMessage = new Message("system_parent", description,"parent");
             messages.add(taskMessage);
         }
     }
@@ -115,7 +115,8 @@ public class MessageList {
      */
     public void addShopMessage(double price) {
         String formattedString = String.format("Double value: %.2f", price);
-        Message shopMessage = new Message("system_kid", "bigTransaction");
+        Message shopMessage = new Message("system_kid", "bigTransaction","kid");
+        Message shopMessage1 = new Message("system_parent", "bigTransaction","parent");
         messages.add(shopMessage);
     }
 
