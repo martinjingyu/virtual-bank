@@ -2,6 +2,7 @@ package Entity;
 
 import utill.validate.Validate;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -80,8 +81,28 @@ public class Agent {
                     selectedIndex = getSavingAccountIndexByName(text);
                     if (selectedIndex != -1) {
                         if (kid.getAccountManager().getSavingAccounts().get(selectedIndex).getBalance() == 0) {
-                            kid.getAccountManager().removeSavingAccount(selectedIndex);
-                            output = accountType + " account deleted successfully.";
+                            JOptionPane pane = new JOptionPane();
+                            int response = pane.showConfirmDialog(null,
+                                    "Are you sure you want to delete this "+accountType+ " "+kid.getAccountManager().getSavingAccounts().get(selectedIndex).getName()+"?",
+                                    "Confirm Deletion",
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.WARNING_MESSAGE);
+                            if (response == JOptionPane.YES_OPTION) {
+                                kid.getAccountManager().removeSavingAccount(selectedIndex);
+                                output = accountType + " account deleted successfully.";
+                                // User confirmed, proceed with deletion
+                                JOptionPane.showMessageDialog(null,
+                                        "Account deleted successfully.",
+                                        "Deletion Successful",
+                                        JOptionPane.INFORMATION_MESSAGE);
+                            } else {
+                                // User did not confirm, do nothing
+                                JOptionPane.showMessageDialog(null,
+                                        "Account deletion canceled.",
+                                        "Deletion Canceled",
+                                        JOptionPane.INFORMATION_MESSAGE);
+                                output ="You can enter \"cancel\" to end";
+                            }
                         } else {
                             output = "Account has a balance. Please clear the balance before deleting.";
                         }
