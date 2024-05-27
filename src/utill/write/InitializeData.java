@@ -95,10 +95,10 @@ public class InitializeData {
         }
 
         try  {
-            Message message1 = new Message("system_kid","Welcome to our virtual bank application.");
-            Message message2 = new Message("system_parent","Welcome to our virtual bank application.");
-            Message message3 = new Message("system_kid","Before using our software, please read the user manual carefully");
-            Message message4 = new Message("system_parent","Before using our software, please read the user manual carefully");
+            Message message1 = new Message("system_kid","Welcome to our virtual bank application.","kid");
+            Message message2 = new Message("system_parent","Welcome to our virtual bank application.","parent");
+            Message message3 = new Message("system_kid","Before using our software, please read the user manual carefully","kid");
+            Message message4 = new Message("system_parent","Before using our software, please read the user manual carefully","parent");
             MessageList messageList = new MessageList();
             messageList.addMessage(message1);
             messageList.addMessage(message2);

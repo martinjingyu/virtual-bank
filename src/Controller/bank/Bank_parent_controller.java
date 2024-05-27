@@ -140,7 +140,7 @@ public class Bank_parent_controller {
                         try {
                             double newInterestRate = Validate.validateInterest(userInput);
                             kid.getAccountManager().setInterestRate(newInterestRate, selectedOption);
-                            kid.getMessagelist().addMessage(new Message("parent", "The interest rate for " + selectedOption + " has been changed to " + userInput + "%"));
+                            kid.getMessagelist().addMessage(new Message("parent", "The interest rate for " + selectedOption + " has been changed to " + userInput + "%","kid"));
                             dialog.dispose();
                         } catch (Exception ex) {
                             textField.setText("");

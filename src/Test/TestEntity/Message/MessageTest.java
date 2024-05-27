@@ -28,7 +28,8 @@ public class MessageTest {
     public void testMessageConstructorWithoutTimestamp() {
         String sender = "Alice";
         String content = "Hello, Bob!";
-        Message message = new Message(sender, content);
+        String receiver = "Bob";
+        Message message = new Message(sender, content,receiver);
 
         assertEquals(sender, message.getSender());
         assertEquals(content, message.getContent());
@@ -48,7 +49,8 @@ public class MessageTest {
         String sender = "Alice";
         String content = "Hello, Bob!";
         String newTimestamp = "2024-05-18 12:00:00";
-        Message message = new Message(sender, content);
+        String receiver = "Bob";
+        Message message = new Message(sender, content, receiver);
         message.setTimestamp(newTimestamp);
 
         assertEquals(newTimestamp, message.getTimestamp());
