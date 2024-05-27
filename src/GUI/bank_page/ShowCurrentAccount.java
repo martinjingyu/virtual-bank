@@ -211,7 +211,7 @@ public class ShowCurrentAccount extends JFrame {
      */
     public void afterAddAccount(AccountManager accountManager, String name, Kids kid) {
         accountManager.createNewCurrentAccount(name);
-        kid.getMessagelist().addMessage(new Message("system_kid", "You have created a new current account " + "\"" + name + "\""));
+        kid.getMessagelist().addMessage(new Message("system_kid", "You have created a new current account " + "\"" + name + "\"","kid"));
         mainContent.removeAll();
         mainContent.add(createHeaderPanel(), BorderLayout.NORTH);
         initData(accountManager.getCurrentAccounts(), false, accountManager);

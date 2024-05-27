@@ -409,7 +409,7 @@ public class ShowSavingAccount extends JFrame {
     public void afterAddAccount(AccountManager accountManager, String name, Kids kid) {
         timer.stop();
         accountManager.createNewSavingAccount(name);
-        kid.getMessagelist().addMessage(new Message("system_kid", "You have created a new saving account " + "\"" + name + "\""));
+        kid.getMessagelist().addMessage(new Message("system_kid", "You have created a new saving account " + "\"" + name + "\"","kid"));
         mainContent.removeAll();
         mainContent.add(createHeaderPanel(), BorderLayout.NORTH);
         initData(accountManager.getSavingAccounts(), false, accountManager);
