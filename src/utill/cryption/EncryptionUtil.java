@@ -59,7 +59,8 @@ public class EncryptionUtil {
      *
      * @param data The data for which the hash value is to be generated.
      * @return The hash value of the data.
-     * @throws NoSuchAlgorithmException If the specified hashing algorithm is not available.
+     * @throws NoSuchAlgorithmException If the specified hashing algorithm is not
+     *                                  available.
      */
     public static String generateHash(String data) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -73,18 +74,20 @@ public class EncryptionUtil {
      * @param args Command-line arguments. The file path to be encrypted.
      */
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("Usage: java utill.cryption.EncryptionUtil <file_path>");
-            return;
-        }
+        // if (args.length != 1) {
+        // System.out.println("Usage: java utill.cryption.EncryptionUtil <file_path>");
+        // return;
+        // }
 
-        String filePath = args[0];
+        String filePath = "data\\secret.txt";
         try {
             // Read the file content
             String content = readFile(filePath);
 
             // Encrypt the file content
             String encryptedContent = encrypt(content);
+            System.out.println(encryptedContent);
+            System.out.println("encryptedContent");
 
             // Save the encrypted content to a new file
             String encryptedFilePath = filePath + ".encrypted";
@@ -119,7 +122,7 @@ public class EncryptionUtil {
      * Writes content to a file.
      *
      * @param filePath the path of the file to write to
-     * @param content the content to write to the file
+     * @param content  the content to write to the file
      * @throws IOException if any I/O error occurs
      */
     private static void writeFile(String filePath, String content) throws IOException {
