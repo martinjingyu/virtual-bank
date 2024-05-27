@@ -1,9 +1,8 @@
 package Entity;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -43,12 +42,23 @@ public class HistoryTransactionList {
      *
      * @return a list of unique transaction dates
      */
+
     public List<String> getDateList() {
-        Set<String> dateSet = new HashSet<>(); // Use a set to store unique dates
+        Set<String> dateSet = new TreeSet<>(new Comparator<String>() {
+            @Override
+            public int compare(String date1, String date2) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
+                LocalDate d1 = LocalDate.parse(date1, formatter);
+                LocalDate d2 = LocalDate.parse(date2, formatter);
+                return d2.compareTo(d1);
+            }
+        });
+
         for (HistoryTransaction transaction : getAllTransactions()) {
-            dateSet.add(transaction.getDay()); // Add only the date part to the set
+            dateSet.add(transaction.getDay());
         }
-        return new ArrayList<>(dateSet); // Convert the set to a list and return
+        return new ArrayList<>(dateSet);
+
     }
 
     /**

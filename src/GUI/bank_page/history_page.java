@@ -109,10 +109,10 @@ public class history_page extends JPanel {
     private JScrollPane createDatePanel() {
         JPanel datePanel = new JPanel();
         datePanel.setLayout(new BoxLayout(datePanel, BoxLayout.Y_AXIS));
-        datePanel.setPreferredSize(new Dimension(270, 400));
         datePanel.setBackground(panelBgColor);
 
         JScrollPane scrollPane = new JScrollPane(datePanel);
+        scrollPane.setPreferredSize(new Dimension(270, Integer.MAX_VALUE));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(new LineBorder(borderColor, 1));  // Set a border to the scroll pane
@@ -140,7 +140,7 @@ public class history_page extends JPanel {
         JPanel uploadPanel = new JPanel(); // Use default FlowLayout, improved automatic layout
         uploadPanel.setLayout(new BoxLayout(uploadPanel, BoxLayout.Y_AXIS)); // Arrange vertically
         uploadPanel.setBackground(panelBgColor);
-        uploadPanel.setPreferredSize(new Dimension(540, 400));
+//        uploadPanel.setPreferredSize(new Dimension(540, 200));
         uploadPanel.setBorder(new LineBorder(borderColor, 1)); // Set border
 
         List<String> details = transactionList.getTransactionDetails(historyController.getSelectedDate());
