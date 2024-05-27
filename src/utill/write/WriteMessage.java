@@ -16,7 +16,7 @@ public class WriteMessage {
             List<Message> messages = messageList.getAllMessages();
             for (Message message : messages) {
                 // 将消息对象的信息以特定格式写入文件
-                buffer.append(message.getSender() + "," + message.getTimestamp() + "," + "\"" + message.getContent() + "\"").append(System.lineSeparator());
+                buffer.append(message.getSender() + "," + message.getTimestamp() + "," +message.getReceiver()+","+ "\"" + message.getContent() + "\"").append(System.lineSeparator());
             }
             String encryptedData = EncryptionUtil.encrypt(buffer.toString());
             bw.write(encryptedData);

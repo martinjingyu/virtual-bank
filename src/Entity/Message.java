@@ -11,7 +11,7 @@ public class Message {
     private String sender;
     private String timestamp;
     private String content;
-
+    private String receiver;
     /**
      * Constructs a Message object with specified sender, timestamp, and content.
      *
@@ -19,10 +19,13 @@ public class Message {
      * @param timestamp the timestamp of the message
      * @param content   the content of the message
      */
-    public Message(String sender, String timestamp, String content) {
+
+
+    public Message(String sender, String timestamp, String content,String receiver) {
         this.sender = sender;
         this.timestamp = timestamp;
         this.content = content;
+        this.receiver = receiver;
     }
 
     /**
@@ -32,10 +35,10 @@ public class Message {
      * @param sender  the sender of the message
      * @param content the content of the message
      */
-    public Message(String sender, String content) {
+    public Message(String sender, String content, String receiver) {
         this.content = content;
         this.sender = sender;
-
+        this.receiver = receiver;
         Instant timestamp = Instant.now();
 
         // Create a DateTimeFormatter formatter
@@ -81,6 +84,11 @@ public class Message {
      */
     public String getContent() {
         return content;
+    }
+
+
+    public String getReceiver() {
+        return receiver;
     }
 
     /**
