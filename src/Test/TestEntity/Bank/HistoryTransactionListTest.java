@@ -2,81 +2,133 @@ package Test.TestEntity.Bank;
 
 import Entity.HistoryTransaction;
 import Entity.HistoryTransactionList;
-import org.junit.Before;
-import org.junit.Test;
+import Entity.AccountManager;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HistoryTransactionListTest {
-    private HistoryTransactionList transactionList;
 
-    @Before
+    private HistoryTransactionList historyTransactionList;
+    private AccountManager accountManager;
+
+    @BeforeEach
     public void setUp() {
-        transactionList = new HistoryTransactionList();
+        historyTransactionList = new HistoryTransactionList();
+        accountManager = new AccountManager();
+    }
+
+    @Test
+    public void testConstructor() {
+        assertNotNull(historyTransactionList.getAllTransactions());
+        assertTrue(historyTransactionList.getAllTransactions().isEmpty());
     }
 
     @Test
     public void testAddTransaction() {
-        HistoryTransaction transaction = new HistoryTransaction("CA1", "CA2", 10.0);
-        transactionList.addTransaction(transaction);
-        List<HistoryTransaction> transactions = transactionList.getAllTransactions();
-        assertEquals(1, transactions.size());
-        assertEquals(transaction, transactions.get(0));
+        HistoryTransaction transaction = new HistoryTransaction("Task", "shop", 100.0);
+        historyTransactionList.addTransaction(transaction);
+        assertEquals(1, historyTransactionList.getAllTransactions().size());
+        assertTrue(historyTransactionList.getAllTransactions().contains(transaction));
     }
 
     @Test
     public void testGetAllTransactions() {
-        HistoryTransaction transaction1 = new HistoryTransaction("CA2", "CA3", 20.0);
-        HistoryTransaction transaction2 = new HistoryTransaction("CA3", "Shop", -5.0);
-        transactionList.addTransaction(transaction1);
-        transactionList.addTransaction(transaction2);
+        HistoryTransaction transaction1 = new HistoryTransaction("Task", "shop", 100.0);
+        HistoryTransaction transaction2 = new HistoryTransaction("Task", "shop", 200.0);
+        historyTransactionList.addTransaction(transaction1);
+        historyTransactionList.addTransaction(transaction2);
 
-        List<HistoryTransaction> transactions = transactionList.getAllTransactions();
+        List<HistoryTransaction> transactions = historyTransactionList.getAllTransactions();
         assertEquals(2, transactions.size());
-        assertEquals(transaction1, transactions.get(0));
-        assertEquals(transaction2, transactions.get(1));
+        assertTrue(transactions.contains(transaction1));
+        assertTrue(transactions.contains(transaction2));
     }
 
+    @Test
+    public void testGetDateList() {
+        HistoryTransaction transaction1 = new HistoryTransaction("Task", "shop", 100.0, "2024-05-27 10:00:00");
+        HistoryTransaction transaction2 = new HistoryTransaction("Task", "shop", 200.0, "2024-05-28 11:00:00");
+        historyTransactionList.addTransaction(transaction1);
+        historyTransactionList.addTransaction(transaction2);
+
+        List<String> dateList = historyTransactionList.getDateList();
+        assertEquals(2, dateList.size());
+        assertTrue(dateList.contains("2024-05-27"));
+        assertTrue(dateList.contains("2024-05-28"));
+    }
 
     @Test
     public void testGetTransactionDetails() {
-        HistoryTransaction transaction1 = new HistoryTransaction("Task", "CA2", 10.0, "2023:05:21 15:30:45");
-        HistoryTransaction transaction2 = new HistoryTransaction("CA1", "SA3", 50.0, "2023:05:22 10:20:30");
-        transactionList.addTransaction(transaction1);
-        transactionList.addTransaction(transaction2);
+        HistoryTransaction transaction1 = new HistoryTransaction("Task", "shop", 100.0, "2024-05-27 10:00:00");
+        HistoryTransaction transaction2 = new HistoryTransaction("Task", "shop", 200.0, "2024-05-28 11:00:00");
+        historyTransactionList.addTransaction(transaction1);
+        historyTransactionList.addTransaction(transaction2);
 
-        List<String> details = transactionList.getTransactionDetails();
+        List<String> details = historyTransactionList.getTransactionDetails();
         assertEquals(2, details.size());
-        assertTrue(details.contains("2023:05:21 15:30:45 - from Task to CA2 : $ 10.0"));
-        assertTrue(details.contains("2023:05:22 10:20:30 - from CA1 to SA3 : $ 50.0"));
+        assertEquals("2024-05-27 10:00:00 - from Task to shop : $ 100.0", details.get(0));
+        assertEquals("2024-05-28 11:00:00 - from Task to shop : $ 200.0", details.get(1));
     }
 
     @Test
     public void testGetTransactionDetailsForSpecificDate() {
-        HistoryTransaction transaction1 = new HistoryTransaction("CA1", "CA2", 20.0, "2023:05:21 15:30:45");
-        HistoryTransaction transaction2 = new HistoryTransaction("CA3", "CA1", 30.0, "2023:05:21 16:20:30");
-        HistoryTransaction transaction3 = new HistoryTransaction("CA2", "SA1", 100.0, "2023:05:22 11:20:30");
-        transactionList.addTransaction(transaction1);
-        transactionList.addTransaction(transaction2);
-        transactionList.addTransaction(transaction3);
+        HistoryTransaction transaction1 = new HistoryTransaction("Task", "shop", 100.0, "2024-05-27 10:00:00");
+        HistoryTransaction transaction2 = new HistoryTransaction("Task", "shop", 200.0, "2024-05-28 11:00:00");
+        historyTransactionList.addTransaction(transaction1);
+        historyTransactionList.addTransaction(transaction2);
 
-        List<String> details = transactionList.getTransactionDetails("2023:05:21");
-        assertEquals(2, details.size());
-        assertTrue(details.contains("2023:05:21 15:30:45 - from CA1 to CA2 : $ 20.0"));
-        assertTrue(details.contains("2023:05:21 16:20:30 - from CA3 to CA1 : $ 30.0"));
+        List<String> details = historyTransactionList.getTransactionDetails("2024-05-27");
+        assertEquals(1, details.size());
+        assertEquals("2024-05-27 10:00:00 - from Task to shop : $ 100.0", details.get(0));
     }
 
     @Test
-    public void testGetIncomeForDate() {
-        HistoryTransaction transaction1 = new HistoryTransaction("Task", "CA1", 10.0, "2023:05:21 15:30:45");
-        HistoryTransaction transaction2 = new HistoryTransaction("Task", "CA2", 20.0, "2023:05:21 16:20:30");
-        transactionList.addTransaction(transaction1);
-        transactionList.addTransaction(transaction2);
+    public void testGetTransactionsForDate() {
+        HistoryTransaction transaction1 = new HistoryTransaction("Task", "shop", 100.0, "2024-05-27 10:00:00");
+        HistoryTransaction transaction2 = new HistoryTransaction("Task", "shop", 200.0, "2024-05-28 11:00:00");
+        historyTransactionList.addTransaction(transaction1);
+        historyTransactionList.addTransaction(transaction2);
 
-        double income = transactionList.getIncomeForDate("2023:05:21");
-        assertEquals(30.0, income, 0.001);
+        List<HistoryTransaction> transactions = historyTransactionList.getTransactionsForDate("2024-05-27");
+        assertEquals(1, transactions.size());
+        assertTrue(transactions.contains(transaction1));
+    }
+
+    @Test
+    public void testGetTotalIncome() {
+        HistoryTransaction incomeTransaction = new HistoryTransaction("Task", "shop", 100.0);
+        HistoryTransaction expenseTransaction = new HistoryTransaction("shop", "Task", -50.0);
+        historyTransactionList.addTransaction(incomeTransaction);
+        historyTransactionList.addTransaction(expenseTransaction);
+
+        double totalIncome = historyTransactionList.getTotalIncome();
+        assertEquals(100.0, totalIncome);
+    }
+
+    @Test
+    public void testGetTotalExpenses() {
+        HistoryTransaction incomeTransaction = new HistoryTransaction("Task", "shop", 100.0);
+        HistoryTransaction expenseTransaction = new HistoryTransaction("shop", "Task", -50.0);
+        historyTransactionList.addTransaction(incomeTransaction);
+        historyTransactionList.addTransaction(expenseTransaction);
+
+        double totalExpenses = historyTransactionList.getTotalExpenses();
+        assertEquals(50.0, totalExpenses);
+    }
+
+    @Test
+    public void testGetTotalBalance() {
+        HistoryTransaction incomeTransaction = new HistoryTransaction("Task", "shop", 100.0);
+        HistoryTransaction expenseTransaction = new HistoryTransaction("shop", "Task", -50.0);
+        historyTransactionList.addTransaction(incomeTransaction);
+        historyTransactionList.addTransaction(expenseTransaction);
+
+        double totalBalance = historyTransactionList.getTotalBalance();
+        assertEquals(50.0, totalBalance);
     }
 
 
