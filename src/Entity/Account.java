@@ -2,6 +2,7 @@ package Entity;
 
 import Exceptions.InsufficientFundsException;
 
+import javax.swing.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -67,6 +68,7 @@ public abstract class Account {
             System.out.println("Withdrawn: " + amount);
         } else {
             System.out.println("Insufficient funds.");
+            JOptionPane.showMessageDialog(null, "Insufficient funds.", "Insufficient funds", JOptionPane.ERROR_MESSAGE);
             throw new InsufficientFundsException("Insufficient funds.");
         }
     }

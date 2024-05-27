@@ -172,7 +172,6 @@ public class SavingAccountController {
                     bank_kid.updateAccounts();
                     frame.dispose();
                 } catch (InsufficientFundsException e2) {
-                    JOptionPane.showMessageDialog(null, "Insufficient Funds", "Error", JOptionPane.ERROR_MESSAGE);
                     textField.setText("");
                 } catch (Exception e1) {
                     textField.setText("");
