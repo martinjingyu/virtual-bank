@@ -193,10 +193,7 @@ public class GUIMain {
         Basic_login.addbasicPanel(cardPanel, cardLayout, this);
         Parent.addParentPanel(cardPanel, cardLayout, this, frame);
         Children.addChildrenPanel(cardPanel, cardLayout, this);
-        Parent_main.addParent_mainPanel(cardPanel, cardLayout, this);
         Error.addErrorPanel(cardPanel, cardLayout, this);
-        Children_main.addChildren_mainPanel(cardPanel, cardLayout, this);
-        Remain.addRemainPanel(cardPanel, cardLayout, this);
         Sign.addSignPanel(cardPanel, cardLayout, this);
     }
 
