@@ -174,30 +174,27 @@ public class Task_parent extends JPanel {
                         JOptionPane.WARNING_MESSAGE);
 
                 if (response1 == JOptionPane.YES_OPTION) {
-                    // 发信息
+
+                    if(task_parent_control.getKid().getTaskList().getSize()==1)
+                    {
+                        JOptionPane.showMessageDialog(this, "Deletion is not allowed as there is only one task remaining.", "Deletion Warning", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        // 发信息
 
 
-                    String name = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
-                    task_parent_control.getKid().getMessagelist().addTaskMessage("Parent_Opt","You have delete the task "+ name);
+                        String name = task_parent_control.getKid().getTaskList().getNonConfirmedTask().getTask(index).getName();
+                        task_parent_control.getKid().getMessagelist().addTaskMessage("Parent_Opt", "You have delete the task " + name);
 
+                        // 删除任务
+                        task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getTask(i));
 
-//                    List<Task> allTasks =  task_parent_control.getKid().getTaskList().getAllTasks();
-//                    System.out.println("task: ");
-//                    for (Task task : allTasks) {
-//                        System.out.println(task);
-//                    }
-                    // 执行删除任务的逻辑
-                    // 删除任务
-                    task_parent_control.getKid().getTaskList().removeTask(task_parent_control.getKid().getTaskList().getTask(i));
-
-
-
-                    // 显示状态
-                    JOptionPane.showMessageDialog(this,
-                            "Task has been deleted.",
-                            "Task Deleted",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    mainFrame.refresh();
+                        // 显示状态
+                        JOptionPane.showMessageDialog(this,
+                                "Task has been deleted.",
+                                "Task Deleted",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        mainFrame.refresh();
+                    }
                 }
 
         }
