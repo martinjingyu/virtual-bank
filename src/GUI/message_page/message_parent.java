@@ -8,6 +8,7 @@ import utill.read.ReadAll;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.List;
 
 /**
  * The {@code message_parent} class represents a graphical user interface (GUI) for displaying messages and contacts for a parent user.
@@ -157,6 +158,18 @@ public class message_parent extends JPanel {
     public void updateContactSelection(String contact) {
         contactNameLabel.setText(contact);
         messageModel.clear();  // Optionally delegate to controller to handle updating model
+        if(contact.equals("Kid")){
+            java.util.List<Message> filteredMessages = controller.getMessagesForContact("kid");
+            for (Message message : filteredMessages) {
+                messageModel.addElement(message);
+            }
+        }
+        if(contact.equals("System Alerts")){
+            List<Message> filteredMessages = controller.getMessagesForContact("system_parent");
+            for (Message message : filteredMessages) {
+                messageModel.addElement(message);
+            }
+        }
     }
 
     /**
@@ -205,7 +218,7 @@ public class message_parent extends JPanel {
         }
 
         private String formatMessage(Message message) {
-            return "<html><div style='text-align: " + (message.getSender().equals("kid") || message.getSender().equals("system") ? "right" : "left") + ";'>" +
+            return "<html><div style='text-align: " + (message.getSender().equals("kid") || message.getSender().equals("system_parent") ? "right" : "left") + ";'>" +
                     message.getTimestamp() + "<br/>" +
                     message.getContent() + "</div></html>";
         }
