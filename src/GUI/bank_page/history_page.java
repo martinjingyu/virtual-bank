@@ -24,7 +24,7 @@ public class history_page extends JPanel {
     private HistoryTransactionList transactionList;
     private JTextField nameTextField, priceTextField;
     private HistoryController historyController;
-    private JScrollPane DetailPanel;
+    private JPanel DetailPanel;
     private JPanel accountInfoPanel;
     private List<JLabel> dateList;
 
@@ -106,13 +106,13 @@ public class history_page extends JPanel {
     }
 
     // Create the To-Do List Panel
-    private JScrollPane createDatePanel() {
+    private JPanel createDatePanel() {
         JPanel datePanel = new JPanel();
         datePanel.setLayout(new BoxLayout(datePanel, BoxLayout.Y_AXIS));
+        datePanel.setPreferredSize(new Dimension(270, 400));
         datePanel.setBackground(panelBgColor);
 
         JScrollPane scrollPane = new JScrollPane(datePanel);
-        scrollPane.setPreferredSize(new Dimension(270, Integer.MAX_VALUE));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setBorder(new LineBorder(borderColor, 1));  // Set a border to the scroll pane
@@ -132,16 +132,21 @@ public class history_page extends JPanel {
             datePanel.add(dateLabel);
         }
 
-        return scrollPane;
+        return datePanel;
     }
 
     // Create the Upload Products Panel
-    private JScrollPane createDetailPanel() {
+    private JPanel createDetailPanel() {
         JPanel uploadPanel = new JPanel(); // Use default FlowLayout, improved automatic layout
         uploadPanel.setLayout(new BoxLayout(uploadPanel, BoxLayout.Y_AXIS)); // Arrange vertically
         uploadPanel.setBackground(panelBgColor);
-//        uploadPanel.setPreferredSize(new Dimension(540, 200));
+        uploadPanel.setPreferredSize(new Dimension(540, 0));
         uploadPanel.setBorder(new LineBorder(borderColor, 1)); // Set border
+
+        JScrollPane scrollPane = new JScrollPane(uploadPanel); // Create a scroll panel containing uploadPanel
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setBorder(new LineBorder(borderColor, 1));  // Set border for the scroll pane
 
         List<String> details = transactionList.getTransactionDetails(historyController.getSelectedDate());
 
@@ -158,12 +163,7 @@ public class history_page extends JPanel {
             uploadPanel.add(detailLabel);
         }
 
-        JScrollPane scrollPane = new JScrollPane(uploadPanel); // Create a scroll panel containing uploadPanel
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBorder(new LineBorder(borderColor, 1));  // Set border for the scroll pane
-
-        return scrollPane; // Return the scroll pane containing uploadPanel
+        return uploadPanel; // Return the scroll pane containing uploadPanel
     }
 
     // Create the Account Information Panel
@@ -182,9 +182,9 @@ public class history_page extends JPanel {
         double totalBalance;
 
         if (historyController.hasSelectedDate()) {
-            totalIncome = transactionList.getIncomeForDate(historyController.getSelectedDate());
-            totalExpenses = transactionList.getExpensesForDate(historyController.getSelectedDate());
-            totalBalance = transactionList.getBalanceForDate(historyController.getSelectedDate());
+            totalIncome = transactionList.getIncomeForDate(historyController.getSelectedDate(),historyController.getKid().getAccountManager());
+            totalExpenses = transactionList.getExpensesForDate(historyController.getSelectedDate(),historyController.getKid().getAccountManager());
+            totalBalance = transactionList.getBalanceForDate(historyController.getSelectedDate(),historyController.getKid().getAccountManager());
         } else {
             totalIncome = transactionList.getTotalIncome();
             totalExpenses = transactionList.getTotalExpenses();

@@ -71,13 +71,13 @@ public class bank_parents extends JPanel{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
         String formattedDate = LocalDate.now().format(formatter);
 
-        JLabel income = new JLabel(String.valueOf(bank_parent_controller.getKid().getTransactionList().getIncomeForDate(formattedDate)));
+        JLabel income = new JLabel(String.valueOf(bank_parent_controller.getKid().getTransactionList().getIncomeForDate(formattedDate,bank_parent_controller.getKid().getAccountManager())));
         income.setBounds(150,70,100,50);
         income.setForeground(new Color(-9975466));
         income.setFont(font);
         add(income);
 
-        JLabel expenses = new JLabel(String.valueOf(bank_parent_controller.getKid().getTransactionList().getExpensesForDate(formattedDate)));
+        JLabel expenses = new JLabel(String.valueOf(bank_parent_controller.getKid().getTransactionList().getExpensesForDate(formattedDate,bank_parent_controller.getKid().getAccountManager())));
         expenses.setBounds(280,70,100,50);
         expenses.setFont(font);
         expenses.setForeground(Color.RED);

@@ -29,6 +29,8 @@ public class Bank_kid extends JPanel {
     private final Font font = new Font("Arial Black", Font.BOLD, 18);
     private JLabel currentTotal;
     private JLabel savingTotal;
+    private JLabel income;
+    private JLabel expenses;
 
     /**
      * Constructs a Bank_kid object with the specified Bank_kid_control and MainFrame_kid.
@@ -92,14 +94,14 @@ public class Bank_kid extends JPanel {
         String formattedDate = LocalDate.now().format(formatter);
 
         // Display income
-        JLabel income = new JLabel(String.valueOf(bank_kid_control.getKid().getTransactionList().getIncomeForDate(formattedDate)));
+        income = new JLabel(String.valueOf(bank_kid_control.getKid().getTransactionList().getIncomeForDate(formattedDate,bank_kid_control.getKid().getAccountManager())));
         income.setBounds(150, 70, 100, 50);
         income.setForeground(new Color(-9975466));
         income.setFont(font);
         add(income);
 
         // Display expenses
-        JLabel expenses = new JLabel(String.valueOf(bank_kid_control.getKid().getTransactionList().getExpensesForDate(formattedDate)));
+        expenses = new JLabel(String.valueOf(bank_kid_control.getKid().getTransactionList().getExpensesForDate(formattedDate,bank_kid_control.getKid().getAccountManager())));
         expenses.setBounds(280, 70, 100, 50);
         expenses.setFont(font);
         expenses.setForeground(Color.RED);
@@ -140,8 +142,12 @@ public class Bank_kid extends JPanel {
      * Updates the displayed account balances.
      */
     public void updateAccounts() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/M/d");
+        String formattedDate = LocalDate.now().format(formatter);
         currentTotal.setText(String.valueOf(bank_kid_control.getKid().getAccountManager().getTotalCurrentBalance()));
         savingTotal.setText(String.valueOf(bank_kid_control.getKid().getAccountManager().getTotalSavingBalance()));
+        income.setText(String.valueOf(bank_kid_control.getKid().getTransactionList().getIncomeForDate(formattedDate,bank_kid_control.getKid().getAccountManager())));
+        expenses.setText(String.valueOf(bank_kid_control.getKid().getTransactionList().getExpensesForDate(formattedDate,bank_kid_control.getKid().getAccountManager())));
         revalidate();
         repaint();
     }
